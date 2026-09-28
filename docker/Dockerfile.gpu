@@ -1,0 +1,16 @@
+# GPU benchmark image SPECIFICATION for the future NVIDIA benchmark machine.
+# NOT BUILT OR TESTED in Phase 1 (no NVIDIA GPU available locally).
+# Requires: NVIDIA driver compatible with the chosen CUDA runtime + NVIDIA Container Toolkit on the host.
+# Choose the CUDA wheel index matching the target driver (e.g. cu126 / cu128) — confirm at provisioning time.
+FROM nvidia/cuda:12.8.1-cudnn-runtime-ubuntu24.04
+ENV DEBIAN_FRONTEND=noninteractive PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
+RUN apt-get update && apt-get install -y --no-install-recommends python3.11 python3.11-venv python3-pip && rm -rf /var/lib/apt/lists/*
+RUN python3.11 -m venv /opt/venv
+ENV PATH=/opt/venv/bin:$PATH
+RUN pip install --upgrade pip==26.2.1 \
+ && pip install torch==2.14.0 torchvision==0.29.0 --index-url https://download.pytorch.org/whl/cu128
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
+RUN useradd -m -u 1000 fes
+USER fes
+WORKDIR /workspace

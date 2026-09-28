@@ -1,0 +1,2 @@
+dataset_id,name,source,source_commit,license,license_url,download_date,acquirer,status_acquisition_eval,notes
+DS01,FairFace (Padding=0.25 train+val),https://github.com/joojs/fairface,fb823086827337b4044e7f0abd3f2035e76b7c5f,CC BY 4.0,https://creativecommons.org/licenses/by/4.0/,2026-09-28,Claude Code session for project user,ELIGIBLE,Archive + labels; per-file registry to be generated on extraction (Phase 2)

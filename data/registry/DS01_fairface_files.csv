@@ -1,0 +1,4 @@
+path,sha256,size_bytes,split,per_item_license,note
+datasets/DS01_fairface/fairface-img-margin025-trainval.zip,654c9b042def71b70a63b4920b05ced0a5489dcfaee75ca5ab5f5583fe451801,578232678,train+val,CC BY 4.0,archive-level; per-image hashes generated at extraction
+datasets/DS01_fairface/fairface_label_train.csv,90624451f2214ae1aa84021ae51c19ce45a375bd0bff901b935feadc59514795,3793020,train,CC BY 4.0,
+datasets/DS01_fairface/fairface_label_val.csv,19906f6917373dc19385e23ff0bacb75767fd0f99569ae6201d268af33d4c96b,447631,val,CC BY 4.0,

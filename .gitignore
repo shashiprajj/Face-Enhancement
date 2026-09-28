@@ -8,10 +8,13 @@ venv/
 .ipynb_checkpoints/
 
 # Large assets — never commit (tracked via manifests + checksums instead)
-models/
-datasets/
+models/*
+!models/README.md
+datasets/*
+!datasets/README.md
 experiments/**/outputs/
-logs/
+logs/*
+!logs/README.md
 *.pth
 *.pt
 *.ckpt

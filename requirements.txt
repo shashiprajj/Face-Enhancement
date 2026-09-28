@@ -1,0 +1,14 @@
+# Face Enhancement Service — Phase 1 experimentation dependencies (pinned).
+# PyTorch is installed separately from the CPU or CUDA wheel index (see docker/Dockerfile.*):
+#   torch==2.14.0  torchvision==0.29.0
+# Only packages justified by the P1-T5 Tier A shortlist and P0-T4 evaluation tooling.
+numpy==2.4.6
+opencv-python-headless==5.0.0.93   # YuNet/SFace (cv2.FaceDetectorYN / FaceRecognizerSF), classical baselines, degradation ops
+pillow==12.3.0
+scikit-image==0.26.0               # PSNR / SSIM
+scipy==1.17.1
+lpips==0.1.4                       # LPIPS (NOTE: fetches torchvision AlexNet ImageNet weights on first use)
+pandas==3.0.6
+pyyaml==6.0.3
+tqdm==4.70.1
+gdown==6.4.0                       # official Google Drive weight links (VQFR/NAFNet etc.) in P1-T9
