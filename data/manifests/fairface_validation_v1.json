@@ -1,0 +1,77 @@
+{
+  "checks": {
+    "in_labels_not_in_zip": [],
+    "in_zip_not_in_labels": [],
+    "label_issues": {},
+    "label_rows": 97698,
+    "raw_hashes": "OK",
+    "split_dir_mismatch": [],
+    "zip_members": 97698,
+    "zip_non_jpg_members": [],
+    "zip_testzip_first_bad_member": null
+  },
+  "config": "configs/phase2/fairface.yaml",
+  "config_sha256": "ca1af54114404d2b14a4cb0a193a76fb13cf73313efb42706f86828bba8a8d9a",
+  "manifest": "data/manifests/fairface_files_v1.csv.gz",
+  "manifest_sha256": "2e864d441ce4758c14470259e3739965fca53e60c860ffff6244c9f7ba01a6cc",
+  "run": {
+    "git_head": "c295b2665516b1cb1a127925109821d68e1da8dd-dirty",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-09-28T10:25:11+00:00"
+  },
+  "summary": {
+    "by_split": {
+      "train": 86744,
+      "val": 10954
+    },
+    "exact_duplicate_files": 319,
+    "exact_duplicate_groups": 158,
+    "grayscale": 2341,
+    "images": 97698,
+    "label_values": {
+      "age": {
+        "0-2": 1991,
+        "10-19": 10284,
+        "20-29": 28898,
+        "3-9": 11764,
+        "30-39": 21580,
+        "40-49": 12097,
+        "50-59": 7024,
+        "60-69": 3100,
+        "more than 70": 960
+      },
+      "gender": {
+        "Female": 45920,
+        "Male": 51778
+      },
+      "race": {
+        "Black": 13789,
+        "East Asian": 13837,
+        "Indian": 13835,
+        "Latino_Hispanic": 14990,
+        "Middle Eastern": 10425,
+        "Southeast Asian": 12210,
+        "White": 18612
+      },
+      "service_test": {
+        "False": 52284,
+        "True": 45414
+      }
+    },
+    "near_dup_groups_crossing_splits": 63,
+    "near_duplicate_files": 671,
+    "near_duplicate_groups": 327,
+    "sizes": {
+      "224x224": 97698
+    },
+    "stage1_reasons": {
+      "exact_duplicate": 319,
+      "grayscale": 2341
+    },
+    "stage1_suitable": 95040,
+    "unreadable": 0
+  }
+}

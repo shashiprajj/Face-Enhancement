@@ -1,0 +1,16 @@
+# P2-T4 — Degradation pilot: every profile × severity on a seeded dev-pool sample.
+# Purpose: validate the generator, collect statistics, prove reproducibility. Final benchmark sets are
+# generated from P2-T7 split selections with the same code.
+name: fes-syn-pilot-v1
+seed: 20260928
+reference_manifest: data/manifests/references_v1.csv.gz
+selection: {pool: dev_pool, n: 40}
+out_dir: datasets/benchmark/fes-syn-pilot-v1
+manifest: data/manifests/degrade_pilot_v1.csv.gz
+report: data/manifests/degrade_pilot_v1_report.json
+workers: 16
+detector:            # used only to measure how often a face is still detectable after degradation
+  model: models/D01_yunet/face_detection_yunet_2026may.onnx
+  score_threshold: 0.7
+  nms_threshold: 0.3
+  max_side: 640

@@ -1,0 +1,161 @@
+{
+  "accepted": 9850,
+  "accepted_quality": {
+    "det_score": {
+      "5": 0.92,
+      "50": 0.942,
+      "95": 0.955
+    },
+    "eye_dist": {
+      "5": 70.541,
+      "50": 80.961,
+      "95": 88.764
+    },
+    "ffhq512_oob_frac": {
+      "5": 0.417,
+      "50": 0.54,
+      "95": 0.623
+    },
+    "ffhq512_scale": {
+      "5": 1.403,
+      "50": 1.551,
+      "95": 1.751
+    },
+    "lap_var": {
+      "5": 10.6,
+      "50": 39.105,
+      "95": 321.012
+    },
+    "mean_luma": {
+      "5": 57.255,
+      "50": 101.24,
+      "95": 149.343
+    },
+    "rms_contrast": {
+      "5": 28.13,
+      "50": 45.98,
+      "95": 66.38
+    },
+    "roll_deg": {
+      "5": -4.949,
+      "50": 0.18,
+      "95": 6.475
+    },
+    "yaw_proxy": {
+      "5": -0.271,
+      "50": -0.018,
+      "95": 0.225
+    }
+  },
+  "accepted_strata": {
+    "age": {
+      "0-2": 237,
+      "10-19": 1074,
+      "20-29": 2887,
+      "3-9": 1325,
+      "30-39": 2033,
+      "40-49": 1185,
+      "50-59": 700,
+      "60-69": 303,
+      "more than 70": 106
+    },
+    "gender": {
+      "Female": 4909,
+      "Male": 4941
+    },
+    "race": {
+      "Black": 1404,
+      "East Asian": 1411,
+      "Indian": 1432,
+      "Latino_Hispanic": 1484,
+      "Middle Eastern": 1115,
+      "Southeast Asian": 1339,
+      "White": 1665
+    }
+  },
+  "accepted_strata_by_pool": {
+    "dev_pool": {
+      "Black|Female": 268,
+      "Black|Male": 241,
+      "East Asian|Female": 265,
+      "East Asian|Male": 240,
+      "Indian|Female": 278,
+      "Indian|Male": 249,
+      "Latino_Hispanic|Female": 264,
+      "Latino_Hispanic|Male": 238,
+      "Middle Eastern|Female": 243,
+      "Middle Eastern|Male": 216,
+      "Southeast Asian|Female": 251,
+      "Southeast Asian|Male": 245,
+      "White|Female": 259,
+      "White|Male": 241
+    },
+    "test_pool": {
+      "Black|Female": 456,
+      "Black|Male": 439,
+      "East Asian|Female": 464,
+      "East Asian|Male": 442,
+      "Indian|Female": 452,
+      "Indian|Male": 453,
+      "Latino_Hispanic|Female": 513,
+      "Latino_Hispanic|Male": 469,
+      "Middle Eastern|Female": 218,
+      "Middle Eastern|Male": 438,
+      "Southeast Asian|Female": 420,
+      "Southeast Asian|Male": 423,
+      "White|Female": 558,
+      "White|Male": 607
+    }
+  },
+  "by_pool": {
+    "dev_pool": {
+      "accepted": 3498,
+      "candidates": 5992
+    },
+    "test_pool": {
+      "accepted": 6352,
+      "candidates": 10954
+    }
+  },
+  "candidates": 16946,
+  "config": "configs/phase2/references.yaml",
+  "config_sha256": "d318487ff1411bfc9a69aac9d524aec3692261066221f57bec4eb734449a3a51",
+  "manifest": "data/manifests/references_v1.csv.gz",
+  "manifest_sha256": "6eebe9a3db017be780dcc218ea8e10778f8466ea7fd9294e09ff71425f59e02b",
+  "reject_reasons": {
+    "clipped_exposure": 2261,
+    "exact_duplicate": 1,
+    "implausible_landmarks": 37,
+    "low_det_score": 1382,
+    "multiple_faces": 75,
+    "near_duplicate": 121,
+    "no_face_detected": 50,
+    "nonstandard_position": 3010,
+    "nonstandard_roll": 1682,
+    "nonstandard_scale": 2444,
+    "source_blurry": 1628,
+    "stage1:exact_duplicate": 45,
+    "stage1:grayscale": 432
+  },
+  "resolved_thresholds": {
+    "eye_dist_range_px": [
+      63.293,
+      98.896
+    ],
+    "max_eye_mid_offset_px": 11.867,
+    "median_eye_dist": 79.117,
+    "median_eye_mid_xy": [
+      110.606,
+      68.017
+    ],
+    "min_source_lap_var": 8.48
+  },
+  "run": {
+    "git_head": "c295b2665516b1cb1a127925109821d68e1da8dd-dirty",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-09-28T10:36:49+00:00"
+  }
+}

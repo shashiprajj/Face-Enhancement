@@ -1,0 +1,45 @@
+# P2-T3 — Clean reference faces. No enhancement, no sharpening, no resampling.
+#
+# Design (see docs/phase_2/P2-T3_Clean_Reference_Dataset.md §2): FairFace chips are already aligned faces
+# (dlib 5-point alignment, 224 px, padding 0.25). Re-warping them to FFHQ framing needs ~40% out-of-source
+# padding or upsampling (data/manifests/framing_probe_v1.json), so the reference IS the source chip
+# (decoded JPEG pixels saved losslessly). YuNet verifies the chip geometry; outliers are rejected.
+# The FFHQ-512 transform per reference is recorded for benchmark adapters.
+version: ref-v1
+source_manifest: data/manifests/fairface_files_v1.csv.gz     # P2-T2 output
+out_dir: datasets/derived/DS01_fairface/references/ref-v1
+manifest: data/manifests/references_v1.csv.gz
+report: data/manifests/references_v1_report.json
+seed: 20260928
+workers: 16
+
+pools:
+  test_pool: {split_source: val, sample: all}                 # FairFace val → test pool (P1-T7 §7)
+  dev_pool:  {split_source: train, sample: 6000,              # FairFace train → dev pool (seeded, stratified)
+              stratify_by: [race, gender]}
+
+detector:
+  model: models/D01_yunet/face_detection_yunet_2026may.onnx
+  score_threshold: 0.7
+  nms_threshold: 0.3
+  max_side: 640
+
+reference:
+  size: 224                     # native FairFace chip; LR sizes for x2/x4/x8/x16 = 112/56/28/14
+  ffhq_record_size: 512         # transform recorded (not applied) for benchmark adapters
+
+# Objective acceptance rules. Geometry bounds are relative to the candidate-pool medians; sharpness
+# percentile is over the stage-1-suitable pool. Resolved numbers are written to the report.
+acceptance:
+  require_stage1_suitable: true
+  exclude_near_duplicates: true
+  require_single_face: true          # extra faces in a chip = background people → ambiguous reference
+  min_det_score: 0.9
+  require_plausible_landmarks: true
+  eye_dist_ratio_range: [0.8, 1.25]  # chip inter-ocular distance / pool median (standard framing)
+  max_eye_mid_offset_ratio: 0.15     # |eye midpoint − pool median| / median eye distance
+  max_abs_roll_deg: 10.0             # chips are roll-normalized by dlib; larger roll = misalignment
+  min_lap_var_percentile: 10         # drop the blurriest 10% of sources
+  max_clip_frac: 0.05                # >5% pixels at luma ≤5 or ≥250 = clipped exposure
+  # JPEG quality is NOT a criterion: every FairFace image has the same Q≈75 table (P2-T2 finding).
+png_compression: 3

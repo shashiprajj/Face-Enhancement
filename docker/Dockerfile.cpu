@@ -3,8 +3,9 @@ FROM python:3.11-slim-bookworm@sha256:a36c24f9cbdf4fd0f52d67f0823eeac19c2028c637
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 RUN pip install --upgrade pip==26.2.1 \
  && pip install torch==2.14.0 torchvision==0.29.0 --index-url https://download.pytorch.org/whl/cpu
-COPY requirements.txt /tmp/requirements.txt
-RUN pip install -r /tmp/requirements.txt
+COPY requirements.txt requirements-dev.txt /tmp/
+RUN pip install -r /tmp/requirements.txt -r /tmp/requirements-dev.txt
+ENV PYTHONPATH=/workspace/src
 RUN useradd -m -u 1000 fes
 USER fes
 WORKDIR /workspace

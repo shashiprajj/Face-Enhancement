@@ -1,0 +1,2 @@
+# Dev/test tooling for Phase 2+ (pinned)
+pytest==9.1.1

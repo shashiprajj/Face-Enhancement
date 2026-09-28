@@ -1,0 +1,17 @@
+# P2-T2 — FairFace verification & working-copy organization
+dataset_id: DS01
+raw:
+  zip: datasets/raw/DS01_fairface/fairface-img-margin025-trainval.zip
+  zip_sha256: 654c9b042def71b70a63b4920b05ced0a5489dcfaee75ca5ab5f5583fe451801
+  labels:
+    train: {path: datasets/raw/DS01_fairface/fairface_label_train.csv, sha256: 90624451f2214ae1aa84021ae51c19ce45a375bd0bff901b935feadc59514795}
+    val:   {path: datasets/raw/DS01_fairface/fairface_label_val.csv,   sha256: 19906f6917373dc19385e23ff0bacb75767fd0f99569ae6201d268af33d4c96b}
+work_dir: datasets/work/DS01_fairface/v1          # byte-identical extracted copy (regenerable)
+manifest: data/manifests/fairface_files_v1.csv.gz  # one row per image
+report: data/manifests/fairface_validation_v1.json
+workers: 16
+near_duplicate_max_hamming: 3        # pHash-64 bits; conservative "visually identical" criterion
+# Stage-1 (image-level) suitability for restoration benchmarking. Face-level checks happen in P2-T3.
+suitability:
+  min_side_px: 200                   # FairFace chips are 224; anything smaller is anomalous
+  exclude_grayscale: true            # grayscale photos kept in the working copy but excluded from colour references (P0-T3 E10 tested separately)
