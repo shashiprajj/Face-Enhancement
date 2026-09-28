@@ -1,0 +1,17 @@
+# P2-T6 — Reusable preprocessing (detection → selection → alignment). Detection is separate from enhancement.
+version: preproc-1.0.0
+detector:
+  model: models/D01_yunet/face_detection_yunet_2026may.onnx   # MIT (P1-T4 D01)
+  score_threshold: 0.7
+  nms_threshold: 0.3
+  max_side: 640
+preprocess:
+  out_size: 512                 # FFHQ framing for restoration models (P1-T5 §5.1)
+  selection: largest            # largest | all | index
+  face_index: 0
+  min_eye_dist_px: 12.0         # below → FACE_TOO_SMALL (never "restored" into a face)
+  low_conf_warn: 0.85
+  partial_oob_warn: 0.02
+  yaw_warn: 0.25
+  crop_pad_frac: 0.5            # face_crop inputs: pad before re-detection
+  crop_relaxed_threshold: 0.5

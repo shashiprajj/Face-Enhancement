@@ -1,0 +1,68 @@
+# P2-T5 — Executable specification for the internal consent-based real-world face collection (DS03).
+# STATUS: DRAFT — requires Legal/Compliance review (DPDP Act 2023 obligations, P0 Q-5) before any capture.
+# The validator scripts/p2_validate_collection.py enforces every rule marked [enforced].
+spec_version: rw-spec-1.0.0
+dataset_id: DS03
+purpose: >
+  Evaluation ONLY of face restoration quality and identity preservation on real low-quality captures
+  (Phase 0 master §8: real-world evaluation is mandatory). No model training without a separate consent scope.
+
+consent:
+  required_scope: [evaluation]              # [enforced] participant must have consented to this scope
+  optional_scopes: [training, publication_of_samples]   # never assumed; default = not granted
+  withdrawal_deadline_days: 30              # data removed from all derived sets within this period [enforced via 'withdrawn' flag]
+  consent_records_location: legal-restricted-store     # signed forms are NEVER stored in the dataset
+  minimum_age_years: 18
+
+identifiers:
+  participant_id_pattern: "^P-[0-9A-F]{6}$"     # [enforced] random, non-derived from identity
+  session_id_pattern: "^S-[0-9A-F]{6}$"         # [enforced]
+  capture_id_pattern: "^C-[0-9A-F]{8}$"         # [enforced]
+  device_id_pattern: "^D-[A-Z0-9_]{2,24}$"      # [enforced]
+
+data_minimization:
+  forbidden_columns: [name, full_name, first_name, last_name, email, phone, mobile, address, dob, date_of_birth,
+                      aadhaar, pan, passport, employee_id, signature]      # [enforced]
+  pii_value_patterns:                        # [enforced] scanned in every text cell
+    email: "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+    phone_in: "(?:\\+91[- ]?)?[6-9][0-9]{9}"
+  optional_self_reported: [age_band, gender_self, skin_tone_mst]   # Monk Skin Tone 1-10; optional, aggregate use only
+  allowed_age_bands: ["18-29", "30-39", "40-49", "50-59", "60+", "prefer_not_to_say"]
+  strip_exif_gps: true                       # [enforced] images with GPS EXIF are rejected
+
+capture:
+  hq_reference:                              # role HQ_REF — the clean same-identity target
+    device_class: [mirrorless_or_dslr, flagship_phone_rear]
+    distance_m: [1.0, 1.5]
+    lighting_lux_min: 400
+    min_eye_distance_px: 120                 # [enforced by validator via detection] ensures genuinely high-res reference
+    poses: [frontal, yaw_left_30, yaw_right_30]
+    shots_per_pose: 2
+    format: [png, jpg_q95_plus, tiff]
+  lq_conditions:                             # role LQ — each links to an HQ_REF capture of the same participant
+    distance_far:     {code: DIST, levels: ["3m", "6m", "10m"], device_class: [flagship_phone_rear, budget_phone_rear]}
+    low_light:        {code: LOWL, levels: ["50lux", "10lux"], device_class: [budget_phone_front, webcam_720p]}
+    motion:           {code: MOTN, levels: ["subject_turn", "handheld_1_15s"], device_class: [budget_phone_rear]}
+    defocus:          {code: DFOC, levels: ["focus_offset"], device_class: [mirrorless_or_dslr]}
+    compression:      {code: COMP, levels: ["messaging_app_1x", "messaging_app_3x", "webcam_stream_480p"], device_class: [any]}
+    low_cost_device:  {code: LCDV, levels: ["webcam_480p", "ip_camera_2_5m_height"], device_class: [webcam_480p, ip_camera]}
+    backlight:        {code: BKLT, levels: ["window_backlight"], device_class: [flagship_phone_rear]}
+    occlusion:        {code: OCCL, levels: ["glasses", "mask", "hand"], device_class: [flagship_phone_rear], optional: true}
+  required_condition_codes_per_participant: [DIST, LOWL, MOTN, COMP, LCDV]   # [enforced] coverage check
+  record_per_capture: [lux_measured, distance_m, device_id, condition, level, pose]   # [enforced] non-empty
+
+storage_and_retention:
+  location: encrypted-at-rest internal storage (not git, not third-party GPU rental without approval)
+  access: named evaluation team only; access log kept
+  retention: delete raw + derived at project end + 90 days, or earlier on withdrawal
+  no_sample_images_in_reports_without: publication_of_samples consent
+
+splits:                                      # [enforced] by participant — never by image
+  rule: sha256(salt + participant_id) mod 100
+  salt: "fes-ds03-v1"
+  dev_below: 30                              # 30% dev (threshold calibration), 70% test
+  train: none                                # no training split under the evaluation-only scope
+
+sample_size:
+  pilot_participants: 30                     # justified estimate for a pilot (variance estimation, P1-T7 §8)
+  final_participants: TBD                    # set by power analysis on pilot variance (P0-T4 TH-11)

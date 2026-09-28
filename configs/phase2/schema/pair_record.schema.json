@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fes/phase2/pair_record/1.0.0",
+  "title": "Canonical clean/degraded pair record (pairs_<subset>.csv.gz)",
+  "type": "object",
+  "required": ["pair_id", "ref_id", "sample_id", "pool", "profile", "severity", "ref_path", "ref_sha256",
+               "degraded_path", "degraded_sha256", "degraded_pixel_sha256", "out_w", "out_h", "seed",
+               "params_json", "degrade_version"],
+  "properties": {
+    "pair_id": {"type": "string", "pattern": "^ff-(train|val)-[0-9]+\\.ref-v1\\.[a-z0-9]+-(mild|moderate|severe|extreme)$"},
+    "ref_id": {"type": "string", "pattern": "^ff-(train|val)-[0-9]+\\.ref-v1$"},
+    "sample_id": {"type": "string", "pattern": "^ff-(train|val)-[0-9]+$"},
+    "pool": {"type": "string", "enum": ["dev_pool", "test_pool"]},
+    "profile": {"type": "string", "enum": ["lowres", "gaussblur", "motionblur", "noise", "jpeg", "underexposure",
+                                             "lowcontrast", "combined", "realistic2"]},
+    "severity": {"type": "string", "enum": ["mild", "moderate", "severe", "extreme"]},
+    "ref_path": {"type": "string"},
+    "ref_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "degraded_path": {"type": "string", "pattern": "^datasets/benchmark/"},
+    "degraded_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "degraded_pixel_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "out_w": {"type": "integer", "enum": [14, 28, 56, 112, 224]},
+    "out_h": {"type": "integer", "enum": [14, 28, 56, 112, 224]},
+    "seed": {"type": "integer"},
+    "params_json": {"type": "json"},
+    "degrade_version": {"type": "string", "pattern": "^degrade-"},
+    "psnr_vs_ref": {"type": "number"},
+    "ssim_vs_ref": {"type": "number"},
+    "yunet_face_found": {"type": "boolean"}
+  }
+}

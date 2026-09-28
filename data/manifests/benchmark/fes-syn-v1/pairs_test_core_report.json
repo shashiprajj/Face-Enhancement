@@ -1,0 +1,276 @@
+{
+  "cell_stats": {
+    "combined-mild": {
+      "deg_mean_luma": 102.5,
+      "n": 700,
+      "out_size": "112x112",
+      "psnr_mean": 33.82,
+      "ssim_mean": 0.9338,
+      "yunet_detect_rate": 1.0
+    },
+    "combined-moderate": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "56x56",
+      "psnr_mean": 28.48,
+      "ssim_mean": 0.8296,
+      "yunet_detect_rate": 0.997
+    },
+    "combined-severe": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "28x28",
+      "psnr_mean": 23.72,
+      "ssim_mean": 0.6977,
+      "yunet_detect_rate": 0.886
+    },
+    "gaussblur-extreme": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 28.09,
+      "ssim_mean": 0.8266,
+      "yunet_detect_rate": 1.0
+    },
+    "gaussblur-mild": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 50.7,
+      "ssim_mean": 0.998,
+      "yunet_detect_rate": 1.0
+    },
+    "gaussblur-moderate": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 40.54,
+      "ssim_mean": 0.9807,
+      "yunet_detect_rate": 1.0
+    },
+    "gaussblur-severe": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 33.71,
+      "ssim_mean": 0.9304,
+      "yunet_detect_rate": 1.0
+    },
+    "jpeg-extreme": {
+      "deg_mean_luma": 102.3,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 29.97,
+      "ssim_mean": 0.8705,
+      "yunet_detect_rate": 0.991
+    },
+    "jpeg-mild": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 40.92,
+      "ssim_mean": 0.9881,
+      "yunet_detect_rate": 1.0
+    },
+    "jpeg-moderate": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 37.11,
+      "ssim_mean": 0.9683,
+      "yunet_detect_rate": 1.0
+    },
+    "jpeg-severe": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 33.71,
+      "ssim_mean": 0.937,
+      "yunet_detect_rate": 1.0
+    },
+    "lowcontrast-mild": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 24.39,
+      "ssim_mean": 0.9446,
+      "yunet_detect_rate": 1.0
+    },
+    "lowcontrast-moderate": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 19.96,
+      "ssim_mean": 0.8668,
+      "yunet_detect_rate": 0.997
+    },
+    "lowcontrast-severe": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 17.04,
+      "ssim_mean": 0.753,
+      "yunet_detect_rate": 0.947
+    },
+    "lowres-extreme": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "14x14",
+      "psnr_mean": 24.07,
+      "ssim_mean": 0.7025,
+      "yunet_detect_rate": 0.943
+    },
+    "lowres-mild": {
+      "deg_mean_luma": 102.5,
+      "n": 700,
+      "out_size": "112x112",
+      "psnr_mean": 42.95,
+      "ssim_mean": 0.9864,
+      "yunet_detect_rate": 1.0
+    },
+    "lowres-moderate": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "56x56",
+      "psnr_mean": 35.48,
+      "ssim_mean": 0.9401,
+      "yunet_detect_rate": 1.0
+    },
+    "lowres-severe": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "28x28",
+      "psnr_mean": 28.85,
+      "ssim_mean": 0.8278,
+      "yunet_detect_rate": 1.0
+    },
+    "motionblur-extreme": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 26.63,
+      "ssim_mean": 0.7942,
+      "yunet_detect_rate": 0.99
+    },
+    "motionblur-mild": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 39.54,
+      "ssim_mean": 0.9761,
+      "yunet_detect_rate": 1.0
+    },
+    "motionblur-moderate": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 33.66,
+      "ssim_mean": 0.9291,
+      "yunet_detect_rate": 1.0
+    },
+    "motionblur-severe": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 29.94,
+      "ssim_mean": 0.8703,
+      "yunet_detect_rate": 1.0
+    },
+    "noise-extreme": {
+      "deg_mean_luma": 104.2,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 15.01,
+      "ssim_mean": 0.1864,
+      "yunet_detect_rate": 0.009
+    },
+    "noise-mild": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 34.18,
+      "ssim_mean": 0.9156,
+      "yunet_detect_rate": 1.0
+    },
+    "noise-moderate": {
+      "deg_mean_luma": 102.5,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 24.77,
+      "ssim_mean": 0.5991,
+      "yunet_detect_rate": 0.99
+    },
+    "noise-severe": {
+      "deg_mean_luma": 102.7,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 20.5,
+      "ssim_mean": 0.3955,
+      "yunet_detect_rate": 0.834
+    },
+    "realistic2-mild": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "112x112",
+      "psnr_mean": 32.64,
+      "ssim_mean": 0.918,
+      "yunet_detect_rate": 1.0
+    },
+    "realistic2-moderate": {
+      "deg_mean_luma": 102.6,
+      "n": 700,
+      "out_size": "56x56",
+      "psnr_mean": 27.9,
+      "ssim_mean": 0.8174,
+      "yunet_detect_rate": 0.991
+    },
+    "realistic2-severe": {
+      "deg_mean_luma": 102.4,
+      "n": 700,
+      "out_size": "28x28",
+      "psnr_mean": 23.6,
+      "ssim_mean": 0.7,
+      "yunet_detect_rate": 0.891
+    },
+    "underexposure-mild": {
+      "deg_mean_luma": 73.2,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 18.37,
+      "ssim_mean": 0.9179,
+      "yunet_detect_rate": 1.0
+    },
+    "underexposure-moderate": {
+      "deg_mean_luma": 51.5,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 13.52,
+      "ssim_mean": 0.7201,
+      "yunet_detect_rate": 0.999
+    },
+    "underexposure-severe": {
+      "deg_mean_luma": 35.3,
+      "n": 700,
+      "out_size": "224x224",
+      "psnr_mean": 11.11,
+      "ssim_mean": 0.4976,
+      "yunet_detect_rate": 0.997
+    }
+  },
+  "cells": 32,
+  "config": "configs/phase2/degrade_fes-syn-v1_test_core.yaml",
+  "config_sha256": "bdd7caa0f47c568c5192f0a1babc8e42fc034af7d3fcaf85419f0d7699d1e563",
+  "degrade_version": "degrade-1.0.0",
+  "manifest": "data/manifests/benchmark/fes-syn-v1/pairs_test_core.csv.gz",
+  "manifest_sha256": "d9a5e72dc34b352ad9e599339c768c5a242e7fd83f8a2d0e41e9c4cea75bc500",
+  "pairs": 22400,
+  "references": 700,
+  "run": {
+    "git_head": "7c29beedb605d8e43125ada1b7dfe26416704378-dirty",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-09-28T14:25:35+00:00"
+  }
+}

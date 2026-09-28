@@ -151,11 +151,11 @@
     "min_source_lap_var": 8.48
   },
   "run": {
-    "git_head": "c295b2665516b1cb1a127925109821d68e1da8dd-dirty",
+    "git_head": "7c29beedb605d8e43125ada1b7dfe26416704378-dirty",
     "numpy": "2.4.6",
     "opencv": "5.0.0",
     "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
     "python": "3.11.16",
-    "utc": "2026-09-28T10:36:49+00:00"
+    "utc": "2026-09-28T14:17:47+00:00"
   }
 }

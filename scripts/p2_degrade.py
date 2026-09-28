@@ -86,7 +86,7 @@ def select_refs(cfg: dict, refs: list[dict]) -> list[dict]:
     sel = cfg["selection"]
     if "ref_ids_csv_gz" in sel:  # explicit list (P2-T7 split selections), optionally filtered to one split
         chosen = C.read_csv_gz(C.repo_path(sel["ref_ids_csv_gz"]))
-        wanted = {r["ref_id"] for r in chosen if "split" not in sel or r.get("split") == sel["split"]}
+        wanted = {r["ref_id"] for r in chosen if "subset" not in sel or r.get("subset") == sel["subset"]}
         missing = wanted - {r["ref_id"] for r in refs}
         assert not missing, f"selection references unknown/unaccepted ref_ids: {sorted(missing)[:5]}"
         return sorted((r for r in refs if r["ref_id"] in wanted), key=lambda r: r["ref_id"])

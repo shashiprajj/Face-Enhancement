@@ -1,0 +1,426 @@
+{
+  "config": "configs/phase2/preprocess.yaml",
+  "config_sha256": "92ef72f487d58fa567debe9f1fb2813a152e2281f842e0db43683463fc52ea27",
+  "results": [
+    {
+      "aligned": true,
+      "crop_path": "datasets/derived/examples/preproc/01_one_face_face0.png",
+      "crop_pixel_sha256": "6f6345e3eb6c8a8f7a194930451be7ffba38252e175937f104f216c3a0579aeb",
+      "det_bbox_xywh": [
+        31.27,
+        3.48,
+        192.06,
+        212.43
+      ],
+      "det_landmarks": [
+        [
+          69.37,
+          63.45
+        ],
+        [
+          149.93,
+          61.91
+        ],
+        [
+          98.22,
+          105.82
+        ],
+        [
+          76.82,
+          148.49
+        ],
+        [
+          142.85,
+          147.58
+        ]
+      ],
+      "det_score": 0.9443,
+      "eye_dist_src": 80.573,
+      "face_index": 0,
+      "input": "datasets/derived/examples/inputs/01_one_face.png",
+      "input_sha256": "50254a8beebd8b2806775326f5b8ec13537677445c1a129c860b0aa090b5ff29",
+      "meta": {
+        "crop_retry": false,
+        "detector": "yunet:face_detection_yunet_2026may.onnx:thr0.7:nms0.3:max640",
+        "input_mode": "full_image",
+        "out_size": 512,
+        "preproc_version": "preproc-1.0.0",
+        "selection": "largest"
+      },
+      "n_faces": 1,
+      "oob_frac": 0.53537,
+      "roll_deg": -1.093,
+      "scale": 1.55758,
+      "status": "OK",
+      "transform_2x3": [
+        [
+          1.55757807,
+          0.00066351,
+          89.16340499
+        ],
+        [
+          -0.00066351,
+          1.55757807,
+          143.16839679
+        ]
+      ],
+      "warnings": [
+        "partial_face"
+      ],
+      "yaw_proxy": -0.152
+    },
+    {
+      "aligned": true,
+      "crop_path": "datasets/derived/examples/preproc/02_two_faces_face0.png",
+      "crop_pixel_sha256": "2d956febc2cd38eebec6faf9ba0d97460e77e2f28511ae1417c613ab911de1cd",
+      "det_bbox_xywh": [
+        50.75,
+        5.17,
+        168.29,
+        229.12
+      ],
+      "det_landmarks": [
+        [
+          82.38,
+          82.59
+        ],
+        [
+          163.31,
+          84.16
+        ],
+        [
+          112.81,
+          124.86
+        ],
+        [
+          84.38,
+          163.54
+        ],
+        [
+          153.38,
+          165.14
+        ]
+      ],
+      "det_score": 0.9448,
+      "eye_dist_src": 80.946,
+      "face_index": 0,
+      "input": "datasets/derived/examples/inputs/02_two_faces.png",
+      "input_sha256": "b407d3103d5cff2986d594e594d2439e81cd52396062b7b3b8e2c0f024c93672",
+      "meta": {
+        "crop_retry": false,
+        "detector": "yunet:face_detection_yunet_2026may.onnx:thr0.7:nms0.3:max640",
+        "input_mode": "full_image",
+        "out_size": 512,
+        "preproc_version": "preproc-1.0.0",
+        "selection": "largest"
+      },
+      "n_faces": 2,
+      "oob_frac": 0.31198,
+      "roll_deg": 1.112,
+      "scale": 1.59562,
+      "status": "OK",
+      "transform_2x3": [
+        [
+          1.59407311,
+          0.07013041,
+          57.77583234
+        ],
+        [
+          -0.07013041,
+          1.59407311,
+          117.94965228
+        ]
+      ],
+      "warnings": [
+        "multiple_faces",
+        "partial_face"
+      ],
+      "yaw_proxy": -0.114
+    },
+    {
+      "aligned": false,
+      "face_index": null,
+      "input": "datasets/derived/examples/inputs/03_no_face.png",
+      "input_sha256": "298e88bb16e806aebf6da1b0648c29b960b908c1573e011e3b3806bae16ac95b",
+      "meta": {
+        "crop_retry": false,
+        "detector": "yunet:face_detection_yunet_2026may.onnx:thr0.7:nms0.3:max640",
+        "input_mode": "full_image",
+        "out_size": 512,
+        "preproc_version": "preproc-1.0.0",
+        "selection": "largest"
+      },
+      "n_faces": 0,
+      "oob_frac": null,
+      "roll_deg": null,
+      "scale": null,
+      "status": "NO_FACE_DETECTED",
+      "transform_2x3": null,
+      "warnings": [],
+      "yaw_proxy": null
+    },
+    {
+      "aligned": false,
+      "det_bbox_xywh": [
+        84.38,
+        77.89,
+        21.43,
+        27.1
+      ],
+      "det_landmarks": [
+        [
+          87.38,
+          88.68
+        ],
+        [
+          98.69,
+          88.7
+        ],
+        [
+          92.4,
+          93.41
+        ],
+        [
+          88.93,
+          98.86
+        ],
+        [
+          98.1,
+          98.42
+        ]
+      ],
+      "det_score": 0.7428,
+      "eye_dist_src": 11.307,
+      "face_index": 0,
+      "input": "datasets/derived/examples/inputs/04_very_small_face.png",
+      "input_sha256": "486109d5a4976f317892763781b93952fb2f801cdc66fb5557b811dfd6c4d459",
+      "meta": {
+        "crop_retry": false,
+        "detector": "yunet:face_detection_yunet_2026may.onnx:thr0.7:nms0.3:max640",
+        "input_mode": "full_image",
+        "out_size": 512,
+        "preproc_version": "preproc-1.0.0",
+        "selection": "largest"
+      },
+      "n_faces": 1,
+      "oob_frac": null,
+      "roll_deg": null,
+      "scale": null,
+      "status": "FACE_TOO_SMALL",
+      "transform_2x3": null,
+      "warnings": [
+        "low_confidence"
+      ],
+      "yaw_proxy": null
+    },
+    {
+      "aligned": true,
+      "crop_path": "datasets/derived/examples/preproc/05_partial_face_face0.png",
+      "crop_pixel_sha256": "0fbbcff7de89d478c375394c773cb7e9e68c51e1e7f50c751c92308221ab5240",
+      "det_bbox_xywh": [
+        0.31,
+        0.38,
+        150.15,
+        208.8
+      ],
+      "det_landmarks": [
+        [
+          8.29,
+          55.56
+        ],
+        [
+          91.06,
+          58.36
+        ],
+        [
+          41.04,
+          105.0
+        ],
+        [
+          12.0,
+          148.9
+        ],
+        [
+          79.47,
+          149.41
+        ]
+      ],
+      "det_score": 0.9399,
+      "eye_dist_src": 82.817,
+      "face_index": 0,
+      "input": "datasets/derived/examples/inputs/05_partial_face.png",
+      "input_sha256": "c6cadff4ef7346c57b7205579059868dce4950333570654881f6919d9ce62e29",
+      "meta": {
+        "crop_retry": false,
+        "detector": "yunet:face_detection_yunet_2026may.onnx:thr0.7:nms0.3:max640",
+        "input_mode": "full_image",
+        "out_size": 512,
+        "preproc_version": "preproc-1.0.0",
+        "selection": "largest"
+      },
+      "n_faces": 1,
+      "oob_frac": 0.71167,
+      "roll_deg": 1.934,
+      "scale": 1.48017,
+      "status": "OK",
+      "transform_2x3": [
+        [
+          1.47888975,
+          0.06164025,
+          181.61656697
+        ],
+        [
+          -0.06164025,
+          1.47888975,
+          157.21606866
+        ]
+      ],
+      "warnings": [
+        "partial_face"
+      ],
+      "yaw_proxy": -0.0846
+    },
+    {
+      "aligned": true,
+      "crop_path": "datasets/derived/examples/preproc/06_occluded_eyes_face0.png",
+      "crop_pixel_sha256": "f8474df4188280c8142632e43580c3aa0d4a6d95511a8a73aa6120657f04f809",
+      "det_bbox_xywh": [
+        34.41,
+        2.37,
+        181.17,
+        206.23
+      ],
+      "det_landmarks": [
+        [
+          62.39,
+          64.92
+        ],
+        [
+          149.63,
+          58.8
+        ],
+        [
+          95.8,
+          104.25
+        ],
+        [
+          76.24,
+          147.88
+        ],
+        [
+          150.61,
+          142.31
+        ]
+      ],
+      "det_score": 0.9312,
+      "eye_dist_src": 87.448,
+      "face_index": 0,
+      "input": "datasets/derived/examples/inputs/06_occluded_eyes.png",
+      "input_sha256": "8380b86101f4baefafe6e21aa2d366855b17cb87a7556c0551fb5b413f6478b3",
+      "meta": {
+        "crop_retry": false,
+        "detector": "yunet:face_detection_yunet_2026may.onnx:thr0.7:nms0.3:max640",
+        "input_mode": "full_image",
+        "out_size": 512,
+        "preproc_version": "preproc-1.0.0",
+        "selection": "largest"
+      },
+      "n_faces": 1,
+      "oob_frac": 0.56834,
+      "roll_deg": -4.01,
+      "scale": 1.50174,
+      "status": "OK",
+      "transform_2x3": [
+        [
+          1.49789881,
+          -0.10729815,
+          107.5186909
+        ],
+        [
+          0.10729815,
+          1.49789881,
+          140.64184104
+        ]
+      ],
+      "warnings": [
+        "partial_face"
+      ],
+      "yaw_proxy": -0.1503
+    },
+    {
+      "aligned": true,
+      "crop_path": "datasets/derived/examples/preproc/07_already_cropped_face0.png",
+      "crop_pixel_sha256": "fc1ae26ec907bd1799696e41615e174a5510b1e0a8349de0d8b6fd3c567d1ce8",
+      "det_bbox_xywh": [
+        -20.0,
+        -47.1,
+        442.19,
+        500.97
+      ],
+      "det_landmarks": [
+        [
+          94.84,
+          91.76
+        ],
+        [
+          302.62,
+          87.51
+        ],
+        [
+          198.25,
+          207.67
+        ],
+        [
+          103.99,
+          294.37
+        ],
+        [
+          295.03,
+          291.96
+        ]
+      ],
+      "det_score": 0.8692,
+      "eye_dist_src": 207.823,
+      "face_index": 0,
+      "input": "datasets/derived/examples/inputs/07_already_cropped.png",
+      "input_sha256": "e12956f9bc32503b363a782c5639bd795687808ab92e3c7863e81d14a308968b",
+      "meta": {
+        "crop_retry": false,
+        "detector": "yunet:face_detection_yunet_2026may.onnx:thr0.7:nms0.3:max640",
+        "input_mode": "full_image",
+        "out_size": 512,
+        "preproc_version": "preproc-1.0.0",
+        "selection": "largest"
+      },
+      "n_faces": 1,
+      "oob_frac": 0.7649,
+      "roll_deg": -1.174,
+      "scale": 0.62073,
+      "status": "OK",
+      "transform_2x3": [
+        [
+          0.62071886,
+          -0.00304181,
+          133.67577217
+        ],
+        [
+          0.00304181,
+          0.62071886,
+          185.91345397
+        ]
+      ],
+      "warnings": [
+        "partial_face"
+      ],
+      "yaw_proxy": -0.014
+    }
+  ],
+  "run": {
+    "git_head": "7c29beedb605d8e43125ada1b7dfe26416704378",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-09-28T10:45:20+00:00"
+  }
+}
