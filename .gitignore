@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Large assets — never commit (tracked via manifests + checksums instead)
+models/
+datasets/
+experiments/**/outputs/
+logs/
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.onnx
+*.bin
+*.zip
+*.tar
+*.tar.gz
+
+# Secrets
+.env
+.env.*
+*.token
+.huggingface/
+hf_token*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

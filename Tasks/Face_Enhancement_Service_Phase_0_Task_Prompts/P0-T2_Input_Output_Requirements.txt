@@ -1,0 +1,51 @@
+PHASE 0 — TASK P0-T2
+INPUT / OUTPUT REQUIREMENTS
+
+PREREQUISITE
+P0-T1 must be completed. Read its output first.
+
+OBJECTIVE
+Define the conceptual input/output contract for the standalone Face Enhancement Service. Do not implement the API.
+
+INSTRUCTIONS
+1. Review P0-T1.
+2. Define input requirements:
+   - image formats
+   - size/resolution considerations
+   - file-size considerations
+   - color/image encoding
+   - full image vs face crop
+   - face-count behavior
+3. Define the conceptual processing flow.
+4. Define the enhanced-image output.
+5. Define useful optional metadata for a future API response.
+6. Define conceptual error categories.
+7. Do not choose model-specific dimensions as final requirements.
+8. Do not implement FastAPI.
+9. Do not introduce Feature-Match-specific fields.
+
+IMPORTANT DECISION
+Evaluate whether the service should accept:
+A) only cropped faces,
+B) full images containing faces,
+C) both.
+Recommend an approach and explain why.
+
+DELIVERABLE
+Create:
+docs/phase_0/P0-T2_Input_Output_Specification.md
+
+Include:
+- Input contract
+- Supported/initially targeted formats
+- Size/resolution policy
+- Full-image vs face-crop decision
+- Face-count policy
+- Output contract
+- Metadata candidates
+- Error categories
+- Text/ASCII processing-flow diagram
+- Deferred decisions
+
+FINAL RESPONSE
+Report files, decisions, deferred items, and acceptance status.

@@ -1,0 +1,46 @@
+PHASE 1 — TASK P1-T4
+FACE DETECTION / ALIGNMENT COMPONENT SURVEY
+
+PREREQUISITE
+P1-T1 and P1-T2 must be complete. P1-T3 should be reviewed for licensing constraints.
+
+OBJECTIVE
+Identify suitable face detection and alignment components needed around the enhancement model.
+
+CONTEXT
+Phase 0 defines detection and alignment as supporting components. The enhancement service must not perform identity recognition.
+
+INSTRUCTIONS
+1. Survey current open-source options for:
+   - face detection
+   - facial landmarks
+   - face alignment
+2. Consider accuracy, small-face detection, pose handling, CPU/GPU behavior, inference speed, Python integration, maintenance, and licensing.
+3. Check code and model-weight licenses separately.
+4. Consider whether a single component can provide both detection and landmarks.
+5. Define how the pipeline should behave for:
+   - no face
+   - one face
+   - multiple faces
+   - face crop with no detected face
+   - landmark failure
+   - small/side-profile face
+6. Do not introduce face-recognition functionality.
+7. Do not make final implementation choices without evidence.
+8. Do not integrate Feature-Match.
+
+DELIVERABLE
+Create:
+docs/phase_1/P1-T4_Detection_Alignment_Survey.md
+
+Create a candidate matrix if useful:
+docs/phase_1/detection_alignment_candidates.csv
+
+ACCEPTANCE CRITERIA
+- Detection and alignment options are documented.
+- Licensing is considered.
+- Runtime behavior for Phase 0 edge cases is mapped.
+- Candidates can be compared during later benchmarking.
+
+FINAL RESPONSE
+Summarize candidate options and which ones should proceed to deeper evaluation.

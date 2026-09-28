@@ -1,0 +1,58 @@
+PHASE 0 — TASK P0-T4
+EVALUATION & SUCCESS CRITERIA
+
+PREREQUISITE
+P0-T1 through P0-T3 must be completed.
+
+OBJECTIVE
+Define how we will determine whether an enhancement model and the eventual service are successful.
+
+INSTRUCTIONS
+1. Review all previous Phase 0 outputs.
+2. Define four evaluation dimensions:
+   A. image/visual quality
+   B. identity preservation
+   C. inference/system performance
+   D. operational reliability
+3. Define candidate objective metrics conceptually.
+4. Consider:
+   - PSNR
+   - SSIM
+   - LPIPS
+   - identity similarity using an appropriate independent face-identity evaluator
+   - latency
+   - P95 latency
+   - memory/VRAM
+   - throughput
+   - failure rate
+5. Explain metric limitations.
+6. Define identity-preservation evaluation without making Feature-Match a dependency.
+7. Define fair model-comparison methodology.
+8. Define baselines:
+   - degraded/original input
+   - classical preprocessing where appropriate
+   - candidate restoration models
+9. Define what evidence is required before selecting a production candidate.
+10. Do not implement benchmarks or download models.
+
+IMPORTANT
+Do not invent arbitrary final numeric thresholds. Mark values TBD when they depend on later experiments and define how they will be established.
+
+DELIVERABLE
+Create:
+docs/phase_0/P0-T4_Evaluation_and_Success_Criteria.md
+
+Include:
+- Evaluation dimensions
+- Candidate metrics
+- Metric limitations
+- Comparison design
+- Baselines
+- Identity-preservation approach
+- Performance approach
+- Reliability approach
+- Model-selection evidence requirements
+- TBD thresholds and how they will be determined
+
+FINAL RESPONSE
+Report files, evaluation design, TBD items, and acceptance status.

@@ -1,0 +1,51 @@
+PHASE 1 — TASK P1-T9
+APPROVED MODEL & DATASET ACQUISITION
+
+PREREQUISITE
+P1-T3 model license screening, P1-T7 dataset selection, and P1-T8 environment setup must be complete.
+
+OBJECTIVE
+Download only the approved models and datasets needed for Phase 1 evaluation.
+
+IMPORTANT
+This is the first task where model/dataset downloads are intentionally allowed.
+
+INSTRUCTIONS
+1. Re-check approval/license status before every acquisition.
+2. Acquire only:
+   - license-eligible or explicitly owner-approved assets
+   - assets included in the Phase 1 shortlist/evaluation plan
+3. Use official Hugging Face repositories, official project releases, or documented official dataset sources.
+4. Record:
+   - repository/source
+   - exact model/dataset identifier
+   - revision/commit/version where available
+   - download date
+   - license
+   - license source
+   - file size
+   - checksum/hash where practical
+5. If Hugging Face authentication is required, use the supported local authentication method. Never write access tokens into code, reports, or Git.
+6. If browser login is not directly usable by the tooling, do not bypass security controls. Use an explicit supported authentication mechanism.
+7. Verify downloaded files.
+8. Keep large assets outside Git unless the project explicitly requires otherwise.
+9. Do not download anything whose license status is unresolved.
+10. Do not train or benchmark yet.
+
+DELIVERABLES
+Create:
+docs/phase_1/P1-T9_Acquisition_Manifest.md
+
+Create:
+docs/phase_1/model_acquisition_manifest.csv
+
+Include exact versions/revisions and provenance.
+
+ACCEPTANCE CRITERIA
+- Every acquired asset has a documented provenance and license status.
+- No unresolved-license asset was downloaded.
+- Assets can be reproduced/retrieved later.
+- Secrets are not committed.
+
+FINAL RESPONSE
+Report what was acquired, where it is stored, exact versions, and any blocked assets.

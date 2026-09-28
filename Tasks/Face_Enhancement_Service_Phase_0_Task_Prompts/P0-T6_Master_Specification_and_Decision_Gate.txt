@@ -1,0 +1,75 @@
+PHASE 0 — TASK P0-T6
+MASTER SPECIFICATION & PHASE 0 DECISION GATE
+
+PREREQUISITE
+P0-T1 through P0-T5 must be completed successfully.
+
+OBJECTIVE
+Consolidate all Phase 0 decisions into one authoritative specification and determine whether Phase 0 is ready to proceed to Phase 1.
+
+INSTRUCTIONS
+1. Read all five previous task outputs.
+2. Reconcile contradictions or overlaps.
+3. Never silently change an earlier decision; explicitly identify and resolve conflicts.
+4. Create a master specification covering:
+   - product objective
+   - scope/out-of-scope
+   - input requirements
+   - output requirements
+   - degradation requirements
+   - identity-preservation principle
+   - evaluation methodology
+   - performance requirements
+   - reliability requirements
+   - hardware/deployment constraints
+   - licensing/commercial constraints
+   - security/operational constraints
+   - deferred decisions
+   - assumptions
+   - risks
+   - Phase 1 prerequisites
+5. Create a Phase 0 decision gate:
+   GREEN = ready for Phase 1
+   YELLOW = can proceed with documented open items
+   RED = Phase 0 incomplete; blockers listed
+6. Do not download models/datasets.
+7. Do not implement FastAPI.
+8. Do not integrate Feature-Match.
+
+DELIVERABLES
+Create:
+docs/phase_0/P0_Master_Specification.md
+
+Create:
+reports/Phase_0_Final_Report.md
+
+Optionally create:
+docs/phase_0/PHASE_0_INDEX.md
+
+The final report must include:
+- Executive summary
+- Tasks completed
+- Documents produced
+- Key decisions
+- Assumptions
+- Open questions
+- Risks
+- Deferred decisions
+- Acceptance checklist
+- Decision-gate status
+- Exact prerequisites/recommendations for Phase 1
+
+GREEN requires:
+- Unambiguous scope
+- Feature-Match explicitly external
+- Input/output documented
+- Degradation types documented
+- Identity preservation as a core requirement
+- Evaluation methodology defined
+- Technical/deployment constraints documented
+- Commercial licensing as a selection criterion
+- Open items explicitly identified
+- No fundamental product definition required before Phase 1
+
+FINAL RESPONSE
+Provide a concise completion summary and point to the final Phase 0 report.

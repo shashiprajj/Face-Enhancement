@@ -1,0 +1,76 @@
+PHASE 1 — TASK P1-T10
+PHASE 1 FINAL INVENTORY & READINESS REPORT
+
+PREREQUISITE
+P1-T1 through P1-T9 must be completed.
+
+OBJECTIVE
+Consolidate Phase 1 into a final, auditable inventory and determine whether the project is ready for Phase 2 model benchmarking.
+
+IMPORTANT
+Do NOT declare a final production model. Phase 1 ends with a benchmark-ready candidate set.
+
+INSTRUCTIONS
+1. Read all Phase 1 task outputs.
+2. Reconcile inconsistencies explicitly.
+3. Produce a final inventory of:
+   - enhancement/restoration candidates
+   - detection/alignment candidates
+   - evaluation datasets
+   - synthetic degradation strategy
+   - licenses
+   - versions/revisions
+   - environment
+   - GPU status
+   - acquisition status
+4. Identify:
+   - approved candidates
+   - rejected candidates and reasons
+   - blocked candidates
+   - unresolved license questions
+   - missing GPU requirements
+   - missing data
+5. Verify that every Phase 0 requirement has a corresponding Phase 1 plan or asset.
+6. Define exactly what Phase 2 should benchmark.
+7. Define any prerequisites that must be resolved before Phase 2.
+8. Do not implement the production API.
+9. Do not integrate Feature-Match.
+10. Do not select a final winner based on assumptions.
+
+DELIVERABLES
+Create:
+reports/Phase_1_Final_Report.md
+
+Create:
+docs/phase_1/P1_Master_Inventory.md
+
+Optionally update:
+docs/phase_1/PHASE_1_INDEX.md
+
+The final report must include:
+- Executive summary
+- Phase 1 task status
+- Model inventory
+- License-screening summary
+- Detection/alignment inventory
+- Dataset inventory
+- Evaluation-data plan
+- Acquisition manifest summary
+- Environment summary
+- GPU readiness
+- Risks/blockers
+- Rejected/blocked candidates
+- Phase 2 benchmark candidates
+- Phase 2 prerequisites
+- Phase 1 decision gate
+
+DECISION GATE
+Use:
+GREEN = benchmark-ready
+YELLOW = benchmark-ready with documented non-blocking gaps
+RED = Phase 2 cannot start until listed blockers are resolved
+
+A GREEN/YELLOW decision must NOT imply that a final model has been selected.
+
+FINAL RESPONSE
+Give a concise completion summary and point to reports/Phase_1_Final_Report.md.

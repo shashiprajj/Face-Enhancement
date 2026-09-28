@@ -1,0 +1,57 @@
+PHASE 1 — TASK P1-T3
+MODEL LICENSE & COMMERCIAL-USE SCREENING
+
+PREREQUISITE
+P1-T1 and P1-T2 must be complete.
+
+OBJECTIVE
+Determine which model candidates are legally eligible for the intended product use.
+
+THIS IS A HARD GATE.
+
+INSTRUCTIONS
+1. Read the Phase 0 commercial-use requirement status.
+2. Review every candidate from P1-T2.
+3. Verify licenses from primary sources:
+   - official repository
+   - official Hugging Face model card
+   - LICENSE file
+   - official project documentation
+   - model-weight terms where separately specified
+4. Check separately:
+   - source-code license
+   - model-weight license
+   - training-data/license statements where relevant
+   - commercial-use permission
+   - redistribution restrictions
+   - attribution requirements
+   - prohibited-use clauses
+   - patent clauses if applicable
+5. Do not interpret ambiguous legal language as approval.
+6. Mark ambiguous cases as NEEDS LEGAL/OWNER REVIEW.
+7. Do not download a candidate solely because it is technically attractive.
+8. Do not give legal advice; provide factual license findings and flag questions for the designated reviewer.
+9. Record exact source URLs and dates checked.
+10. If commercial use has not been confirmed by the product owner, clearly state that the screening is conditional.
+
+DELIVERABLE
+Create:
+docs/phase_1/P1-T3_Model_License_Screening.md
+
+Create:
+docs/phase_1/model_license_matrix.csv
+
+Use statuses:
+- ELIGIBLE — evidence supports intended use
+- INELIGIBLE — evidence conflicts with intended use
+- REVIEW_REQUIRED — ambiguity or missing evidence
+- BLOCKED — commercial-use requirement itself is unconfirmed
+
+ACCEPTANCE CRITERIA
+- Every shortlisted candidate has a documented license status.
+- No model is called commercially safe without evidence.
+- License evidence is traceable to primary sources.
+- Only ELIGIBLE candidates can proceed to acquisition, subject to owner/reviewer sign-off.
+
+FINAL RESPONSE
+Provide the license-screening summary and exact candidates eligible for the next stage.

@@ -1,0 +1,60 @@
+PHASE 0 — TASK P0-T5
+TECHNICAL / DEPLOYMENT CONSTRAINTS
+
+PREREQUISITE
+P0-T1 through P0-T4 must be completed.
+
+OBJECTIVE
+Define technical, infrastructure, deployment, commercial, and operational constraints that will guide model selection and implementation.
+
+INSTRUCTIONS
+1. Review all previous Phase 0 outputs.
+2. Inspect the current development environment only as needed to record available facts.
+3. Separate actual facts from assumptions.
+4. Record, where available:
+   - OS
+   - Python version
+   - CPU
+   - RAM
+   - GPU
+   - VRAM
+   - CUDA/runtime
+   - storage
+5. Define expected deployment targets conceptually:
+   - local development
+   - Docker
+   - GPU server
+   - possible CPU fallback
+6. Define initial performance expectations without inventing unrealistic hard limits.
+7. Define commercial/licensing constraints:
+   - model license
+   - model-weight license
+   - code license
+   - third-party dependencies
+   - redistribution/commercial-use implications
+8. Define operational constraints:
+   - maximum image size
+   - temporary-file handling
+   - resource isolation
+   - request limits
+   - logging/monitoring
+9. Explicitly confirm no Feature-Match dependency.
+10. Do not download/install models.
+
+DELIVERABLE
+Create:
+docs/phase_0/P0-T5_Technical_Constraints.md
+
+Include:
+- Environment facts
+- Deployment assumptions
+- Hardware constraints
+- Performance targets/TBDs
+- Licensing/commercial requirements
+- Operational constraints
+- Security considerations
+- Feature-Match independence
+- Open questions
+
+FINAL RESPONSE
+Report files, environment facts, constraints, open questions, and acceptance status.

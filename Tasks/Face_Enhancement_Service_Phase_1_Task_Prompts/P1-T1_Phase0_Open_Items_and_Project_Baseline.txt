@@ -1,0 +1,57 @@
+PHASE 1 — TASK P1-T1
+PHASE 0 OPEN ITEMS & PROJECT BASELINE
+
+PREREQUISITE
+Phase 0 must be completed. Read:
+- docs/phase_0/P0_Master_Specification.md
+- reports/Phase_0_Final_Report.md
+and the Phase 0 task documents as needed.
+
+OBJECTIVE
+Start Phase 1 by resolving or formally tracking the Phase 0 open items and establishing a reproducible project baseline.
+
+INSTRUCTIONS
+1. Read the authoritative Phase 0 Master Specification and Final Report.
+2. Identify every Phase 0 open item that affects Phase 1.
+3. Check whether the product owner has now confirmed:
+   - commercial-use requirement
+   - intended production hardware/deployment target
+4. Check whether a license reviewer/owner has been identified.
+5. Check whether GPU access is available. If not, document the exact gap and create a practical GPU-access plan/options without pretending that performance testing can be completed locally.
+6. Initialize Git if the repository is not already a Git repository.
+7. Create a project-local Python environment if appropriate for the repository/environment.
+8. Do NOT install model-specific packages yet.
+9. Do NOT download models or datasets yet.
+10. Do NOT implement FastAPI or production enhancement code.
+11. Do NOT inspect, import, modify, or depend on Feature-Match.
+
+IMPORTANT
+Do not invent stakeholder approvals. If an assumption remains unconfirmed, mark it UNCONFIRMED.
+
+DELIVERABLES
+Create:
+docs/phase_1/P1-T1_Phase0_Open_Items_and_Baseline.md
+
+If appropriate, create/update:
+docs/phase_1/PHASE_1_INDEX.md
+
+Record:
+- Phase 0 baseline commit/hash if available
+- Python environment approach
+- Git status
+- GPU status
+- commercial-use status
+- license-review status
+- unresolved blockers
+- recommended resolution path
+
+ACCEPTANCE CRITERIA
+- Phase 0 is treated as authoritative.
+- Open items are explicitly tracked.
+- No unverified approval is claimed.
+- Git baseline exists or the exact reason it cannot be created is documented.
+- Local environment strategy is documented.
+- No model/dataset is downloaded prematurely.
+
+FINAL RESPONSE
+Report status, blockers, files created, and whether P1-T2 can safely begin.
