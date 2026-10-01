@@ -1,0 +1,92 @@
+{
+  "configuration": {
+    "components": [
+      "M30",
+      "M28-SIDD",
+      "M23"
+    ],
+    "config_id": "A5",
+    "kind": "chain",
+    "label": "Chain FBCNN \u2192 NAFNet-SIDD \u2192 Real-ESRGAN",
+    "settings": {
+      "between_stages": "float32, clamp [0,1] (no 8-bit re-quantization)",
+      "order": [
+        "FBCNN color (blind QF)",
+        "M28-SIDD",
+        "Real-ESRGAN x4plus"
+      ],
+      "precision": "fp32",
+      "routing": "none \u2014 all stages always run",
+      "to_e": "as general SR"
+    }
+  },
+  "failures": [],
+  "infer_s_under_load": {
+    "mean": 32.731,
+    "note": "per-image wall time inside a worker, concurrent workers + host background load; NOT the P3-T8 performance measurement",
+    "p50": 41.534,
+    "p95": 54.905
+  },
+  "load_reports": {
+    "M23": {
+      "asset_id": "A02",
+      "load_s": 4.799,
+      "missing_keys": [],
+      "n_checkpoint_tensors": 702,
+      "n_model_params": 16697987,
+      "sha256": "4fa0d38905f75ac06eb49a7951b426670021be3018265fd191d2125df9d682f1",
+      "strict": true,
+      "unexpected_keys": [],
+      "weights": "models/M23_realesrgan/RealESRGAN_x4plus.pth"
+    },
+    "M28-SIDD": {
+      "asset_id": "A07",
+      "load_s": 24.034,
+      "missing_keys": [],
+      "n_checkpoint_tensors": 664,
+      "n_model_params": 115982915,
+      "sha256": "cd685efaae01f7c4e9951f2deab05780079c8eb1e49ed664b72f6db04dabb445",
+      "strict": true,
+      "unexpected_keys": [],
+      "weights": "models/M28_nafnet/NAFNet-SIDD-width64.pth"
+    },
+    "M30": {
+      "asset_id": "A04",
+      "load_s": 16.385,
+      "missing_keys": [],
+      "n_checkpoint_tensors": 184,
+      "n_model_params": 71921796,
+      "sha256": "8b0e4ef23d59cf7ac934a342cb31a17619e4fa4a0b3374a9d78c5174312387e8",
+      "strict": true,
+      "unexpected_keys": [],
+      "weights": "models/M30_fbcnn/fbcnn_color.pth"
+    }
+  },
+  "manifest": "data/manifests/phase3/runs/main/A5.csv.gz",
+  "manifest_sha256": "92fbd2a4893dae9db6f20337bf2143687da5911c6bc42394fef213df2ce5bfd9",
+  "n_failed": 0,
+  "n_missing": 0,
+  "n_ok": 896,
+  "n_pairs": 896,
+  "pool_broken": null,
+  "population": "main",
+  "population_manifest": "data/manifests/phase3/population_main.csv.gz",
+  "population_sha256": "840ee52d4c8ccb675b10404948fa0d2506128854bad21b4509d92c515e2cf60c",
+  "run": {
+    "config": "configs/phase3/benchmark_p3.yaml",
+    "config_sha256": "28f9ab7c08ba3cbee0b943b7c444cfede4e5bafee5e92214c686205a1b413cd0",
+    "cpu_count_container": 16,
+    "git_head": "b14cef3c98f33876cf6b7c05ff5252cdeba045ee-dirty",
+    "machine": "x86_64",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "protocol_version": "p3-protocol-1.0.1",
+    "python": "3.11.16",
+    "torch": "2.14.0+cpu",
+    "utc": "2026-09-30T16:55:02+00:00"
+  },
+  "threads_per_worker": 2,
+  "wall_s_this_invocation": 16811.5,
+  "workers": 4
+}

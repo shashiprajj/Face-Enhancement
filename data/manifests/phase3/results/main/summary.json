@@ -1,0 +1,49 @@
+{
+  "bootstrap": {
+    "B": 2000,
+    "ci": 0.95,
+    "method": "percentile",
+    "seed": 20260928
+  },
+  "configs": [
+    "B0",
+    "B1",
+    "B2",
+    "B2c",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5"
+  ],
+  "drop_cut_shift1px_p99": 0.02154,
+  "identity_threshold_far1e-2": 0.31333,
+  "metric_files": {
+    "A1": "1f9d62c0b26e4a57e99de5ddcbdb221af8bc2bbbd7ee38d0fb2fd8f7d8eb5ecd",
+    "A2": "ff96620a49ea84b24fe4ecf60ce88a02a00ba0ca19b5bbab194ab26673aaf44a",
+    "A3": "0fcf78634f78929c116a2df30922c493073024904173ac1f211794fe7123d516",
+    "A4": "ef12e1273a1e6a6de63815a79a11d1aa1a7fa3c8a615135a61a275576c8911a0",
+    "A5": "56256867d1ccaa2c0059b04659ac5fcf3f47ee45a7a8a12d5adc3e2a25f51cbf",
+    "B0": "9fe300d9396c2eff6b400890549270563c1a7d509e8b8fabfb6aca125616c554",
+    "B1": "7ec0f6fe23a100dc96c5ec72bc5212123a0113728e0f33e9750d578e60f393e6",
+    "B2": "c29d55eeddfb8ddebfac71833040d7ad9ab8a3c05489354f8b1102011203d31e",
+    "B2c": "79a9fee1fdbf50dd3aabbcfe4f60860e533aa568c177be54b131451335957efa"
+  },
+  "n_cells": 32,
+  "n_refs": 28,
+  "outputs": {
+    "cells.csv.gz": "b23236af036ca865b4d92136581b4e55fd07d34eae5d55f118f03b47e6a1dd49",
+    "deltas.csv.gz": "3a7828d0e45682003546a2d7e293b5df7a3c42eb3eb3ba91b578705c792b9eba",
+    "identity.csv.gz": "0f280805357f8223722dc1bc4b0fc6d044d07eed5990d5c9979e1f5df188a00a",
+    "strata.csv.gz": "4efd9243dcd64860c38ffa74dc3268244cf10fec7b1e81677be0bfdff5a175fb"
+  },
+  "population": "main",
+  "run": {
+    "git_head": "b14cef3c98f33876cf6b7c05ff5252cdeba045ee-dirty",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-01T15:37:27+00:00"
+  }
+}

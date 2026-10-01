@@ -1,0 +1,322 @@
+PHASE 3 — BENCHMARKING & BASELINE EVALUATION
+MASTER CLAUDE PROMPT
+
+PROJECT
+Standalone Face Enhancement / Restoration Service.
+
+CURRENT STATUS
+- Phase 0: completed, YELLOW.
+- Phase 1: completed, YELLOW.
+- Phase 2: completed, YELLOW.
+- Phase 2 synthetic benchmark `fes-syn-v1` is ready and reproducible.
+- Feature-Match is completely separate and MUST NOT be opened, modified, integrated, or depended upon.
+- No final enhancement model has been selected.
+- Production licensing is not approved yet.
+- GPU benchmarking is not available yet.
+- Real-world low-quality face data is still an open item.
+- Only one identity-evaluation model is currently available/cleared; the Phase 0 requirement for a second evaluator remains open.
+
+PHASE 3 OBJECTIVE
+
+Benchmark the shortlisted enhancement/restoration candidates on the reproducible Phase 2 benchmark data and establish evidence about:
+1. image/restoration quality,
+2. identity preservation,
+3. failure modes,
+4. CPU inference behavior,
+5. reproducibility.
+
+PHASE 3 IS AN EVALUATION PHASE ONLY.
+
+DO NOT:
+- select a final production model,
+- approve a model for commercial production,
+- integrate Feature-Match,
+- build the final production FastAPI service,
+- invent missing thresholds,
+- claim synthetic results represent real-world performance,
+- bypass or reinterpret licensing restrictions.
+
+SHORTLISTED CANDIDATES FROM PHASE 1
+
+- RestoreFormer++
+- VQFR v1
+- Real-ESRGAN
+- SwinIR
+- FBCNN → NAFNet → Real-ESRGAN
+- Classical/non-learning baselines already defined by Phase 1
+
+SUPPORTING COMPONENTS
+
+- RetinaFace / YuNet for preprocessing where appropriate
+- SFace for identity-preservation evaluation
+- Phase 2 benchmark dataset `fes-syn-v1`
+- Phase 2 clean/degraded paired data and manifests
+
+EXECUTION RULE
+
+Execute tasks strictly in order.
+
+Before each task:
+1. Read relevant Phase 0, Phase 1 and Phase 2 documents.
+2. Read outputs of previous Phase 3 tasks.
+3. Inspect the actual repository/data instead of assuming paths, counts or files.
+4. Preserve previous decisions unless new evidence requires a documented change.
+5. Record important assumptions, limitations and failures.
+6. Do not silently modify the scope.
+
+TASK P3-T1 — Benchmark Baseline & Harness Specification
+
+Objective:
+Define the exact benchmark protocol before candidate results are compared.
+
+Work:
+- Read Phase 0 success criteria and Phase 2 benchmark specification.
+- Inventory actual `fes-syn-v1` manifests.
+- Define benchmark input/output contract.
+- Define evaluation units and aggregation rules.
+- Define linkage between clean reference, degraded input and enhanced output.
+- Define reproducibility requirements.
+- Separate trial/dev data from main test data.
+- Freeze the evaluation protocol before interpreting candidate results.
+- Do not invent thresholds where specifications say TBD.
+
+Deliverables:
+- `docs/phase_3/P3-T1_Benchmark_Harness_Specification.md`
+- Benchmark configuration/schema.
+- Input/output manifest specification.
+
+Done when:
+Every candidate can be evaluated using the same controlled protocol.
+
+TASK P3-T2 — Candidate Model Adapters & Environment Validation
+
+Objective:
+Create a common adapter/interface so every candidate can run through the same harness.
+
+Work:
+- Validate every already-acquired candidate model in the Phase 1 Docker environment.
+- Build adapters where necessary.
+- Normalize input/output formats.
+- Record model-specific input dimensions, color space, scaling and preprocessing.
+- Keep model-specific preprocessing inside its adapter.
+- Do not alter model weights.
+- Use safe loading practices already established.
+- If a candidate fails, document the exact failure instead of silently removing it.
+- Do not download unnecessary replacement models.
+
+Deliverables:
+- `docs/phase_3/P3-T2_Model_Adapters.md`
+- Adapter code.
+- Model-load validation report.
+
+Done when:
+The harness can invoke each available candidate or clearly documents why it is blocked.
+
+TASK P3-T3 — No-Enhancement / Classical Baseline
+
+Objective:
+Establish the baseline against which learned enhancement models are evaluated.
+
+Work:
+- Evaluate degraded images without learned enhancement.
+- Run Phase 1 classical baselines where already defined.
+- Produce the same applicable metrics and metadata used for candidate models.
+- Validate the evaluation pipeline before interpreting candidate results.
+
+Deliverables:
+- `docs/phase_3/P3-T3_Baseline_Evaluation.md`
+- Baseline results.
+- Baseline output manifest.
+
+Done when:
+A reproducible baseline exists for the degraded inputs.
+
+TASK P3-T4 — Candidate Inference Benchmark
+
+Objective:
+Run every shortlisted candidate on exactly the same benchmark inputs.
+
+Work:
+- Use identical input manifests.
+- Run the defined trial subset first.
+- Validate outputs before full execution.
+- Run the main benchmark after trial validation.
+- Preserve model/version/config metadata.
+- Record failed inputs and model failures.
+- Never silently substitute one model for another.
+- Keep model outputs outside git.
+- Use reproducible configuration/seeds where applicable.
+
+Deliverables:
+- `docs/phase_3/P3-T4_Candidate_Inference.md`
+- Candidate output manifests.
+- Run/failure logs.
+- Benchmark output structure.
+
+Done when:
+Every runnable candidate has outputs for the same controlled evaluation population.
+
+TASK P3-T5 — Image Quality Evaluation
+
+Objective:
+Measure how candidate enhancement changes image quality relative to clean references.
+
+Work:
+- Use metrics defined/approved by the Phase 0/Phase 3 specification.
+- Evaluate degraded input versus enhanced output versus clean reference.
+- Aggregate by degradation family and severity.
+- Report distributions, not only averages.
+- Analyze failures and outliers.
+- Do not equate image-quality scores with identity preservation.
+
+Deliverables:
+- `docs/phase_3/P3-T5_Image_Quality_Evaluation.md`
+- Machine-readable metric results.
+- Aggregated statistics.
+- Failure-case metadata.
+
+Done when:
+Every runnable candidate and the baseline have reproducible quality measurements.
+
+TASK P3-T6 — Identity Preservation Evaluation
+
+Objective:
+Measure whether enhancement preserves the identity represented by the clean reference.
+
+Work:
+- Use SFace as the currently available identity evaluator.
+- Compare clean/reference faces with degraded and enhanced faces using the defined protocol.
+- Evaluate similarity by degradation type and severity.
+- Record evaluator model/version/configuration.
+- Do not treat visual similarity as proof of identity preservation.
+- Explicitly document that only one identity evaluator is currently available/cleared.
+- Do not invent a second evaluator or claim the two-evaluator requirement is satisfied.
+
+Deliverables:
+- `docs/phase_3/P3-T6_Identity_Preservation_Evaluation.md`
+- Identity metric results.
+- Failure/outlier analysis.
+- Single-evaluator limitation statement.
+
+Done when:
+Identity-preservation results are reproducible and clearly separated from image-quality results.
+
+TASK P3-T7 — Failure Analysis & Robustness Evaluation
+
+Objective:
+Understand where candidates help, fail, or introduce identity-risk defects.
+
+Work:
+- Analyze results by degradation family and severity.
+- Identify artifacts, facial distortions, over-smoothing, missing details, incorrect reconstruction and other defects.
+- Examine difficult preprocessing cases where applicable.
+- Build a structured failure taxonomy.
+- Preserve representative examples and metadata.
+- Connect qualitative examples to measured results.
+
+Deliverables:
+- `docs/phase_3/P3-T7_Failure_Analysis.md`
+- Failure taxonomy.
+- Representative sample index.
+- Candidate-specific failure statistics.
+
+Done when:
+Major failure modes are documented rather than relying only on aggregate scores.
+
+TASK P3-T8 — CPU Performance & Resource Benchmark
+
+Objective:
+Measure CPU inference behavior using the current available environment.
+
+Work:
+- Record hardware/software environment.
+- Measure inference time using one consistent methodology.
+- Separate warm-up from measured runs.
+- Measure memory/resource use where practical.
+- Report per-image latency and throughput reproducibly.
+- Compare candidates under the same conditions.
+- Do not present CPU results as production GPU performance.
+- Clearly record that GPU benchmarking remains pending.
+
+Deliverables:
+- `docs/phase_3/P3-T8_CPU_Performance_Benchmark.md`
+- Machine-readable performance results.
+- Environment record.
+- Candidate performance tables.
+
+Done when:
+CPU performance characteristics are documented without unsupported GPU extrapolation.
+
+TASK P3-T9 — Cross-Candidate Evidence Synthesis
+
+Objective:
+Combine benchmark evidence without prematurely selecting a winner.
+
+Work:
+- Combine image-quality, identity-preservation, robustness and CPU evidence.
+- Compare candidates by degradation family and severity.
+- Identify trade-offs rather than creating a simplistic single score.
+- Keep licensing status separate from technical performance.
+- Keep the real-world-data limitation explicit.
+- Do not declare a final best/worst model.
+- Do not make a production recommendation.
+- Identify candidates/evidence needing further testing.
+
+Deliverables:
+- `docs/phase_3/P3-T9_Evidence_Synthesis.md`
+- Cross-candidate comparison tables.
+- Descriptive strengths/limitations.
+- Evidence-gap list for later phases.
+
+Done when:
+Evidence is organized for a later decision gate without turning Phase 3 into final model selection.
+
+TASK P3-T10 — Phase 3 Validation, Report & Gate
+
+Objective:
+Validate the complete Phase 3 benchmark and produce the final report and gate.
+
+Work:
+- Re-run key checks required for reproducibility.
+- Verify candidate output counts and manifests.
+- Verify metric files and aggregation logic.
+- Confirm the same evaluation population was used.
+- Check for data leakage or inconsistent preprocessing.
+- Confirm no Feature-Match dependency was introduced.
+- Review limitations:
+  - no real-world dataset,
+  - one identity evaluator,
+  - no GPU,
+  - unresolved production licensing.
+- Compare results with Phase 0 and Phase 1 requirements.
+- Do not invent TBD thresholds.
+- Decide GREEN/YELLOW/RED based on evidence.
+- State exactly what the next phase can do and what remains blocked.
+
+Deliverables:
+- `reports/Phase_3_Final_Report.md`
+- `docs/phase_3/PHASE_3_INDEX.md`
+- Final benchmark/results index.
+- Reproducibility evidence.
+- Explicit Phase 3 gate.
+
+DONE WHEN:
+Phase 3 has a reproducible technical benchmark record for all runnable candidates, including quality, identity, robustness and CPU evidence, with clear limitations and a documented gate.
+
+FINAL PHASE 3 BOUNDARY
+
+At the end of Phase 3 we should know:
+- how candidates behave on the synthetic benchmark,
+- measured image-quality behavior,
+- measured identity-preservation behavior using the current evaluator,
+- CPU performance characteristics,
+- major failure modes.
+
+We should NOT claim:
+- production readiness,
+- commercial licensing approval,
+- real-world robustness,
+- GPU production performance,
+- final model selection.
+
+The final report must be factual, reproducible and explicit about uncertainty.

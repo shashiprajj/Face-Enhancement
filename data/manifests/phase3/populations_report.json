@@ -1,0 +1,193 @@
+{
+  "checks": {
+    "input_manifests_match_p2t8": true,
+    "main_in_test_split": true,
+    "population_files_sha256_ok": true,
+    "trial_in_dev_split": true,
+    "trial_main_disjoint": true
+  },
+  "inputs": {
+    "pairs_dev_pilot": {
+      "n_cells": 32,
+      "n_refs": 112,
+      "out_sizes": {
+        "112": 336,
+        "14": 112,
+        "224": 2464,
+        "28": 336,
+        "56": 336
+      },
+      "path": "data/manifests/benchmark/fes-syn-v1/pairs_dev_pilot.csv.gz",
+      "rows": 3584,
+      "sha256": "79cf9aa575865b244785e25678f6e0a8fa599d980f5835cae153f51c7bc147a5"
+    },
+    "pairs_test_core": {
+      "n_cells": 32,
+      "n_refs": 700,
+      "out_sizes": {
+        "112": 2100,
+        "14": 700,
+        "224": 15400,
+        "28": 2100,
+        "56": 2100
+      },
+      "path": "data/manifests/benchmark/fes-syn-v1/pairs_test_core.csv.gz",
+      "rows": 22400,
+      "sha256": "d9a5e72dc34b352ad9e599339c768c5a242e7fd83f8a2d0e41e9c4cea75bc500"
+    },
+    "splits": {
+      "path": "data/manifests/benchmark/fes-syn-v1/splits.csv.gz",
+      "rows": 9850,
+      "sha256": "94bdb5cb8d4c69a10f5b4915c4cae528ec77d50a8f91a77f552d572bb43ba54a"
+    }
+  },
+  "populations": {
+    "impostor_pool": {
+      "files_verified": 23100,
+      "manifest": "data/manifests/phase3/population_impostor_pool.csv.gz",
+      "min_eval_mask_frac": 0.91338,
+      "n_cells": 32,
+      "n_pairs": 22400,
+      "n_refs": 700,
+      "ref_ids": null,
+      "refs_with_partial_f_coverage": 72,
+      "sha256": "61553bab1d10d25ae43e3e542e8f45924f4d837d170da6443a606953b455792a",
+      "source": "pairs_test_core",
+      "strata": {
+        "Black|Female": 50,
+        "Black|Male": 50,
+        "East Asian|Female": 50,
+        "East Asian|Male": 50,
+        "Indian|Female": 50,
+        "Indian|Male": 50,
+        "Latino_Hispanic|Female": 50,
+        "Latino_Hispanic|Male": 50,
+        "Middle Eastern|Female": 50,
+        "Middle Eastern|Male": 50,
+        "Southeast Asian|Female": 50,
+        "Southeast Asian|Male": 50,
+        "White|Female": 50,
+        "White|Male": 50
+      }
+    },
+    "main": {
+      "files_verified": 924,
+      "manifest": "data/manifests/phase3/population_main.csv.gz",
+      "min_eval_mask_frac": 0.98447,
+      "n_cells": 32,
+      "n_pairs": 896,
+      "n_refs": 28,
+      "ref_ids": [
+        "ff-val-10081.ref-v1",
+        "ff-val-10825.ref-v1",
+        "ff-val-1201.ref-v1",
+        "ff-val-1220.ref-v1",
+        "ff-val-1594.ref-v1",
+        "ff-val-1954.ref-v1",
+        "ff-val-2634.ref-v1",
+        "ff-val-2699.ref-v1",
+        "ff-val-2950.ref-v1",
+        "ff-val-3186.ref-v1",
+        "ff-val-3568.ref-v1",
+        "ff-val-365.ref-v1",
+        "ff-val-4851.ref-v1",
+        "ff-val-4919.ref-v1",
+        "ff-val-513.ref-v1",
+        "ff-val-5428.ref-v1",
+        "ff-val-7031.ref-v1",
+        "ff-val-7184.ref-v1",
+        "ff-val-7245.ref-v1",
+        "ff-val-7339.ref-v1",
+        "ff-val-7377.ref-v1",
+        "ff-val-829.ref-v1",
+        "ff-val-8446.ref-v1",
+        "ff-val-9028.ref-v1",
+        "ff-val-9103.ref-v1",
+        "ff-val-9263.ref-v1",
+        "ff-val-934.ref-v1",
+        "ff-val-9361.ref-v1"
+      ],
+      "refs_with_partial_f_coverage": 3,
+      "sha256": "840ee52d4c8ccb675b10404948fa0d2506128854bad21b4509d92c515e2cf60c",
+      "source": "pairs_test_core",
+      "strata": {
+        "Black|Female": 2,
+        "Black|Male": 2,
+        "East Asian|Female": 2,
+        "East Asian|Male": 2,
+        "Indian|Female": 2,
+        "Indian|Male": 2,
+        "Latino_Hispanic|Female": 2,
+        "Latino_Hispanic|Male": 2,
+        "Middle Eastern|Female": 2,
+        "Middle Eastern|Male": 2,
+        "Southeast Asian|Female": 2,
+        "Southeast Asian|Male": 2,
+        "White|Female": 2,
+        "White|Male": 2
+      }
+    },
+    "noise_floor": {
+      "files_verified": 3696,
+      "manifest": "data/manifests/phase3/population_noise_floor.csv.gz",
+      "min_eval_mask_frac": 0.94667,
+      "n_cells": 32,
+      "n_pairs": 3584,
+      "n_refs": 112,
+      "ref_ids": null,
+      "refs_with_partial_f_coverage": 12,
+      "sha256": "2c3b9e08858f2b5368173bf7b5b6af02e479322d97d3e02e1a7421c9b5ebe09a",
+      "source": "pairs_dev_pilot",
+      "strata": {
+        "Black|Female": 8,
+        "Black|Male": 8,
+        "East Asian|Female": 8,
+        "East Asian|Male": 8,
+        "Indian|Female": 8,
+        "Indian|Male": 8,
+        "Latino_Hispanic|Female": 8,
+        "Latino_Hispanic|Male": 8,
+        "Middle Eastern|Female": 8,
+        "Middle Eastern|Male": 8,
+        "Southeast Asian|Female": 8,
+        "Southeast Asian|Male": 8,
+        "White|Female": 8,
+        "White|Male": 8
+      }
+    },
+    "trial": {
+      "files_verified": 132,
+      "manifest": "data/manifests/phase3/population_trial.csv.gz",
+      "min_eval_mask_frac": 1.0,
+      "n_cells": 32,
+      "n_pairs": 128,
+      "n_refs": 4,
+      "ref_ids": [
+        "ff-train-13002.ref-v1",
+        "ff-train-13590.ref-v1",
+        "ff-train-67659.ref-v1",
+        "ff-train-68676.ref-v1"
+      ],
+      "refs_with_partial_f_coverage": 0,
+      "sha256": "834b02250d56c390482bb2940a3b3289448b03a4628203f05674bdc172d5a7a0",
+      "source": "pairs_dev_pilot",
+      "strata": {
+        "Black|Female": 1,
+        "East Asian|Female": 1,
+        "Indian|Male": 1,
+        "Middle Eastern|Male": 1
+      }
+    }
+  },
+  "protocol_version": "p3-protocol-1.0.0",
+  "run": {
+    "config": "configs/phase3/benchmark_p3.yaml",
+    "config_sha256": "d364fb4b039834e942ff23071a10283e795698f8af73fe94d1de454a05d81fd3",
+    "git_head": "b14cef3c98f33876cf6b7c05ff5252cdeba045ee",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.0",
+    "utc": "2026-09-29T06:25:20+00:00"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-01",
+  "feature_match_references": 0,
+  "leakage": {
+    "main_in_test_split": true,
+    "main_leak_flag_false": 28,
+    "main_near_dup": 0,
+    "note": "main refs are among the 700 impostor-pool refs (clean refs only) used for the FAR operating point",
+    "trial_and_main_refs": 0,
+    "trial_in_dev_split": true
+  },
+  "model_validation": "model_validation_report.json: 7/7 networks VALIDATED (weights SHA-256 ok, 0 missing/unexpected keys), 12/12 vendored sources SHA ok, 9/9 adapters contract_ok + repeat_identical",
+  "output_counts_main": {
+    "A1": {
+      "manifest_sha256": "292d167ba1d6d12738fb18bb4b57e08c9943f651cf1679bb745d795a0009c3ed",
+      "n": 896,
+      "ok": 896
+    },
+    "A2": {
+      "manifest_sha256": "afd45a8537eea54d1ae58390b6fc14f57d97f953ea7245a7f43b5aaf03ac19ed",
+      "n": 896,
+      "ok": 896
+    },
+    "A3": {
+      "manifest_sha256": "feb0633aa60d1e16f84aed7f73985d79c9de9c4bd9903dc55d393a91a5e2a3de",
+      "n": 896,
+      "ok": 896
+    },
+    "A4": {
+      "manifest_sha256": "ca6d579b10418f56acf33d2f05933a5f858d843da9b00cb232895aa1dca95222",
+      "n": 896,
+      "ok": 896
+    },
+    "A5": {
+      "manifest_sha256": "92fbd2a4893dae9db6f20337bf2143687da5911c6bc42394fef213df2ce5bfd9",
+      "n": 896,
+      "ok": 896
+    },
+    "B0": {
+      "manifest_sha256": "76ecc3eb4318be01aa599ac6cd3ea1d4eb2fc959a87b33da12d792024e1d4dbf",
+      "n": 896,
+      "ok": 896
+    },
+    "B1": {
+      "manifest_sha256": "962cce848ff9efb6358a6bc0224a03fabe68903d85c272a8314ec7c9b1e08d82",
+      "n": 896,
+      "ok": 896
+    },
+    "B2": {
+      "manifest_sha256": "20f244f6bc487c1e4467131a15bbd8493077d78956d9995c1a9c06336a783dd7",
+      "n": 896,
+      "ok": 896
+    },
+    "B2c": {
+      "manifest_sha256": "e45177bfa9d48728e2de0ca487da94320325949e3759de2102d8e88b599f5300",
+      "n": 896,
+      "ok": 896
+    }
+  },
+  "reaggregate": {
+    "identical": true,
+    "outputs": {
+      "cells.csv.gz": "b23236af036ca865b4d92136581b4e55fd07d34eae5d55f118f03b47e6a1dd49",
+      "deltas.csv.gz": "3a7828d0e45682003546a2d7e293b5df7a3c42eb3eb3ba91b578705c792b9eba",
+      "identity.csv.gz": "0f280805357f8223722dc1bc4b0fc6d044d07eed5990d5c9979e1f5df188a00a",
+      "strata.csv.gz": "4efd9243dcd64860c38ffa74dc3268244cf10fec7b1e81677be0bfdff5a175fb"
+    }
+  },
+  "rerun_A2_t4": {
+    "max_abs_diff": 1,
+    "note": "pairs originally produced at 2 threads re-run at 4 threads differ by \u22641 grey level on \u22640.004% of pixels; pairs from the 4-thread segment reproduce exactly at 4 threads",
+    "pairs": 6,
+    "pixel_identical": 4
+  },
+  "rerun_outputs_t2": {
+    "pairs": 36,
+    "pixel_identical": 36
+  },
+  "rescore_metric_files": {
+    "A1": "1f9d62c0b26e (identical to summary)",
+    "A4": "ef12e1273a1e (identical to summary)"
+  },
+  "same_population": "all 9 metric files share the B0 pair order (asserted in p3_aggregate.py); population_main sha256 840ee52d\u2026",
+  "unit_tests": "tests/test_bench_harness.py: 23 passed"
+}

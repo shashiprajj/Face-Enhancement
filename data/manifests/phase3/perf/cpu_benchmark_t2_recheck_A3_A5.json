@@ -1,0 +1,168 @@
+{
+  "method": {
+    "batch": 1,
+    "precision": "fp32",
+    "process": "fresh spawned process per configuration, sequential",
+    "reference": "ff-val-10081.ref-v1",
+    "repeats": 5,
+    "threads": 2,
+    "timed_region": "adapter.enhance end-to-end (uint8 in \u2192 uint8 out)",
+    "warmup_calls": 1
+  },
+  "results": [
+    {
+      "baseline_rss_mb": 242.6,
+      "cold_load_s": 1.531,
+      "config_id": "A3",
+      "loadavg_after": [
+        1.99,
+        3.48,
+        5.74
+      ],
+      "loadavg_before": [
+        1.78,
+        4.08,
+        6.17
+      ],
+      "peak_rss_mb": 1169.0,
+      "rss_after_load_mb": 465.4,
+      "sha_check_s": 0.314,
+      "sizes": {
+        "112": {
+          "first_call_s": 2.636,
+          "max_s": 2.8243,
+          "mean_s": 2.7537,
+          "median_s": 2.748,
+          "min_s": 2.6595,
+          "pair_id": "ff-val-10081.ref-v1.lowres-mild",
+          "std_s": 0.0716,
+          "throughput_img_s_single_process": 0.3639
+        },
+        "14": {
+          "first_call_s": 0.066,
+          "max_s": 0.0723,
+          "mean_s": 0.0661,
+          "median_s": 0.0647,
+          "min_s": 0.0636,
+          "pair_id": "ff-val-10081.ref-v1.lowres-extreme",
+          "std_s": 0.0036,
+          "throughput_img_s_single_process": 15.4537
+        },
+        "224": {
+          "first_call_s": 10.74,
+          "max_s": 13.5067,
+          "mean_s": 12.2673,
+          "median_s": 11.8518,
+          "min_s": 11.643,
+          "pair_id": "ff-val-10081.ref-v1.gaussblur-moderate",
+          "std_s": 0.8107,
+          "throughput_img_s_single_process": 0.0844
+        },
+        "28": {
+          "first_call_s": 0.187,
+          "max_s": 0.1777,
+          "mean_s": 0.1767,
+          "median_s": 0.1767,
+          "min_s": 0.1757,
+          "pair_id": "ff-val-10081.ref-v1.lowres-severe",
+          "std_s": 0.0008,
+          "throughput_img_s_single_process": 5.6583
+        },
+        "56": {
+          "first_call_s": 0.665,
+          "max_s": 0.6932,
+          "mean_s": 0.6672,
+          "median_s": 0.6615,
+          "min_s": 0.6506,
+          "pair_id": "ff-val-10081.ref-v1.lowres-moderate",
+          "std_s": 0.0178,
+          "throughput_img_s_single_process": 1.5118
+        }
+      },
+      "threads": 2
+    },
+    {
+      "baseline_rss_mb": 242.6,
+      "cold_load_s": 8.382,
+      "config_id": "A5",
+      "loadavg_after": [
+        2.37,
+        3.02,
+        5.27
+      ],
+      "loadavg_before": [
+        1.99,
+        3.48,
+        5.74
+      ],
+      "peak_rss_mb": 2107.5,
+      "rss_after_load_mb": 1497.5,
+      "sha_check_s": 5.754,
+      "sizes": {
+        "112": {
+          "first_call_s": 3.284,
+          "max_s": 3.424,
+          "mean_s": 3.3229,
+          "median_s": 3.3153,
+          "min_s": 3.2047,
+          "pair_id": "ff-val-10081.ref-v1.lowres-mild",
+          "std_s": 0.0897,
+          "throughput_img_s_single_process": 0.3016
+        },
+        "14": {
+          "first_call_s": 0.145,
+          "max_s": 0.1531,
+          "mean_s": 0.1423,
+          "median_s": 0.1423,
+          "min_s": 0.1348,
+          "pair_id": "ff-val-10081.ref-v1.lowres-extreme",
+          "std_s": 0.0072,
+          "throughput_img_s_single_process": 7.0296
+        },
+        "224": {
+          "first_call_s": 13.195,
+          "max_s": 13.3498,
+          "mean_s": 13.2452,
+          "median_s": 13.2483,
+          "min_s": 13.098,
+          "pair_id": "ff-val-10081.ref-v1.gaussblur-moderate",
+          "std_s": 0.0922,
+          "throughput_img_s_single_process": 0.0755
+        },
+        "28": {
+          "first_call_s": 0.301,
+          "max_s": 0.3245,
+          "mean_s": 0.3038,
+          "median_s": 0.296,
+          "min_s": 0.2862,
+          "pair_id": "ff-val-10081.ref-v1.lowres-severe",
+          "std_s": 0.0189,
+          "throughput_img_s_single_process": 3.3784
+        },
+        "56": {
+          "first_call_s": 0.891,
+          "max_s": 0.8736,
+          "mean_s": 0.8638,
+          "median_s": 0.8668,
+          "min_s": 0.8458,
+          "pair_id": "ff-val-10081.ref-v1.lowres-moderate",
+          "std_s": 0.0106,
+          "throughput_img_s_single_process": 1.1537
+        }
+      },
+      "threads": 2
+    }
+  ],
+  "run": {
+    "cpu_count_visible": 16,
+    "cpuinfo_model": "Intel(R) Core(TM) Ultra 7 255H",
+    "git_head": "b14cef3c98f33876cf6b7c05ff5252cdeba045ee-dirty",
+    "machine": "x86_64",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "torch": "2.14.0+cpu",
+    "utc": "2026-10-01T15:41:57+00:00"
+  }
+}

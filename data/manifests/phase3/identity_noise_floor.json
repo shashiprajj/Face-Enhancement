@@ -1,0 +1,67 @@
+{
+  "evaluator": "models/E01_sface/face_recognition_sface_2021dec.onnx",
+  "evaluator_sha256": "0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79",
+  "n_refs": 112,
+  "note": "1-cos under identity-neutral perturbations. Descriptive; no threshold is derived (TH-1 TBD).",
+  "perturbations": {
+    "down2_up_bicubic": {
+      "cos_mean": 0.99779,
+      "one_minus_cos": {
+        "0.5": 0.00191,
+        "0.9": 0.00406,
+        "0.95": 0.00484,
+        "0.99": 0.00575,
+        "1.0": 0.00646
+      }
+    },
+    "harness_roundtrip_E_F_E": {
+      "cos_mean": 0.99863,
+      "one_minus_cos": {
+        "0.5": 0.00115,
+        "0.9": 0.00261,
+        "0.95": 0.00311,
+        "0.99": 0.00389,
+        "1.0": 0.00465
+      }
+    },
+    "jpeg_q75": {
+      "cos_mean": 0.99999,
+      "one_minus_cos": {
+        "0.5": 0.0,
+        "0.9": 5e-05,
+        "0.95": 6e-05,
+        "0.99": 0.00015,
+        "1.0": 0.00031
+      }
+    },
+    "jpeg_q90": {
+      "cos_mean": 0.99927,
+      "one_minus_cos": {
+        "0.5": 0.00061,
+        "0.9": 0.00127,
+        "0.95": 0.0014,
+        "0.99": 0.00183,
+        "1.0": 0.00195
+      }
+    },
+    "shift_1px": {
+      "cos_mean": 0.9896,
+      "one_minus_cos": {
+        "0.5": 0.00973,
+        "0.9": 0.01528,
+        "0.95": 0.01602,
+        "0.99": 0.02154,
+        "1.0": 0.02368
+      }
+    }
+  },
+  "population": "noise_floor (dev_pilot, 112 refs)",
+  "run": {
+    "git_head": "b14cef3c98f33876cf6b7c05ff5252cdeba045ee",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.0",
+    "utc": "2026-09-29T17:55:41+00:00"
+  }
+}

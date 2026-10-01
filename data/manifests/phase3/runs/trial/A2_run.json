@@ -1,0 +1,68 @@
+{
+  "configuration": {
+    "components": [
+      "M05"
+    ],
+    "config_id": "A2",
+    "kind": "face",
+    "label": "VQFR v1",
+    "settings": {
+      "border": "BORDER_CONSTANT (135,133,132) BGR",
+      "d_to_f": "single warp INTER_CUBIC",
+      "f_to_e": "INTER_AREA pre-reduction + INTER_LINEAR",
+      "frame": "FFHQ-512 (facexlib template)",
+      "input_norm": "RGB, (x-0.5)/0.5",
+      "output": "clamp[-1,1] \u2192 round",
+      "output_branch": "main_dec (v1 has no fidelity_ratio control; argument unused upstream)",
+      "precision": "fp32",
+      "uncovered_e_pixels": "bicubic degraded input (P1-T5 paste-back rule; excluded from metrics)"
+    }
+  },
+  "failures": [],
+  "infer_s_under_load": {
+    "mean": 64.912,
+    "note": "per-image wall time inside a worker, concurrent workers + host background load; NOT the P3-T8 performance measurement",
+    "p50": 60.097,
+    "p95": 105.36
+  },
+  "load_reports": {
+    "M05": {
+      "asset_id": "A05",
+      "load_s": 5.575,
+      "missing_keys": [],
+      "n_checkpoint_tensors": 459,
+      "n_model_params": 76563583,
+      "sha256": "33a1fac51e2b286705fc3e561d87330d1562b574e3cf09fb4201d55d73fe57bf",
+      "strict": true,
+      "unexpected_keys": [],
+      "weights": "models/M05_vqfr/VQFR_v1-33a1fac5.pth"
+    }
+  },
+  "manifest": "data/manifests/phase3/runs/trial/A2.csv.gz",
+  "manifest_sha256": "7402c18e0a209d598a30e23638ef4a8bcc77d9c82dd812a47f6720f9c201ff4a",
+  "n_failed": 0,
+  "n_missing": 0,
+  "n_ok": 128,
+  "n_pairs": 128,
+  "pool_broken": null,
+  "population": "trial",
+  "population_manifest": "data/manifests/phase3/population_trial.csv.gz",
+  "population_sha256": "834b02250d56c390482bb2940a3b3289448b03a4628203f05674bdc172d5a7a0",
+  "run": {
+    "config": "configs/phase3/benchmark_p3.yaml",
+    "config_sha256": "28f9ab7c08ba3cbee0b943b7c444cfede4e5bafee5e92214c686205a1b413cd0",
+    "cpu_count_container": 16,
+    "git_head": "b14cef3c98f33876cf6b7c05ff5252cdeba045ee-dirty",
+    "machine": "x86_64",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "protocol_version": "p3-protocol-1.0.1",
+    "python": "3.11.16",
+    "torch": "2.14.0+cpu",
+    "utc": "2026-10-01T15:15:40+00:00"
+  },
+  "threads_per_worker": 2,
+  "wall_s_this_invocation": 140.6,
+  "workers": 2
+}

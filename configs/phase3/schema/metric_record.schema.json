@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fes/phase3/metric_record/1.0.0",
+  "title": "Per-pair metrics of one configuration (data/manifests/phase3/metrics/<population>/<config>.csv.gz)",
+  "type": "object",
+  "required": ["pair_id", "ref_id", "cell", "profile", "severity", "in_size", "config_id", "status"],
+  "properties": {
+    "status": {"type": "string", "enum": ["OK", "FAILED", "MISSING"], "description": "metrics are empty unless OK; FAILED/MISSING are counted, never dropped"},
+    "psnr": {"type": "number", "description": "dB, RGB 8-bit, masked (E-frame eval mask)"},
+    "ssim": {"type": "number", "description": "luma BT.601, Gaussian sigma 1.5, mean over mask"},
+    "lpips": {"type": "number", "description": "AlexNet v0.1, lower = more similar; spatial mean over mask when mask is partial"},
+    "sharp_ratio": {"type": "number", "description": "Laplacian variance output / reference (descriptive)"},
+    "color_de": {"type": "number", "description": "ΔE76 between image-mean Lab colours (descriptive)"},
+    "det_found": {"type": "boolean", "description": "YuNet (thr 0.7) finds a face in the output"},
+    "det_score": {"type": ["number", "string"]},
+    "lm_nme": {"type": ["number", "string"], "description": "mean 5-landmark error / reference inter-ocular distance"},
+    "id_cos": {"type": "number", "description": "SFace cosine(output, clean reference), fixed alignment"},
+    "imp_cos_mean": {"type": "number", "description": "mean SFace cosine(output, other population references)"},
+    "imp_cos_max": {"type": "number"},
+    "imp_n": {"type": "integer", "description": "number of impostor comparisons (other population references)"},
+    "imp_n_ge_thr": {"type": "integer", "description": "impostor comparisons at/above the FAR 1e-2 threshold"},
+    "id_ge_thr": {"type": "boolean", "description": "genuine cos at/above the FAR 1e-2 threshold (TAR numerator)"},
+    "race": {"type": "string", "description": "FairFace label, aggregate strata only"},
+    "gender": {"type": "string"}
+  }
+}
