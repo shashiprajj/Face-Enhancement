@@ -1,0 +1,24 @@
+{
+  "agreement": {
+    "alpha_artef_ordinal": null,
+    "alpha_invented_ordinal": null,
+    "alpha_same_ordinal": null,
+    "alpha_subst_nominal": null
+  },
+  "disagreements": [],
+  "qualified": [],
+  "random_by_config": {},
+  "reviewers": {},
+  "run": {
+    "git_head": "52b18bd99ae035df5526a343e90059f1ddf9ccb9-dirty",
+    "key_sha256": "5264c93d73857849b9e56c1d96df2526021ae1361d7beb3ff27dd10a57047322",
+    "n_files": 0,
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-03T08:58:35+00:00"
+  },
+  "status": "INSUFFICIENT (G-5: < 2 qualified reviewers)",
+  "targeted": {}
+}

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Identity Review</title>
+<!-- P4-T5 blinded identity/fabrication review tool. Fully offline: no network requests, no external resources.
+     Template: scripts/p4_review_tool.html; the builder injects the blinded item list. Responses are kept in this
+     browser's localStorage and exported as a JSON file the reviewer hands back. -->
+<style>
+:root { --bg:#f7f7f5; --fg:#1d1d1b; --muted:#6b6b66; --card:#fff; --line:#d9d9d4; --accent:#2f5d8a; --warn:#9a3b1b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#171716; --fg:#ecece8; --muted:#a3a39c; --card:#222220; --line:#3a3a37; --accent:#7fb0e0; --warn:#e39a7c; } }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.45 system-ui, sans-serif; }
+main { max-width: 1040px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 20px; margin: 0 0 4px; }
+.muted { color: var(--muted); }
+.card { background: var(--card); border:1px solid var(--line); border-radius: 8px; padding: 16px; margin: 12px 0; }
+.pair { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+.pair figure { margin:0; text-align:center; }
+.pair img { width: 336px; max-width: 42vw; image-rendering: auto; border:1px solid var(--line); border-radius:4px; }
+fieldset { border:1px solid var(--line); border-radius:6px; margin: 10px 0; padding: 8px 12px; }
+legend { font-weight: 600; padding: 0 4px; }
+label { display:inline-block; margin: 3px 14px 3px 0; cursor:pointer; }
+button { font: inherit; padding: 8px 16px; border-radius:6px; border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer; }
+button.secondary { background: transparent; color: var(--accent); }
+button:disabled { opacity: .4; cursor: default; }
+.bar { height: 6px; background: var(--line); border-radius: 3px; overflow:hidden; }
+.bar > div { height:100%; background: var(--accent); }
+.err { color: var(--warn); font-weight:600; min-height: 1.4em; }
+.row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content: space-between; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Face identity review <span class="muted">(kit __KIT_VERSION__)</span></h1>
+  <p class="muted">Offline tool. Images stay on this computer.</p>
+
+  <section id="start" class="card">
+    <p><b>Your task:</b> For each pair, the <b>left</b> image is a reference photo. The <b>right</b> image is a processed or other image. Judge whether they show the <b>same person</b>, and whether anything about the person's identity has been invented, removed or changed.</p>
+    <ul>
+      <li>Judge <b>identity</b>, not attractiveness or sharpness. A blurry image of the same person is still the same person.</li>
+      <li>"Invented structure" means facial detail on the right that the left does not support, such as a new eye shape, teeth or wrinkles.</li>
+      <li>You do not know how each right image was produced. Some are deliberately easy checks.</li>
+      <li>There are no time limits. Your progress is saved in this browser. Use <i>Export</i> at the end and send the file back.</li>
+    </ul>
+    <p><label>Reviewer code (no real name): <input id="rid" maxlength="24" pattern="[A-Za-z0-9_-]+" placeholder="e.g. R01"></label></p>
+    <button id="go">Start / resume</button> <span class="err" id="starterr"></span>
+  </section>
+
+  <section id="review" class="card" hidden>
+    <div class="row"><span id="pos" class="muted"></span><span class="muted" id="iid"></span></div>
+    <div class="bar"><div id="prog" style="width:0"></div></div>
+    <div class="pair" style="margin-top:12px">
+      <figure><img id="L" alt="reference"><figcaption class="muted">Reference</figcaption></figure>
+      <figure><img id="R" alt="image under review"><figcaption class="muted">Image under review</figcaption></figure>
+    </div>
+    <form id="f">
+      <fieldset><legend>1. Same person?</legend>
+        <label><input type="radio" name="same" value="1">Definitely different</label>
+        <label><input type="radio" name="same" value="2">Probably different</label>
+        <label><input type="radio" name="same" value="3">Cannot tell</label>
+        <label><input type="radio" name="same" value="4">Probably same</label>
+        <label><input type="radio" name="same" value="5">Definitely same</label></fieldset>
+      <fieldset><legend>2. Does the right image look like a <i>different, specific</i> person (identity substitution)?</legend>
+        <label><input type="radio" name="subst" value="no">No</label>
+        <label><input type="radio" name="subst" value="unsure">Unsure</label>
+        <label><input type="radio" name="subst" value="yes">Yes</label></fieldset>
+      <fieldset><legend>3. Invented facial structure</legend>
+        <label><input type="radio" name="invented" value="none">None</label>
+        <label><input type="radio" name="invented" value="minor">Minor</label>
+        <label><input type="radio" name="invented" value="major">Major</label></fieldset>
+      <fieldset><legend>4. Identity-relevant attributes removed or changed (select all that apply)</legend>
+        <label><input type="checkbox" name="attr" value="none">None</label>
+        <label><input type="checkbox" name="attr" value="facial_hair">Facial hair</label>
+        <label><input type="checkbox" name="attr" value="glasses">Glasses</label>
+        <label><input type="checkbox" name="attr" value="jewellery">Jewellery / piercing</label>
+        <label><input type="checkbox" name="attr" value="marks">Moles / scars / bindi / marks</label>
+        <label><input type="checkbox" name="attr" value="hair">Hair / hairline</label>
+        <label><input type="checkbox" name="attr" value="eyes">Eyes</label>
+        <label><input type="checkbox" name="attr" value="nose">Nose</label>
+        <label><input type="checkbox" name="attr" value="mouth_teeth">Mouth / teeth</label></fieldset>
+      <fieldset><legend>5. Appearance change (select all that apply)</legend>
+        <label><input type="checkbox" name="appear" value="none">None</label>
+        <label><input type="checkbox" name="appear" value="younger">Looks younger</label>
+        <label><input type="checkbox" name="appear" value="older">Looks older</label>
+        <label><input type="checkbox" name="appear" value="gender_presentation">Gender presentation</label>
+        <label><input type="checkbox" name="appear" value="skin_tone">Skin tone</label>
+        <label><input type="checkbox" name="appear" value="expression">Expression</label></fieldset>
+      <fieldset><legend>6. Artefacts (unnatural patterns, colour noise, distortions)</legend>
+        <label><input type="radio" name="artef" value="none">None</label>
+        <label><input type="radio" name="artef" value="minor">Minor</label>
+        <label><input type="radio" name="artef" value="major">Major</label></fieldset>
+      <fieldset><legend>7. Your confidence in these answers</legend>
+        <label><input type="radio" name="conf" value="low">Low</label>
+        <label><input type="radio" name="conf" value="medium">Medium</label>
+        <label><input type="radio" name="conf" value="high">High</label></fieldset>
+      <div class="err" id="ferr"></div>
+      <div class="row">
+        <button type="button" class="secondary" id="back">Back</button>
+        <button type="submit" id="next">Save &amp; next</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="done" class="card" hidden>
+    <p><b>All items answered.</b> Thank you. Export your responses and send the file to the evaluation team.</p>
+  </section>
+  <p><button class="secondary" id="export" hidden>Export responses (JSON)</button></p>
+</main>
+<script>
+"use strict";
+const ITEMS = /*__ITEMS__*/[];
+const KIT = "__KIT_VERSION__";
+let rid = null, order = [], idx = 0, resp = {};
+const $ = (id) => document.getElementById(id);
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* export still works */ } }
+};
+// deterministic per-reviewer order: xorshift seeded from the reviewer code (recorded with the responses)
+function seedOf(s) { let h = 2166136261; for (const c of s) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+function shuffled(arr, seed) {
+  const a = arr.slice(); let x = seed || 1;
+  for (let i = a.length - 1; i > 0; i--) { x ^= x << 13; x >>>= 0; x ^= x >>> 17; x ^= x << 5; x >>>= 0; const j = x % (i + 1); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+function key() { return `fes-review-${KIT}-${rid}`; }
+function save() { store.set(key(), { resp, idx }); }
+function show() {
+  if (idx >= order.length) { $("review").hidden = true; $("done").hidden = false; return; }
+  $("review").hidden = false; $("done").hidden = true;
+  const it = order[idx];
+  $("L").src = it.left; $("R").src = it.right;
+  $("pos").textContent = `Item ${idx + 1} of ${order.length}`; $("iid").textContent = it.item_id;
+  $("prog").style.width = `${100 * Object.keys(resp).length / order.length}%`;
+  const f = $("f"); f.reset(); $("ferr").textContent = "";
+  const r = resp[it.item_id];
+  if (r) {
+    for (const n of ["same", "subst", "invented", "artef", "conf"]) { const el = f.querySelector(`input[name=${n}][value="${r[n]}"]`); if (el) el.checked = true; }
+    for (const n of ["attr", "appear"]) for (const v of r[n]) { const el = f.querySelector(`input[name=${n}][value="${v}"]`); if (el) el.checked = true; }
+  }
+  $("back").disabled = idx === 0;
+  window.scrollTo(0, 0);
+}
+$("go").onclick = () => {
+  const v = $("rid").value.trim();
+  if (!/^[A-Za-z0-9_-]{2,24}$/.test(v)) { $("starterr").textContent = "Use 2–24 letters, digits, - or _ (no real names)."; return; }
+  rid = v; order = shuffled(ITEMS, seedOf(KIT + "|" + rid));
+  const s = store.get(key()); if (s) { resp = s.resp || {}; idx = Math.min(s.idx || 0, order.length); }
+  $("start").hidden = true; $("export").hidden = false; show();
+};
+$("back").onclick = () => { if (idx > 0) { idx--; save(); show(); } };
+$("f").onsubmit = (e) => {
+  e.preventDefault();
+  const f = $("f"), one = (n) => (f.querySelector(`input[name=${n}]:checked`) || {}).value;
+  const many = (n) => [...f.querySelectorAll(`input[name=${n}]:checked`)].map((x) => x.value);
+  const r = { same: one("same"), subst: one("subst"), invented: one("invented"), attr: many("attr"), appear: many("appear"),
+              artef: one("artef"), conf: one("conf") };
+  const missing = ["same", "subst", "invented", "artef", "conf"].filter((n) => !r[n]);
+  if (!r.attr.length) missing.push("attributes"); if (!r.appear.length) missing.push("appearance");
+  if ((r.attr.includes("none") && r.attr.length > 1) || (r.appear.includes("none") && r.appear.length > 1)) { $("ferr").textContent = "'None' cannot be combined with other options."; return; }
+  if (missing.length) { $("ferr").textContent = "Please answer: " + missing.join(", "); return; }
+  r.position = idx; r.answered_utc = new Date().toISOString();
+  resp[order[idx].item_id] = r; idx++; save(); show();
+};
+$("export").onclick = () => {
+  const blob = new Blob([JSON.stringify({ kit: KIT, reviewer: rid, order_seed: seedOf(KIT + "|" + rid), n_items: order.length,
+    exported_utc: new Date().toISOString(), responses: resp }, null, 1)], { type: "application/json" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `review_${KIT}_${rid}.json`; a.click();
+};
+</script>
+</body>
+</html>
