@@ -1,0 +1,14 @@
+{
+  "reason": "DS05: legal_status='NOT_REVIEWED' (APPROVED required); reason: Agreement text unreviewed; leaning INELIGIBLE",
+  "register": "data/registry/p4_realworld_sources.csv",
+  "run": {
+    "git_head": "fdfce67a0e01f35dcb775d146b0a68938dd345c5-dirty",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-03T06:56:19+00:00"
+  },
+  "source_id": "DS05",
+  "status": "BLOCKED_G3"
+}

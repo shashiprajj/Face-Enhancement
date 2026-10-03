@@ -1,0 +1,46 @@
+PHASE 4 — REAL-WORLD VALIDATION & ENHANCEMENT GATING
+
+Read all Phase 0–3 documentation and:
+- docs/phase_4/PHASE_4_PLAN.md
+- docs/phase_4/PHASE_4_TASK_INDEX.md
+- docs/phase_4/CLAUDE_EXECUTION_RULES.md
+
+Baseline: Phase 3 commit fdfce67, gate YELLOW.
+
+Mission:
+Determine whether the service can safely decide:
+DO_NOT_ENHANCE, ENHANCE_WITH_VALIDATED_PATH, or REJECT/ESCALATE.
+
+Task order:
+P4-T1 dataset/governance
+P4-T2 taxonomy/quality metadata
+P4-T3 second identity evaluator
+P4-T4 real-world benchmark
+P4-T5 human review
+P4-T6 Do-Not-Enhance gate
+P4-T7 selective routing
+P4-T8 evidence synthesis/gate
+
+Cross-cutting gates:
+G-1 GPU
+G-2 second evaluator
+G-3 real-world dataset/legal approval
+G-4 production licensing
+G-5 human review
+
+For every task:
+- inspect existing code/docs first
+- reuse Phase 3 harness
+- keep synthetic and real-world populations separate
+- freeze manifests before final evaluation
+- record hashes
+- test reproducibility
+- report changes, tests, evidence, blockers and gate status
+
+Do not integrate Feature-Match.
+Do not assume enhancement should always occur.
+Do not rank models before evidence synthesis.
+Do not treat LPIPS improvement as identity improvement.
+Do not treat public availability as commercial licence permission.
+
+At completion produce a complete Phase 4 evidence package and explicitly state what can proceed to Phase 5 and what remains blocked.
