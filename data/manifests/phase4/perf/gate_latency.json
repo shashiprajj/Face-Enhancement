@@ -1,0 +1,39 @@
+{
+  "ms_per_input_by_size": {
+    "112": {
+      "n": 42,
+      "p50": 6.44,
+      "p95": 14.24
+    },
+    "14": {
+      "n": 14,
+      "p50": 2.08,
+      "p95": 6.09
+    },
+    "224": {
+      "n": 308,
+      "p50": 12.4,
+      "p95": 34.11
+    },
+    "28": {
+      "n": 42,
+      "p50": 2.42,
+      "p95": 6.51
+    },
+    "56": {
+      "n": 42,
+      "p50": 3.55,
+      "p95": 6.98
+    }
+  },
+  "note": "min of 3 per image; host shared with other containers; CPU only",
+  "run": {
+    "git_head": "0f1ab8e56499d5c9d2b8d5a7cb9e190fdfb2dea2-dirty",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-03T09:04:32+00:00"
+  },
+  "threads": 1
+}
