@@ -1,0 +1,10 @@
+# Phase 4 CPU evaluation image = fes-dev:cpu-p2 + dlib (official PyPI sdist, hash-pinned, compiled here) for the
+# second, TEST-ONLY identity evaluator E07 (P4-T3). No other dependency changes.
+FROM fes-dev:cpu-p2
+USER root
+COPY requirements-p4.txt /tmp/
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential cmake \
+ && pip install --require-hashes --no-binary dlib -r /tmp/requirements-p4.txt \
+ && python -c "import dlib; assert dlib.__version__ == '20.0.1', dlib.__version__" \
+ && apt-get purge -y build-essential cmake && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
+USER fes
