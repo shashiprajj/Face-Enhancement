@@ -1,0 +1,63 @@
+# P4-T2 — versioned degradation taxonomy + quality-metadata contract. Evaluation only.
+# A label always carries its SOURCE so observed real degradation can never be mistaken for synthetic.
+taxonomy_version: p4-taxonomy-1.0.0
+quality_features: {module: src/fes_bench/quality.py, version: p4-quality-1.0.0}
+
+label_sources:
+  SYNTHETIC_GENERATOR: "fes-syn-v1 cell label from fes_data.degrade (degrade-1.0.0); known parameters"
+  CAPTURE_PROTOCOL:    "real-world capture condition/level recorded at acquisition (rw-spec-1.0.0)"
+  ANNOTATOR:           "human annotation (P4-T5 reviewers); not yet collected"
+  ESTIMATED:           "rule-based estimate from p4-quality features, calibrated on DEV only (P4-T6)"
+
+families:            # code: description (P0 master §6 / P0-T3 §2)
+  LOWRES:     low resolution / distance
+  BLUR_DEF:   defocus / gaussian blur
+  BLUR_MOT:   motion blur
+  NOISE:      sensor noise / low-light grain
+  COMPRESS:   JPEG / re-encode / messaging / screenshot
+  UNDEREXP:   under-exposure / low light (photometric)
+  OVEREXP:    over-exposure / glare / backlight (photometric)
+  LOWCON:     low contrast (photometric)
+  OCCLUSION:  occluder over the face (not measurable automatically; P2-T6)
+  POSE:       non-frontal pose
+  CROP:       partial / poor crop
+  MIXED:      ≥ 2 families present (mixed_flag = true)
+  CLEAN:      no material degradation
+
+severities: [none, mild, moderate, severe, extreme]   # Phase 0 targets: mild–moderate primary, severe secondary,
+                                                      # extreme → flag/decline (C6)
+
+synthetic_cell_map:   # fes-syn-v1 profile → family; severity = the cell's severity; label_source SYNTHETIC_GENERATOR
+  lowres: [LOWRES]
+  gaussblur: [BLUR_DEF]
+  motionblur: [BLUR_MOT]
+  noise: [NOISE]
+  jpeg: [COMPRESS]
+  underexposure: [UNDEREXP]
+  lowcontrast: [LOWCON]
+  combined: [MIXED, BLUR_DEF, LOWRES, NOISE, COMPRESS]     # chain blur>downscale>noise>jpeg
+  realistic2: [MIXED, BLUR_DEF, LOWRES, NOISE, COMPRESS]   # second-order chain ×2
+
+capture_condition_map:  # rw-spec-1.0.0 condition code → family; label_source CAPTURE_PROTOCOL; severity from level
+  DIST: {families: [LOWRES], level_severity: {"3m": mild, "6m": moderate, "10m": severe}}
+  LOWL: {families: [UNDEREXP, NOISE], level_severity: {"50lux": moderate, "10lux": severe}}
+  MOTN: {families: [BLUR_MOT], level_severity: {subject_turn: moderate, handheld_1_15s: moderate}}
+  DFOC: {families: [BLUR_DEF], level_severity: {focus_offset: moderate}}
+  COMP: {families: [COMPRESS], level_severity: {messaging_app_1x: mild, messaging_app_3x: moderate, webcam_stream_480p: moderate}}
+  LCDV: {families: [MIXED, LOWRES, NOISE, COMPRESS], level_severity: {webcam_480p: moderate, ip_camera_2_5m_height: severe}}
+  BKLT: {families: [OVEREXP, UNDEREXP], level_severity: {window_backlight: moderate}}
+  OCCL: {families: [OCCLUSION], level_severity: {glasses: mild, mask: severe, hand: moderate}}
+  # Capture-protocol severities are PRIORS only; observed severity must be re-estimated from features on DEV.
+
+mixed_flag_rule: "true when the label lists MIXED or ≥ 2 non-MIXED families"
+
+metadata_validity:     # where each feature is valid (else recorded as NaN, never imputed)
+  iod_px, det_score, roll_deg, yaw_proxy, align_resid: "only when the detection contract returns a face"
+  blockiness: "native side ≥ 32 px (needs ≥ 4 blocks per axis)"
+  noise_sigma: "native side ≥ 3 px; inflated by strong edges/texture on small images (documented bias)"
+  occlusion: "not measured (no eligible model); always NaN"
+  pose: "proxies only (no 3-D pose model); FairFace is mostly frontal so POSE is unrepresented in fes-syn-v1"
+
+calibration:
+  rule: "Any threshold/bin on these features is fit on DEV populations only (p4dev; rw dev split) and frozen before test."
+  synthetic_vs_real: "Synthetic-calibrated thresholds are NOT valid for real-world inputs until re-calibrated on the real dev split."
