@@ -8,66 +8,66 @@
     {
       "A0_full_photo": {
         "E01": {
-          "cos": 0.52832,
+          "cos": 0.3051,
           "fa": true,
-          "imp_max": 0.34725,
+          "imp_max": 0.34126,
           "match": true,
-          "rank1": true
+          "rank1": false
         },
         "E07": {
-          "cos": 0.91223,
+          "cos": 0.90515,
           "fa": true,
-          "imp_max": 0.91609,
-          "match": true,
+          "imp_max": 0.92169,
+          "match": false,
           "rank1": false
         }
       },
       "A_service_original": {
         "E01": {
-          "cos": 0.54372,
-          "fa": true,
-          "imp_max": 0.30579,
+          "cos": 0.36733,
+          "fa": false,
+          "imp_max": 0.2625,
           "match": true,
           "rank1": true
         },
         "E07": {
-          "cos": 0.91137,
+          "cos": 0.89968,
           "fa": true,
-          "imp_max": 0.9191,
-          "match": true,
+          "imp_max": 0.91504,
+          "match": false,
           "rank1": false
         }
       },
       "B_equals_C_pixels": false,
       "B_gated": {
         "E01": {
-          "cos": 0.54372,
-          "fa": true,
-          "imp_max": 0.30579,
+          "cos": 0.36733,
+          "fa": false,
+          "imp_max": 0.2625,
           "match": true,
           "rank1": true
         },
         "E07": {
-          "cos": 0.91137,
+          "cos": 0.89968,
           "fa": true,
-          "imp_max": 0.9191,
-          "match": true,
+          "imp_max": 0.91504,
+          "match": false,
           "rank1": false
         }
       },
       "C_forced_a4": {
         "E01": {
-          "cos": 0.5722,
-          "fa": true,
-          "imp_max": 0.30838,
+          "cos": 0.4032,
+          "fa": false,
+          "imp_max": 0.28157,
           "match": true,
           "rank1": true
         },
         "E07": {
-          "cos": 0.91607,
+          "cos": 0.90749,
           "fa": true,
-          "imp_max": 0.92305,
-          "match": true,
+          "imp_max": 0.91882,
+          "match": false,
           "rank1": false
         }
       },
@@ -75,22 +75,22 @@
       "chip_px": 224,
       "decision": "DO_NOT_ENHANCE",
       "fallback": "",
-      "id": "A1",
+      "id": "A15",
       "n_faces": 1,
       "quality": {
-        "blockiness": 0.979112,
-        "det_score": 0.94111,
-        "iod_px": 81.283538,
+        "blockiness": 0.95241,
+        "det_score": 0.918078,
+        "iod_px": 78.107587,
         "is_gray": false,
-        "lap_norm_c": 0.353837,
-        "lapd1_c": 0.023429,
-        "luma_mean": 15.993064,
-        "noise_sigma": 0.487425,
-        "rms_contrast": 17.080362
+        "lap_norm_c": 0.592105,
+        "lapd1_c": 0.028174,
+        "luma_mean": 4.487305,
+        "noise_sigma": 0.258865,
+        "rms_contrast": 7.544482
       },
       "reason": "photometric_no_a4_evidence",
       "route": "B0",
-      "sha256": "1c89bf0090f069241a5d88b361ece32b3298460720c5261755e5b4141cb8d4b2",
+      "sha256": "18f5bda2df845e9bef0dcd82863d2398aa8a94fc6d6caa45e5b1d222cc313fe4",
       "status": "ORIGINAL",
       "used": "B0",
       "warnings": [
@@ -100,50 +100,50 @@
     {
       "A0_full_photo": {
         "E01": {
-          "cos": 0.21686,
+          "cos": 0.25032,
           "fa": true,
-          "imp_max": 0.31298,
+          "imp_max": 0.32436,
           "match": false,
           "rank1": false
         },
         "E07": {
-          "cos": 0.91824,
+          "cos": 0.92093,
           "fa": true,
-          "imp_max": 0.92498,
+          "imp_max": 0.9148,
           "match": true,
-          "rank1": false
+          "rank1": true
         }
       },
       "A_service_original": {
         "E01": {
-          "cos": 0.21686,
+          "cos": 0.25032,
           "fa": true,
-          "imp_max": 0.31298,
+          "imp_max": 0.32436,
           "match": false,
           "rank1": false
         },
         "E07": {
-          "cos": 0.91824,
+          "cos": 0.92093,
           "fa": true,
-          "imp_max": 0.92498,
+          "imp_max": 0.9148,
           "match": true,
-          "rank1": false
+          "rank1": true
         }
       },
       "B_gated": {
         "E01": {
-          "cos": 0.21686,
+          "cos": 0.25032,
           "fa": true,
-          "imp_max": 0.31298,
+          "imp_max": 0.32436,
           "match": false,
           "rank1": false
         },
         "E07": {
-          "cos": 0.91824,
+          "cos": 0.92093,
           "fa": true,
-          "imp_max": 0.92498,
+          "imp_max": 0.9148,
           "match": true,
-          "rank1": false
+          "rank1": true
         }
       },
       "C_forced_a4": null,
@@ -151,22 +151,22 @@
       "chip_px": 224,
       "decision": "UNSAFE_OR_UNCERTAIN",
       "fallback": "",
-      "id": "A2",
+      "id": "A16",
       "n_faces": 1,
       "quality": {
-        "blockiness": 1.015713,
-        "det_score": 0.759502,
-        "iod_px": 60.930984,
-        "is_gray": false,
-        "lap_norm_c": 0.359973,
-        "lapd1_c": 0.027841,
-        "luma_mean": 23.746173,
-        "noise_sigma": 0.77985,
-        "rms_contrast": 33.300939
+        "blockiness": 0.97659,
+        "det_score": 0.595577,
+        "iod_px": 69.643663,
+        "is_gray": true,
+        "lap_norm_c": 0.057256,
+        "lapd1_c": 0.012924,
+        "luma_mean": 9.883669,
+        "noise_sigma": 0.184591,
+        "rms_contrast": 8.637503
       },
       "reason": "low_detection_confidence",
       "route": "B0",
-      "sha256": "8d617f0cdfd81cdb9a9b1b97277f9d62102d1617b1abbd02f429fd22f4bd378f",
+      "sha256": "55b4325bd62e39f9da73d2bfe518947fd945f4930607a1770dcb2394ecf538ab",
       "status": "ORIGINAL",
       "used": "B0",
       "warnings": [
@@ -176,181 +176,73 @@
     {
       "A0_full_photo": {
         "E01": {
-          "cos": 0.25784,
-          "fa": true,
-          "imp_max": 0.29826,
-          "match": false,
-          "rank1": false
-        },
-        "E07": {
-          "cos": 0.90162,
+          "cos": 0.36431,
           "fa": false,
-          "imp_max": 0.90238,
-          "match": false,
-          "rank1": false
-        }
-      },
-      "A_service_original": {
-        "E01": {
-          "cos": 0.31422,
-          "fa": false,
-          "imp_max": 0.28576,
+          "imp_max": 0.25284,
           "match": true,
           "rank1": true
         },
         "E07": {
-          "cos": 0.91283,
+          "cos": 0.93947,
           "fa": true,
-          "imp_max": 0.91262,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "B_equals_C_pixels": false,
-      "B_gated": {
-        "E01": {
-          "cos": 0.31422,
-          "fa": false,
-          "imp_max": 0.28576,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.91283,
-          "fa": true,
-          "imp_max": 0.91262,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "C_forced_a4": {
-        "E01": {
-          "cos": 0.37715,
-          "fa": true,
-          "imp_max": 0.31009,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.91923,
-          "fa": true,
-          "imp_max": 0.93274,
-          "match": true,
-          "rank1": false
-        }
-      },
-      "category": "acceptable",
-      "chip_px": 224,
-      "decision": "DO_NOT_ENHANCE",
-      "fallback": "",
-      "id": "A3",
-      "n_faces": 1,
-      "quality": {
-        "blockiness": 1.024581,
-        "det_score": 0.85344,
-        "iod_px": 75.392258,
-        "is_gray": true,
-        "lap_norm_c": 0.034347,
-        "lapd1_c": 0.012198,
-        "luma_mean": 114.19308,
-        "noise_sigma": 0.291522,
-        "rms_contrast": 73.458773
-      },
-      "reason": "acceptable",
-      "route": "B0",
-      "sha256": "975eba1f792504d87c5efda9394fd8cd1c61ab310c986414ec69361089b32f97",
-      "status": "ORIGINAL",
-      "used": "B0",
-      "warnings": [
-        "low_confidence"
-      ]
-    },
-    {
-      "A0_full_photo": {
-        "E01": {
-          "cos": 0.52495,
-          "fa": false,
-          "imp_max": 0.24652,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94679,
-          "fa": false,
-          "imp_max": 0.90838,
+          "imp_max": 0.92116,
           "match": true,
           "rank1": true
         }
       },
       "A_service_original": {
         "E01": {
-          "cos": 0.50516,
+          "cos": 0.36431,
           "fa": false,
-          "imp_max": 0.23505,
+          "imp_max": 0.25284,
           "match": true,
           "rank1": true
         },
         "E07": {
-          "cos": 0.9507,
-          "fa": false,
-          "imp_max": 0.89643,
+          "cos": 0.93947,
+          "fa": true,
+          "imp_max": 0.92116,
           "match": true,
           "rank1": true
         }
       },
-      "B_equals_C_pixels": false,
       "B_gated": {
         "E01": {
-          "cos": 0.50516,
+          "cos": 0.36431,
           "fa": false,
-          "imp_max": 0.23505,
+          "imp_max": 0.25284,
           "match": true,
           "rank1": true
         },
         "E07": {
-          "cos": 0.9507,
-          "fa": false,
-          "imp_max": 0.89643,
+          "cos": 0.93947,
+          "fa": true,
+          "imp_max": 0.92116,
           "match": true,
           "rank1": true
         }
       },
-      "C_forced_a4": {
-        "E01": {
-          "cos": 0.49044,
-          "fa": false,
-          "imp_max": 0.22864,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.95085,
-          "fa": false,
-          "imp_max": 0.89558,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "category": "acceptable",
+      "C_forced_a4": null,
+      "category": "unrecognizable",
       "chip_px": 224,
-      "decision": "DO_NOT_ENHANCE",
+      "decision": "UNSAFE_OR_UNCERTAIN",
       "fallback": "",
-      "id": "A4",
+      "id": "A17",
       "n_faces": 1,
       "quality": {
-        "blockiness": 0.954842,
-        "det_score": 0.953316,
-        "iod_px": 88.481144,
+        "blockiness": 1.013683,
+        "det_score": 0.909397,
+        "iod_px": 83.148571,
         "is_gray": false,
-        "lap_norm_c": 0.357244,
-        "lapd1_c": 0.024755,
-        "luma_mean": 51.991171,
-        "noise_sigma": 0.588812,
-        "rms_contrast": 43.360257
+        "lap_norm_c": 0.003541,
+        "lapd1_c": 0.000649,
+        "luma_mean": 100.938496,
+        "noise_sigma": 0.276692,
+        "rms_contrast": 33.244777
       },
-      "reason": "acceptable",
+      "reason": "beyond_evidence_extreme_blur",
       "route": "B0",
-      "sha256": "b057c08d1e8f9363d15d277320e5f290add4d4ce55fcf735e8b2df6ca4f3ab40",
+      "sha256": "3866accb8bfc19d8bc5a05a7170f395e32e46d6da87736414b446551a09b0f55",
       "status": "ORIGINAL",
       "used": "B0",
       "warnings": []
@@ -358,153 +250,73 @@
     {
       "A0_full_photo": {
         "E01": {
-          "cos": null,
+          "cos": 0.40401,
           "fa": false,
-          "imp_max": null,
-          "match": false,
-          "rank1": false
+          "imp_max": 0.23347,
+          "match": true,
+          "rank1": true
         },
         "E07": {
-          "cos": null,
-          "fa": false,
-          "imp_max": null,
-          "match": false,
+          "cos": 0.91855,
+          "fa": true,
+          "imp_max": 0.92249,
+          "match": true,
           "rank1": false
         }
       },
       "A_service_original": {
         "E01": {
-          "cos": null,
+          "cos": 0.40401,
           "fa": false,
-          "imp_max": null,
-          "match": false,
-          "rank1": false
+          "imp_max": 0.23347,
+          "match": true,
+          "rank1": true
         },
         "E07": {
-          "cos": null,
-          "fa": false,
-          "imp_max": null,
-          "match": false,
+          "cos": 0.91855,
+          "fa": true,
+          "imp_max": 0.92249,
+          "match": true,
           "rank1": false
         }
       },
       "B_gated": {
         "E01": {
-          "cos": null,
+          "cos": 0.40401,
           "fa": false,
-          "imp_max": null,
-          "match": false,
-          "rank1": false
+          "imp_max": 0.23347,
+          "match": true,
+          "rank1": true
         },
         "E07": {
-          "cos": null,
-          "fa": false,
-          "imp_max": null,
-          "match": false,
+          "cos": 0.91855,
+          "fa": true,
+          "imp_max": 0.92249,
+          "match": true,
           "rank1": false
         }
       },
       "C_forced_a4": null,
-      "category": "",
-      "chip_px": 0,
+      "category": "unrecognizable",
+      "chip_px": 224,
       "decision": "UNSAFE_OR_UNCERTAIN",
       "fallback": "",
-      "id": "A5",
-      "n_faces": 0,
-      "quality": {},
-      "reason": "no_valid_face:NO_FACE_DETECTED",
-      "route": "B0",
-      "sha256": "f7605fddc2838c76af7550036b753b5021703d30ecebd24ee157ff46d3662e3a",
-      "status": "ORIGINAL",
-      "used": "B0",
-      "warnings": []
-    },
-    {
-      "A0_full_photo": {
-        "E01": {
-          "cos": 0.59383,
-          "fa": true,
-          "imp_max": 0.32293,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94602,
-          "fa": true,
-          "imp_max": 0.91908,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "A_service_original": {
-        "E01": {
-          "cos": 0.59201,
-          "fa": true,
-          "imp_max": 0.34137,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94523,
-          "fa": true,
-          "imp_max": 0.91228,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "B_equals_C_pixels": false,
-      "B_gated": {
-        "E01": {
-          "cos": 0.59201,
-          "fa": true,
-          "imp_max": 0.34137,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94523,
-          "fa": true,
-          "imp_max": 0.91228,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "C_forced_a4": {
-        "E01": {
-          "cos": 0.58504,
-          "fa": true,
-          "imp_max": 0.35317,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94817,
-          "fa": true,
-          "imp_max": 0.9192,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "category": "acceptable",
-      "chip_px": 224,
-      "decision": "DO_NOT_ENHANCE",
-      "fallback": "",
-      "id": "A6",
+      "id": "A18",
       "n_faces": 1,
       "quality": {
-        "blockiness": 1.017514,
-        "det_score": 0.949644,
-        "iod_px": 81.869704,
+        "blockiness": 0.994476,
+        "det_score": 0.918015,
+        "iod_px": 80.202958,
         "is_gray": false,
-        "lap_norm_c": 0.049708,
-        "lapd1_c": 0.017864,
-        "luma_mean": 66.664142,
-        "noise_sigma": 0.34824,
-        "rms_contrast": 44.604655
+        "lap_norm_c": 0.004573,
+        "lapd1_c": 0.000857,
+        "luma_mean": 52.806262,
+        "noise_sigma": 0.284745,
+        "rms_contrast": 37.503731
       },
-      "reason": "acceptable",
+      "reason": "beyond_evidence_extreme_blur",
       "route": "B0",
-      "sha256": "bb0b66d06e8015f19074e036367ebf812e4171800688fd55250a034127bd6b46",
+      "sha256": "b58a2adc42c7945ad7b0dabc50e8f3523c87caa0516a8d65b589a30078aa1060",
       "status": "ORIGINAL",
       "used": "B0",
       "warnings": []
@@ -512,482 +324,32 @@
     {
       "A0_full_photo": {
         "E01": {
-          "cos": 0.55561,
+          "cos": 0.39263,
           "fa": true,
-          "imp_max": 0.29291,
+          "imp_max": 0.34668,
           "match": true,
           "rank1": true
         },
         "E07": {
-          "cos": 0.94689,
+          "cos": 0.92667,
           "fa": true,
-          "imp_max": 0.90879,
+          "imp_max": 0.92343,
           "match": true,
           "rank1": true
         }
       },
       "A_service_original": {
         "E01": {
-          "cos": 0.53997,
+          "cos": 0.3341,
           "fa": false,
-          "imp_max": 0.28653,
+          "imp_max": 0.27318,
           "match": true,
           "rank1": true
         },
         "E07": {
-          "cos": 0.9465,
-          "fa": false,
-          "imp_max": 0.90732,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "B_equals_C_pixels": false,
-      "B_gated": {
-        "E01": {
-          "cos": 0.53997,
-          "fa": false,
-          "imp_max": 0.28653,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.9465,
-          "fa": false,
-          "imp_max": 0.90732,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "C_forced_a4": {
-        "E01": {
-          "cos": 0.54038,
-          "fa": false,
-          "imp_max": 0.28216,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.9484,
-          "fa": false,
-          "imp_max": 0.90771,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "category": "degraded_no_a4_evidence",
-      "chip_px": 224,
-      "decision": "DO_NOT_ENHANCE",
-      "fallback": "",
-      "id": "A7",
-      "n_faces": 1,
-      "quality": {
-        "blockiness": 0.977893,
-        "det_score": 0.952586,
-        "iod_px": 86.639788,
-        "is_gray": false,
-        "lap_norm_c": 0.607481,
-        "lapd1_c": 0.031777,
-        "luma_mean": 99.237544,
-        "noise_sigma": 3.922574,
-        "rms_contrast": 46.912335
-      },
-      "reason": "degraded_no_a4_evidence:noise",
-      "route": "B0",
-      "sha256": "2792f2395eed4bcebaee15d47838a83361e0b034e5cdd961e58b996b754867d4",
-      "status": "ORIGINAL",
-      "used": "B0",
-      "warnings": []
-    },
-    {
-      "A0_full_photo": {
-        "E01": {
-          "cos": 0.56181,
+          "cos": 0.93584,
           "fa": true,
-          "imp_max": 0.37398,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.95066,
-          "fa": true,
-          "imp_max": 0.92016,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "A_service_original": {
-        "E01": {
-          "cos": 0.54564,
-          "fa": true,
-          "imp_max": 0.3378,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94563,
-          "fa": true,
-          "imp_max": 0.91451,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "B_equals_C_pixels": false,
-      "B_gated": {
-        "E01": {
-          "cos": 0.54564,
-          "fa": true,
-          "imp_max": 0.3378,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94563,
-          "fa": true,
-          "imp_max": 0.91451,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "C_forced_a4": {
-        "E01": {
-          "cos": 0.52295,
-          "fa": true,
-          "imp_max": 0.32728,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94385,
-          "fa": true,
-          "imp_max": 0.91635,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "category": "degraded_no_a4_evidence",
-      "chip_px": 131,
-      "decision": "DO_NOT_ENHANCE",
-      "fallback": "",
-      "id": "A8",
-      "n_faces": 1,
-      "quality": {
-        "blockiness": 0.866665,
-        "det_score": 0.935929,
-        "iod_px": 49.809766,
-        "is_gray": false,
-        "lap_norm_c": 0.202133,
-        "lapd1_c": 0.018712,
-        "luma_mean": 50.647456,
-        "noise_sigma": 2.429719,
-        "rms_contrast": 48.146675
-      },
-      "reason": "degraded_no_a4_evidence:noise+lowres",
-      "route": "B0",
-      "sha256": "4c4d8c56d8876e00a89c6c60da2d9bd81c9762fbda18b250a483ac3369b00dcc",
-      "status": "ORIGINAL",
-      "used": "B0",
-      "warnings": []
-    },
-    {
-      "A0_full_photo": {
-        "E01": {
-          "cos": 0.46823,
-          "fa": true,
-          "imp_max": 0.28943,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.9418,
-          "fa": false,
-          "imp_max": 0.90846,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "A_service_original": {
-        "E01": {
-          "cos": 0.44841,
-          "fa": true,
-          "imp_max": 0.28958,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94303,
-          "fa": true,
-          "imp_max": 0.91038,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "B_equals_C_pixels": false,
-      "B_gated": {
-        "E01": {
-          "cos": 0.44841,
-          "fa": true,
-          "imp_max": 0.28958,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94303,
-          "fa": true,
-          "imp_max": 0.91038,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "C_forced_a4": {
-        "E01": {
-          "cos": 0.45604,
-          "fa": false,
-          "imp_max": 0.27907,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94254,
-          "fa": true,
-          "imp_max": 0.91115,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "category": "acceptable",
-      "chip_px": 224,
-      "decision": "DO_NOT_ENHANCE",
-      "fallback": "",
-      "id": "A9",
-      "n_faces": 1,
-      "quality": {
-        "blockiness": 1.032094,
-        "det_score": 0.951588,
-        "iod_px": 93.53171,
-        "is_gray": false,
-        "lap_norm_c": 0.225408,
-        "lapd1_c": 0.025216,
-        "luma_mean": 70.300403,
-        "noise_sigma": 0.71243,
-        "rms_contrast": 32.307441
-      },
-      "reason": "acceptable",
-      "route": "B0",
-      "sha256": "c33adfc67a3fd59fed075443e33a79dc13dc9ec77a03d18f93b09066ddb616db",
-      "status": "ORIGINAL",
-      "used": "B0",
-      "warnings": []
-    },
-    {
-      "A0_full_photo": {
-        "E01": {
-          "cos": 0.49104,
-          "fa": true,
-          "imp_max": 0.33478,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94094,
-          "fa": true,
-          "imp_max": 0.92202,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "A_service_original": {
-        "E01": {
-          "cos": 0.43193,
-          "fa": false,
-          "imp_max": 0.22989,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.93884,
-          "fa": true,
-          "imp_max": 0.92361,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "B_equals_C_pixels": false,
-      "B_gated": {
-        "E01": {
-          "cos": 0.43193,
-          "fa": false,
-          "imp_max": 0.22989,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.93884,
-          "fa": true,
-          "imp_max": 0.92361,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "C_forced_a4": {
-        "E01": {
-          "cos": 0.32857,
-          "fa": false,
-          "imp_max": 0.2874,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.93519,
-          "fa": true,
-          "imp_max": 0.92127,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "category": "degraded_no_a4_evidence",
-      "chip_px": 224,
-      "decision": "DO_NOT_ENHANCE",
-      "fallback": "",
-      "id": "A10",
-      "n_faces": 1,
-      "quality": {
-        "blockiness": 0.981042,
-        "det_score": 0.927288,
-        "iod_px": 85.85174,
-        "is_gray": false,
-        "lap_norm_c": 0.00978,
-        "lapd1_c": 0.002817,
-        "luma_mean": 67.981246,
-        "noise_sigma": 0.313473,
-        "rms_contrast": 28.215979
-      },
-      "reason": "degraded_no_a4_evidence:blur",
-      "route": "B0",
-      "sha256": "07a8ed2800afd8ba5c8db257378be5814e1df50c92c6796b67bee6a26a6e3272",
-      "status": "ORIGINAL",
-      "used": "B0",
-      "warnings": []
-    },
-    {
-      "A0_full_photo": {
-        "E01": {
-          "cos": 0.56628,
-          "fa": true,
-          "imp_max": 0.30545,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.93824,
-          "fa": true,
-          "imp_max": 0.91403,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "A_service_original": {
-        "E01": {
-          "cos": 0.52101,
-          "fa": false,
-          "imp_max": 0.28029,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.93932,
-          "fa": true,
-          "imp_max": 0.91821,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "B_equals_C_pixels": false,
-      "B_gated": {
-        "E01": {
-          "cos": 0.52101,
-          "fa": false,
-          "imp_max": 0.28029,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.93932,
-          "fa": true,
-          "imp_max": 0.91821,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "C_forced_a4": {
-        "E01": {
-          "cos": 0.50874,
-          "fa": false,
-          "imp_max": 0.28415,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94817,
-          "fa": true,
-          "imp_max": 0.90978,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "category": "degraded_no_a4_evidence",
-      "chip_px": 224,
-      "decision": "DO_NOT_ENHANCE",
-      "fallback": "",
-      "id": "A11",
-      "n_faces": 1,
-      "quality": {
-        "blockiness": 1.002568,
-        "det_score": 0.946182,
-        "iod_px": 85.13612,
-        "is_gray": false,
-        "lap_norm_c": 0.011575,
-        "lapd1_c": 0.005077,
-        "luma_mean": 97.808076,
-        "noise_sigma": 0.31137,
-        "rms_contrast": 40.643304
-      },
-      "reason": "degraded_no_a4_evidence:blur",
-      "route": "B0",
-      "sha256": "b1c2de18e4a928a572bd484a1c55fdd24f8ef5943817f53f1e26b0623b68bcae",
-      "status": "ORIGINAL",
-      "used": "B0",
-      "warnings": []
-    },
-    {
-      "A0_full_photo": {
-        "E01": {
-          "cos": 0.51079,
-          "fa": true,
-          "imp_max": 0.33149,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.95323,
-          "fa": true,
-          "imp_max": 0.91993,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "A_service_original": {
-        "E01": {
-          "cos": 0.48173,
-          "fa": true,
-          "imp_max": 0.29883,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.9553,
-          "fa": true,
-          "imp_max": 0.91841,
+          "imp_max": 0.92937,
           "match": true,
           "rank1": true
         }
@@ -995,238 +357,58 @@
       "B_equals_C_pixels": true,
       "B_gated": {
         "E01": {
-          "cos": 0.4339,
-          "fa": true,
-          "imp_max": 0.30842,
-          "match": true,
+          "cos": 0.2736,
+          "fa": false,
+          "imp_max": 0.26422,
+          "match": false,
           "rank1": true
         },
         "E07": {
-          "cos": 0.91073,
-          "fa": false,
-          "imp_max": 0.90231,
+          "cos": 0.93702,
+          "fa": true,
+          "imp_max": 0.91661,
           "match": true,
           "rank1": true
         }
       },
       "C_forced_a4": {
         "E01": {
-          "cos": 0.4339,
-          "fa": true,
-          "imp_max": 0.30842,
-          "match": true,
+          "cos": 0.2736,
+          "fa": false,
+          "imp_max": 0.26422,
+          "match": false,
           "rank1": true
         },
         "E07": {
-          "cos": 0.91073,
-          "fa": false,
-          "imp_max": 0.90231,
+          "cos": 0.93702,
+          "fa": true,
+          "imp_max": 0.91661,
           "match": true,
           "rank1": true
         }
       },
       "category": "degraded_recognizable",
-      "chip_px": 224,
+      "chip_px": 127,
       "decision": "ENHANCE_CANDIDATE",
       "fallback": "",
-      "id": "A12",
+      "id": "A19",
       "n_faces": 1,
       "quality": {
-        "blockiness": 1.00596,
-        "det_score": 0.941172,
-        "iod_px": 80.241202,
+        "blockiness": 0.921057,
+        "det_score": 0.914712,
+        "iod_px": 53.12493,
         "is_gray": false,
-        "lap_norm_c": 0.004877,
-        "lapd1_c": 0.001888,
-        "luma_mean": 66.504345,
-        "noise_sigma": 0.297167,
-        "rms_contrast": 39.205585
+        "lap_norm_c": 0.005663,
+        "lapd1_c": 0.001254,
+        "luma_mean": 48.466737,
+        "noise_sigma": 0.277775,
+        "rms_contrast": 37.675526
       },
       "reason": "strong_blur",
       "route": "A4",
-      "sha256": "005d0a128a5c71f94befe6c140d2a0913bd53d4b4df4b6dffa7d5fa9fc926e85",
+      "sha256": "8151e7e19379ef4b3d4721fbf2504526209580bbf6535eb25a9217ac4d3e21da",
       "status": "ENHANCED",
       "used": "A4",
-      "warnings": []
-    },
-    {
-      "A0_full_photo": {
-        "E01": {
-          "cos": 0.56424,
-          "fa": true,
-          "imp_max": 0.29202,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94347,
-          "fa": false,
-          "imp_max": 0.89964,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "A_service_original": {
-        "E01": {
-          "cos": 0.51618,
-          "fa": false,
-          "imp_max": 0.26537,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94617,
-          "fa": false,
-          "imp_max": 0.90524,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "B_equals_C_pixels": false,
-      "B_gated": {
-        "E01": {
-          "cos": 0.51618,
-          "fa": false,
-          "imp_max": 0.26537,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94617,
-          "fa": false,
-          "imp_max": 0.90524,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "C_forced_a4": {
-        "E01": {
-          "cos": 0.50673,
-          "fa": false,
-          "imp_max": 0.24124,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.94955,
-          "fa": false,
-          "imp_max": 0.90803,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "category": "degraded_no_a4_evidence",
-      "chip_px": 224,
-      "decision": "DO_NOT_ENHANCE",
-      "fallback": "",
-      "id": "A13",
-      "n_faces": 1,
-      "quality": {
-        "blockiness": 0.983146,
-        "det_score": 0.931305,
-        "iod_px": 83.392426,
-        "is_gray": true,
-        "lap_norm_c": 1.006596,
-        "lapd1_c": 0.036679,
-        "luma_mean": 57.813437,
-        "noise_sigma": 3.265418,
-        "rms_contrast": 28.114639
-      },
-      "reason": "degraded_no_a4_evidence:noise",
-      "route": "B0",
-      "sha256": "458d67913a6913ee3891484d3af56e1028a9f978f810e7aa59b9d419e958ab8e",
-      "status": "ORIGINAL",
-      "used": "B0",
-      "warnings": []
-    },
-    {
-      "A0_full_photo": {
-        "E01": {
-          "cos": 0.38067,
-          "fa": false,
-          "imp_max": 0.2663,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.95659,
-          "fa": true,
-          "imp_max": 0.91642,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "A_service_original": {
-        "E01": {
-          "cos": 0.35327,
-          "fa": true,
-          "imp_max": 0.29972,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.95311,
-          "fa": true,
-          "imp_max": 0.92352,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "B_equals_C_pixels": false,
-      "B_gated": {
-        "E01": {
-          "cos": 0.35327,
-          "fa": true,
-          "imp_max": 0.29972,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.95311,
-          "fa": true,
-          "imp_max": 0.92352,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "C_forced_a4": {
-        "E01": {
-          "cos": 0.35938,
-          "fa": true,
-          "imp_max": 0.30373,
-          "match": true,
-          "rank1": true
-        },
-        "E07": {
-          "cos": 0.95406,
-          "fa": true,
-          "imp_max": 0.92527,
-          "match": true,
-          "rank1": true
-        }
-      },
-      "category": "photometric",
-      "chip_px": 224,
-      "decision": "DO_NOT_ENHANCE",
-      "fallback": "",
-      "id": "A14",
-      "n_faces": 1,
-      "quality": {
-        "blockiness": 1.005022,
-        "det_score": 0.931464,
-        "iod_px": 84.857641,
-        "is_gray": true,
-        "lap_norm_c": 0.326696,
-        "lapd1_c": 0.030757,
-        "luma_mean": 31.899334,
-        "noise_sigma": 0.409146,
-        "rms_contrast": 23.162873
-      },
-      "reason": "photometric_no_a4_evidence",
-      "route": "B0",
-      "sha256": "87d8e51fe68ca3069c2147d2bf7008d055ce415894643e41bba01b259eb989a8",
-      "status": "ORIGINAL",
-      "used": "B0",
       "warnings": []
     }
   ],
@@ -1236,7 +418,7 @@
     "opencv": "5.0.0",
     "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
     "python": "3.11.16",
-    "utc": "2026-10-04T19:21:12+00:00"
+    "utc": "2026-10-04T19:43:18+00:00"
   },
   "thr_far_1e-2": {
     "E01": 0.288174439971381,
