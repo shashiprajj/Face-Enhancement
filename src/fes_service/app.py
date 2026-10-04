@@ -6,6 +6,8 @@
 Endpoints
   GET  /health        liveness (process up)
   GET  /ready         readiness: frozen seals verified, detector loaded, A4 worker loaded and warmed up
+                      (+ `limits`: the input limits /v1/enhance enforces, for clients such as the demo UI)
+  GET  /ui/           R5-UI local demo page (static HTML/CSS/JS, same origin; it only calls /ready and /v1/enhance)
   POST /v1/enhance    multipart `image` (file), optional form `input_mode` = full_image | face_chip,
                       `return_image` = true | false.
                       200 ENHANCED / ORIGINAL (JSON metadata + base64 image), 422 REJECTED, 503 busy / not ready
@@ -22,18 +24,25 @@ No request image is stored or logged.
 from __future__ import annotations
 
 import base64
+import dataclasses
 import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 import numpy as np
 from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.concurrency import run_in_threadpool
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
-from fes_service.pipeline import REJECTED, SERVICE_VERSION, Busy, EnhancementPipeline
+from fes_service.pipeline import REJECTED, SERVICE_VERSION, Busy, EnhancementPipeline, Limits
 from fes_service.worker import IsolatedModel
 
 STATE: dict = {"ready": False, "error": ""}
+UI_DIR = Path(__file__).with_name("ui")
+# the demo page loads nothing from other origins and may only talk to this service
+UI_CSP = ("default-src 'self'; img-src 'self' blob: data:; style-src 'self'; script-src 'self'; connect-src 'self'; "
+          "object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'")
 
 
 def build_pipeline() -> EnhancementPipeline:
@@ -82,6 +91,7 @@ def ready():
             "gate": pipe.gate if pipe else "",
             "model": STATE.get("model_info", {}),
             "worker_alive": bool(pipe and pipe.a4.alive()), "worker_restarts": pipe.a4.restarts if pipe else 0,
+            "limits": dataclasses.asdict(pipe.limits if pipe else Limits()),
             "validity": "SYNTHETIC-calibrated gate/router; research candidate, not production-approved"}
     return JSONResponse(body, status_code=200 if STATE["ready"] else 503)
 
@@ -102,3 +112,21 @@ async def enhance(image: UploadFile = File(...), input_mode: str = Form("full_im
     body["image_format"] = res.image_format
     body["image_b64"] = base64.b64encode(res.image).decode() if (return_image and res.image) else None
     return JSONResponse(body, status_code=422 if res.status == REJECTED else 200)
+
+
+# ------------------------------------------------------------------ R5-UI demo page (served same-origin: no CORS needed)
+
+class _UIFiles(StaticFiles):
+    async def get_response(self, path, scope):
+        resp = await super().get_response(path, scope)
+        resp.headers.update({"Content-Security-Policy": UI_CSP, "X-Content-Type-Options": "nosniff",
+                             "Referrer-Policy": "no-referrer", "Cache-Control": "no-store"})
+        return resp
+
+
+@app.get("/", include_in_schema=False)
+def root():
+    return RedirectResponse("/ui/")
+
+
+app.mount("/ui", _UIFiles(directory=UI_DIR, html=True), name="ui")
