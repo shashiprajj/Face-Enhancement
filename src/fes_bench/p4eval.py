@@ -128,3 +128,36 @@ def cluster_boot(by_ref: dict[str, list[float]], B: int = 2000, seed: int = 2026
 
 def tie_mark(lo: float, hi: float) -> str:
     return "▲" if lo > 0 else ("▼" if hi < 0 else "≈")
+
+
+def multi_of(p: Pair, c: str, delta: dict) -> str:
+    return multi_verdict(verdict(p.cos[(c, "E01")] - p.cos[("B0", "E01")], delta["E01"]),
+                         verdict(p.cos[(c, "E07")] - p.cos[("B0", "E07")], delta["E07"]))
+
+
+def policy_metrics(pairs: list[Pair], used: dict[str, str], delta: dict, thr: dict) -> dict:
+    """Outcome of a policy that returns config `used[pair_id]` (B0 = original) for each pair. Per evaluator,
+    never pooled: mean ΔID vs original (cluster CI), TAR, flips/rescues; multi-evaluator: confirmed benefit, harm
+    (any evaluator), confirmed harm, disagreements; enhancement rate."""
+    from collections import Counter, defaultdict
+    harm_set = {"CONFIRMED_HARM", "PARTIAL_HARM", "DISAGREE"}
+    row = {"n": len(pairs), "enhanced": sum(used[p.pair_id] != "B0" for p in pairs)}
+    row["enhancement_rate"] = round(row["enhanced"] / max(1, len(pairs)), 4)
+    for e in EVALUATORS:
+        by_ref = defaultdict(list)
+        for p in pairs:
+            c = used[p.pair_id]
+            by_ref[p.ref_id].append(p.cos[(c, e)] - p.cos[("B0", e)])
+        est, lo, hi = cluster_boot(by_ref)
+        row[f"d_{e}"] = [round(est, 5), round(lo, 5), round(hi, 5), tie_mark(lo, hi)]
+        row[f"TAR_{e}"] = round(float(np.mean([p.cos[(used[p.pair_id], e)] >= thr[e] for p in pairs])), 4)
+        row[f"flips_{e}"] = int(sum(p.cos[("B0", e)] >= thr[e] > p.cos[(used[p.pair_id], e)] for p in pairs))
+        row[f"rescues_{e}"] = int(sum(p.cos[(used[p.pair_id], e)] >= thr[e] > p.cos[("B0", e)] for p in pairs))
+        row[f"benefit_{e}"] = int(sum(used[p.pair_id] != "B0" and verdict(p.cos[(used[p.pair_id], e)] - p.cos[("B0", e)], delta[e]) == "BENEFIT" for p in pairs))
+        row[f"harm_{e}"] = int(sum(used[p.pair_id] != "B0" and verdict(p.cos[(used[p.pair_id], e)] - p.cos[("B0", e)], delta[e]) == "HARM" for p in pairs))
+    v = Counter(multi_of(p, used[p.pair_id], delta) for p in pairs if used[p.pair_id] != "B0")
+    row["confirmed_benefit"] = v.get("CONFIRMED_BENEFIT", 0)
+    row["harm_any"] = sum(v.get(k, 0) for k in harm_set)
+    row["confirmed_harm"] = v.get("CONFIRMED_HARM", 0)
+    row["disagree"] = v.get("DISAGREE", 0)
+    return row

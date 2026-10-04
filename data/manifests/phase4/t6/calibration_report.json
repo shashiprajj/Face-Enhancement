@@ -1,0 +1,125 @@
+{
+  "cv_utility_by_fold": {
+    "0": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "1": [
+      -18.0,
+      3.0,
+      4.0,
+      4.0
+    ],
+    "2": [
+      -12.0,
+      4.0,
+      11.0,
+      9.0
+    ],
+    "3": [
+      -15.0,
+      5.0,
+      12.0,
+      9.0
+    ],
+    "4": [
+      -15.0,
+      7.0,
+      15.0,
+      9.0
+    ]
+  },
+  "cv_utility_mean_by_k": {
+    "0": 0.0,
+    "1": -1.75,
+    "2": 3.0,
+    "3": 2.75,
+    "4": 4.0
+  },
+  "dev_in_sample_label_by_decision": {
+    "DO_NOT_ENHANCE": {
+      "NEUTRAL": 330,
+      "UNSAFE": 241,
+      "WORTHY": 36
+    },
+    "ENHANCE_CANDIDATE": {
+      "NEUTRAL": 51,
+      "UNSAFE": 2,
+      "WORTHY": 50
+    },
+    "UNSAFE_OR_UNCERTAIN": {
+      "NEUTRAL": 52,
+      "UNSAFE": 62,
+      "WORTHY": 72
+    }
+  },
+  "dev_in_sample_utility": 44.0,
+  "gate_sha256": "b8ee2c4309e5fe9a7ac1b07a6c0c8154f015dd86981fb72b1bf0043ec9fb7d88",
+  "k": 4,
+  "label_counts_fit": {
+    "NEUTRAL": 381,
+    "UNSAFE": 243,
+    "WORTHY": 86
+  },
+  "n_dev_pairs": 896,
+  "n_fit_pairs": 710,
+  "note": "In-sample (dev) figures describe the fit only; the single test evaluation is p4_gate_evaluate.py.",
+  "rules": [
+    {
+      "conds": [
+        [
+          "noise_sigma",
+          ">=",
+          9.837129
+        ]
+      ]
+    },
+    {
+      "conds": [
+        [
+          "hf_ratio_c",
+          "<=",
+          0.000167
+        ]
+      ]
+    },
+    {
+      "conds": [
+        [
+          "blockiness",
+          ">=",
+          2.422797
+        ],
+        [
+          "noise_sigma",
+          "<=",
+          0.282681
+        ]
+      ]
+    },
+    {
+      "conds": [
+        [
+          "lap_norm_c",
+          "<=",
+          0.019835
+        ],
+        [
+          "noise_sigma",
+          "<=",
+          0.282681
+        ]
+      ]
+    }
+  ],
+  "run": {
+    "git_head": "4ebceb64a89d745b7064b0637bd70349ffb169ca-dirty",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-04T09:34:08+00:00"
+  }
+}
