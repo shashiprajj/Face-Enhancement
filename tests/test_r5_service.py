@@ -176,6 +176,46 @@ def test_metadata_has_no_sensitive_fields(samples, pipe_spy):
     assert not {"landmarks", "bbox", "det_landmarks", "embedding", "transform_2x3"} & set(m)
 
 
+# ------------------------------------------------------------------ force_a4 (R5-UI research option)
+
+def test_force_a4_overrides_route_only_and_reports_gate_verdict(samples):
+    spy = Spy()
+    pipe = SP.EnhancementPipeline(spy, timeout_s=10, gate="rw")
+    _, data, _ = samples["DNE_mild"]
+    gated = pipe.process(data, "face_chip")
+    assert gated.status == SP.ORIGINAL_S and spy.calls == 0 and not gated.forced and gated.chip
+    forced = pipe.process(data, "face_chip", force_a4=True)
+    assert forced.status == SP.ENHANCED and forced.used == "A4" and spy.calls == 1 and forced.forced
+    assert (forced.decision, forced.reason, forced.bucket) == (gated.decision, gated.reason, gated.bucket)
+    assert forced.gate_route == gated.route == RT.ORIGINAL and forced.chip == gated.chip
+    assert "plan" not in vars(pipe.router)                       # the override never outlives the request
+    again = pipe.process(data, "face_chip")                       # next unforced request: frozen behaviour
+    assert again.status == SP.ORIGINAL_S and spy.calls == 1
+
+
+def test_force_a4_on_gate_approved_input_is_not_marked_forced(samples):
+    pipe = SP.EnhancementPipeline(Spy(), timeout_s=10)
+    r = pipe.process(samples["A4_NOISE"][1], "face_chip", force_a4=True)
+    assert r.status == SP.ENHANCED and not r.forced and r.gate_route == "A4"
+
+
+def test_force_a4_cannot_enhance_without_a_face(pipe_spy):
+    pipe, spy = pipe_spy
+    calls = spy.calls
+    data = png(np.random.default_rng(2).integers(0, 255, (300, 400, 3), np.uint8))
+    r = pipe.process(data, force_a4=True)
+    assert r.status == SP.ORIGINAL_S and r.image == data and r.chip is None and spy.calls == calls
+
+
+def test_force_a4_keeps_failure_fallbacks(samples):
+    m = IsolatedModel("fes_service.models:fake_bad_output_factory", timeout_s=10)
+    try:
+        r = SP.EnhancementPipeline(m, timeout_s=10).process(samples["DNE_mild"][1], "face_chip", force_a4=True)
+        assert r.status == SP.ORIGINAL_S and r.fallback == "INVALID_OUTPUT" and r.forced
+    finally:
+        m.close()
+
+
 # ------------------------------------------------------------------ process-isolated model failures
 
 @pytest.mark.parametrize("factory,fallback", [
@@ -255,6 +295,11 @@ def test_api_health_ready_and_enhance(client, samples):
     uns = client.post("/v1/enhance", files={"image": ("x.png", samples["UNSAFE"][1], "image/png")},
                       data={"input_mode": "face_chip"})
     assert uns.status_code == 200 and uns.json()["status"] == SP.ORIGINAL_S and uns.json()["escalate"]
+    # R5-UI: chip_b64 + opt-in force_a4 (default off keeps the gate's route)
+    assert orig.json()["chip_b64"] is None and orig.json()["forced"] is False       # return_image=false → no pixels
+    f = client.post("/v1/enhance", files={"image": ("x.png", samples["DNE_mild"][1], "image/png")},
+                    data={"input_mode": "face_chip", "force_a4": "true"}).json()
+    assert f["status"] == SP.ENHANCED and f["forced"] and f["gate_route"] == RT.ORIGINAL and f["chip_b64"]
 
 
 def test_api_not_ready_when_model_cannot_load(monkeypatch):

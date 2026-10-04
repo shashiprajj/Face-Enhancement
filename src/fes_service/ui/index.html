@@ -39,6 +39,9 @@
         </div>
       </div>
       <div class="actions">
+        <label class="force" title="Runs A4 on the detected face even when the quality gate says not to. Research only.">
+          <input id="force-a4" type="checkbox"> Force A4 (research — bypass the quality gate)
+        </label>
         <button id="enhance-btn" class="btn primary" type="button" disabled>Enhance Image</button>
       </div>
       <div id="loading" class="loading" hidden role="status" aria-live="polite">
@@ -59,15 +62,18 @@
           <p id="result-message" class="msg"></p>
           <p id="reason-text" class="reason" hidden></p>
         </div>
-        <button id="reset-btn" class="btn primary" type="button">Try Another Image</button>
+        <div class="result-actions">
+          <button id="force-btn" class="btn ghost" type="button" hidden>Run A4 anyway (forced)</button>
+          <button id="reset-btn" class="btn primary" type="button">Try Another Image</button>
+        </div>
       </div>
       <div class="compare">
         <figure>
-          <figcaption>ORIGINAL</figcaption>
+          <figcaption id="left-label">ORIGINAL</figcaption>
           <div class="frame"><img id="orig-img" alt="Original uploaded image"></div>
         </figure>
         <figure>
-          <figcaption>PROCESSED</figcaption>
+          <figcaption id="right-label">PROCESSED</figcaption>
           <div class="frame"><img id="proc-img" alt="Image returned by the service"></div>
           <p id="output-note" class="note"></p>
         </figure>

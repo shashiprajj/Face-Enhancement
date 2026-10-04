@@ -10,6 +10,11 @@ Input modes
               cut out as a square chip in the same FairFace/dlib framing the gate was calibrated on
               (DLIB_CHIP_TEMPLATE, landmark similarity fit) at NATIVE resolution (no upsampling; downscaled to
               224 only if larger), so A4 and the gate see what they saw in Phase 4.
+Research option (R5-UI)
+  force_a4   run A4 on the face chip even when the gate does not route it (what the R5 "forced A4" evaluations did).
+             The gate still runs and its decision/reason are reported unchanged; `forced` marks the override and
+             `gate_route` keeps the gate's own route. Detection failures still return ORIGINAL (no chip to enhance);
+             the router's timeout/failure fallbacks and output guard still apply. Default off = the frozen behaviour.
 Outputs
   ENHANCED   the A4 face chip, 224×224 (E-frame), PNG
   ORIGINAL   the input bytes exactly as received (never re-encoded) — for every non-A4 outcome
@@ -76,6 +81,9 @@ class Result:
     chip_px: int = 0
     quality: dict = field(default_factory=dict)
     timings_ms: dict = field(default_factory=dict)
+    forced: bool = False                         # force_a4 overrode the gate's route
+    gate_route: str = ""                         # the route the gate chose (before any force_a4 override)
+    chip: bytes | None = None                    # PNG of the face chip the gate analysed / A4 received
 
     def metadata(self) -> dict:
         """Structured, non-sensitive metadata: no landmarks, boxes, embeddings or pixels."""
@@ -86,7 +94,8 @@ class Result:
                 "decision": self.decision, "reason": self.reason, "bucket": self.bucket, "route": self.route,
                 "used": self.used, "fallback": self.fallback, "escalate": self.escalate, "error": self.error,
                 "warnings": self.warnings, "n_faces": self.n_faces, "chip_px": self.chip_px,
-                "quality": self.quality, "timings_ms": self.timings_ms}
+                "quality": self.quality, "timings_ms": self.timings_ms, "forced": self.forced,
+                "gate_route": self.gate_route}
 
 
 def _json_num(v):
@@ -199,16 +208,33 @@ class EnhancementPipeline:
         return img, ""
 
     # ---------------------------------------------------------------- main entry
-    def process(self, data: bytes, input_mode: str = "full_image") -> Result:
+    def process(self, data: bytes, input_mode: str = "full_image", force_a4: bool = False) -> Result:
         if not self._slots.acquire(blocking=False):
             raise Busy("too many requests in flight")
         try:
             with self._lock:
-                return self._process(data, input_mode)
+                return self._process(data, input_mode, force_a4)
         finally:
             self._slots.release()
 
-    def _process(self, data: bytes, input_mode: str) -> Result:
+    def _route(self, chip: np.ndarray, force_a4: bool):
+        """The frozen router; with force_a4 its plan is kept but the route is overridden to A4 (under the lock)."""
+        if not force_a4:
+            return self.router.route(chip, {"s": chip.shape[0]}, G.upsample_to_e(chip))
+        gate_plan = self.router.plan
+
+        def forced_plan(f):
+            rec = gate_plan(f)
+            rec.extra["gate_route"] = rec.route
+            rec.route = "A4"
+            return rec
+        self.router.plan = forced_plan
+        try:
+            return self.router.route(chip, {"s": chip.shape[0]}, G.upsample_to_e(chip))
+        finally:
+            del self.router.plan                                     # back to the class method
+
+    def _process(self, data: bytes, input_mode: str, force_a4: bool = False) -> Result:
         t0 = time.perf_counter()
         ms = lambda: round((time.perf_counter() - t0) * 1000, 1)  # noqa: E731
         res = Result(status=REJECTED, request_id=uuid.uuid4().hex, input_mode=input_mode)
@@ -249,10 +275,12 @@ class EnhancementPipeline:
                 return original(decision=GT.UNSAFE, reason="alignment_unreliable:landmarks", escalate=True)
             chip, _ = face_chip(img, lm)
         res.chip_px = int(chip.shape[0])
+        ok, chip_png = cv2.imencode(".png", chip)
+        res.chip = chip_png.tobytes() if ok else None
 
         # ---- frozen T6 → T7 → ORIGINAL | A4 (with the router's fallbacks and output guard)
         try:
-            out, rec = self.router.route(chip, {"s": chip.shape[0]}, G.upsample_to_e(chip))
+            out, rec = self._route(chip, force_a4)
         except Exception as e:  # noqa: BLE001 — feature extraction itself failed: never enhance
             return original(decision=GT.UNSAFE, reason="quality_analysis_failed", escalate=True,
                             error=f"{type(e).__name__}: {e}"[:200])
@@ -260,6 +288,8 @@ class EnhancementPipeline:
         res.quality = {k: _json_num(self._feat.get(k)) for k in QUALITY_KEYS}
         res.decision, res.reason, res.bucket, res.route = rec.decision, rec.reason, rec.bucket, rec.route
         res.fallback, res.escalate, res.error, res.used = rec.fallback, rec.escalate, rec.error, rec.used
+        res.gate_route = rec.extra.get("gate_route", rec.route)
+        res.forced = force_a4 and res.gate_route != "A4"
         if rec.used == RT.ORIGINAL:
             return original()
         if self.gate == "rw" and self._feat.get("is_gray"):

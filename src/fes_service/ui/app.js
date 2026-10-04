@@ -13,6 +13,7 @@ const el = {
   result: $("result"), badge: $("status-badge"), chip: $("decision-chip"), title: $("result-title"),
   message: $("result-message"), reasonText: $("reason-text"), orig: $("orig-img"), proc: $("proc-img"),
   outputNote: $("output-note"), warnings: $("warnings"), details: $("details"), reset: $("reset-btn"),
+  force: $("force-a4"), forceBtn: $("force-btn"), leftLabel: $("left-label"), rightLabel: $("right-label"),
 };
 
 const state = { file: null, url: "", limits: { ...DEFAULT_LIMITS }, busy: false, validDims: false };
@@ -46,7 +47,7 @@ const clearError = () => { el.error.hidden = true; el.error.replaceChildren(); }
 
 function refreshButtons() {
   el.enhance.disabled = !state.file || !state.validDims || state.busy;
-  el.replace.disabled = el.remove.disabled = state.busy;
+  el.replace.disabled = el.remove.disabled = el.force.disabled = el.forceBtn.disabled = state.busy;
   el.drop.classList.toggle("disabled", state.busy);
 }
 
@@ -104,7 +105,7 @@ window.addEventListener("dragover", (e) => e.preventDefault());
 window.addEventListener("drop", (e) => e.preventDefault());
 
 // ------------------------------------------------------------------ enhance (/v1/enhance)
-async function enhance() {
+async function enhance(force = el.force.checked) {
   if (!state.file || state.busy) return;                  // duplicate-submission guard
   state.busy = true; refreshButtons(); clearError(); el.result.hidden = true;
   el.loadingText.textContent = PROCESSING_MESSAGE;
@@ -117,7 +118,7 @@ async function enhance() {
   const timer = setTimeout(() => { timedOut = true; ctrl.abort(); }, REQUEST_TIMEOUT_MS);
   let view;
   try {
-    const r = await fetch("/v1/enhance", { method: "POST", body: buildEnhanceForm(state.file), signal: ctrl.signal });
+    const r = await fetch("/v1/enhance", { method: "POST", body: buildEnhanceForm(state.file, { force }), signal: ctrl.signal });
     const body = await r.json().catch(() => null);
     view = interpretResponse(r.status, body);
   } catch (e) {
@@ -130,18 +131,22 @@ async function enhance() {
   if (view.imageSrc) renderResult(view, rtt);
   else { showError(`${view.title}. `, view.message); checkHealth(); }
 }
-el.enhance.addEventListener("click", enhance);
+el.enhance.addEventListener("click", () => enhance());
+el.forceBtn.addEventListener("click", () => enhance(true));
 
 function renderResult(v, rtt) {
-  el.badge.textContent = v.kind;
+  el.badge.textContent = v.forced ? `${v.kind} · FORCED` : v.kind;
   el.badge.dataset.tone = v.tone;
   el.chip.hidden = !v.decision; el.chip.textContent = v.decision;
   el.title.textContent = v.title;
   el.message.textContent = v.message;
   el.reasonText.hidden = !v.reason;
   el.reasonText.textContent = v.reason ? `Reason: ${v.reason}${v.reasonText ? ` — ${v.reasonText}` : ""}` : "";
-  el.orig.src = state.url;
+  el.orig.src = v.leftSrc || state.url;
   el.proc.src = v.imageSrc;
+  el.leftLabel.textContent = v.leftLabel;
+  el.rightLabel.textContent = v.rightLabel;
+  el.forceBtn.hidden = !v.canForce;
   el.outputNote.textContent = v.outputNote;
   el.warnings.hidden = !v.warnings.length;
   el.warnings.textContent = v.warnings.length ? `Service warnings: ${v.warnings.join(", ")}` : "";
@@ -159,7 +164,7 @@ function renderResult(v, rtt) {
 el.reset.addEventListener("click", () => {
   if (state.busy) return;
   clearFile(); clearError();
-  el.result.hidden = true;
+  el.result.hidden = true; el.force.checked = false;
   el.orig.removeAttribute("src"); el.proc.removeAttribute("src"); el.details.replaceChildren();
   window.scrollTo({ top: 0, behavior: "smooth" });
 });

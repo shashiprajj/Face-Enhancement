@@ -87,6 +87,26 @@ Nothing else changed:
 - `/health` is unchanged.
 - No decision logic was touched.
 
+**Follow-up addition, requested by the user (A10-style view):** the user wanted the result to look like the R5 real-person sheets: the face crop next to the A4 output. Those sheets came from `scripts/r5_realperson_eval.py`, which runs A4 on the face crop **regardless of the gate** ("A4 (forced)"). Through the service, the gate keeps most real photos ORIGINAL, so this view could not appear. Three opt-in additions make it possible; old clients are unaffected:
+
+- **`POST /v1/enhance` form field `force_a4`** (default `false`). When true, the pipeline still runs the frozen gate and reports its `decision`, `reason` and `bucket` unchanged, then overrides only the route to A4.
+  - The response marks this with `forced: true` and `gate_route`, the gate's own route.
+  - Detection failures still return ORIGINAL, because there is no face crop to enhance.
+  - The router's timeout and failure fallbacks and the output guard still apply.
+  - The override is applied per request, under the pipeline lock, and removed afterwards; a test checks this.
+  - No gate, router, threshold or `fes_bench` file was changed.
+- **`chip_b64`:** the PNG of the face crop the gate analysed and A4 received. It is returned only when `return_image` is true.
+- **New metadata fields:** `forced` and `gate_route`.
+
+**UI changes:**
+
+- A **"Force A4 (research — bypass the quality gate)"** checkbox, off by default.
+- A **"Run A4 anyway (forced)"** button on results where a face was found but the gate kept the original.
+- Enhanced results now compare like for like: **ORIGINAL (face crop, N px)** next to **A4 (gate-approved)** or **A4 (forced)**.
+- A forced result is badged **ENHANCED · FORCED** in amber, and its message states the gate's actual verdict.
+
+**Checked in Chrome on the real service:** img1 first came back ORIGINAL (`degraded_no_a4_evidence:noise+lowres`). "Run A4 anyway" then returned the 181 px face crop next to the 224 px A4 output in 39 s.
+
 **Pre-existing field, not changed:** `/ready` already exposed `model.weights`, a path relative to the repository. The UI does not read or display it. Changing it would be a contract change outside this task's scope, so it was left as is.
 
 ## 6. Tests
@@ -225,6 +245,7 @@ FES_IMAGE=fes-dev:cpu-p5 scripts/dock.sh python -m pytest -q tests/test_r5_ui.py
 - The runtime `/ready` reports the same seals: t6 `b8ee2c43`, t7 `2f026f22`, rw `78837a8d`.
 - The smoke-test decisions match the frozen R5-3 manifest (`data/manifests/phase5_rapid/rwgate/realphotos.csv.gz`) for every photo tested.
 - No new model was added (no GFPGAN or CodeFormer), and no thresholds, Feature-Match, SFace or dlib appear in the UI.
+- `force_a4` (follow-up, opt-in) changes only which route runs for that request. With the default `false`, behaviour is byte-identical; the existing tests and the R5-3 smoke decisions still match. A forced output is research evidence only: the gate's verdict is that A4 has no proven benefit there.
 
 ## 12. Commit
 

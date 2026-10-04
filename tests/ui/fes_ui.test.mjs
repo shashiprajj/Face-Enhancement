@@ -51,6 +51,41 @@ test("request uses the existing /v1/enhance multipart contract", () => {
   assert.deepEqual([...fd.keys()].sort(), ["image", "input_mode", "return_image"]);
 });
 
+test("force_a4 is sent only when asked for", () => {
+  const file = new File([new Uint8Array([1])], "f.png", { type: "image/png" });
+  assert.equal(buildEnhanceForm(file).get("force_a4"), null);
+  assert.equal(buildEnhanceForm(file, { force: true }).get("force_a4"), "true");
+});
+
+test("forced A4 result: face crop vs A4 crop, gate verdict kept and flagged", () => {
+  const v = interpretResponse(200, { ...base, status: "ENHANCED", decision: "DO_NOT_ENHANCE",
+    reason: "degraded_no_a4_evidence:blur", route: "A4", used: "A4", gate_route: "B0", forced: true,
+    image_format: "png", image_b64: PNG_B64, chip_b64: PNG_B64 });
+  assert.equal(v.forced, true);
+  assert.equal(v.tone, "warn");
+  assert.match(v.title, /forced.*gate bypassed/);
+  assert.match(v.message, /DO_NOT_ENHANCE/);
+  assert.equal(v.leftSrc, `data:image/png;base64,${PNG_B64}`);
+  assert.equal(v.rightLabel, "A4 (forced)");
+  assert.match(v.leftLabel, /face crop, 180 px/);
+  assert.equal(v.canForce, false);
+  const d = Object.fromEntries(v.details);
+  assert.equal(d["Gate route"], "B0");
+  assert.equal(d["Forced A4"], "yes (gate bypassed)");
+});
+
+test("gate-kept original offers the forced run only when a face crop exists", () => {
+  const orig = { ...base, status: "ORIGINAL", decision: "DO_NOT_ENHANCE", reason: "acceptable", image_format: "as_received",
+    image_b64: JPG_B64 };
+  assert.equal(interpretResponse(200, { ...orig, chip_b64: PNG_B64 }).canForce, true);
+  assert.equal(interpretResponse(200, { ...orig, chip_b64: null }).canForce, false);           // no face found
+  assert.equal(interpretResponse(200, { ...orig, chip_b64: PNG_B64, fallback: "TIMEOUT" }).canForce, false);
+  const g = interpretResponse(200, { ...orig, status: "ENHANCED", decision: "ENHANCE_CANDIDATE", forced: false,
+    image_format: "png", image_b64: PNG_B64, chip_b64: PNG_B64 });
+  assert.equal(g.rightLabel, "A4 (gate-approved)");
+  assert.equal(g.tone, "ok");
+});
+
 test("timeout covers the backend A4 timeout and the loading text is truthful", () => {
   assert.ok(REQUEST_TIMEOUT_MS >= 150_000);
   assert.match(PROCESSING_MESSAGE, /up to a minute on CPU/);

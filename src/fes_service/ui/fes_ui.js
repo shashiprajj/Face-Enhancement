@@ -49,12 +49,13 @@ export function validateDimensions(w, h, limits = DEFAULT_LIMITS) {
   return { ok: true, error: "" };
 }
 
-/** The multipart body for POST /v1/enhance (existing contract: image, input_mode, return_image). */
-export function buildEnhanceForm(file, FormDataCtor = FormData) {
+/** The multipart body for POST /v1/enhance (image, input_mode, return_image; force_a4 only when asked for). */
+export function buildEnhanceForm(file, { force = false } = {}, FormDataCtor = FormData) {
   const fd = new FormDataCtor();
   fd.append("image", file, file.name || "upload");
   fd.append("input_mode", "full_image");
   fd.append("return_image", "true");
+  if (force) fd.append("force_a4", "true");
   return fd;
 }
 
@@ -131,8 +132,13 @@ export function interpretResponse(httpStatus, body) {
   const decision = body.decision || "";
   const reason = body.reason || "";
   const fallback = body.fallback || "";
+  const forced = body.forced === true;
   let title, message;
-  if (s === "ENHANCED") {
+  if (s === "ENHANCED" && forced) {
+    title = "A4 (forced) — quality gate bypassed";
+    message = `The gate decided ${decision || "not to enhance"}; A4 was run anyway because Force A4 was requested. `
+      + "This is a research view: the gate found no evidence that A4 helps this image.";
+  } else if (s === "ENHANCED") {
     title = "Enhanced";
     message = "The face was enhanced by the A4 model.";
   } else if (fallback) {
@@ -154,6 +160,8 @@ export function interpretResponse(httpStatus, body) {
     ["Reason", reason],
     ["Category", body.bucket],
     ["Route / used", body.route || body.used ? `${body.route || "—"} / ${body.used || "—"}` : ""],
+    ["Gate route", forced ? body.gate_route : ""],
+    ["Forced A4", forced ? "yes (gate bypassed)" : ""],
     ["Fallback", fallback],
     ["Escalate", body.escalate === true ? "yes" : body.escalate === false ? "no" : ""],
     ["Faces detected", Number.isFinite(body.n_faces) ? String(body.n_faces) : ""],
@@ -167,11 +175,20 @@ export function interpretResponse(httpStatus, body) {
     ["Service version", body.service_version],
     ["Request ID", body.request_id],
   ].filter(([, v]) => v !== null && v !== undefined && v !== "");
+  const chipSrc = body.chip_b64 ? `data:image/png;base64,${body.chip_b64}` : "";
+  const enhanced = s === "ENHANCED";
   return {
-    kind: s, tone: tone(s, decision), title, message, decision, reason, reasonText: explainReason(reason), fallback,
+    kind: s, tone: forced ? "warn" : tone(s, decision), title, message, decision, reason,
+    reasonText: explainReason(reason), fallback, forced,
     imageSrc: `data:${mime};base64,${body.image_b64}`,
-    outputNote: s === "ENHANCED"
-      ? "Processed = the enhanced 224×224 face crop returned by the service (not the full photo)."
+    // enhanced: compare like for like (the face crop the service cut → the A4 output), as in the R5 side-by-side sheets
+    leftSrc: enhanced && chipSrc ? chipSrc : "",
+    leftLabel: enhanced && chipSrc ? `ORIGINAL (face crop, ${body.chip_px || "?"} px)` : "ORIGINAL",
+    rightLabel: enhanced ? (forced ? "A4 (forced)" : "A4 (gate-approved)") : "PROCESSED (returned unchanged)",
+    // a face was cut out but the gate kept the original: offer the research override
+    canForce: !enhanced && !!chipSrc && !fallback,
+    outputNote: enhanced
+      ? "Right = the enhanced 224×224 face crop returned by the service. Left = the face crop the service cut from your photo (same framing)."
       : "Processed = the original image bytes returned unchanged by the service.",
     details, warnings: Array.isArray(body.warnings) ? body.warnings : [],
   };

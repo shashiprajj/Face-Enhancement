@@ -51,7 +51,9 @@ main { max-width: 1080px; margin: 0 auto; padding: 8px 16px; display: grid; gap:
 .file-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
 .file-name { color: var(--muted); overflow-wrap: anywhere; }
 .file-actions { display: flex; gap: 8px; }
-.actions { margin-top: 16px; display: flex; justify-content: flex-end; }
+.actions { margin-top: 16px; display: flex; justify-content: flex-end; align-items: center; gap: 16px; flex-wrap: wrap; }
+.force { color: var(--muted); font-size: 14px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.result-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .btn { font: inherit; font-weight: 600; border-radius: 8px; padding: 9px 18px; cursor: pointer; border: 1px solid transparent; }
 .btn.primary { background: var(--accent); color: var(--accent-ink); }

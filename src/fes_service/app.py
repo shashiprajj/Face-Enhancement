@@ -9,7 +9,8 @@ Endpoints
                       (+ `limits`: the input limits /v1/enhance enforces, for clients such as the demo UI)
   GET  /ui/           R5-UI local demo page (static HTML/CSS/JS, same origin; it only calls /ready and /v1/enhance)
   POST /v1/enhance    multipart `image` (file), optional form `input_mode` = full_image | face_chip,
-                      `return_image` = true | false.
+                      `return_image` = true | false, `force_a4` = false (default) | true (research: run A4 even
+                      when the gate does not route it; the gate's decision is still reported, `forced` = true).
                       200 ENHANCED / ORIGINAL (JSON metadata + base64 image), 422 REJECTED, 503 busy / not ready
 Environment
   FES_A4_FACTORY   model factory (default fes_service.models:a4_factory)
@@ -98,19 +99,20 @@ def ready():
 
 @app.post("/v1/enhance")
 async def enhance(image: UploadFile = File(...), input_mode: str = Form("full_image"),
-                  return_image: bool = Form(True)):
+                  return_image: bool = Form(True), force_a4: bool = Form(False)):
     if not STATE["ready"]:
         return JSONResponse({"status": "NOT_READY", "error": STATE["error"]}, status_code=503)
     pipe: EnhancementPipeline = STATE["pipeline"]
     data = await image.read(pipe.limits.max_bytes + 1)
     try:
-        res = await run_in_threadpool(pipe.process, data, input_mode)
+        res = await run_in_threadpool(pipe.process, data, input_mode, force_a4)
     except Busy:
         return JSONResponse({"status": "BUSY", "error": "too many requests in flight"}, status_code=503,
                             headers={"Retry-After": "30"})
     body = res.metadata()
     body["image_format"] = res.image_format
     body["image_b64"] = base64.b64encode(res.image).decode() if (return_image and res.image) else None
+    body["chip_b64"] = base64.b64encode(res.chip).decode() if (return_image and res.chip) else None
     return JSONResponse(body, status_code=422 if res.status == REJECTED else 200)
 
 
