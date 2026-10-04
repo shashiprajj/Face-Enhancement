@@ -1,0 +1,88 @@
+{
+  "checks": {
+    "a4_pixels_equal_phase4": true,
+    "all_deterministic": true,
+    "face_chip_matches_phase4": true,
+    "no_unexpected_fallbacks": true,
+    "originals_returned_unchanged": true
+  },
+  "cold_start_s": 6.2,
+  "data_kind": "SYNTHETIC (Phase 4 dev chips) + 3 constructed full-image cases",
+  "groups": {
+    "A4_BLUR": 2,
+    "A4_NOISE": 2,
+    "DNE_mild": 2,
+    "ENHANCE_to_original": 2,
+    "UNSAFE": 2
+  },
+  "host_note": "shared laptop CPU; WelOrbit containers running; torch 2 threads in the worker",
+  "latency": {
+    "ENHANCED": {
+      "max_s": 80.67,
+      "n": 8,
+      "p50_s": 71.175
+    },
+    "ORIGINAL": {
+      "max_s": 0.04,
+      "n": 16,
+      "p50_s": 0.015
+    },
+    "REJECTED": {
+      "max_s": 0.04,
+      "n": 2,
+      "p50_s": 0.02
+    }
+  },
+  "peak_rss_mb": {
+    "service_mb": 187.2,
+    "worker_mb": 1246.2
+  },
+  "policy_equivalence_face_chip": {
+    "identical": 896,
+    "mismatches": [],
+    "n": 896
+  },
+  "ready": {
+    "error": "",
+    "model": {
+      "device": "cpu",
+      "label": "SwinIR-L real-SR x4 (GAN)",
+      "load_s": 2.9,
+      "model": "A4",
+      "strict": true,
+      "weights": "models/M24_swinir/003_realSR_BSRGAN_DFOWMFC_s64w8_SwinIR-L_x4_GAN.pth",
+      "weights_sha256": "99adfa91350a84c99e946c1eb3d8fce34bc28f57d807b09dc8fe40a316328c0a"
+    },
+    "ready": true,
+    "routing_table": {
+      "BLUR": "A4",
+      "COMPRESS": "B0",
+      "LOWRES": "B0",
+      "MIXED": "B0",
+      "NOISE": "A4",
+      "NONE": "B0",
+      "PHOTOMETRIC": "B0"
+    },
+    "seals": {
+      "t6_gate": "b8ee2c4309e5fe9a7ac1b07a6c0c8154f015dd86981fb72b1bf0043ec9fb7d88",
+      "t7_routing": "2f026f22903955cae6fc4379897e3d738b521a9533a136844f48792cc36e8eac"
+    },
+    "service_version": "fes-service-r5-0.1.0",
+    "validity": "SYNTHETIC-calibrated gate/router; research candidate, not production-approved",
+    "worker_alive": true,
+    "worker_restarts": 0
+  },
+  "run": {
+    "git_head": "7aa8b2905bf347a1a6e5375f976617d5fb11a0fe",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-04T11:34:37+00:00"
+  },
+  "status_counts": {
+    "ENHANCED": 4,
+    "ORIGINAL": 8,
+    "REJECTED": 1
+  }
+}

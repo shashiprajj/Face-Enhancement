@@ -1,0 +1,9 @@
+# Phase 5 (rapid validation) service image = fes-dev:cpu-p4 + the hash-pinned FastAPI service layer (R5-1).
+# CPU only. No model weights are baked in: models/ is mounted read-only at run time.
+FROM fes-dev:cpu-p4
+USER root
+COPY requirements-p5.txt /tmp/
+RUN pip install --require-hashes --only-binary=:all: -r /tmp/requirements-p5.txt \
+ && python -c "import fastapi, uvicorn, multipart, httpx, psutil; print(fastapi.__version__)"
+USER fes
+ENV CUDA_VISIBLE_DEVICES="" OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1

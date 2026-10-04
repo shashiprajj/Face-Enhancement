@@ -1,0 +1,89 @@
+TASK R5-1 — STANDALONE WORKING ENHANCEMENT PIPELINE
+
+Objective
+---------
+Turn the already-proven Phase 4 components into one working standalone face-enhancement pipeline.
+
+Do NOT redesign T6, T7, or search for new models.
+
+Read first
+----------
+- Phase 4 final report
+- Phase 4 completion/status report
+- T6 implementation/report
+- T7 implementation/report
+- A4 implementation/configuration
+- Existing detector/alignment code
+- Existing tests and benchmark harness
+
+Target flow
+-----------
+Input image
+    |
+Validation
+    |
+Face detection
+    |
+Alignment/crop
+    |
+T6 quality gate
+    |
+T7 routing
+    |
++----------------+
+|                |
+Original         A4
+|                |
++-------+--------+
+        |
+Output validation
+        |
+Enhanced/original result
+
+Required implementation
+------------------------
+1. Create or finalize a standalone FastAPI/service boundary.
+2. Load A4 from a local pinned model artifact.
+3. Ensure inference requires no online API.
+4. Force CPU execution.
+5. Reuse the frozen T6/T7 logic rather than rewriting it.
+6. Implement safe handling for:
+   - invalid image
+   - no face
+   - multiple faces according to the existing contract
+   - uncertain quality
+   - A4 exception
+   - timeout/failure
+7. Always preserve the original as a fallback.
+8. Add structured response metadata for route/result/status without unnecessary sensitive information.
+9. Add health/readiness checks.
+10. Add unit and integration tests.
+11. Measure CPU latency and memory for representative samples.
+12. Run end-to-end samples.
+13. Produce a concise implementation/runtime report.
+14. Commit the intended changes.
+
+Required safety behavior
+------------------------
+Good image -> ORIGINAL
+Unsafe/uncertain -> ORIGINAL
+Approved degradation -> A4
+A4 failure -> ORIGINAL/safe fallback
+Detection failure -> safe fallback
+
+Do not
+------
+- add A1/A2/A5
+- redesign the quality model
+- perform another large benchmark
+- integrate into production Feature-Match behavior
+- claim production approval
+- spend time optimizing CPU performance before correctness is proven
+
+Acceptance
+----------
+A poor-quality input can pass through the standalone service and deterministically return either the original or an A4-enhanced face according to the frozen policy, with safe failure behavior.
+
+Expected effort
+---------------
+Approximately 2–3 hours.

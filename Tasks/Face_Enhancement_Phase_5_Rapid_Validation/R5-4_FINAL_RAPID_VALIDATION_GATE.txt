@@ -1,0 +1,85 @@
+TASK R5-4 — FINAL RAPID VALIDATION GATE
+
+Objective
+---------
+Make the final evidence-based decision about whether A4 is a viable working enhancement candidate.
+
+Review
+------
+Use:
+- R5-1 service evidence
+- R5-2 actual Feature-Match comparison
+- R5-3 targeted fixes and robustness
+- Phase 4 T6/T7 evidence
+- CPU runtime/resource observations
+- current licensing status
+
+Answer five questions
+---------------------
+1. Does A4 actually help real low-quality faces?
+2. Does enhancement ever turn a correct match into an incorrect match?
+3. Does T6/T7 prevent unnecessary enhancement?
+4. Does the standalone service reliably produce usable output?
+5. Is A4 good enough to continue toward production hardening?
+
+GREEN
+-----
+Choose GREEN if:
+- A4 clearly improves useful real-world Feature-Match outcomes;
+- identity errors are absent or acceptably low;
+- T6/T7 safely controls enhancement;
+- the service behaves reliably;
+- CPU behavior is acceptable for the intended next step.
+
+GREEN does NOT mean commercial production approval.
+Licensing must still be cleared separately before commercial deployment.
+
+YELLOW
+------
+Choose YELLOW if:
+- A4 helps some cases;
+- evidence is encouraging but inconsistent or too small;
+- targeted improvement is required;
+- licensing or other approval gates remain open.
+
+RED
+---
+Choose RED if:
+- A4 does not improve actual Feature-Match;
+- A4 creates unacceptable identity errors;
+- routing cannot contain harm;
+- the service is unreliable.
+
+If RED:
+---------
+Do not randomly test more models.
+
+Instead:
+1. Extract the real-world failure signatures.
+2. Identify which degradation classes A4 fails on.
+3. Identify the exact Feature-Match failure mechanism.
+4. Use those failures to define the next model-selection benchmark.
+
+Required report
+---------------
+Keep it concise and decision-oriented:
+- final verdict
+- number of images tested
+- A4 route percentage
+- original vs enhanced matching results
+- wins/losses/unchanged
+- identity flips
+- failure/fallback counts
+- degradation-specific results
+- robustness result
+- CPU runtime
+- licensing status
+- exact next step
+
+Acceptance
+----------
+A clear GREEN/YELLOW/RED decision exists with reproducible evidence.
+
+Expected effort
+---------------
+Approximately 1 hour.

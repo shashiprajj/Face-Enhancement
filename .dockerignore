@@ -1,0 +1,10 @@
+models/
+datasets/
+experiments/
+data/
+logs/
+third_party/
+Tasks/
+.git/
+.venv/
+**/__pycache__/
