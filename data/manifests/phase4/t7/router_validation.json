@@ -1,0 +1,306 @@
+{
+  "checks": {
+    "R1_decisions_deterministic": true,
+    "R1b_runtime_plan_equals_offline_replay": true,
+    "R2_routed_outputs_deterministic_and_equal_harness": true,
+    "R3_original_paths_exact": true,
+    "R4_fault_injection_falls_back": true
+  },
+  "groups": {
+    "A4": {
+      "fault_injection": {
+        "model_failure": {
+          "error": "RuntimeError: injected model failure",
+          "fallback": "MODEL_FAILURE",
+          "returned_original": true
+        },
+        "timeout": {
+          "fallback": "TIMEOUT",
+          "returned_original": true
+        }
+      },
+      "n": 4,
+      "rows": [
+        {
+          "bucket": "BLUR",
+          "decision": "ENHANCE_CANDIDATE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            51.677,
+            45.627
+          ],
+          "pair_id": "ff-train-4485.ref-v1.gaussblur-extreme",
+          "reason": "rule1",
+          "route": "A4",
+          "used": "A4"
+        },
+        {
+          "bucket": "NOISE",
+          "decision": "ENHANCE_CANDIDATE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            44.76,
+            46.751
+          ],
+          "pair_id": "ff-train-81170.ref-v1.noise-moderate",
+          "reason": "rule0",
+          "route": "A4",
+          "used": "A4"
+        },
+        {
+          "bucket": "NOISE",
+          "decision": "ENHANCE_CANDIDATE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            45.038,
+            44.053
+          ],
+          "pair_id": "ff-train-27622.ref-v1.noise-moderate",
+          "reason": "rule0",
+          "route": "A4",
+          "used": "A4"
+        },
+        {
+          "bucket": "NOISE",
+          "decision": "ENHANCE_CANDIDATE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            44.277,
+            44.101
+          ],
+          "pair_id": "ff-train-81383.ref-v1.noise-severe",
+          "reason": "rule0",
+          "route": "A4",
+          "used": "A4"
+        }
+      ]
+    },
+    "DO_NOT_ENHANCE": {
+      "fault_injection": {},
+      "n": 4,
+      "rows": [
+        {
+          "bucket": "",
+          "decision": "DO_NOT_ENHANCE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.001,
+            0.001
+          ],
+          "pair_id": "ff-train-22205.ref-v1.lowres-moderate",
+          "reason": "default",
+          "route": "B0",
+          "used": "B0"
+        },
+        {
+          "bucket": "",
+          "decision": "DO_NOT_ENHANCE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.005,
+            0.005
+          ],
+          "pair_id": "ff-train-81170.ref-v1.noise-mild",
+          "reason": "default",
+          "route": "B0",
+          "used": "B0"
+        },
+        {
+          "bucket": "",
+          "decision": "DO_NOT_ENHANCE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.004,
+            0.004
+          ],
+          "pair_id": "ff-train-84405.ref-v1.motionblur-moderate",
+          "reason": "default",
+          "route": "B0",
+          "used": "B0"
+        },
+        {
+          "bucket": "",
+          "decision": "DO_NOT_ENHANCE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.005,
+            0.004
+          ],
+          "pair_id": "ff-train-69910.ref-v1.jpeg-moderate",
+          "reason": "default",
+          "route": "B0",
+          "used": "B0"
+        }
+      ]
+    },
+    "ENHANCE_CANDIDATE->ORIGINAL": {
+      "fault_injection": {},
+      "n": 4,
+      "rows": [
+        {
+          "bucket": "COMPRESS",
+          "decision": "ENHANCE_CANDIDATE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.004,
+            0.004
+          ],
+          "pair_id": "ff-train-84405.ref-v1.jpeg-severe",
+          "reason": "rule2",
+          "route": "B0",
+          "used": "B0"
+        },
+        {
+          "bucket": "COMPRESS",
+          "decision": "ENHANCE_CANDIDATE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.004,
+            0.005
+          ],
+          "pair_id": "ff-train-59417.ref-v1.jpeg-extreme",
+          "reason": "rule2",
+          "route": "B0",
+          "used": "B0"
+        },
+        {
+          "bucket": "LOWRES",
+          "decision": "ENHANCE_CANDIDATE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.001,
+            0.001
+          ],
+          "pair_id": "ff-train-85768.ref-v1.combined-severe",
+          "reason": "rule1",
+          "route": "B0",
+          "used": "B0"
+        },
+        {
+          "bucket": "PHOTOMETRIC",
+          "decision": "ENHANCE_CANDIDATE",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.004,
+            0.004
+          ],
+          "pair_id": "ff-train-8874.ref-v1.gaussblur-extreme",
+          "reason": "rule1",
+          "route": "B0",
+          "used": "B0"
+        }
+      ]
+    },
+    "UNSAFE_OR_UNCERTAIN": {
+      "fault_injection": {},
+      "n": 4,
+      "rows": [
+        {
+          "bucket": "",
+          "decision": "UNSAFE_OR_UNCERTAIN",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.001,
+            0.001
+          ],
+          "pair_id": "ff-train-8874.ref-v1.lowres-extreme",
+          "reason": "no_valid_face:NO_FACE_DETECTED",
+          "route": "B0",
+          "used": "B0"
+        },
+        {
+          "bucket": "",
+          "decision": "UNSAFE_OR_UNCERTAIN",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.001,
+            0.001
+          ],
+          "pair_id": "ff-train-81170.ref-v1.lowres-severe",
+          "reason": "no_valid_face:FACE_TOO_SMALL",
+          "route": "B0",
+          "used": "B0"
+        },
+        {
+          "bucket": "",
+          "decision": "UNSAFE_OR_UNCERTAIN",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.001,
+            0.001
+          ],
+          "pair_id": "ff-train-85768.ref-v1.realistic2-severe",
+          "reason": "no_valid_face:FACE_TOO_SMALL",
+          "route": "B0",
+          "used": "B0"
+        },
+        {
+          "bucket": "",
+          "decision": "UNSAFE_OR_UNCERTAIN",
+          "deterministic": true,
+          "equals_harness_or_original": true,
+          "fallback": "",
+          "latency_s": [
+            0.001,
+            0.001
+          ],
+          "pair_id": "ff-train-10464.ref-v1.realistic2-severe",
+          "reason": "no_valid_face:FACE_TOO_SMALL",
+          "route": "B0",
+          "used": "B0"
+        }
+      ]
+    }
+  },
+  "peak_rss_mb": 1438.0,
+  "run": {
+    "git_head": "bc5ef801d861a1c734a6c0eba64e0dcbaab71ea6",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-04T09:36:21+00:00"
+  },
+  "t6_seal": "b8ee2c4309e5fe9a7ac1b07a6c0c8154f015dd86981fb72b1bf0043ec9fb7d88",
+  "t7_seal": "2f026f22903955cae6fc4379897e3d738b521a9533a136844f48792cc36e8eac",
+  "table": {
+    "BLUR": "A4",
+    "COMPRESS": "B0",
+    "LOWRES": "B0",
+    "MIXED": "B0",
+    "NOISE": "A4",
+    "NONE": "B0",
+    "PHOTOMETRIC": "B0"
+  },
+  "validated": true
+}
