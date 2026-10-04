@@ -3,8 +3,8 @@
 
     FES_IMAGE=fes-dev:cpu-p5 scripts/dock.sh python scripts/r5_realperson_eval.py
 
-Privacy: personal photos. Nothing image-like is written to tracked paths — the manifest stores anonymous ids (D1…D5 in
-file-name order), SHA-256 of the files, gate decisions and scores only. Chips/outputs go to the git-ignored
+Privacy: personal photos. Nothing image-like is written to tracked paths — the manifest stores the generic file names
+(A1 … A14), SHA-256 of the files, gate decisions and scores only. Chips/outputs go to the git-ignored
 experiments/phase5_rapid/outputs/realperson/.
 Conditions per degraded photo:
   A0 ORIGINAL (full photo)  degraded photo, own YuNet landmarks → identity (what a matcher sees without the service)
@@ -38,7 +38,7 @@ DIR = "Dataset-and-code/Real-Person-Test-Data"
 
 def main() -> None:
     import torch
-    torch.set_num_threads(2)
+    torch.set_num_threads(6)
     det = P.YuNetDetector(repo_path("models/D01_yunet/face_detection_yunet_2026may.onnx"), 0.7, 0.3, max_side=640)
     sf, dl = SFace(), EV.DlibResNet()
 
@@ -76,14 +76,17 @@ def main() -> None:
 
     a4 = build("A4")
     a4.load()
-    model = IsolatedModel("fes_service.models:a4_factory", timeout_s=600, threads=2)
+    model = IsolatedModel("fes_service.models:a4_factory", timeout_s=600, threads=6)
     pipe = EnhancementPipeline(model, timeout_s=600, gate="rw")
     assert pipe.seals["rw_gate"].startswith("78837a8d")
     out_dir = repo_path("experiments/phase5_rapid/outputs/realperson")
     out_dir.mkdir(parents=True, exist_ok=True)
     rows = []
-    for i, f in enumerate(sorted(glob.glob(str(repo_path(f"{DIR}/Degraded image/*.jpg")))), 1):
-        qid = f"D{i}"
+    import os
+    import re
+    natural = lambda p: [int(t) if t.isdigit() else t for t in re.split(r"(\d+)", os.path.basename(p))]  # noqa: E731
+    for f in sorted(glob.glob(str(repo_path(f"{DIR}/Degraded image/*.jpg"))), key=natural):
+        qid = os.path.splitext(os.path.basename(f))[0]          # generic file names (A1 … A14), not personal
         data = open(f, "rb").read()
         img = cv2.imdecode(np.frombuffer(data, np.uint8), cv2.IMREAD_COLOR)
         res = pipe.process(data, "full_image")
@@ -115,7 +118,7 @@ def main() -> None:
         "run": run_info(), "proxy": "SFace E01 + dlib E07 — NOT Feature-Match", "identities": 1,
         "reference_sha256": sha256_file(ref_path), "gallery": f"{len(gal)} LFW references (impostors) + this reference",
         "thr_far_1e-2": thr, "rows": rows,
-        "privacy": "no images, crops or file names stored; ids D1..D5 by file-name order"})
+        "privacy": "no images or crops stored; ids are the generic file names supplied by the user (A1…)"})
 
 
 if __name__ == "__main__":

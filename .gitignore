@@ -37,3 +37,6 @@ hf_token*
 Thumbs.db
 .vscode/
 .idea/
+
+# user-supplied real photos and their enhanced outputs (personal data) — never commit
+Dataset-and-code/
