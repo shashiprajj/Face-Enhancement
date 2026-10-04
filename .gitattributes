@@ -6,3 +6,7 @@
 *.jpg binary
 *.onnx binary
 *.pth binary
+
+# vendored upstream files are SHA-256-pinned byte-for-byte (archs.VENDORED_SHA256); some upstreams use CRLF
+third_party/gfpgan/** -text
+third_party/codeformer/** -text
