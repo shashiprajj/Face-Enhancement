@@ -1,0 +1,435 @@
+{
+  "gallery": "480 LFW references (impostors) + this reference",
+  "identities": 1,
+  "privacy": "no images, crops or file names stored; ids D1..D5 by file-name order",
+  "proxy": "SFace E01 + dlib E07 \u2014 NOT Feature-Match",
+  "reference_sha256": "29b4ccc1d24a73f13625e9126af10f819d79551964e9953676c070a522415588",
+  "rows": [
+    {
+      "A0_full_photo": {
+        "E01": {
+          "cos": 0.52832,
+          "fa": true,
+          "imp_max": 0.34725,
+          "match": true,
+          "rank1": true
+        },
+        "E07": {
+          "cos": 0.91223,
+          "fa": true,
+          "imp_max": 0.91609,
+          "match": true,
+          "rank1": false
+        }
+      },
+      "A_service_original": {
+        "E01": {
+          "cos": 0.54372,
+          "fa": true,
+          "imp_max": 0.30579,
+          "match": true,
+          "rank1": true
+        },
+        "E07": {
+          "cos": 0.91137,
+          "fa": true,
+          "imp_max": 0.9191,
+          "match": true,
+          "rank1": false
+        }
+      },
+      "B_equals_C_pixels": false,
+      "B_gated": {
+        "E01": {
+          "cos": 0.54372,
+          "fa": true,
+          "imp_max": 0.30579,
+          "match": true,
+          "rank1": true
+        },
+        "E07": {
+          "cos": 0.91137,
+          "fa": true,
+          "imp_max": 0.9191,
+          "match": true,
+          "rank1": false
+        }
+      },
+      "C_forced_a4": {
+        "E01": {
+          "cos": 0.5722,
+          "fa": true,
+          "imp_max": 0.30838,
+          "match": true,
+          "rank1": true
+        },
+        "E07": {
+          "cos": 0.91607,
+          "fa": true,
+          "imp_max": 0.92305,
+          "match": true,
+          "rank1": false
+        }
+      },
+      "category": "photometric",
+      "chip_px": 224,
+      "decision": "DO_NOT_ENHANCE",
+      "fallback": "",
+      "id": "D1",
+      "n_faces": 1,
+      "quality": {
+        "blockiness": 0.979112,
+        "det_score": 0.94111,
+        "iod_px": 81.283538,
+        "is_gray": false,
+        "lap_norm_c": 0.353837,
+        "lapd1_c": 0.023429,
+        "luma_mean": 15.993064,
+        "noise_sigma": 0.487425,
+        "rms_contrast": 17.080362
+      },
+      "reason": "photometric_no_a4_evidence",
+      "route": "B0",
+      "sha256": "1c89bf0090f069241a5d88b361ece32b3298460720c5261755e5b4141cb8d4b2",
+      "status": "ORIGINAL",
+      "used": "B0",
+      "warnings": [
+        "partial_face"
+      ]
+    },
+    {
+      "A0_full_photo": {
+        "E01": {
+          "cos": 0.21686,
+          "fa": true,
+          "imp_max": 0.31298,
+          "match": false,
+          "rank1": false
+        },
+        "E07": {
+          "cos": 0.91824,
+          "fa": true,
+          "imp_max": 0.92498,
+          "match": true,
+          "rank1": false
+        }
+      },
+      "A_service_original": {
+        "E01": {
+          "cos": 0.21686,
+          "fa": true,
+          "imp_max": 0.31298,
+          "match": false,
+          "rank1": false
+        },
+        "E07": {
+          "cos": 0.91824,
+          "fa": true,
+          "imp_max": 0.92498,
+          "match": true,
+          "rank1": false
+        }
+      },
+      "B_gated": {
+        "E01": {
+          "cos": 0.21686,
+          "fa": true,
+          "imp_max": 0.31298,
+          "match": false,
+          "rank1": false
+        },
+        "E07": {
+          "cos": 0.91824,
+          "fa": true,
+          "imp_max": 0.92498,
+          "match": true,
+          "rank1": false
+        }
+      },
+      "C_forced_a4": null,
+      "category": "uncertain_or_no_face",
+      "chip_px": 224,
+      "decision": "UNSAFE_OR_UNCERTAIN",
+      "fallback": "",
+      "id": "D2",
+      "n_faces": 1,
+      "quality": {
+        "blockiness": 1.015713,
+        "det_score": 0.759502,
+        "iod_px": 60.930984,
+        "is_gray": false,
+        "lap_norm_c": 0.359973,
+        "lapd1_c": 0.027841,
+        "luma_mean": 23.746173,
+        "noise_sigma": 0.77985,
+        "rms_contrast": 33.300939
+      },
+      "reason": "low_detection_confidence",
+      "route": "B0",
+      "sha256": "8d617f0cdfd81cdb9a9b1b97277f9d62102d1617b1abbd02f429fd22f4bd378f",
+      "status": "ORIGINAL",
+      "used": "B0",
+      "warnings": [
+        "low_confidence"
+      ]
+    },
+    {
+      "A0_full_photo": {
+        "E01": {
+          "cos": 0.25784,
+          "fa": true,
+          "imp_max": 0.29826,
+          "match": false,
+          "rank1": false
+        },
+        "E07": {
+          "cos": 0.90162,
+          "fa": false,
+          "imp_max": 0.90238,
+          "match": false,
+          "rank1": false
+        }
+      },
+      "A_service_original": {
+        "E01": {
+          "cos": 0.31422,
+          "fa": false,
+          "imp_max": 0.28576,
+          "match": true,
+          "rank1": true
+        },
+        "E07": {
+          "cos": 0.91283,
+          "fa": true,
+          "imp_max": 0.91262,
+          "match": true,
+          "rank1": true
+        }
+      },
+      "B_equals_C_pixels": false,
+      "B_gated": {
+        "E01": {
+          "cos": 0.31422,
+          "fa": false,
+          "imp_max": 0.28576,
+          "match": true,
+          "rank1": true
+        },
+        "E07": {
+          "cos": 0.91283,
+          "fa": true,
+          "imp_max": 0.91262,
+          "match": true,
+          "rank1": true
+        }
+      },
+      "C_forced_a4": {
+        "E01": {
+          "cos": 0.37715,
+          "fa": true,
+          "imp_max": 0.31009,
+          "match": true,
+          "rank1": true
+        },
+        "E07": {
+          "cos": 0.91923,
+          "fa": true,
+          "imp_max": 0.93274,
+          "match": true,
+          "rank1": false
+        }
+      },
+      "category": "acceptable",
+      "chip_px": 224,
+      "decision": "DO_NOT_ENHANCE",
+      "fallback": "",
+      "id": "D3",
+      "n_faces": 1,
+      "quality": {
+        "blockiness": 1.024581,
+        "det_score": 0.85344,
+        "iod_px": 75.392258,
+        "is_gray": true,
+        "lap_norm_c": 0.034347,
+        "lapd1_c": 0.012198,
+        "luma_mean": 114.19308,
+        "noise_sigma": 0.291522,
+        "rms_contrast": 73.458773
+      },
+      "reason": "acceptable",
+      "route": "B0",
+      "sha256": "975eba1f792504d87c5efda9394fd8cd1c61ab310c986414ec69361089b32f97",
+      "status": "ORIGINAL",
+      "used": "B0",
+      "warnings": [
+        "low_confidence"
+      ]
+    },
+    {
+      "A0_full_photo": {
+        "E01": {
+          "cos": 0.52495,
+          "fa": false,
+          "imp_max": 0.24652,
+          "match": true,
+          "rank1": true
+        },
+        "E07": {
+          "cos": 0.94679,
+          "fa": false,
+          "imp_max": 0.90838,
+          "match": true,
+          "rank1": true
+        }
+      },
+      "A_service_original": {
+        "E01": {
+          "cos": 0.50516,
+          "fa": false,
+          "imp_max": 0.23505,
+          "match": true,
+          "rank1": true
+        },
+        "E07": {
+          "cos": 0.9507,
+          "fa": false,
+          "imp_max": 0.89643,
+          "match": true,
+          "rank1": true
+        }
+      },
+      "B_equals_C_pixels": false,
+      "B_gated": {
+        "E01": {
+          "cos": 0.50516,
+          "fa": false,
+          "imp_max": 0.23505,
+          "match": true,
+          "rank1": true
+        },
+        "E07": {
+          "cos": 0.9507,
+          "fa": false,
+          "imp_max": 0.89643,
+          "match": true,
+          "rank1": true
+        }
+      },
+      "C_forced_a4": {
+        "E01": {
+          "cos": 0.49044,
+          "fa": false,
+          "imp_max": 0.22864,
+          "match": true,
+          "rank1": true
+        },
+        "E07": {
+          "cos": 0.95085,
+          "fa": false,
+          "imp_max": 0.89558,
+          "match": true,
+          "rank1": true
+        }
+      },
+      "category": "acceptable",
+      "chip_px": 224,
+      "decision": "DO_NOT_ENHANCE",
+      "fallback": "",
+      "id": "D4",
+      "n_faces": 1,
+      "quality": {
+        "blockiness": 0.954842,
+        "det_score": 0.953316,
+        "iod_px": 88.481144,
+        "is_gray": false,
+        "lap_norm_c": 0.357244,
+        "lapd1_c": 0.024755,
+        "luma_mean": 51.991171,
+        "noise_sigma": 0.588812,
+        "rms_contrast": 43.360257
+      },
+      "reason": "acceptable",
+      "route": "B0",
+      "sha256": "b057c08d1e8f9363d15d277320e5f290add4d4ce55fcf735e8b2df6ca4f3ab40",
+      "status": "ORIGINAL",
+      "used": "B0",
+      "warnings": []
+    },
+    {
+      "A0_full_photo": {
+        "E01": {
+          "cos": null,
+          "fa": false,
+          "imp_max": null,
+          "match": false,
+          "rank1": false
+        },
+        "E07": {
+          "cos": null,
+          "fa": false,
+          "imp_max": null,
+          "match": false,
+          "rank1": false
+        }
+      },
+      "A_service_original": {
+        "E01": {
+          "cos": null,
+          "fa": false,
+          "imp_max": null,
+          "match": false,
+          "rank1": false
+        },
+        "E07": {
+          "cos": null,
+          "fa": false,
+          "imp_max": null,
+          "match": false,
+          "rank1": false
+        }
+      },
+      "B_gated": {
+        "E01": {
+          "cos": null,
+          "fa": false,
+          "imp_max": null,
+          "match": false,
+          "rank1": false
+        },
+        "E07": {
+          "cos": null,
+          "fa": false,
+          "imp_max": null,
+          "match": false,
+          "rank1": false
+        }
+      },
+      "C_forced_a4": null,
+      "category": "",
+      "chip_px": 0,
+      "decision": "UNSAFE_OR_UNCERTAIN",
+      "fallback": "",
+      "id": "D5",
+      "n_faces": 0,
+      "quality": {},
+      "reason": "no_valid_face:NO_FACE_DETECTED",
+      "route": "B0",
+      "sha256": "f7605fddc2838c76af7550036b753b5021703d30ecebd24ee157ff46d3662e3a",
+      "status": "ORIGINAL",
+      "used": "B0",
+      "warnings": []
+    }
+  ],
+  "run": {
+    "git_head": "76577d56746935bbf6e32422d74ece8979db737c",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-04T18:35:24+00:00"
+  },
+  "thr_far_1e-2": {
+    "E01": 0.288174439971381,
+    "E07": 0.908463604917789
+  }
+}

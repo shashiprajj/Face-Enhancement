@@ -1,0 +1,47 @@
+{
+  "configuration": {
+    "components": [],
+    "config_id": "B0",
+    "kind": "baseline",
+    "label": "Degraded input (no enhancement)",
+    "settings": {
+      "lr_to_e": "INTER_CUBIC",
+      "same_size": "identity"
+    }
+  },
+  "failures": [],
+  "infer_s_under_load": {
+    "mean": 0.0,
+    "note": "per-image wall time inside a worker, concurrent workers + host background load; NOT the P3-T8 performance measurement",
+    "p50": 0.0,
+    "p95": 0.0
+  },
+  "load_reports": {},
+  "manifest": "data/manifests/phase5_rapid/lfw/runs/lfwq/B0.csv.gz",
+  "manifest_sha256": "0ca3ebb386f3f79b4c5fa0479e711650096ce6afe8e66b6a3086bffc358b0426",
+  "n_failed": 0,
+  "n_missing": 0,
+  "n_ok": 800,
+  "n_pairs": 800,
+  "pool_broken": null,
+  "population": "lfwq",
+  "population_manifest": "data/manifests/phase5_rapid/lfw/population_lfwq.csv.gz",
+  "population_sha256": "1da4efa57f39a8da3fb8a6d8e23847e0d808286a6b6a54b6de8d5c21538282c8",
+  "run": {
+    "config": "configs/phase5/benchmark_p5.yaml",
+    "config_sha256": "625bd01d41157866303ba0505ebef6dbfb031d08f2d6246c071407b88b023bc1",
+    "cpu_count_container": 16,
+    "git_head": "76577d56746935bbf6e32422d74ece8979db737c",
+    "machine": "x86_64",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "protocol_version": "p3-protocol-1.0.1",
+    "python": "3.11.16",
+    "torch": "2.14.0+cpu",
+    "utc": "2026-10-04T17:52:41+00:00"
+  },
+  "threads_per_worker": 1,
+  "wall_s_this_invocation": 10.1,
+  "workers": 2
+}
