@@ -15,6 +15,7 @@ Environment
   FES_A4_THREADS   torch threads in the worker (default 2)
   FES_MAX_INFLIGHT requests allowed to wait (default 4)
   FES_WARMUP       1 = run one tiny A4 inference before reporting ready (default 1)
+  FES_GATE         rw = R5-3 real-world gate (default) · t6 = frozen Phase 4 T6/T7 policy (synthetic-calibrated)
 No request image is stored or logged.
 """
 
@@ -39,7 +40,8 @@ def build_pipeline() -> EnhancementPipeline:
     timeout = float(os.environ.get("FES_A4_TIMEOUT_S", "120"))
     model = IsolatedModel(os.environ.get("FES_A4_FACTORY", "fes_service.models:a4_factory"), timeout_s=timeout,
                           threads=int(os.environ.get("FES_A4_THREADS", "2")))
-    return EnhancementPipeline(model, timeout_s=timeout, max_inflight=int(os.environ.get("FES_MAX_INFLIGHT", "4")))
+    return EnhancementPipeline(model, timeout_s=timeout, max_inflight=int(os.environ.get("FES_MAX_INFLIGHT", "4")),
+                               gate=os.environ.get("FES_GATE", "rw"))
 
 
 def startup() -> None:
@@ -77,6 +79,7 @@ def ready():
     pipe = STATE.get("pipeline")
     body = {"ready": STATE["ready"], "service_version": SERVICE_VERSION, "error": STATE["error"],
             "seals": pipe.seals if pipe else {}, "routing_table": pipe.table if pipe else {},
+            "gate": pipe.gate if pipe else "",
             "model": STATE.get("model_info", {}),
             "worker_alive": bool(pipe and pipe.a4.alive()), "worker_restarts": pipe.a4.restarts if pipe else 0,
             "validity": "SYNTHETIC-calibrated gate/router; research candidate, not production-approved"}

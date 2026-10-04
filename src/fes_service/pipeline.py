@@ -42,7 +42,8 @@ SERVICE_VERSION = "fes-service-r5-0.1.0"
 YUNET = "models/D01_yunet/face_detection_yunet_2026may.onnx"
 CHIP_MAX = G.E_SIZE                                   # 224: the largest input size the gate was calibrated on
 TEMPLATE_IOD_150 = float(np.linalg.norm(DLIB_CHIP_TEMPLATE_150[1] - DLIB_CHIP_TEMPLATE_150[0]))
-QUALITY_KEYS = ("noise_sigma", "lap_norm_c", "blockiness", "luma_mean", "rms_contrast", "iod_px", "det_score")
+QUALITY_KEYS = ("noise_sigma", "lap_norm_c", "lapd1_c", "blockiness", "luma_mean", "rms_contrast", "iod_px", "det_score",
+                "is_gray")
 
 ENHANCED, ORIGINAL_S, REJECTED = "ENHANCED", "ORIGINAL", "REJECTED"
 
@@ -123,26 +124,44 @@ class EnhancementPipeline:
     """Thread-safe; one request is processed at a time (YuNet and the router are stateful), at most `max_inflight`
     requests may wait — beyond that `Busy` is raised (HTTP 503) instead of queueing without bound."""
 
-    def __init__(self, a4, timeout_s: float = 120.0, limits: Limits = Limits(), max_inflight: int = 4):
+    def __init__(self, a4, timeout_s: float = 120.0, limits: Limits = Limits(), max_inflight: int = 4,
+                 gate: str = "t6"):
+        """gate="t6": the frozen Phase 4 T6/T7 policy, exactly (synthetic-calibrated).
+        gate="rw": the R5-3 real-world gate (fes_service.rwgate, configs/phase5/r5_rwgate.json)."""
+        assert gate in ("t6", "rw"), gate
+        self.gate = gate
         g6 = json.loads(repo_path("configs/phase4/t6_gate.json").read_text(encoding="utf-8"))
         r7 = json.loads(repo_path("configs/phase4/t7_routing.json").read_text(encoding="utf-8"))
         self.rules = GT.load_rules(g6)                          # verifies the T6 seal
         self.t, self.table = RT.load_routing(r7, g6)            # verifies the T7 seal + link to T6
         assert set(self.table.values()) <= {RT.ORIGINAL, "A4"}, "only A4 may be routed (Phase 4 gate)"
         self.seals = {"t6_gate": g6["sha256"], "t7_routing": r7["sha256"]}
+        if gate == "rw":
+            from fes_service import rwgate as RW
+            self.rw_cfg = RW.load_config()
+            self.seals["rw_gate"] = self.rw_cfg["sha256"]
         self.det = P.YuNetDetector(repo_path(YUNET), 0.7, 0.3, max_side=640)
         self.det_cfg = P.PreprocessConfig(out_size=112)
         self.a4 = a4
         self.limits = limits
         self._feat = {}
         # the router's own thread timeout is a backstop; the isolated worker enforces (and kills at) timeout_s
-        self.router = RT.Router(self.rules, self.t, self.table, {"A4": a4}, features_fn=self._features,
-                                face_check=lambda out: len(self.det.detect(out)) > 0, timeout_s=timeout_s + 30.0)
+        face_check = lambda out: len(self.det.detect(out)) > 0  # noqa: E731
+        if gate == "rw":
+            self.router = RW.RWRouter(self.rw_cfg, {"A4": a4}, features_fn=self._features, face_check=face_check,
+                                      timeout_s=timeout_s + 30.0)
+        else:
+            self.router = RT.Router(self.rules, self.t, self.table, {"A4": a4}, features_fn=self._features,
+                                    face_check=face_check, timeout_s=timeout_s + 30.0)
         self._lock = threading.Lock()
         self._slots = threading.BoundedSemaphore(max_inflight)
 
     def _features(self, chip: np.ndarray) -> dict:
-        self._feat = Q.features(chip, self.det)
+        if self.gate == "rw":
+            from fes_service.rwgate import rw_features
+            self._feat = rw_features(chip, self.det)
+        else:
+            self._feat = Q.features(chip, self.det)
         return self._feat
 
     # ---------------------------------------------------------------- validation
@@ -243,6 +262,10 @@ class EnhancementPipeline:
         res.fallback, res.escalate, res.error, res.used = rec.fallback, rec.escalate, rec.error, rec.used
         if rec.used == RT.ORIGINAL:
             return original()
+        if self.gate == "rw" and self._feat.get("is_gray"):
+            # greyscale in → greyscale out: A4 runs in RGB and may tint a grey face; never add colour that was not there
+            out = cv2.cvtColor(cv2.cvtColor(out, cv2.COLOR_BGR2GRAY), cv2.COLOR_GRAY2BGR)
+            res.warnings.append("grayscale_preserved")
         ok, png = cv2.imencode(".png", out)
         if not ok:
             return original(used=RT.ORIGINAL, fallback="INVALID_OUTPUT", error="png encode failed")

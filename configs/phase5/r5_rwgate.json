@@ -1,0 +1,48 @@
+{
+  "calibration": {
+    "blur_scan_best": {
+      "U": 11.0,
+      "benefit": 14,
+      "harm": 1,
+      "t": 0.002617
+    },
+    "data": "DEV only: p4dev (896) + r5gap (224, dev refs)",
+    "lambda": 3.0,
+    "size_tier_chosen": 112
+  },
+  "decision_order": [
+    "safety (T6, unchanged)",
+    "insufficient_face_size",
+    "beyond_evidence_extreme_blur",
+    "photometric_no_a4_evidence",
+    "compression_no_a4_evidence",
+    "strong_noise\u2192A4",
+    "strong_blur\u2192A4",
+    "degraded_below_a4_size",
+    "degraded_no_a4_evidence",
+    "acceptable"
+  ],
+  "feature_version": "p5-rwfeat-1.0.0",
+  "frozen_phase4": {
+    "t6_seal": "b8ee2c4309e5fe9a7ac1b07a6c0c8154f015dd86981fb72b1bf0043ec9fb7d88",
+    "t7_seal": "2f026f22903955cae6fc4379897e3d738b521a9533a136844f48792cc36e8eac"
+  },
+  "gate_version": "p5-rwgate-1.0.0",
+  "name": "r5_rwgate",
+  "route_model": "A4",
+  "sha256": "78837a8d2355c5ae46df24afe47fcaf5db6a0acce466ec40720c35397ac96514",
+  "thresholds": {
+    "blockiness_hi": 1.523105,
+    "blur_max": 0.002617,
+    "clean_iod_lo": 71.440432,
+    "clean_lapd1_lo": 0.005579,
+    "clean_noise_hi": 1.083544,
+    "iod_min_a4": 35.347,
+    "iod_min_recognizable": 16.0,
+    "lapd1_floor": 0.000974,
+    "luma_mean_lo": 47.13201,
+    "noise_min": 9.837129,
+    "rms_contrast_lo": 25.377259
+  },
+  "validity": "Gate behaviour calibrated for real inputs (grain-robust blur, explicit face-size zones); the A4 benefit boundary is still SYNTHETIC-evidenced. Not a production approval."
+}

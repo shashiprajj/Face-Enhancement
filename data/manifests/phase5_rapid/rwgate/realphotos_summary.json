@@ -1,0 +1,82 @@
+{
+  "a4_real": true,
+  "after_rw": {
+    "categories": {
+      "": 32,
+      "acceptable": 24,
+      "compression": 1,
+      "degraded_no_a4_evidence": 88,
+      "degraded_recognizable": 3,
+      "photometric": 4,
+      "tiny": 2,
+      "uncertain_or_no_face": 43,
+      "unrecognizable": 3
+    },
+    "decisions": {
+      "DO_NOT_ENHANCE": 117,
+      "ENHANCE_CANDIDATE": 3,
+      "UNSAFE_OR_UNCERTAIN": 80
+    },
+    "fallbacks": {},
+    "grayscale_preserved": 2,
+    "reasons": {
+      "acceptable": 24,
+      "alignment_unreliable": 11,
+      "beyond_evidence_extreme_blur": 3,
+      "compression_no_a4_evidence": 1,
+      "degraded_no_a4_evidence:blur": 2,
+      "degraded_no_a4_evidence:blur+lowres": 5,
+      "degraded_no_a4_evidence:blur+noise+lowres": 1,
+      "degraded_no_a4_evidence:lowres": 22,
+      "degraded_no_a4_evidence:noise": 11,
+      "degraded_no_a4_evidence:noise+lowres": 47,
+      "insufficient_face_size": 2,
+      "low_detection_confidence": 17,
+      "no_valid_face:FACE_TOO_SMALL": 22,
+      "no_valid_face:NO_FACE_DETECTED": 25,
+      "photometric_no_a4_evidence": 4,
+      "strong_blur": 1,
+      "strong_noise": 2
+    },
+    "routes": {
+      "A4": 3,
+      "B0": 197
+    },
+    "used": {
+      "A4": 3,
+      "B0": 197
+    }
+  },
+  "before_t6": {
+    "decisions": {
+      "DO_NOT_ENHANCE": 120,
+      "ENHANCE_CANDIDATE": 5,
+      "UNSAFE_OR_UNCERTAIN": 75
+    },
+    "routes": {
+      "A4": 1,
+      "B0": 199
+    }
+  },
+  "identity_measured": false,
+  "n": 200,
+  "note": "No same-person references: routing behaviour only. human_recognizable not reviewed.",
+  "run": {
+    "git_head": "db43fc0e0c273c79c2dadb9b4f6fc4fbb0975329-dirty",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-04T17:21:18+00:00"
+  },
+  "seals": {
+    "rw_gate": "78837a8d2355c5ae46df24afe47fcaf5db6a0acce466ec40720c35397ac96514",
+    "t6_gate": "b8ee2c4309e5fe9a7ac1b07a6c0c8154f015dd86981fb72b1bf0043ec9fb7d88",
+    "t7_routing": "2f026f22903955cae6fc4379897e3d738b521a9533a136844f48792cc36e8eac"
+  },
+  "transitions": {
+    "A4->B0": 1,
+    "B0->A4": 3,
+    "B0->B0": 196
+  }
+}

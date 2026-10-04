@@ -1,0 +1,24 @@
+{
+  "cells": [
+    "gaussblur-severe",
+    "gaussblur-extreme",
+    "noise-moderate",
+    "noise-severe"
+  ],
+  "n": 224,
+  "refs": 28,
+  "run": {
+    "git_head": "db43fc0e0c273c79c2dadb9b4f6fc4fbb0975329",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.0",
+    "utc": "2026-10-04T16:49:27+00:00"
+  },
+  "seed": 20261004,
+  "sizes": [
+    168,
+    112
+  ],
+  "split": "dev"
+}
