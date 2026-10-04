@@ -1,0 +1,27 @@
+{
+  "far": 0.01,
+  "impostor_pairs": 244650,
+  "impostor_pool": "impostor_pool",
+  "impostor_pool_refs": 700,
+  "impostor_quantiles": {
+    "0.5": 0.8496,
+    "0.9": 0.89829,
+    "0.99": 0.93363,
+    "0.999": 0.95254
+  },
+  "note": "Embeddings not persisted. FairFace has no identity labels; a few same-person pairs may remain.",
+  "route": "chip (E-frame INTER_AREA 224\u2192150)",
+  "run": {
+    "dlib": "20.0.1",
+    "evaluator": "E07-dlib-resnet-v1",
+    "git_head": "92fe16e982569c464d3bfe433d3f48c48956fc89-dirty",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-04T15:12:48+00:00",
+    "weights_sha256": "55533b28a95800a551ba546ba62fe69625c7e95a7061c338adffead08719da30"
+  },
+  "split": "test",
+  "threshold_at_far": 0.93363
+}

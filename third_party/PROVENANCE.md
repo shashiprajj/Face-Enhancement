@@ -21,6 +21,8 @@ commit that was on `master` on the fetch date.
 | `swinir/` | JingyunLiang/SwinIR @ `6545850fbf8df298df73d81f3e8cba638787c8bd` | `models/network_swinir.py` | Apache-2.0 (`LICENSE`) | `9e143898…` |
 | `fbcnn/` | jiaxi-jiang/FBCNN @ `54d1831927506b3247e2d4d245abb4f4dab1a1cd` | `models/network_fbcnn.py` | Apache-2.0 (`LICENSE`) | `e1afc1f6…` |
 | `nafnet/` | megvii-research/NAFNet @ `2b4af71ebe098a92a75910c233a3965a3e93ede4` | `basicsr/models/archs/NAFNet_arch.py`, `arch_util.py`, `local_arch.py` | MIT (`LICENSE`) | `01b22270…` / `5a11af2e…` / `c4df2ba4…` |
+| `gfpgan/` (Phase 5 Rapid, **research-only**, 2026-10-04) | TencentARC/GFPGAN @ `7552a7791caad982045a7bbe5634bbf1cd5c8679` | `gfpgan/archs/gfpganv1_clean_arch.py`, `gfpgan/archs/stylegan2_clean_arch.py` | Apache-2.0 + NVIDIA NC / CC BY-NC-SA parts (`LICENSE`) → production REVIEW_REQUIRED | `576f44f3…` / `274f6a66…` |
+| `codeformer/` (Phase 5 Rapid, **research-only**, 2026-10-04) | sczhou/CodeFormer @ `b33cc7d639d6545bfcccc7e0bc6ae51f24e79c2b` | `basicsr/archs/codeformer_arch.py`, `basicsr/archs/vqgan_arch.py` | **S-Lab License 1.0 — non-commercial** (`LICENSE`) → never production without a commercial licence | `dfccf9e9…` / `5ef00125…` |
 
 Full SHA-256 values: `VENDORED_SHA256` in `src/fes_bench/archs.py` (authoritative; checked at load time).
 

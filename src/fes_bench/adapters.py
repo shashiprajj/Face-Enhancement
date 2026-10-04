@@ -55,6 +55,11 @@ WEIGHTS = {
                   "329d3ab4077b8d6b7ff61de376e483714667960bf85be027bf4335cda701196f"),
     "M28-SIDD": ("A07", "models/M28_nafnet/NAFNet-SIDD-width64.pth",
                  "cd685efaae01f7c4e9951f2deab05780079c8eb1e49ed664b72f6db04dabb445"),
+    # Phase 5 Rapid, research-only (official GitHub releases, downloaded 2026-10-04)
+    "M01": ("P5-GFPGAN", "models/M01_gfpgan/GFPGANv1.4.pth",
+            "e2cd4703ab14f4d01fd1383a8a8b266f9a5833dacee8e6a79d3bf21a1b6be5ad"),
+    "M02": ("P5-CODEFORMER", "models/M02_codeformer/codeformer.pth",
+            "1009e537e0c2a07d4cabce6355f53cb66767cd4b4297ec7a4a64ca4b8a5684b7"),
 }
 
 # builder, checkpoint key, prefix to strip, strict
@@ -66,6 +71,8 @@ NETS = {
     "M30": (archs.build_fbcnn_color, None, None, True),
     "M28-GoPro": (archs.build_nafnet_gopro, "params", None, True),
     "M28-SIDD": (archs.build_nafnet_sidd, "params", None, True),
+    "M01": (archs.build_gfpgan_v14, "params_ema", None, True),
+    "M02": (archs.build_codeformer, "params_ema", None, True),
 }
 
 
@@ -224,6 +231,33 @@ class VQFRv1(FaceModel):
         return s
 
 
+class GFPGANv14(FaceModel):
+    """GFPGAN v1.4 (gfpgan/utils.py: return_rgb=False, weight=0.5). Upstream injects random StyleGAN noise on every
+    call; the seed is fixed per call so the same input always gives the same output."""
+
+    def __init__(self):
+        super().__init__("A6", "GFPGAN v1.4 (research-only)", "M01")
+
+    def _forward(self, x):
+        torch.manual_seed(0)
+        return self.net(x, return_rgb=False, weight=0.5)[0]
+
+
+class CodeFormerW(FaceModel):
+    """CodeFormer (inference_codeformer.py: net(x, w=fidelity, adain=True)[0]). w=0.5 upstream default; w=1.0 =
+    maximum fidelity to the input (identity-oriented)."""
+
+    def __init__(self, config_id, w):
+        super().__init__(config_id, f"CodeFormer w={w} (research-only, NC licence)", "M02")
+        self.w = w
+
+    def _forward(self, x):
+        return self.net(x, w=self.w, adain=True)[0]
+
+    def settings(self):
+        return {**super().settings(), "fidelity_w": self.w, "adain": True}
+
+
 # ---------------------------------------------------------------- general SR (D-frame native, ×4)
 
 def _realesrgan_x4(net, x: torch.Tensor) -> torch.Tensor:
@@ -304,5 +338,6 @@ def build(config_id: str) -> Adapter:
     table = {
         "B0": B0Identity, "B1": B1Lanczos, "B2": lambda: B2Classical(False), "B2c": lambda: B2Classical(True),
         "A1": RestoreFormerPP, "A2": VQFRv1, "A3": RealESRGAN, "A4": SwinIR, "A5": Chain,
+        "A6": GFPGANv14, "A7": lambda: CodeFormerW("A7", 0.5), "A8": lambda: CodeFormerW("A8", 1.0),
     }
     return table[config_id]()

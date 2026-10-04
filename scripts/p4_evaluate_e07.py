@@ -39,6 +39,7 @@ def main() -> None:
     ap.add_argument("--population", required=True)
     ap.add_argument("--root", required=True)
     ap.add_argument("--configs", nargs="*", default=CONFIGS)
+    ap.add_argument("--out", default=None, help="output dir (default data/manifests/phase4/metrics_e07/<population>)")
     a = ap.parse_args()
     cv2.setNumThreads(2)
     val = json.loads(repo_path(VALIDATION).read_text(encoding="utf-8"))
@@ -64,7 +65,7 @@ def main() -> None:
     P = np.stack(pool)
     imp = (P @ P.T)[np.triu_indices(len(P), 1)]
     thr = float(np.quantile(imp, 1 - FAR))
-    out_dir = repo_path(f"data/manifests/phase4/metrics_e07/{a.population}")
+    out_dir = repo_path(a.out or f"data/manifests/phase4/metrics_e07/{a.population}")
     write_json(out_dir / "identity_calibration.json", {
         "run": run_info({"evaluator": ev.id, "weights_sha256": ev.sha256, "dlib": EV.DLIB_VERSION}),
         "route": "chip (E-frame INTER_AREA 224→150)", "split": split, "impostor_pool": pool_name,

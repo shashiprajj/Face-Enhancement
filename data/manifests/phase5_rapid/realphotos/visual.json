@@ -1,0 +1,131 @@
+{
+  "n": 16,
+  "run": {
+    "git_head": "92fe16e982569c464d3bfe433d3f48c48956fc89-dirty",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-04T14:00:24+00:00"
+  },
+  "sec_per_face": {
+    "A4": 37.21,
+    "A6": 10.15,
+    "A7": 21.4,
+    "A8": 21.73
+  },
+  "selection": [
+    {
+      "bucket": "",
+      "chip_px": 104,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img28.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 100,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img76.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 224,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img190.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 62,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img33.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 224,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img153.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 66,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img11.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 118,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img5.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 94,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img119.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 55,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img18.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 55,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img191.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 107,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img195.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 39,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img89.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 224,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img124.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 78,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img93.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 50,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img43.jpg",
+      "route": "B0"
+    },
+    {
+      "bucket": "",
+      "chip_px": 224,
+      "decision": "DO_NOT_ENHANCE",
+      "image": "img155.jpg",
+      "route": "B0"
+    }
+  ]
+}

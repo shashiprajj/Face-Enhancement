@@ -38,6 +38,11 @@ VENDORED_SHA256 = {
     "nafnet/basicsr/models/archs/arch_util.py": "5a11af2e7c2d7a7b57c1fbd7e19cf0a50b4b4e8c7ae7dd203a915d7a707e7005",
     "nafnet/basicsr/models/archs/local_arch.py": "c4df2ba4d896442a0f6ec984accd6e68f31edce3afdf066add202c25a0d1af26",
     "nafnet/basicsr/models/archs/NAFNet_arch.py": "01b22270cc93f1bb90c0e3e4490e98b023fcf73f8552860b4a9ee880ce5c6967",
+    # Phase 5 Rapid (research-only, user decision 2026-10-04): GFPGAN v1.4 clean arch, CodeFormer
+    "gfpgan/gfpgan/archs/stylegan2_clean_arch.py": "274f6a66c0c56ee565e0df9e77a90d2a475c766419e15026273ca10f0dfd0ba0",
+    "gfpgan/gfpgan/archs/gfpganv1_clean_arch.py": "576f44f3aae39e21a8138fe51f8ec96c0b94559e08fc10c78416e8658ac290a9",
+    "codeformer/basicsr/archs/vqgan_arch.py": "5ef00125ce448e34c9c02655bdebff5dca51589597c7c43a0b4bf2326d32e8cb",
+    "codeformer/basicsr/archs/codeformer_arch.py": "dfccf9e9e6cd58b933301350e956418d1ffb15bb601ef5ce16d6dda3f01d020a",
 }
 
 
@@ -233,6 +238,27 @@ def build_nafnet_gopro() -> nn.Module:
     # options/test/GoPro/NAFNet-width64.yml @2b4af71: NAFNetLocal (TLC, train_size 1x3x256x256)
     return _nafnet_modules().NAFNetLocal(img_channel=3, width=64, middle_blk_num=1,
                                          enc_blk_nums=[1, 1, 1, 28], dec_blk_nums=[1, 1, 1, 1])
+
+
+def build_gfpgan_v14() -> nn.Module:
+    """TencentARC/GFPGAN @7552a77 gfpgan/utils.py, arch='clean', model v1.4 (research-only; licence REVIEW)."""
+    _install_shims()
+    _load("basicsr.archs.arch_util", "basicsr/basicsr/archs/arch_util.py")
+    _package("gfpgan.archs")
+    _load("gfpgan.archs.stylegan2_clean_arch", "gfpgan/gfpgan/archs/stylegan2_clean_arch.py")
+    m = _load("gfpgan.archs.gfpganv1_clean_arch", "gfpgan/gfpgan/archs/gfpganv1_clean_arch.py")
+    return m.GFPGANv1Clean(out_size=512, num_style_feat=512, channel_multiplier=2, decoder_load_path=None,
+                           fix_decoder=False, num_mlp=8, input_is_latent=True, different_w=True, narrow=1,
+                           sft_half=True)
+
+
+def build_codeformer() -> nn.Module:
+    """sczhou/CodeFormer @b33cc7d inference_codeformer.py (research-only; S-Lab licence: NON-COMMERCIAL)."""
+    _install_shims()
+    _load("basicsr.archs.vqgan_arch", "codeformer/basicsr/archs/vqgan_arch.py")
+    m = _load("basicsr.archs.codeformer_arch", "codeformer/basicsr/archs/codeformer_arch.py")
+    return m.CodeFormer(dim_embd=512, codebook_size=1024, n_head=8, n_layers=9,
+                        connect_list=["32", "64", "128", "256"])
 
 
 # ---------------------------------------------------------------- weights

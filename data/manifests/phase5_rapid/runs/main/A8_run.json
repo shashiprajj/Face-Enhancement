@@ -1,0 +1,69 @@
+{
+  "configuration": {
+    "components": [
+      "M02"
+    ],
+    "config_id": "A8",
+    "kind": "face",
+    "label": "CodeFormer w=1.0 (research-only, NC licence)",
+    "settings": {
+      "adain": true,
+      "border": "BORDER_CONSTANT (135,133,132) BGR",
+      "d_to_f": "single warp INTER_CUBIC",
+      "f_to_e": "INTER_AREA pre-reduction + INTER_LINEAR",
+      "fidelity_w": 1.0,
+      "frame": "FFHQ-512 (facexlib template)",
+      "input_norm": "RGB, (x-0.5)/0.5",
+      "output": "clamp[-1,1] \u2192 round",
+      "precision": "fp32",
+      "uncovered_e_pixels": "bicubic degraded input (P1-T5 paste-back rule; excluded from metrics)"
+    }
+  },
+  "failures": [],
+  "infer_s_under_load": {
+    "mean": 16.99,
+    "note": "per-image wall time inside a worker, concurrent workers + host background load; NOT the P3-T8 performance measurement",
+    "p50": 16.545,
+    "p95": 22.305
+  },
+  "load_reports": {
+    "M02": {
+      "asset_id": "P5-CODEFORMER",
+      "load_s": 8.764,
+      "missing_keys": [],
+      "n_checkpoint_tensors": 515,
+      "n_model_params": 94112707,
+      "sha256": "1009e537e0c2a07d4cabce6355f53cb66767cd4b4297ec7a4a64ca4b8a5684b7",
+      "strict": true,
+      "unexpected_keys": [],
+      "weights": "models/M02_codeformer/codeformer.pth"
+    }
+  },
+  "manifest": "data/manifests/phase5_rapid/runs/main/A8.csv.gz",
+  "manifest_sha256": "e1a558c97e2754c94f9160607aee13a5aa3dcc1892d1eb57aed7c9f02117aa44",
+  "n_failed": 0,
+  "n_missing": 0,
+  "n_ok": 896,
+  "n_pairs": 896,
+  "pool_broken": null,
+  "population": "main",
+  "population_manifest": "data/manifests/phase5_rapid/population_main.csv.gz",
+  "population_sha256": "840ee52d4c8ccb675b10404948fa0d2506128854bad21b4509d92c515e2cf60c",
+  "run": {
+    "config": "configs/phase5/benchmark_p5.yaml",
+    "config_sha256": "625bd01d41157866303ba0505ebef6dbfb031d08f2d6246c071407b88b023bc1",
+    "cpu_count_container": 16,
+    "git_head": "92fe16e982569c464d3bfe433d3f48c48956fc89-dirty",
+    "machine": "x86_64",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "protocol_version": "p3-protocol-1.0.1",
+    "python": "3.11.16",
+    "torch": "2.14.0+cpu",
+    "utc": "2026-10-04T15:01:51+00:00"
+  },
+  "threads_per_worker": 2,
+  "wall_s_this_invocation": 2899.1,
+  "workers": 4
+}
