@@ -93,3 +93,12 @@ def test_ui_logic_node_suite():
     p = subprocess.run(["node", "--test", str(repo_path("tests/ui/fes_ui.test.mjs"))], capture_output=True, text=True,
                        timeout=120)
     assert p.returncode == 0, p.stdout[-3000:] + p.stderr[-2000:]
+
+
+def test_compare_frames_never_crop_the_image():
+    """Regression (user report): tall photos were cut off. The images must be letterboxed (contain), never clipped."""
+    css = (UI / "style.css").read_text(encoding="utf-8")
+    frame = re.search(r"\.frame \{([^}]*)\}", css).group(1)
+    img = re.search(r"\.frame img \{([^}]*)\}", css).group(1)
+    assert "overflow: hidden" not in frame and "height: 340px" in frame
+    assert "object-fit: contain" in img and "width: 100%" in img and "height: 100%" in img

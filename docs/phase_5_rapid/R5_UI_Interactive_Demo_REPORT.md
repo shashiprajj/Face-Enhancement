@@ -154,6 +154,8 @@ The 2 skipped tests are:
 
 **Fix made during the smoke test:** case 5 first showed the explanation "No usable face was found" for `FACE_TOO_SMALL`. This was misleading, because 2 faces were detected. The text now reads "A face was found, but it is too small to process safely." The raw reason code was always shown.
 
+**Fix made after hand-over (user report):** a tall photo was shown with its top and bottom cut off in both the ORIGINAL and PROCESSED boxes. This was a display bug in the CSS: the image's `max-height: 100%` did not resolve inside the grid box, and `overflow: hidden` clipped the rest. The service had returned the photo unchanged (ORIGINAL). The boxes now letterbox every image (`object-fit: contain` in a fixed 340 px box). Checked in Chrome with 600×1200, 1600×500, 224×224 and 100×3000 images, all fully visible, and covered by the regression test `test_compare_frames_never_crop_the_image`.
+
 **Not exercised live:**
 
 - the 180 s browser timeout and the BUSY response; these are covered by unit tests;
