@@ -1,0 +1,48 @@
+{
+  "blockers": [
+    {
+      "evidence": [
+        "no Feature-Match code, package, service, container or config under D:/ReBIT (only this repository) or C:/Users/SHASHI (depth-4 search)",
+        "no Docker image/container matching feature/match",
+        "Phase 0 boundary: Feature-Match is external, never inspected (P0-T1 X6, P0-T5 \u00a79)"
+      ],
+      "id": "B1",
+      "what": "Feature-Match not accessible"
+    },
+    {
+      "evidence": [
+        "Dataset-and-code/Real-Person-Test-Data: 1 person, 1 reference, 5 degraded (required: >= 20 people)"
+      ],
+      "id": "B2",
+      "what": "insufficient real identity-labelled pairs"
+    }
+  ],
+  "frozen_baseline": {
+    "commit": "4ea2ed3",
+    "gate": "p5-rwgate-1.0.0",
+    "gate_commit": "76577d5",
+    "gate_seal": "78837a8d",
+    "model": "A4 SwinIR-L (weights 99adfa91)",
+    "service": "R5-1 fes_service"
+  },
+  "harness": {
+    "client_contract": "FES_FM_CLIENT=module:factory -> object.verify(reference: bytes, query: bytes) -> {score, match, threshold, face_found}",
+    "data_layout": "<data>/<person>/reference/<img>, <data>/<person>/degraded/<imgs>, optional labels.csv(person_id,file,degradation)",
+    "script": "scripts/r5_fm_validate.py",
+    "tests": "tests/test_r5_fm_harness.py"
+  },
+  "metrics": null,
+  "proxy_substitution": "NOT performed (task rule: do not substitute SFace/dlib)",
+  "rows": [],
+  "run": {
+    "git_head": "4ea2ed36b73c42d566812e53567290c4294fb716",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.0",
+    "utc": "2026-10-04T19:08:25+00:00"
+  },
+  "status": "BLOCKED",
+  "task": "R5-4",
+  "verdict": "NO VERDICT (blocked) \u2014 no GREEN/YELLOW/RED on Feature-Match"
+}

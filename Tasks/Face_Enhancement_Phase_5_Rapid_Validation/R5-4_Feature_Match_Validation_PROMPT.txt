@@ -1,0 +1,177 @@
+R5-4 — FINAL RAPID VALIDATION: ACTUAL FEATURE-MATCH DECISION GATE
+
+PROJECT
+Face Enhancement Service
+Repository: D:\ReBIT\Face-Enhancement
+
+OBJECTIVE
+Run the decisive validation of the current enhancement pipeline using the ACTUAL Feature-Match system.
+
+R5-2 proved only research-proxy evidence:
+- Frozen gate + A4 gives a small identity-similarity gain on LFW.
+- Strong blur is the clearest useful case.
+- Noise is mixed and can increase wrong-person similarity.
+- The user's 5 real photos are insufficient: some already match; the failures are mainly low-light/extreme-pose.
+- SFace/dlib were stand-ins because Feature-Match was unavailable.
+
+Therefore R5-4 must answer:
+"Does enhancement actually convert real degraded images into correct Feature-Match matches?"
+
+FROZEN BASELINE — DO NOT CHANGE
+- Current commit: 4ea2ed3
+- Gate baseline: 76577d5
+- Gate: p5-rwgate-1.0.0
+- Gate seal: 78837a8d
+- Enhancement model: A4 SwinIR-L
+- R5-1 standalone service
+
+Do NOT modify A4, gate thresholds, routing, detector, Feature-Match thresholds, or Feature-Match code during this task.
+
+EXPERIMENT
+For real identity-labelled paired data run:
+
+A) ORIGINAL
+Degraded query -> Feature-Match.
+
+B) CURRENT PIPELINE
+Degraded query -> frozen gate -> ORIGINAL or A4 -> Feature-Match.
+
+C) FORCED A4 — RESEARCH DIAGNOSTIC ONLY
+For safely processable images, force A4 -> Feature-Match.
+Do not force A4 on unsafe/no-face images.
+
+DATA
+Preferred minimum:
+- 20+ real people.
+- Each person: clear/reference image + degraded/query image.
+- Include blur, low light, noise, compression, small face, and pose variation where available.
+- Include both successful and failed original matches if possible.
+
+If the existing real-person dataset is only the previous 1-person/5-photo set, do not pretend it is sufficient. Use it only as a supplementary pilot.
+
+If Feature-Match cannot be accessed safely, STOP and report the blocker. Do not substitute SFace/dlib again.
+
+RECORD FOR EVERY PAIR
+- anonymized person/query ID
+- degradation type
+- face detection result
+- gate decision
+- whether A4 ran
+- Feature-Match result for original
+- Feature-Match result for current pipeline
+- forced-A4 result when safely applicable
+- score/distance and configured threshold
+- correct / wrong / no match
+- whether enhancement changed the decision
+- wrong/no-match -> correct rescue
+- correct -> wrong/no-match harm
+- new wrong-person/false accept
+
+PRIMARY METRICS
+Calculate:
+1. Original correct-match rate.
+2. Current-pipeline correct-match rate.
+3. Absolute improvement.
+4. Rescued matches.
+5. Harmed matches.
+6. Unchanged matches.
+7. Newly introduced wrong-person matches.
+8. Breakdown by degradation type.
+9. Gate-admitted vs gate-rejected groups.
+10. Forced-A4 diagnostic separately.
+
+DECISION RULE
+Do not invent a production threshold.
+
+- Meaningful rescues with few harms -> retain A4 + gate for the supported degradation class.
+- Zero meaningful rescues -> do not claim product value.
+- Rescues with material harms -> narrow/rework gate in a separate task.
+- If low-light/pose dominate and A4 does not solve them -> separate future targeted model/detector work.
+- Never tune the gate on this evaluation set.
+
+RULES
+- Validation only; no tuning.
+- No Feature-Match threshold changes.
+- No model training/fine-tuning.
+- No GFPGAN or CodeFormer.
+- No cherry-picking.
+- No silent removal of difficult examples.
+- Do not call proxy metrics Feature-Match results.
+- Keep personal photos out of git/reports; anonymized IDs only.
+- Never commit raw face images.
+
+IMPLEMENTATION
+First inspect the repository to find:
+- Feature-Match location/API
+- input format
+- embedding/matching flow
+- current threshold/config
+- safe local invocation method
+
+Prefer an evaluation adapter/script. Do not modify production Feature-Match behavior.
+
+OUTPUTS
+Create:
+1. docs/phase_5_rapid/R5-4_Feature_Match_Validation_REPORT.md
+2. data/manifests/phase5_rapid/feature_match_validation/results.json
+3. evaluation-only scripts/tests as needed
+4. no raw personal images committed
+
+REPORT
+1. Executive verdict
+2. Objective
+3. Frozen baseline
+4. Feature-Match integration
+5. Dataset/inclusion rules
+6. Conditions A/B/C
+7. Aggregate results
+8. Rescue/harm analysis
+9. Degradation breakdown
+10. Gate-admitted vs rejected
+11. Forced-A4 diagnostic
+12. False-accept analysis
+13. Limitations
+14. Product-value decision
+15. Recommended next task
+16. Tests/commands
+17. Commit hash
+
+TESTING
+Run focused R5-4 tests and the relevant Face Enhancement suite. Do not spend excessive time on unrelated WelOrbit tests.
+
+GIT
+Before work:
+- record git status
+- confirm current commit
+- confirm gate seal/config
+
+At completion:
+- commit only R5-4 code/tests/manifests/report
+- no raw images
+- no unrelated changes
+- return commit hash
+
+STOP CONDITIONS
+Stop without modifying the frozen pipeline if:
+- Feature-Match is unavailable/inaccessible.
+- There is insufficient paired identity-labelled data for meaningful evaluation.
+- Integration would require production behavior changes.
+
+In those cases, write a blocker report and state exactly what is needed.
+
+FINAL RESPONSE
+Return:
+- GREEN/YELLOW/RED
+- current commit
+- dataset size
+- original correct-match rate
+- current-pipeline correct-match rate
+- rescued matches
+- harmed matches
+- new wrong-person matches
+- whether strong blur is helped
+- whether low light/pose are helped
+- whether A4 should remain
+- exact next recommendation
+
+DO NOT continue into model search or gate tuning after this task. Stop at the R5-4 decision gate.
