@@ -1,0 +1,41 @@
+You are working on the Face Enhancement Service repository.
+
+CURRENT STATE
+- Phase 0–3 complete; Phase 3 commit fdfce67.
+- Phase 4 T1–T5 complete.
+- P4-T6, T7, T8 remain.
+- Phase 3 tested A1 RestoreFormer++, A2 VQFR, A3 Real-ESRGAN, A4 SwinIR-L and A5 FBCNN→NAFNet-SIDD→Real-ESRGAN.
+- No candidate had positive mean identity gain over B0.
+- Mild inputs were consistently harmed.
+- P4-T4 added dlib and broadly confirmed the main conclusion.
+- Direction: selective enhancement, not unconditional enhancement.
+
+EXECUTE IN THIS ORDER
+1. P4-T6 Do-Not-Enhance Gate
+2. P4-T7 Selective Model Routing
+3. P4-T8 Evidence Synthesis & Gate
+
+RULES
+- Read the task files before coding.
+- Inspect existing implementation/artifacts first.
+- Resume partial inference; do not recompute completed work.
+- Use conservative workers; one worker for memory-heavy A2/VQFR if needed.
+- Do not begin Phase 5.
+- Do not modify Feature-Match.
+- Calibrate only on development data.
+- Freeze T6 thresholds/logic before evaluation.
+- Keep B0/original as fallback.
+- Identity preservation/rescue is primary; perceptual metrics secondary.
+- Report SFace and dlib separately.
+- Do not select a final production model during these tasks.
+- Do not invent missing evidence.
+
+COMPLETION
+Each task requires implementation, tests, artifacts, report and evidence status, followed by a commit.
+
+FINAL T8 REPORT MUST STATE:
+- what evidence proves,
+- what remains uncertain,
+- whether selective routing is supported,
+- unresolved production blockers,
+- evidence-based Phase 5 scope.
