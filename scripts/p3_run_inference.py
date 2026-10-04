@@ -95,7 +95,10 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="configs/phase3/benchmark_p3.yaml")
     ap.add_argument("--config-id", required=True)
-    ap.add_argument("--population", required=True, choices=["trial", "main"])
+    ap.add_argument("--population", required=True, help="trial | main (Phase 3) | p4dev (Phase 4, with --root)")
+    ap.add_argument("--root", default="data/manifests/phase3", help="manifest root holding population_<pop>.csv.gz "
+                    "and runs/ (Phase 4 populations: data/manifests/phase4)")
+    ap.add_argument("--outputs-root", default=None, help="override runtime.outputs_root (Phase 4: experiments/phase4)")
     ap.add_argument("--workers", type=int, default=None)
     ap.add_argument("--threads", type=int, default=None)
     ap.add_argument("--limit", type=int, default=0, help="debug only: first N pairs (never used for results)")
@@ -105,12 +108,12 @@ def main() -> None:
     threads = args.threads or cfg["runtime"]["torch_threads_per_worker"]
     assert args.config_id in cfg["configurations"], "unknown configuration"
 
-    pop_path = f"data/manifests/phase3/population_{args.population}.csv.gz"
+    pop_path = f"{args.root}/population_{args.population}.csv.gz"
     pairs = read_csv_gz(repo_path(pop_path))
     if args.limit:
         pairs = pairs[:args.limit]
-    out_root = f"{cfg['runtime']['outputs_root']}/outputs/{args.population}/{args.config_id}"
-    run_dir = repo_path(f"data/manifests/phase3/runs/{args.population}")
+    out_root = f"{args.outputs_root or cfg['runtime']['outputs_root']}/outputs/{args.population}/{args.config_id}"
+    run_dir = repo_path(f"{args.root}/runs/{args.population}")
     partial = run_dir / f"{args.config_id}.partial.jsonl"
     run_dir.mkdir(parents=True, exist_ok=True)
 
@@ -163,7 +166,7 @@ def main() -> None:
                 final[r["pair_id"]] = r
     rows = [final[p["pair_id"]] for p in pairs if p["pair_id"] in final]
     missing = [p["pair_id"] for p in pairs if p["pair_id"] not in final]
-    manifest = f"data/manifests/phase3/runs/{args.population}/{args.config_id}.csv.gz"
+    manifest = f"{args.root}/runs/{args.population}/{args.config_id}.csv.gz"
     if not args.limit:
         write_csv_gz(repo_path(manifest), [{k: r[k] for k in FIELDS} for r in rows], FIELDS)
     times = np.array([float(r["infer_s"]) for r in rows if r["status"] == "OK"])

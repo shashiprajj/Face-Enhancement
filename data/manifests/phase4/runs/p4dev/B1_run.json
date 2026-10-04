@@ -1,0 +1,47 @@
+{
+  "configuration": {
+    "components": [],
+    "config_id": "B1",
+    "kind": "baseline",
+    "label": "Classical upscaling (Lanczos-4)",
+    "settings": {
+      "lr_to_e": "INTER_LANCZOS4",
+      "same_size": "identity"
+    }
+  },
+  "failures": [],
+  "infer_s_under_load": {
+    "mean": 0.0,
+    "note": "per-image wall time inside a worker, concurrent workers + host background load; NOT the P3-T8 performance measurement",
+    "p50": 0.0,
+    "p95": 0.001
+  },
+  "load_reports": {},
+  "manifest": "data/manifests/phase4/runs/p4dev/B1.csv.gz",
+  "manifest_sha256": "7628f144647a00c08e7f2885aab1744b01ba67feb1db2feea590150a5a0cf41c",
+  "n_failed": 0,
+  "n_missing": 0,
+  "n_ok": 896,
+  "n_pairs": 896,
+  "pool_broken": null,
+  "population": "p4dev",
+  "population_manifest": "data/manifests/phase4/population_p4dev.csv.gz",
+  "population_sha256": "8a257f44c56359e464c9688af66ab3a9df7551c2018422a03e6d525de0d56734",
+  "run": {
+    "config": "configs/phase3/benchmark_p3.yaml",
+    "config_sha256": "28f9ab7c08ba3cbee0b943b7c444cfede4e5bafee5e92214c686205a1b413cd0",
+    "cpu_count_container": 16,
+    "git_head": "fdfce67a0e01f35dcb775d146b0a68938dd345c5-dirty",
+    "machine": "x86_64",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "protocol_version": "p3-protocol-1.0.1",
+    "python": "3.11.16",
+    "torch": "2.14.0+cpu",
+    "utc": "2026-10-03T06:04:51+00:00"
+  },
+  "threads_per_worker": 2,
+  "wall_s_this_invocation": 14.4,
+  "workers": 4
+}

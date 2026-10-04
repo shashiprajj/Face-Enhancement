@@ -1,0 +1,4479 @@
+{
+  "b0_tar_by_input_detection": {
+    "E01": {
+      "detected": 0.9987,
+      "not_detected": 0.7368
+    },
+    "E07": {
+      "detected": 0.9856,
+      "not_detected": 0.5489
+    }
+  },
+  "by_config": {
+    "A1": {
+      "agreement": {
+        "kappa_verdicts": 0.3739,
+        "spearman_delta": 0.6606,
+        "verdict_crosstab": {
+          "BENEFIT|BENEFIT": 62,
+          "BENEFIT|HARM": 33,
+          "BENEFIT|NEUTRAL": 18,
+          "HARM|BENEFIT": 38,
+          "HARM|HARM": 567,
+          "HARM|NEUTRAL": 74,
+          "NEUTRAL|BENEFIT": 53,
+          "NEUTRAL|HARM": 27,
+          "NEUTRAL|NEUTRAL": 24
+        }
+      },
+      "all": {
+        "TAR_E01": [
+          0.9598,
+          0.9632
+        ],
+        "TAR_E07": [
+          0.9208,
+          0.9297
+        ],
+        "closer_to_impostor_E01": 23,
+        "closer_to_impostor_E07": 31,
+        "closer_to_impostor_both": 16,
+        "d_E01": [
+          -0.05183,
+          -0.06696,
+          -0.03747,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00639,
+          -0.00879,
+          -0.00422,
+          "\u25bc"
+        ],
+        "flips_E01": 10,
+        "flips_E07": 6,
+        "n": 896,
+        "rescues_E01": 13,
+        "rescues_E07": 14,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 62,
+          "CONFIRMED_HARM": 567,
+          "DISAGREE": 71,
+          "NEUTRAL": 24,
+          "PARTIAL_BENEFIT": 71,
+          "PARTIAL_HARM": 101
+        }
+      },
+      "family=combined": {
+        "TAR_E01": [
+          0.8333,
+          0.8214
+        ],
+        "TAR_E07": [
+          0.7143,
+          0.7381
+        ],
+        "closer_to_impostor_E01": 10,
+        "closer_to_impostor_E07": 13,
+        "closer_to_impostor_both": 8,
+        "d_E01": [
+          -0.04218,
+          -0.05723,
+          -0.02736,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00382,
+          -0.00729,
+          -0.00013,
+          "\u25bc"
+        ],
+        "flips_E01": 4,
+        "flips_E07": 1,
+        "n": 84,
+        "rescues_E01": 3,
+        "rescues_E07": 3,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 5,
+          "CONFIRMED_HARM": 40,
+          "DISAGREE": 14,
+          "NEUTRAL": 2,
+          "PARTIAL_BENEFIT": 10,
+          "PARTIAL_HARM": 13
+        }
+      },
+      "family=gaussblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.08047,
+          -0.09876,
+          -0.06361,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00677,
+          -0.00966,
+          -0.00421,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 3,
+          "CONFIRMED_HARM": 81,
+          "DISAGREE": 8,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 5,
+          "PARTIAL_HARM": 15
+        }
+      },
+      "family=jpeg": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.07279,
+          -0.08992,
+          -0.05783,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00834,
+          -0.0107,
+          -0.00617,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 1,
+          "CONFIRMED_HARM": 89,
+          "DISAGREE": 3,
+          "NEUTRAL": 5,
+          "PARTIAL_BENEFIT": 3,
+          "PARTIAL_HARM": 11
+        }
+      },
+      "family=lowcontrast": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.09953,
+          -0.12124,
+          -0.08011,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01228,
+          -0.01541,
+          -0.00926,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 73,
+          "DISAGREE": 2,
+          "NEUTRAL": 1,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 8
+        }
+      },
+      "family=lowres": {
+        "TAR_E01": [
+          0.9554,
+          0.9643
+        ],
+        "TAR_E07": [
+          0.8571,
+          0.9018
+        ],
+        "closer_to_impostor_E01": 3,
+        "closer_to_impostor_E07": 5,
+        "closer_to_impostor_both": 2,
+        "d_E01": [
+          -0.04108,
+          -0.05545,
+          -0.02804,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00246,
+          -0.00505,
+          4e-05,
+          "\u2248"
+        ],
+        "flips_E01": 1,
+        "flips_E07": 1,
+        "n": 112,
+        "rescues_E01": 2,
+        "rescues_E07": 6,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 11,
+          "CONFIRMED_HARM": 54,
+          "DISAGREE": 7,
+          "NEUTRAL": 4,
+          "PARTIAL_BENEFIT": 18,
+          "PARTIAL_HARM": 18
+        }
+      },
+      "family=motionblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          0.9911
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.05607,
+          -0.0741,
+          -0.0387,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00435,
+          -0.00703,
+          -0.0019,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 8,
+          "CONFIRMED_HARM": 65,
+          "DISAGREE": 8,
+          "NEUTRAL": 4,
+          "PARTIAL_BENEFIT": 13,
+          "PARTIAL_HARM": 14
+        }
+      },
+      "family=noise": {
+        "TAR_E01": [
+          0.9554,
+          0.9911
+        ],
+        "TAR_E07": [
+          0.9464,
+          0.9554
+        ],
+        "closer_to_impostor_E01": 1,
+        "closer_to_impostor_E07": 3,
+        "closer_to_impostor_both": 1,
+        "d_E01": [
+          0.0497,
+          0.02999,
+          0.07172,
+          "\u25b2"
+        ],
+        "d_E07": [
+          -0.00462,
+          -0.00801,
+          -0.00164,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 4,
+        "rescues_E07": 1,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 23,
+          "CONFIRMED_HARM": 43,
+          "DISAGREE": 17,
+          "NEUTRAL": 7,
+          "PARTIAL_BENEFIT": 11,
+          "PARTIAL_HARM": 11
+        }
+      },
+      "family=realistic2": {
+        "TAR_E01": [
+          0.8571,
+          0.8452
+        ],
+        "TAR_E07": [
+          0.7024,
+          0.7143
+        ],
+        "closer_to_impostor_E01": 9,
+        "closer_to_impostor_E07": 10,
+        "closer_to_impostor_both": 5,
+        "d_E01": [
+          -0.03213,
+          -0.05184,
+          -0.01308,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00393,
+          -0.00741,
+          -9e-05,
+          "\u25bc"
+        ],
+        "flips_E01": 5,
+        "flips_E07": 3,
+        "n": 84,
+        "rescues_E01": 4,
+        "rescues_E07": 4,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 11,
+          "CONFIRMED_HARM": 41,
+          "DISAGREE": 12,
+          "NEUTRAL": 1,
+          "PARTIAL_BENEFIT": 11,
+          "PARTIAL_HARM": 8
+        }
+      },
+      "family=underexposure": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.11137,
+          -0.13065,
+          -0.09394,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01276,
+          -0.0157,
+          -0.01007,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 81,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 3
+        }
+      },
+      "output_detected_rate": 0.9989,
+      "severity=extreme": {
+        "TAR_E01": [
+          0.9286,
+          0.9643
+        ],
+        "TAR_E07": [
+          0.8429,
+          0.8786
+        ],
+        "closer_to_impostor_E01": 4,
+        "closer_to_impostor_E07": 8,
+        "closer_to_impostor_both": 3,
+        "d_E01": [
+          0.02401,
+          0.00701,
+          0.04258,
+          "\u25b2"
+        ],
+        "d_E07": [
+          0.0015,
+          -0.00203,
+          0.0047,
+          "\u2248"
+        ],
+        "flips_E01": 1,
+        "flips_E07": 2,
+        "n": 140,
+        "rescues_E01": 6,
+        "rescues_E07": 7,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 36,
+          "CONFIRMED_HARM": 30,
+          "DISAGREE": 25,
+          "NEUTRAL": 5,
+          "PARTIAL_BENEFIT": 26,
+          "PARTIAL_HARM": 18
+        }
+      },
+      "severity=mild": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.0861,
+          -0.10266,
+          -0.07081,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01067,
+          -0.01329,
+          -0.00824,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 237,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 15
+        }
+      },
+      "severity=moderate": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          0.9841,
+          0.9881
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.0656,
+          -0.08046,
+          -0.05165,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00691,
+          -0.00935,
+          -0.00464,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 7,
+          "CONFIRMED_HARM": 176,
+          "DISAGREE": 14,
+          "NEUTRAL": 9,
+          "PARTIAL_BENEFIT": 15,
+          "PARTIAL_HARM": 31
+        }
+      },
+      "severity=severe": {
+        "TAR_E01": [
+          0.8968,
+          0.8889
+        ],
+        "TAR_E07": [
+          0.8214,
+          0.8294
+        ],
+        "closer_to_impostor_E01": 19,
+        "closer_to_impostor_E07": 23,
+        "closer_to_impostor_both": 13,
+        "d_E01": [
+          -0.04591,
+          -0.06231,
+          -0.02994,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00597,
+          -0.00843,
+          -0.00338,
+          "\u25bc"
+        ],
+        "flips_E01": 9,
+        "flips_E07": 3,
+        "n": 252,
+        "rescues_E01": 7,
+        "rescues_E07": 5,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 19,
+          "CONFIRMED_HARM": 124,
+          "DISAGREE": 32,
+          "NEUTRAL": 10,
+          "PARTIAL_BENEFIT": 30,
+          "PARTIAL_HARM": 37
+        }
+      }
+    },
+    "A2": {
+      "agreement": {
+        "kappa_verdicts": 0.2131,
+        "spearman_delta": 0.4699,
+        "verdict_crosstab": {
+          "BENEFIT|BENEFIT": 28,
+          "BENEFIT|HARM": 40,
+          "BENEFIT|NEUTRAL": 14,
+          "HARM|BENEFIT": 36,
+          "HARM|HARM": 617,
+          "HARM|NEUTRAL": 83,
+          "NEUTRAL|BENEFIT": 26,
+          "NEUTRAL|HARM": 41,
+          "NEUTRAL|NEUTRAL": 11
+        }
+      },
+      "all": {
+        "TAR_E01": [
+          0.9598,
+          0.9632
+        ],
+        "TAR_E07": [
+          0.9208,
+          0.9219
+        ],
+        "closer_to_impostor_E01": 17,
+        "closer_to_impostor_E07": 37,
+        "closer_to_impostor_both": 13,
+        "d_E01": [
+          -0.06291,
+          -0.07415,
+          -0.05257,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00751,
+          -0.0093,
+          -0.00576,
+          "\u25bc"
+        ],
+        "flips_E01": 12,
+        "flips_E07": 11,
+        "n": 896,
+        "rescues_E01": 15,
+        "rescues_E07": 12,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 28,
+          "CONFIRMED_HARM": 617,
+          "DISAGREE": 76,
+          "NEUTRAL": 11,
+          "PARTIAL_BENEFIT": 40,
+          "PARTIAL_HARM": 124
+        }
+      },
+      "family=combined": {
+        "TAR_E01": [
+          0.8333,
+          0.8333
+        ],
+        "TAR_E07": [
+          0.7143,
+          0.7143
+        ],
+        "closer_to_impostor_E01": 7,
+        "closer_to_impostor_E07": 13,
+        "closer_to_impostor_both": 7,
+        "d_E01": [
+          -0.05738,
+          -0.07427,
+          -0.04047,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00447,
+          -0.00849,
+          -0.00042,
+          "\u25bc"
+        ],
+        "flips_E01": 4,
+        "flips_E07": 3,
+        "n": 84,
+        "rescues_E01": 4,
+        "rescues_E07": 3,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 3,
+          "CONFIRMED_HARM": 44,
+          "DISAGREE": 10,
+          "NEUTRAL": 2,
+          "PARTIAL_BENEFIT": 10,
+          "PARTIAL_HARM": 15
+        }
+      },
+      "family=gaussblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.07565,
+          -0.08885,
+          -0.06356,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00535,
+          -0.00732,
+          -0.00353,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 2,
+          "CONFIRMED_HARM": 78,
+          "DISAGREE": 7,
+          "NEUTRAL": 3,
+          "PARTIAL_BENEFIT": 4,
+          "PARTIAL_HARM": 18
+        }
+      },
+      "family=jpeg": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.07326,
+          -0.08487,
+          -0.0621,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00828,
+          -0.01015,
+          -0.00651,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 96,
+          "DISAGREE": 3,
+          "NEUTRAL": 2,
+          "PARTIAL_BENEFIT": 1,
+          "PARTIAL_HARM": 10
+        }
+      },
+      "family=lowcontrast": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.11641,
+          -0.12884,
+          -0.10204,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01434,
+          -0.01733,
+          -0.01161,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 82,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 1,
+          "PARTIAL_HARM": 1
+        }
+      },
+      "family=lowres": {
+        "TAR_E01": [
+          0.9554,
+          0.9732
+        ],
+        "TAR_E07": [
+          0.8571,
+          0.875
+        ],
+        "closer_to_impostor_E01": 2,
+        "closer_to_impostor_E07": 8,
+        "closer_to_impostor_both": 1,
+        "d_E01": [
+          -0.07508,
+          -0.09389,
+          -0.05771,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00649,
+          -0.0107,
+          -0.00283,
+          "\u25bc"
+        ],
+        "flips_E01": 2,
+        "flips_E07": 4,
+        "n": 112,
+        "rescues_E01": 4,
+        "rescues_E07": 6,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 12,
+          "CONFIRMED_HARM": 77,
+          "DISAGREE": 9,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 2,
+          "PARTIAL_HARM": 12
+        }
+      },
+      "family=motionblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.06333,
+          -0.07694,
+          -0.05101,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00556,
+          -0.00745,
+          -0.00375,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 3,
+          "CONFIRMED_HARM": 68,
+          "DISAGREE": 4,
+          "NEUTRAL": 2,
+          "PARTIAL_BENEFIT": 7,
+          "PARTIAL_HARM": 28
+        }
+      },
+      "family=noise": {
+        "TAR_E01": [
+          0.9554,
+          0.9821
+        ],
+        "TAR_E07": [
+          0.9464,
+          0.9286
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 3,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          0.02773,
+          0.01418,
+          0.04247,
+          "\u25b2"
+        ],
+        "d_E07": [
+          -0.00923,
+          -0.01191,
+          -0.00715,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 2,
+        "n": 112,
+        "rescues_E01": 3,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 3,
+          "CONFIRMED_HARM": 44,
+          "DISAGREE": 29,
+          "NEUTRAL": 2,
+          "PARTIAL_BENEFIT": 9,
+          "PARTIAL_HARM": 25
+        }
+      },
+      "family=realistic2": {
+        "TAR_E01": [
+          0.8571,
+          0.8333
+        ],
+        "TAR_E07": [
+          0.7024,
+          0.7143
+        ],
+        "closer_to_impostor_E01": 8,
+        "closer_to_impostor_E07": 13,
+        "closer_to_impostor_both": 5,
+        "d_E01": [
+          -0.05733,
+          -0.07681,
+          -0.03778,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00526,
+          -0.00883,
+          -0.00119,
+          "\u25bc"
+        ],
+        "flips_E01": 6,
+        "flips_E07": 2,
+        "n": 84,
+        "rescues_E01": 4,
+        "rescues_E07": 3,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 5,
+          "CONFIRMED_HARM": 45,
+          "DISAGREE": 14,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 6,
+          "PARTIAL_HARM": 14
+        }
+      },
+      "family=underexposure": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.09376,
+          -0.10604,
+          -0.08167,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.0095,
+          -0.01163,
+          -0.00768,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 83,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 1
+        }
+      },
+      "output_detected_rate": 0.9922,
+      "severity=extreme": {
+        "TAR_E01": [
+          0.9286,
+          0.9643
+        ],
+        "TAR_E07": [
+          0.8429,
+          0.85
+        ],
+        "closer_to_impostor_E01": 2,
+        "closer_to_impostor_E07": 11,
+        "closer_to_impostor_both": 1,
+        "d_E01": [
+          -0.00486,
+          -0.02437,
+          0.01515,
+          "\u2248"
+        ],
+        "d_E07": [
+          -0.00456,
+          -0.00875,
+          -0.00096,
+          "\u25bc"
+        ],
+        "flips_E01": 2,
+        "flips_E07": 5,
+        "n": 140,
+        "rescues_E01": 7,
+        "rescues_E07": 6,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 18,
+          "CONFIRMED_HARM": 43,
+          "DISAGREE": 33,
+          "NEUTRAL": 2,
+          "PARTIAL_BENEFIT": 14,
+          "PARTIAL_HARM": 30
+        }
+      },
+      "severity=mild": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.08471,
+          -0.09642,
+          -0.07389,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00936,
+          -0.01128,
+          -0.00765,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 241,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 11
+        }
+      },
+      "severity=moderate": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          0.9841,
+          0.996
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.07621,
+          -0.08705,
+          -0.06502,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00703,
+          -0.00901,
+          -0.00512,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 3,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 4,
+          "CONFIRMED_HARM": 191,
+          "DISAGREE": 13,
+          "NEUTRAL": 3,
+          "PARTIAL_BENEFIT": 10,
+          "PARTIAL_HARM": 31
+        }
+      },
+      "severity=severe": {
+        "TAR_E01": [
+          0.8968,
+          0.8889
+        ],
+        "TAR_E07": [
+          0.8214,
+          0.8095
+        ],
+        "closer_to_impostor_E01": 15,
+        "closer_to_impostor_E07": 26,
+        "closer_to_impostor_both": 12,
+        "d_E01": [
+          -0.06004,
+          -0.07304,
+          -0.0476,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00778,
+          -0.01012,
+          -0.00533,
+          "\u25bc"
+        ],
+        "flips_E01": 10,
+        "flips_E07": 6,
+        "n": 252,
+        "rescues_E01": 8,
+        "rescues_E07": 3,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 6,
+          "CONFIRMED_HARM": 142,
+          "DISAGREE": 30,
+          "NEUTRAL": 6,
+          "PARTIAL_BENEFIT": 16,
+          "PARTIAL_HARM": 52
+        }
+      }
+    },
+    "A3": {
+      "agreement": {
+        "kappa_verdicts": 0.3683,
+        "spearman_delta": 0.5335,
+        "verdict_crosstab": {
+          "BENEFIT|BENEFIT": 55,
+          "BENEFIT|HARM": 27,
+          "BENEFIT|NEUTRAL": 33,
+          "HARM|BENEFIT": 20,
+          "HARM|HARM": 286,
+          "HARM|NEUTRAL": 142,
+          "NEUTRAL|BENEFIT": 33,
+          "NEUTRAL|HARM": 85,
+          "NEUTRAL|NEUTRAL": 215
+        }
+      },
+      "all": {
+        "TAR_E01": [
+          0.9598,
+          0.9431
+        ],
+        "TAR_E07": [
+          0.9208,
+          0.8984
+        ],
+        "closer_to_impostor_E01": 37,
+        "closer_to_impostor_E07": 52,
+        "closer_to_impostor_both": 25,
+        "d_E01": [
+          -0.02532,
+          -0.03269,
+          -0.01823,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00424,
+          -0.0055,
+          -0.003,
+          "\u25bc"
+        ],
+        "flips_E01": 25,
+        "flips_E07": 28,
+        "n": 896,
+        "rescues_E01": 10,
+        "rescues_E07": 8,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 55,
+          "CONFIRMED_HARM": 286,
+          "DISAGREE": 47,
+          "NEUTRAL": 215,
+          "PARTIAL_BENEFIT": 66,
+          "PARTIAL_HARM": 227
+        }
+      },
+      "family=combined": {
+        "TAR_E01": [
+          0.8333,
+          0.8214
+        ],
+        "TAR_E07": [
+          0.7143,
+          0.6905
+        ],
+        "closer_to_impostor_E01": 11,
+        "closer_to_impostor_E07": 13,
+        "closer_to_impostor_both": 7,
+        "d_E01": [
+          -0.04819,
+          -0.06717,
+          -0.02802,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.0033,
+          -0.00685,
+          0.00013,
+          "\u2248"
+        ],
+        "flips_E01": 4,
+        "flips_E07": 4,
+        "n": 84,
+        "rescues_E01": 3,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 4,
+          "CONFIRMED_HARM": 32,
+          "DISAGREE": 10,
+          "NEUTRAL": 5,
+          "PARTIAL_BENEFIT": 9,
+          "PARTIAL_HARM": 24
+        }
+      },
+      "family=gaussblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.02275,
+          -0.02814,
+          -0.01797,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00148,
+          -0.00243,
+          -0.00063,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 29,
+          "DISAGREE": 1,
+          "NEUTRAL": 37,
+          "PARTIAL_BENEFIT": 16,
+          "PARTIAL_HARM": 29
+        }
+      },
+      "family=jpeg": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.01325,
+          -0.01938,
+          -0.00708,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00162,
+          -0.00271,
+          -0.00065,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 4,
+          "CONFIRMED_HARM": 18,
+          "DISAGREE": 2,
+          "NEUTRAL": 56,
+          "PARTIAL_BENEFIT": 9,
+          "PARTIAL_HARM": 23
+        }
+      },
+      "family=lowcontrast": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.03747,
+          -0.04501,
+          -0.03056,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.0038,
+          -0.00507,
+          -0.00274,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 34,
+          "DISAGREE": 0,
+          "NEUTRAL": 16,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 34
+        }
+      },
+      "family=lowres": {
+        "TAR_E01": [
+          0.9554,
+          0.8125
+        ],
+        "TAR_E07": [
+          0.8571,
+          0.6964
+        ],
+        "closer_to_impostor_E01": 16,
+        "closer_to_impostor_E07": 19,
+        "closer_to_impostor_both": 12,
+        "d_E01": [
+          -0.14933,
+          -0.16724,
+          -0.1312,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.02017,
+          -0.02392,
+          -0.01661,
+          "\u25bc"
+        ],
+        "flips_E01": 17,
+        "flips_E07": 18,
+        "n": 112,
+        "rescues_E01": 1,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 93,
+          "DISAGREE": 3,
+          "NEUTRAL": 1,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 15
+        }
+      },
+      "family=motionblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          0.9911
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 1,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.02643,
+          -0.03402,
+          -0.01953,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00283,
+          -0.0045,
+          -0.00145,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 28,
+          "DISAGREE": 3,
+          "NEUTRAL": 39,
+          "PARTIAL_BENEFIT": 3,
+          "PARTIAL_HARM": 39
+        }
+      },
+      "family=noise": {
+        "TAR_E01": [
+          0.9554,
+          1.0
+        ],
+        "TAR_E07": [
+          0.9464,
+          0.9821
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 1,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          0.12819,
+          0.10982,
+          0.14884,
+          "\u25b2"
+        ],
+        "d_E07": [
+          0.00398,
+          0.00158,
+          0.00677,
+          "\u25b2"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 5,
+        "rescues_E07": 4,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 41,
+          "CONFIRMED_HARM": 5,
+          "DISAGREE": 16,
+          "NEUTRAL": 22,
+          "PARTIAL_BENEFIT": 24,
+          "PARTIAL_HARM": 4
+        }
+      },
+      "family=realistic2": {
+        "TAR_E01": [
+          0.8571,
+          0.8214
+        ],
+        "TAR_E07": [
+          0.7024,
+          0.6667
+        ],
+        "closer_to_impostor_E01": 10,
+        "closer_to_impostor_E07": 18,
+        "closer_to_impostor_both": 6,
+        "d_E01": [
+          -0.04919,
+          -0.07024,
+          -0.02894,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00625,
+          -0.01078,
+          -0.00181,
+          "\u25bc"
+        ],
+        "flips_E01": 4,
+        "flips_E07": 5,
+        "n": 84,
+        "rescues_E01": 1,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 6,
+          "CONFIRMED_HARM": 27,
+          "DISAGREE": 12,
+          "NEUTRAL": 9,
+          "PARTIAL_BENEFIT": 5,
+          "PARTIAL_HARM": 25
+        }
+      },
+      "family=underexposure": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.0238,
+          -0.02793,
+          -0.02007,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00232,
+          -0.003,
+          -0.00174,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 20,
+          "DISAGREE": 0,
+          "NEUTRAL": 30,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 34
+        }
+      },
+      "output_detected_rate": 0.9766,
+      "severity=extreme": {
+        "TAR_E01": [
+          0.9286,
+          0.8571
+        ],
+        "TAR_E07": [
+          0.8429,
+          0.7786
+        ],
+        "closer_to_impostor_E01": 16,
+        "closer_to_impostor_E07": 19,
+        "closer_to_impostor_both": 12,
+        "d_E01": [
+          0.01325,
+          -0.00434,
+          0.03022,
+          "\u2248"
+        ],
+        "d_E07": [
+          -0.00545,
+          -0.00861,
+          -0.00233,
+          "\u25bc"
+        ],
+        "flips_E01": 16,
+        "flips_E07": 13,
+        "n": 140,
+        "rescues_E01": 6,
+        "rescues_E07": 4,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 22,
+          "CONFIRMED_HARM": 29,
+          "DISAGREE": 13,
+          "NEUTRAL": 26,
+          "PARTIAL_BENEFIT": 25,
+          "PARTIAL_HARM": 25
+        }
+      },
+      "severity=mild": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.02413,
+          -0.02777,
+          -0.02103,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00273,
+          -0.00338,
+          -0.00218,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 78,
+          "DISAGREE": 0,
+          "NEUTRAL": 94,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 80
+        }
+      },
+      "severity=moderate": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          0.9841,
+          0.9881
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 3,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.0296,
+          -0.03704,
+          -0.02208,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00298,
+          -0.00431,
+          -0.00178,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 11,
+          "CONFIRMED_HARM": 90,
+          "DISAGREE": 10,
+          "NEUTRAL": 54,
+          "PARTIAL_BENEFIT": 25,
+          "PARTIAL_HARM": 62
+        }
+      },
+      "severity=severe": {
+        "TAR_E01": [
+          0.8968,
+          0.877
+        ],
+        "TAR_E07": [
+          0.8214,
+          0.7738
+        ],
+        "closer_to_impostor_E01": 21,
+        "closer_to_impostor_E07": 30,
+        "closer_to_impostor_both": 13,
+        "d_E01": [
+          -0.04365,
+          -0.05571,
+          -0.03148,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00632,
+          -0.00853,
+          -0.00399,
+          "\u25bc"
+        ],
+        "flips_E01": 9,
+        "flips_E07": 14,
+        "n": 252,
+        "rescues_E01": 4,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 22,
+          "CONFIRMED_HARM": 89,
+          "DISAGREE": 24,
+          "NEUTRAL": 41,
+          "PARTIAL_BENEFIT": 16,
+          "PARTIAL_HARM": 60
+        }
+      }
+    },
+    "A4": {
+      "agreement": {
+        "kappa_verdicts": 0.5011,
+        "spearman_delta": 0.6745,
+        "verdict_crosstab": {
+          "BENEFIT|BENEFIT": 111,
+          "BENEFIT|HARM": 12,
+          "BENEFIT|NEUTRAL": 39,
+          "HARM|BENEFIT": 30,
+          "HARM|HARM": 262,
+          "HARM|NEUTRAL": 88,
+          "NEUTRAL|BENEFIT": 51,
+          "NEUTRAL|HARM": 66,
+          "NEUTRAL|NEUTRAL": 237
+        }
+      },
+      "all": {
+        "TAR_E01": [
+          0.9598,
+          0.9408
+        ],
+        "TAR_E07": [
+          0.9208,
+          0.9096
+        ],
+        "closer_to_impostor_E01": 30,
+        "closer_to_impostor_E07": 54,
+        "closer_to_impostor_both": 26,
+        "d_E01": [
+          -0.00988,
+          -0.01683,
+          -0.00267,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.0016,
+          -0.00274,
+          -0.00043,
+          "\u25bc"
+        ],
+        "flips_E01": 28,
+        "flips_E07": 20,
+        "n": 896,
+        "rescues_E01": 11,
+        "rescues_E07": 10,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 111,
+          "CONFIRMED_HARM": 262,
+          "DISAGREE": 42,
+          "NEUTRAL": 237,
+          "PARTIAL_BENEFIT": 90,
+          "PARTIAL_HARM": 154
+        }
+      },
+      "family=combined": {
+        "TAR_E01": [
+          0.8333,
+          0.7976
+        ],
+        "TAR_E07": [
+          0.7143,
+          0.6905
+        ],
+        "closer_to_impostor_E01": 9,
+        "closer_to_impostor_E07": 18,
+        "closer_to_impostor_both": 8,
+        "d_E01": [
+          -0.02985,
+          -0.04525,
+          -0.01428,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00183,
+          -0.00562,
+          0.00186,
+          "\u2248"
+        ],
+        "flips_E01": 6,
+        "flips_E07": 4,
+        "n": 84,
+        "rescues_E01": 3,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 3,
+          "CONFIRMED_HARM": 24,
+          "DISAGREE": 13,
+          "NEUTRAL": 17,
+          "PARTIAL_BENEFIT": 14,
+          "PARTIAL_HARM": 13
+        }
+      },
+      "family=gaussblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          0.00604,
+          -0.00094,
+          0.01281,
+          "\u2248"
+        ],
+        "d_E07": [
+          0.00365,
+          0.00242,
+          0.00479,
+          "\u25b2"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 28,
+          "CONFIRMED_HARM": 19,
+          "DISAGREE": 1,
+          "NEUTRAL": 35,
+          "PARTIAL_BENEFIT": 12,
+          "PARTIAL_HARM": 17
+        }
+      },
+      "family=jpeg": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.00572,
+          -0.01014,
+          -0.00057,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00074,
+          -0.00139,
+          -8e-05,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 8,
+          "CONFIRMED_HARM": 19,
+          "DISAGREE": 0,
+          "NEUTRAL": 54,
+          "PARTIAL_BENEFIT": 12,
+          "PARTIAL_HARM": 19
+        }
+      },
+      "family=lowcontrast": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.03435,
+          -0.04279,
+          -0.02735,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00372,
+          -0.0047,
+          -0.00289,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 35,
+          "DISAGREE": 0,
+          "NEUTRAL": 18,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 31
+        }
+      },
+      "family=lowres": {
+        "TAR_E01": [
+          0.9554,
+          0.8304
+        ],
+        "TAR_E07": [
+          0.8571,
+          0.7321
+        ],
+        "closer_to_impostor_E01": 10,
+        "closer_to_impostor_E07": 20,
+        "closer_to_impostor_both": 8,
+        "d_E01": [
+          -0.1088,
+          -0.12395,
+          -0.09297,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01467,
+          -0.01779,
+          -0.0115,
+          "\u25bc"
+        ],
+        "flips_E01": 15,
+        "flips_E07": 14,
+        "n": 112,
+        "rescues_E01": 1,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 80,
+          "DISAGREE": 5,
+          "NEUTRAL": 11,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 16
+        }
+      },
+      "family=motionblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.01092,
+          -0.01684,
+          -0.0044,
+          "\u25bc"
+        ],
+        "d_E07": [
+          0.00046,
+          -0.00058,
+          0.00148,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 8,
+          "CONFIRMED_HARM": 18,
+          "DISAGREE": 5,
+          "NEUTRAL": 44,
+          "PARTIAL_BENEFIT": 20,
+          "PARTIAL_HARM": 17
+        }
+      },
+      "family=noise": {
+        "TAR_E01": [
+          0.9554,
+          1.0
+        ],
+        "TAR_E07": [
+          0.9464,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          0.1371,
+          0.11872,
+          0.1584,
+          "\u25b2"
+        ],
+        "d_E07": [
+          0.00739,
+          0.00545,
+          0.00974,
+          "\u25b2"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 5,
+        "rescues_E07": 6,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 54,
+          "CONFIRMED_HARM": 4,
+          "DISAGREE": 3,
+          "NEUTRAL": 18,
+          "PARTIAL_BENEFIT": 26,
+          "PARTIAL_HARM": 7
+        }
+      },
+      "family=realistic2": {
+        "TAR_E01": [
+          0.8571,
+          0.7976
+        ],
+        "TAR_E07": [
+          0.7024,
+          0.7024
+        ],
+        "closer_to_impostor_E01": 11,
+        "closer_to_impostor_E07": 16,
+        "closer_to_impostor_both": 10,
+        "d_E01": [
+          -0.03991,
+          -0.06464,
+          -0.0159,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00344,
+          -0.00737,
+          0.00055,
+          "\u2248"
+        ],
+        "flips_E01": 7,
+        "flips_E07": 2,
+        "n": 84,
+        "rescues_E01": 2,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 10,
+          "CONFIRMED_HARM": 30,
+          "DISAGREE": 15,
+          "NEUTRAL": 14,
+          "PARTIAL_BENEFIT": 6,
+          "PARTIAL_HARM": 9
+        }
+      },
+      "family=underexposure": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.02485,
+          -0.02909,
+          -0.02094,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00286,
+          -0.00352,
+          -0.00228,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 33,
+          "DISAGREE": 0,
+          "NEUTRAL": 26,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 25
+        }
+      },
+      "output_detected_rate": 0.9732,
+      "severity=extreme": {
+        "TAR_E01": [
+          0.9286,
+          0.8643
+        ],
+        "TAR_E07": [
+          0.8429,
+          0.8071
+        ],
+        "closer_to_impostor_E01": 10,
+        "closer_to_impostor_E07": 19,
+        "closer_to_impostor_both": 8,
+        "d_E01": [
+          0.05216,
+          0.03653,
+          0.06993,
+          "\u25b2"
+        ],
+        "d_E07": [
+          0.00249,
+          -0.0005,
+          0.00561,
+          "\u2248"
+        ],
+        "flips_E01": 15,
+        "flips_E07": 11,
+        "n": 140,
+        "rescues_E01": 6,
+        "rescues_E07": 6,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 63,
+          "CONFIRMED_HARM": 27,
+          "DISAGREE": 7,
+          "NEUTRAL": 17,
+          "PARTIAL_BENEFIT": 19,
+          "PARTIAL_HARM": 7
+        }
+      },
+      "severity=mild": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.02219,
+          -0.0268,
+          -0.01811,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00253,
+          -0.00322,
+          -0.00193,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 1,
+          "CONFIRMED_HARM": 75,
+          "DISAGREE": 0,
+          "NEUTRAL": 108,
+          "PARTIAL_BENEFIT": 2,
+          "PARTIAL_HARM": 66
+        }
+      },
+      "severity=moderate": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          0.9841,
+          0.9921
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 1,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.02157,
+          -0.02851,
+          -0.0146,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00128,
+          -0.00257,
+          6e-05,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 16,
+          "CONFIRMED_HARM": 79,
+          "DISAGREE": 19,
+          "NEUTRAL": 64,
+          "PARTIAL_BENEFIT": 29,
+          "PARTIAL_HARM": 45
+        }
+      },
+      "severity=severe": {
+        "TAR_E01": [
+          0.8968,
+          0.8651
+        ],
+        "TAR_E07": [
+          0.8214,
+          0.7937
+        ],
+        "closer_to_impostor_E01": 20,
+        "closer_to_impostor_E07": 34,
+        "closer_to_impostor_both": 18,
+        "d_E01": [
+          -0.02034,
+          -0.03235,
+          -0.00818,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00327,
+          -0.00548,
+          -0.00118,
+          "\u25bc"
+        ],
+        "flips_E01": 13,
+        "flips_E07": 9,
+        "n": 252,
+        "rescues_E01": 5,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 31,
+          "CONFIRMED_HARM": 81,
+          "DISAGREE": 16,
+          "NEUTRAL": 48,
+          "PARTIAL_BENEFIT": 40,
+          "PARTIAL_HARM": 36
+        }
+      }
+    },
+    "A5": {
+      "agreement": {
+        "kappa_verdicts": 0.3568,
+        "spearman_delta": 0.669,
+        "verdict_crosstab": {
+          "BENEFIT|BENEFIT": 31,
+          "BENEFIT|HARM": 37,
+          "BENEFIT|NEUTRAL": 25,
+          "HARM|BENEFIT": 14,
+          "HARM|HARM": 542,
+          "HARM|NEUTRAL": 121,
+          "NEUTRAL|BENEFIT": 12,
+          "NEUTRAL|HARM": 42,
+          "NEUTRAL|NEUTRAL": 72
+        }
+      },
+      "all": {
+        "TAR_E01": [
+          0.9598,
+          0.9174
+        ],
+        "TAR_E07": [
+          0.9208,
+          0.8717
+        ],
+        "closer_to_impostor_E01": 50,
+        "closer_to_impostor_E07": 72,
+        "closer_to_impostor_both": 40,
+        "d_E01": [
+          -0.07522,
+          -0.09103,
+          -0.06174,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01086,
+          -0.01322,
+          -0.00871,
+          "\u25bc"
+        ],
+        "flips_E01": 44,
+        "flips_E07": 50,
+        "n": 896,
+        "rescues_E01": 6,
+        "rescues_E07": 6,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 31,
+          "CONFIRMED_HARM": 542,
+          "DISAGREE": 51,
+          "NEUTRAL": 72,
+          "PARTIAL_BENEFIT": 37,
+          "PARTIAL_HARM": 163
+        }
+      },
+      "family=combined": {
+        "TAR_E01": [
+          0.8333,
+          0.7857
+        ],
+        "TAR_E07": [
+          0.7143,
+          0.6667
+        ],
+        "closer_to_impostor_E01": 10,
+        "closer_to_impostor_E07": 14,
+        "closer_to_impostor_both": 6,
+        "d_E01": [
+          -0.06462,
+          -0.08663,
+          -0.04076,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00617,
+          -0.00968,
+          -0.00293,
+          "\u25bc"
+        ],
+        "flips_E01": 6,
+        "flips_E07": 5,
+        "n": 84,
+        "rescues_E01": 2,
+        "rescues_E07": 1,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 3,
+          "CONFIRMED_HARM": 47,
+          "DISAGREE": 13,
+          "NEUTRAL": 1,
+          "PARTIAL_BENEFIT": 3,
+          "PARTIAL_HARM": 17
+        }
+      },
+      "family=gaussblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.06043,
+          -0.07694,
+          -0.0474,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00594,
+          -0.0083,
+          -0.00397,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 76,
+          "DISAGREE": 0,
+          "NEUTRAL": 11,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 25
+        }
+      },
+      "family=jpeg": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.02304,
+          -0.03142,
+          -0.01548,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00201,
+          -0.00334,
+          -0.0009,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 8,
+          "CONFIRMED_HARM": 35,
+          "DISAGREE": 2,
+          "NEUTRAL": 23,
+          "PARTIAL_BENEFIT": 7,
+          "PARTIAL_HARM": 37
+        }
+      },
+      "family=lowcontrast": {
+        "TAR_E01": [
+          1.0,
+          0.9881
+        ],
+        "TAR_E07": [
+          1.0,
+          0.9762
+        ],
+        "closer_to_impostor_E01": 1,
+        "closer_to_impostor_E07": 1,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.10541,
+          -0.13372,
+          -0.08182,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01144,
+          -0.0159,
+          -0.00781,
+          "\u25bc"
+        ],
+        "flips_E01": 1,
+        "flips_E07": 2,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 75,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 9
+        }
+      },
+      "family=lowres": {
+        "TAR_E01": [
+          0.9554,
+          0.7143
+        ],
+        "TAR_E07": [
+          0.8571,
+          0.5982
+        ],
+        "closer_to_impostor_E01": 25,
+        "closer_to_impostor_E07": 30,
+        "closer_to_impostor_both": 22,
+        "d_E01": [
+          -0.24609,
+          -0.28014,
+          -0.21574,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.03596,
+          -0.04275,
+          -0.02985,
+          "\u25bc"
+        ],
+        "flips_E01": 27,
+        "flips_E07": 29,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 109,
+          "DISAGREE": 1,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 2
+        }
+      },
+      "family=motionblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          0.9732
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 1,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.05245,
+          -0.06704,
+          -0.04033,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00629,
+          -0.00848,
+          -0.00445,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 3,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 62,
+          "DISAGREE": 0,
+          "NEUTRAL": 15,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 35
+        }
+      },
+      "family=noise": {
+        "TAR_E01": [
+          0.9554,
+          0.9821
+        ],
+        "TAR_E07": [
+          0.9464,
+          0.9554
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 4,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          0.06659,
+          0.04588,
+          0.0903,
+          "\u25b2"
+        ],
+        "d_E07": [
+          -0.00287,
+          -0.00498,
+          -0.00093,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 112,
+        "rescues_E01": 3,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 15,
+          "CONFIRMED_HARM": 16,
+          "DISAGREE": 27,
+          "NEUTRAL": 20,
+          "PARTIAL_BENEFIT": 21,
+          "PARTIAL_HARM": 13
+        }
+      },
+      "family=realistic2": {
+        "TAR_E01": [
+          0.8571,
+          0.7857
+        ],
+        "TAR_E07": [
+          0.7024,
+          0.6667
+        ],
+        "closer_to_impostor_E01": 11,
+        "closer_to_impostor_E07": 18,
+        "closer_to_impostor_both": 9,
+        "d_E01": [
+          -0.06656,
+          -0.08724,
+          -0.04675,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01003,
+          -0.01454,
+          -0.00544,
+          "\u25bc"
+        ],
+        "flips_E01": 7,
+        "flips_E07": 6,
+        "n": 84,
+        "rescues_E01": 1,
+        "rescues_E07": 3,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 5,
+          "CONFIRMED_HARM": 47,
+          "DISAGREE": 8,
+          "NEUTRAL": 2,
+          "PARTIAL_BENEFIT": 6,
+          "PARTIAL_HARM": 16
+        }
+      },
+      "family=underexposure": {
+        "TAR_E01": [
+          1.0,
+          0.9643
+        ],
+        "TAR_E07": [
+          1.0,
+          0.9524
+        ],
+        "closer_to_impostor_E01": 3,
+        "closer_to_impostor_E07": 4,
+        "closer_to_impostor_both": 3,
+        "d_E01": [
+          -0.14523,
+          -0.19025,
+          -0.10443,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01752,
+          -0.02519,
+          -0.01091,
+          "\u25bc"
+        ],
+        "flips_E01": 3,
+        "flips_E07": 4,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 75,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 9
+        }
+      },
+      "output_detected_rate": 0.9565,
+      "severity=extreme": {
+        "TAR_E01": [
+          0.9286,
+          0.8071
+        ],
+        "TAR_E07": [
+          0.8429,
+          0.7429
+        ],
+        "closer_to_impostor_E01": 20,
+        "closer_to_impostor_E07": 27,
+        "closer_to_impostor_both": 18,
+        "d_E01": [
+          -0.03066,
+          -0.0487,
+          -0.01499,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01314,
+          -0.01637,
+          -0.00995,
+          "\u25bc"
+        ],
+        "flips_E01": 20,
+        "flips_E07": 16,
+        "n": 140,
+        "rescues_E01": 3,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 18,
+          "CONFIRMED_HARM": 52,
+          "DISAGREE": 13,
+          "NEUTRAL": 19,
+          "PARTIAL_BENEFIT": 13,
+          "PARTIAL_HARM": 25
+        }
+      },
+      "severity=mild": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.05571,
+          -0.07006,
+          -0.04428,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.0057,
+          -0.00725,
+          -0.00441,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 174,
+          "DISAGREE": 0,
+          "NEUTRAL": 29,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 49
+        }
+      },
+      "severity=moderate": {
+        "TAR_E01": [
+          1.0,
+          0.9881
+        ],
+        "TAR_E07": [
+          0.9841,
+          0.9683
+        ],
+        "closer_to_impostor_E01": 2,
+        "closer_to_impostor_E07": 4,
+        "closer_to_impostor_both": 2,
+        "d_E01": [
+          -0.08102,
+          -0.09728,
+          -0.06574,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00927,
+          -0.01181,
+          -0.00701,
+          "\u25bc"
+        ],
+        "flips_E01": 3,
+        "flips_E07": 5,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 1,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 4,
+          "CONFIRMED_HARM": 160,
+          "DISAGREE": 11,
+          "NEUTRAL": 13,
+          "PARTIAL_BENEFIT": 14,
+          "PARTIAL_HARM": 50
+        }
+      },
+      "severity=severe": {
+        "TAR_E01": [
+          0.8968,
+          0.8254
+        ],
+        "TAR_E07": [
+          0.8214,
+          0.7183
+        ],
+        "closer_to_impostor_E01": 28,
+        "closer_to_impostor_E07": 41,
+        "closer_to_impostor_both": 20,
+        "d_E01": [
+          -0.11369,
+          -0.13784,
+          -0.09206,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01636,
+          -0.02076,
+          -0.01213,
+          "\u25bc"
+        ],
+        "flips_E01": 21,
+        "flips_E07": 29,
+        "n": 252,
+        "rescues_E01": 3,
+        "rescues_E07": 3,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 9,
+          "CONFIRMED_HARM": 156,
+          "DISAGREE": 27,
+          "NEUTRAL": 11,
+          "PARTIAL_BENEFIT": 10,
+          "PARTIAL_HARM": 39
+        }
+      }
+    },
+    "B1": {
+      "agreement": {
+        "kappa_verdicts": 0.3109,
+        "spearman_delta": 0.4299,
+        "verdict_crosstab": {
+          "BENEFIT|BENEFIT": 3,
+          "BENEFIT|HARM": 1,
+          "BENEFIT|NEUTRAL": 4,
+          "HARM|BENEFIT": 2,
+          "HARM|HARM": 7,
+          "HARM|NEUTRAL": 5,
+          "NEUTRAL|BENEFIT": 15,
+          "NEUTRAL|HARM": 20,
+          "NEUTRAL|NEUTRAL": 839
+        }
+      },
+      "all": {
+        "TAR_E01": [
+          0.9598,
+          0.9609
+        ],
+        "TAR_E07": [
+          0.9208,
+          0.9174
+        ],
+        "closer_to_impostor_E01": 14,
+        "closer_to_impostor_E07": 39,
+        "closer_to_impostor_both": 11,
+        "d_E01": [
+          -0.0007,
+          -0.00113,
+          -0.00027,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -7e-05,
+          -0.00018,
+          3e-05,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 5,
+        "n": 896,
+        "rescues_E01": 1,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 3,
+          "CONFIRMED_HARM": 7,
+          "DISAGREE": 3,
+          "NEUTRAL": 839,
+          "PARTIAL_BENEFIT": 19,
+          "PARTIAL_HARM": 25
+        }
+      },
+      "family=combined": {
+        "TAR_E01": [
+          0.8333,
+          0.8452
+        ],
+        "TAR_E07": [
+          0.7143,
+          0.7024
+        ],
+        "closer_to_impostor_E01": 6,
+        "closer_to_impostor_E07": 16,
+        "closer_to_impostor_both": 5,
+        "d_E01": [
+          -0.00315,
+          -0.0044,
+          -0.00193,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00014,
+          -0.0005,
+          0.0002,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 84,
+        "rescues_E01": 1,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 0,
+          "DISAGREE": 0,
+          "NEUTRAL": 70,
+          "PARTIAL_BENEFIT": 5,
+          "PARTIAL_HARM": 9
+        }
+      },
+      "family=gaussblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "d_E07": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 0,
+          "DISAGREE": 0,
+          "NEUTRAL": 112,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 0
+        }
+      },
+      "family=jpeg": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "d_E07": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 0,
+          "DISAGREE": 0,
+          "NEUTRAL": 112,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 0
+        }
+      },
+      "family=lowcontrast": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "d_E07": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 0,
+          "DISAGREE": 0,
+          "NEUTRAL": 84,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 0
+        }
+      },
+      "family=lowres": {
+        "TAR_E01": [
+          0.9554,
+          0.9554
+        ],
+        "TAR_E07": [
+          0.8571,
+          0.8482
+        ],
+        "closer_to_impostor_E01": 2,
+        "closer_to_impostor_E07": 6,
+        "closer_to_impostor_both": 1,
+        "d_E01": [
+          -0.00069,
+          -0.0036,
+          0.00238,
+          "\u2248"
+        ],
+        "d_E07": [
+          -0.00023,
+          -0.00108,
+          0.00056,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 3,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 3,
+          "CONFIRMED_HARM": 5,
+          "DISAGREE": 3,
+          "NEUTRAL": 80,
+          "PARTIAL_BENEFIT": 10,
+          "PARTIAL_HARM": 11
+        }
+      },
+      "family=motionblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "d_E07": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 0,
+          "DISAGREE": 0,
+          "NEUTRAL": 112,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 0
+        }
+      },
+      "family=noise": {
+        "TAR_E01": [
+          0.9554,
+          0.9554
+        ],
+        "TAR_E07": [
+          0.9464,
+          0.9464
+        ],
+        "closer_to_impostor_E01": 2,
+        "closer_to_impostor_E07": 3,
+        "closer_to_impostor_both": 2,
+        "d_E01": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "d_E07": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 0,
+          "DISAGREE": 0,
+          "NEUTRAL": 112,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 0
+        }
+      },
+      "family=realistic2": {
+        "TAR_E01": [
+          0.8571,
+          0.8571
+        ],
+        "TAR_E07": [
+          0.7024,
+          0.6905
+        ],
+        "closer_to_impostor_E01": 4,
+        "closer_to_impostor_E07": 14,
+        "closer_to_impostor_both": 3,
+        "d_E01": [
+          -0.00337,
+          -0.00504,
+          -0.00177,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00031,
+          -0.00063,
+          1e-05,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 2,
+          "DISAGREE": 0,
+          "NEUTRAL": 73,
+          "PARTIAL_BENEFIT": 4,
+          "PARTIAL_HARM": 5
+        }
+      },
+      "family=underexposure": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "d_E07": [
+          0.0,
+          0.0,
+          0.0,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 0,
+          "DISAGREE": 0,
+          "NEUTRAL": 84,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 0
+        }
+      },
+      "output_detected_rate": 0.9431,
+      "severity=extreme": {
+        "TAR_E01": [
+          0.9286,
+          0.9286
+        ],
+        "TAR_E07": [
+          0.8429,
+          0.8357
+        ],
+        "closer_to_impostor_E01": 4,
+        "closer_to_impostor_E07": 9,
+        "closer_to_impostor_both": 3,
+        "d_E01": [
+          -0.00119,
+          -0.00332,
+          0.001,
+          "\u2248"
+        ],
+        "d_E07": [
+          -0.00039,
+          -0.00106,
+          0.00025,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 3,
+        "n": 140,
+        "rescues_E01": 0,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 3,
+          "CONFIRMED_HARM": 5,
+          "DISAGREE": 3,
+          "NEUTRAL": 117,
+          "PARTIAL_BENEFIT": 4,
+          "PARTIAL_HARM": 8
+        }
+      },
+      "severity=mild": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          4e-05,
+          -4e-05,
+          0.00012,
+          "\u2248"
+        ],
+        "d_E07": [
+          -1e-05,
+          -2e-05,
+          0.0,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 0,
+          "DISAGREE": 0,
+          "NEUTRAL": 252,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 0
+        }
+      },
+      "severity=moderate": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          0.9841,
+          0.9802
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 3,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.00094,
+          -0.00124,
+          -0.00067,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -3e-05,
+          -0.00011,
+          5e-05,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 0,
+          "DISAGREE": 0,
+          "NEUTRAL": 249,
+          "PARTIAL_BENEFIT": 2,
+          "PARTIAL_HARM": 1
+        }
+      },
+      "severity=severe": {
+        "TAR_E01": [
+          0.8968,
+          0.9008
+        ],
+        "TAR_E07": [
+          0.8214,
+          0.8175
+        ],
+        "closer_to_impostor_E01": 10,
+        "closer_to_impostor_E07": 27,
+        "closer_to_impostor_both": 8,
+        "d_E01": [
+          -0.00091,
+          -0.00194,
+          8e-05,
+          "\u2248"
+        ],
+        "d_E07": [
+          -0.0,
+          -0.00019,
+          0.00018,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 252,
+        "rescues_E01": 1,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 2,
+          "DISAGREE": 0,
+          "NEUTRAL": 221,
+          "PARTIAL_BENEFIT": 13,
+          "PARTIAL_HARM": 16
+        }
+      }
+    },
+    "B2": {
+      "agreement": {
+        "kappa_verdicts": 0.4366,
+        "spearman_delta": 0.6292,
+        "verdict_crosstab": {
+          "BENEFIT|BENEFIT": 26,
+          "BENEFIT|HARM": 6,
+          "BENEFIT|NEUTRAL": 11,
+          "HARM|BENEFIT": 8,
+          "HARM|HARM": 444,
+          "HARM|NEUTRAL": 108,
+          "NEUTRAL|BENEFIT": 47,
+          "NEUTRAL|HARM": 83,
+          "NEUTRAL|NEUTRAL": 163
+        }
+      },
+      "all": {
+        "TAR_E01": [
+          0.9598,
+          0.9464
+        ],
+        "TAR_E07": [
+          0.9208,
+          0.9118
+        ],
+        "closer_to_impostor_E01": 18,
+        "closer_to_impostor_E07": 41,
+        "closer_to_impostor_both": 13,
+        "d_E01": [
+          -0.04032,
+          -0.04617,
+          -0.03526,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00439,
+          -0.00571,
+          -0.00324,
+          "\u25bc"
+        ],
+        "flips_E01": 15,
+        "flips_E07": 12,
+        "n": 896,
+        "rescues_E01": 3,
+        "rescues_E07": 4,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 26,
+          "CONFIRMED_HARM": 444,
+          "DISAGREE": 14,
+          "NEUTRAL": 163,
+          "PARTIAL_BENEFIT": 58,
+          "PARTIAL_HARM": 191
+        }
+      },
+      "family=combined": {
+        "TAR_E01": [
+          0.8333,
+          0.8571
+        ],
+        "TAR_E07": [
+          0.7143,
+          0.7143
+        ],
+        "closer_to_impostor_E01": 6,
+        "closer_to_impostor_E07": 14,
+        "closer_to_impostor_both": 4,
+        "d_E01": [
+          -0.00057,
+          -0.00546,
+          0.00426,
+          "\u2248"
+        ],
+        "d_E07": [
+          0.00059,
+          -0.00057,
+          0.00168,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 84,
+        "rescues_E01": 2,
+        "rescues_E07": 1,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 8,
+          "CONFIRMED_HARM": 5,
+          "DISAGREE": 4,
+          "NEUTRAL": 27,
+          "PARTIAL_BENEFIT": 21,
+          "PARTIAL_HARM": 19
+        }
+      },
+      "family=gaussblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          0.9911
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.04465,
+          -0.05205,
+          -0.03801,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00624,
+          -0.00789,
+          -0.00478,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 90,
+          "DISAGREE": 0,
+          "NEUTRAL": 9,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 13
+        }
+      },
+      "family=jpeg": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.01099,
+          -0.01638,
+          -0.00601,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00142,
+          -0.00218,
+          -0.0007,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 8,
+          "CONFIRMED_HARM": 30,
+          "DISAGREE": 1,
+          "NEUTRAL": 41,
+          "PARTIAL_BENEFIT": 12,
+          "PARTIAL_HARM": 20
+        }
+      },
+      "family=lowcontrast": {
+        "TAR_E01": [
+          1.0,
+          0.9881
+        ],
+        "TAR_E07": [
+          1.0,
+          0.9643
+        ],
+        "closer_to_impostor_E01": 1,
+        "closer_to_impostor_E07": 1,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.1327,
+          -0.16154,
+          -0.11054,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01474,
+          -0.01987,
+          -0.01067,
+          "\u25bc"
+        ],
+        "flips_E01": 1,
+        "flips_E07": 3,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 80,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 4
+        }
+      },
+      "family=lowres": {
+        "TAR_E01": [
+          0.9554,
+          0.9464
+        ],
+        "TAR_E07": [
+          0.8571,
+          0.8393
+        ],
+        "closer_to_impostor_E01": 3,
+        "closer_to_impostor_E07": 9,
+        "closer_to_impostor_both": 2,
+        "d_E01": [
+          -0.02721,
+          -0.03352,
+          -0.02118,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00445,
+          -0.00575,
+          -0.00319,
+          "\u25bc"
+        ],
+        "flips_E01": 1,
+        "flips_E07": 4,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 1,
+          "CONFIRMED_HARM": 51,
+          "DISAGREE": 6,
+          "NEUTRAL": 16,
+          "PARTIAL_BENEFIT": 6,
+          "PARTIAL_HARM": 32
+        }
+      },
+      "family=motionblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          0.9821
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.03435,
+          -0.04011,
+          -0.02933,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00611,
+          -0.00801,
+          -0.00447,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 2,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 73,
+          "DISAGREE": 0,
+          "NEUTRAL": 13,
+          "PARTIAL_BENEFIT": 2,
+          "PARTIAL_HARM": 24
+        }
+      },
+      "family=noise": {
+        "TAR_E01": [
+          0.9554,
+          0.8393
+        ],
+        "TAR_E07": [
+          0.9464,
+          0.9375
+        ],
+        "closer_to_impostor_E01": 4,
+        "closer_to_impostor_E07": 4,
+        "closer_to_impostor_both": 3,
+        "d_E01": [
+          -0.07335,
+          -0.07913,
+          -0.06762,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00287,
+          -0.00358,
+          -0.0023,
+          "\u25bc"
+        ],
+        "flips_E01": 13,
+        "flips_E07": 1,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 44,
+          "DISAGREE": 1,
+          "NEUTRAL": 23,
+          "PARTIAL_BENEFIT": 2,
+          "PARTIAL_HARM": 42
+        }
+      },
+      "family=realistic2": {
+        "TAR_E01": [
+          0.8571,
+          0.869
+        ],
+        "TAR_E07": [
+          0.7024,
+          0.7143
+        ],
+        "closer_to_impostor_E01": 4,
+        "closer_to_impostor_E07": 13,
+        "closer_to_impostor_both": 4,
+        "d_E01": [
+          -0.00088,
+          -0.00537,
+          0.00379,
+          "\u2248"
+        ],
+        "d_E07": [
+          -0.00014,
+          -0.00091,
+          0.00063,
+          "\u2248"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 1,
+        "rescues_E07": 1,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 9,
+          "CONFIRMED_HARM": 7,
+          "DISAGREE": 2,
+          "NEUTRAL": 30,
+          "PARTIAL_BENEFIT": 15,
+          "PARTIAL_HARM": 21
+        }
+      },
+      "family=underexposure": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.04188,
+          -0.0489,
+          -0.03562,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00442,
+          -0.00559,
+          -0.00339,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 64,
+          "DISAGREE": 0,
+          "NEUTRAL": 4,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 16
+        }
+      },
+      "output_detected_rate": 0.9353,
+      "severity=extreme": {
+        "TAR_E01": [
+          0.9286,
+          0.8429
+        ],
+        "TAR_E07": [
+          0.8429,
+          0.8143
+        ],
+        "closer_to_impostor_E01": 6,
+        "closer_to_impostor_E07": 13,
+        "closer_to_impostor_both": 5,
+        "d_E01": [
+          -0.0461,
+          -0.05387,
+          -0.03826,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00467,
+          -0.00632,
+          -0.00316,
+          "\u25bc"
+        ],
+        "flips_E01": 12,
+        "flips_E07": 6,
+        "n": 140,
+        "rescues_E01": 0,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 8,
+          "CONFIRMED_HARM": 68,
+          "DISAGREE": 6,
+          "NEUTRAL": 14,
+          "PARTIAL_BENEFIT": 16,
+          "PARTIAL_HARM": 28
+        }
+      },
+      "severity=mild": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.03188,
+          -0.03763,
+          -0.02666,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00427,
+          -0.00524,
+          -0.00334,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 144,
+          "DISAGREE": 0,
+          "NEUTRAL": 58,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 50
+        }
+      },
+      "severity=moderate": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          0.9841,
+          0.9881
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 2,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.03191,
+          -0.03655,
+          -0.02767,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00344,
+          -0.00452,
+          -0.0024,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 1,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 12,
+          "CONFIRMED_HARM": 120,
+          "DISAGREE": 3,
+          "NEUTRAL": 47,
+          "PARTIAL_BENEFIT": 21,
+          "PARTIAL_HARM": 49
+        }
+      },
+      "severity=severe": {
+        "TAR_E01": [
+          0.8968,
+          0.8968
+        ],
+        "TAR_E07": [
+          0.8214,
+          0.8016
+        ],
+        "closer_to_impostor_E01": 12,
+        "closer_to_impostor_E07": 26,
+        "closer_to_impostor_both": 8,
+        "d_E01": [
+          -0.05396,
+          -0.06447,
+          -0.04607,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.00532,
+          -0.00737,
+          -0.00366,
+          "\u25bc"
+        ],
+        "flips_E01": 3,
+        "flips_E07": 6,
+        "n": 252,
+        "rescues_E01": 3,
+        "rescues_E07": 1,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 6,
+          "CONFIRMED_HARM": 112,
+          "DISAGREE": 5,
+          "NEUTRAL": 44,
+          "PARTIAL_BENEFIT": 21,
+          "PARTIAL_HARM": 64
+        }
+      }
+    },
+    "B2c": {
+      "agreement": {
+        "kappa_verdicts": 0.1147,
+        "spearman_delta": 0.5175,
+        "verdict_crosstab": {
+          "BENEFIT|HARM": 10,
+          "HARM|BENEFIT": 14,
+          "HARM|HARM": 832,
+          "HARM|NEUTRAL": 19,
+          "NEUTRAL|BENEFIT": 4,
+          "NEUTRAL|HARM": 14,
+          "NEUTRAL|NEUTRAL": 3
+        }
+      },
+      "all": {
+        "TAR_E01": [
+          0.9598,
+          0.9263
+        ],
+        "TAR_E07": [
+          0.9208,
+          0.8839
+        ],
+        "closer_to_impostor_E01": 30,
+        "closer_to_impostor_E07": 53,
+        "closer_to_impostor_both": 20,
+        "d_E01": [
+          -0.10316,
+          -0.11362,
+          -0.09313,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01517,
+          -0.01785,
+          -0.0127,
+          "\u25bc"
+        ],
+        "flips_E01": 31,
+        "flips_E07": 36,
+        "n": 896,
+        "rescues_E01": 1,
+        "rescues_E07": 3,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 832,
+          "DISAGREE": 24,
+          "NEUTRAL": 3,
+          "PARTIAL_BENEFIT": 4,
+          "PARTIAL_HARM": 33
+        }
+      },
+      "family=combined": {
+        "TAR_E01": [
+          0.8333,
+          0.7738
+        ],
+        "TAR_E07": [
+          0.7143,
+          0.6429
+        ],
+        "closer_to_impostor_E01": 8,
+        "closer_to_impostor_E07": 16,
+        "closer_to_impostor_both": 7,
+        "d_E01": [
+          -0.08872,
+          -0.10049,
+          -0.07703,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01534,
+          -0.01869,
+          -0.01172,
+          "\u25bc"
+        ],
+        "flips_E01": 6,
+        "flips_E07": 6,
+        "n": 84,
+        "rescues_E01": 1,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 72,
+          "DISAGREE": 5,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 1,
+          "PARTIAL_HARM": 6
+        }
+      },
+      "family=gaussblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          0.9911
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.10885,
+          -0.1216,
+          -0.09655,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01643,
+          -0.01924,
+          -0.01384,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 1,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 109,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 3
+        }
+      },
+      "family=jpeg": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.09819,
+          -0.10998,
+          -0.08702,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01411,
+          -0.0166,
+          -0.01183,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 107,
+          "DISAGREE": 2,
+          "NEUTRAL": 1,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 2
+        }
+      },
+      "family=lowcontrast": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.08195,
+          -0.0923,
+          -0.07204,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.0109,
+          -0.01327,
+          -0.00869,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 77,
+          "DISAGREE": 3,
+          "NEUTRAL": 1,
+          "PARTIAL_BENEFIT": 1,
+          "PARTIAL_HARM": 2
+        }
+      },
+      "family=lowres": {
+        "TAR_E01": [
+          0.9554,
+          0.9196
+        ],
+        "TAR_E07": [
+          0.8571,
+          0.7679
+        ],
+        "closer_to_impostor_E01": 5,
+        "closer_to_impostor_E07": 12,
+        "closer_to_impostor_both": 2,
+        "d_E01": [
+          -0.09855,
+          -0.11137,
+          -0.08607,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01749,
+          -0.02082,
+          -0.01439,
+          "\u25bc"
+        ],
+        "flips_E01": 4,
+        "flips_E07": 11,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 1,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 101,
+          "DISAGREE": 9,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 2
+        }
+      },
+      "family=motionblur": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          0.9732
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 1,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.0983,
+          -0.1106,
+          -0.08611,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01495,
+          -0.01788,
+          -0.01218,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 3,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 103,
+          "DISAGREE": 1,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 8
+        }
+      },
+      "family=noise": {
+        "TAR_E01": [
+          0.9554,
+          0.8304
+        ],
+        "TAR_E07": [
+          0.9464,
+          0.875
+        ],
+        "closer_to_impostor_E01": 7,
+        "closer_to_impostor_E07": 8,
+        "closer_to_impostor_both": 4,
+        "d_E01": [
+          -0.15559,
+          -0.16931,
+          -0.14303,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01949,
+          -0.02316,
+          -0.0162,
+          "\u25bc"
+        ],
+        "flips_E01": 14,
+        "flips_E07": 8,
+        "n": 112,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 111,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 1
+        }
+      },
+      "family=realistic2": {
+        "TAR_E01": [
+          0.8571,
+          0.7738
+        ],
+        "TAR_E07": [
+          0.7024,
+          0.6429
+        ],
+        "closer_to_impostor_E01": 10,
+        "closer_to_impostor_E07": 16,
+        "closer_to_impostor_both": 7,
+        "d_E01": [
+          -0.0915,
+          -0.10389,
+          -0.0791,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01429,
+          -0.01731,
+          -0.01112,
+          "\u25bc"
+        ],
+        "flips_E01": 7,
+        "flips_E07": 7,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 2,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 73,
+          "DISAGREE": 4,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 2,
+          "PARTIAL_HARM": 5
+        }
+      },
+      "family=underexposure": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.09225,
+          -0.1038,
+          -0.08135,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01136,
+          -0.01361,
+          -0.00924,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 84,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 79,
+          "DISAGREE": 0,
+          "NEUTRAL": 1,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 4
+        }
+      },
+      "output_detected_rate": 0.9219,
+      "severity=extreme": {
+        "TAR_E01": [
+          0.9286,
+          0.8071
+        ],
+        "TAR_E07": [
+          0.8429,
+          0.7143
+        ],
+        "closer_to_impostor_E01": 11,
+        "closer_to_impostor_E07": 21,
+        "closer_to_impostor_both": 6,
+        "d_E01": [
+          -0.09964,
+          -0.11251,
+          -0.08683,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01607,
+          -0.01966,
+          -0.01285,
+          "\u25bc"
+        ],
+        "flips_E01": 17,
+        "flips_E07": 19,
+        "n": 140,
+        "rescues_E01": 0,
+        "rescues_E07": 1,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 114,
+          "DISAGREE": 11,
+          "NEUTRAL": 1,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 14
+        }
+      },
+      "severity=mild": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          1.0,
+          1.0
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 0,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.10917,
+          -0.12125,
+          -0.09775,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01521,
+          -0.01793,
+          -0.0128,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 0,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 0,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 250,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 0,
+          "PARTIAL_HARM": 2
+        }
+      },
+      "severity=moderate": {
+        "TAR_E01": [
+          1.0,
+          1.0
+        ],
+        "TAR_E07": [
+          0.9841,
+          0.9683
+        ],
+        "closer_to_impostor_E01": 0,
+        "closer_to_impostor_E07": 2,
+        "closer_to_impostor_both": 0,
+        "d_E01": [
+          -0.10661,
+          -0.1179,
+          -0.09562,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01525,
+          -0.018,
+          -0.01273,
+          "\u25bc"
+        ],
+        "flips_E01": 0,
+        "flips_E07": 5,
+        "n": 252,
+        "rescues_E01": 0,
+        "rescues_E07": 1,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 247,
+          "DISAGREE": 0,
+          "NEUTRAL": 0,
+          "PARTIAL_BENEFIT": 1,
+          "PARTIAL_HARM": 4
+        }
+      },
+      "severity=severe": {
+        "TAR_E01": [
+          0.8968,
+          0.8452
+        ],
+        "TAR_E07": [
+          0.8214,
+          0.7778
+        ],
+        "closer_to_impostor_E01": 19,
+        "closer_to_impostor_E07": 30,
+        "closer_to_impostor_both": 14,
+        "d_E01": [
+          -0.09566,
+          -0.10576,
+          -0.08583,
+          "\u25bc"
+        ],
+        "d_E07": [
+          -0.01456,
+          -0.01718,
+          -0.01193,
+          "\u25bc"
+        ],
+        "flips_E01": 14,
+        "flips_E07": 12,
+        "n": 252,
+        "rescues_E01": 1,
+        "rescues_E07": 1,
+        "verdicts": {
+          "CONFIRMED_BENEFIT": 0,
+          "CONFIRMED_HARM": 221,
+          "DISAGREE": 13,
+          "NEUTRAL": 2,
+          "PARTIAL_BENEFIT": 3,
+          "PARTIAL_HARM": 13
+        }
+      }
+    }
+  },
+  "configs": [
+    "B0",
+    "B1",
+    "B2",
+    "B2c",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5"
+  ],
+  "data_kind": "SYNTHETIC",
+  "delta": {
+    "E01": 0.02154,
+    "E07": 0.00258
+  },
+  "input_detection_ok_rate_by_cell": {
+    "combined-mild": 1.0,
+    "combined-moderate": 1.0,
+    "combined-severe": 0.1429,
+    "gaussblur-extreme": 1.0,
+    "gaussblur-mild": 1.0,
+    "gaussblur-moderate": 1.0,
+    "gaussblur-severe": 1.0,
+    "jpeg-extreme": 1.0,
+    "jpeg-mild": 1.0,
+    "jpeg-moderate": 1.0,
+    "jpeg-severe": 1.0,
+    "lowcontrast-mild": 1.0,
+    "lowcontrast-moderate": 1.0,
+    "lowcontrast-severe": 0.8929,
+    "lowres-extreme": 0.0,
+    "lowres-mild": 1.0,
+    "lowres-moderate": 1.0,
+    "lowres-severe": 0.2857,
+    "motionblur-extreme": 1.0,
+    "motionblur-mild": 1.0,
+    "motionblur-moderate": 1.0,
+    "motionblur-severe": 1.0,
+    "noise-extreme": 0.0,
+    "noise-mild": 1.0,
+    "noise-moderate": 0.9643,
+    "noise-severe": 0.8571,
+    "realistic2-mild": 1.0,
+    "realistic2-moderate": 1.0,
+    "realistic2-severe": 0.1071,
+    "underexposure-mild": 1.0,
+    "underexposure-moderate": 1.0,
+    "underexposure-severe": 1.0
+  },
+  "n_pairs": 896,
+  "n_refs": 28,
+  "population": "p4dev",
+  "run": {
+    "git_head": "b613aa594b51858cb8ed73894406977604bcd13d-dirty",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-04T09:33:20+00:00"
+  },
+  "split": "dev",
+  "thr_far_1e-2": {
+    "E01": 0.2843,
+    "E07": 0.92975
+  },
+  "verdicts_sha256": "6507d799624265bbecae1a94951604b7d3b636c739721c32aefb1b210110d671"
+}

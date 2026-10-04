@@ -40,7 +40,8 @@ def imread(path: str) -> np.ndarray:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="configs/phase3/benchmark_p3.yaml")
-    ap.add_argument("--population", required=True, choices=["trial", "main"])
+    ap.add_argument("--population", required=True, help="trial | main (Phase 3) | p4dev (Phase 4, with --root)")
+    ap.add_argument("--root", default="data/manifests/phase3", help="manifest root (Phase 4: data/manifests/phase4)")
     ap.add_argument("--configs", nargs="*")
     args = ap.parse_args()
     cfg = load_config(args.config)
@@ -50,7 +51,7 @@ def main() -> None:
     MT.set_torch_home()
     configs = args.configs or list(cfg["configurations"])
 
-    pop = read_csv_gz(repo_path(f"data/manifests/phase3/population_{args.population}.csv.gz"))
+    pop = read_csv_gz(repo_path(f"{args.root}/population_{args.population}.csv.gz"))
     refs = {}
     for p in pop:
         if p["ref_id"] not in refs:
@@ -86,12 +87,12 @@ def main() -> None:
              "note": "Clean-vs-clean impostors on the test split; FairFace has no identity labels, so a small "
                      "number of same-person pairs (P2-T7: 1,060 within-test high-similarity pairs) can remain in "
                      "this distribution and raise the threshold slightly. Embeddings not persisted."}
-    out_dir = repo_path(f"data/manifests/phase3/metrics/{args.population}")
+    out_dir = repo_path(f"{args.root}/metrics/{args.population}")
     write_json(out_dir / "identity_calibration.json", calib)
     print("threshold@FAR1e-2", round(thr, 4), flush=True)
 
     for cid in configs:
-        run_path = repo_path(f"data/manifests/phase3/runs/{args.population}/{cid}.csv.gz")
+        run_path = repo_path(f"{args.root}/runs/{args.population}/{cid}.csv.gz")
         if not run_path.exists():
             print(f"{cid}: no run manifest — skipped (recorded as not run)", flush=True)
             continue
