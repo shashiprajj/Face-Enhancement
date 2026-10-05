@@ -1,0 +1,13 @@
+{
+  "artefact_n": 11,
+  "artefact_pct": 6.5,
+  "git_head": "47fabb058883fffc1f414bd8b536254f4de11dd7",
+  "n": 200,
+  "n_face": 168,
+  "numpy": "2.4.6",
+  "opencv": "5.0.0",
+  "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+  "python": "3.11.16",
+  "sec_per_chip": 0.892,
+  "utc": "2026-10-05T18:30:57+00:00"
+}
