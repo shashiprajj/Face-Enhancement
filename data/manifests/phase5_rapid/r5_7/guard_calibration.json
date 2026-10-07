@@ -1,0 +1,17 @@
+{
+  "dev_blocked_new": 20,
+  "dev_blocked_old": 705,
+  "dev_destructive": 15,
+  "dev_destructive_blocked_new": 15,
+  "dev_destructive_caught_by_p999_alone": 15,
+  "dev_destructive_caught_by_p99_alone": 15,
+  "git_head": "9b9f5e3c321e539b9ea1e978650072cf6930443d",
+  "numpy": "2.4.6",
+  "opencv": "5.0.0",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.11.0",
+  "seal": "8fb7bc39d0fb708b8ec2aea4bbc1d1b8fd72152e21f9e1ea773def6530b01dea",
+  "t99": 20.4,
+  "t999": 36.4,
+  "utc": "2026-10-07T14:26:12+00:00"
+}

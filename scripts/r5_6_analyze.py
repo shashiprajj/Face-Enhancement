@@ -269,7 +269,10 @@ def md_table(S) -> str:
     return "\n".join(L) + "\n"
 
 
-def main():
+def main(prefix: str = ""):
+    """prefix: run-name prefix (R5-7 re-run: "r57_") — same runs, same methodology, separate output files."""
+    global RUNS
+    RUNS = tuple(prefix + n for n in RUNS)
     s1 = read_csv_gz(repo_path(f"{A_OUT}/stage1.csv.gz"))
     base = {f"{r['split']}/{r['name']}": r for r in s1}
     S = {"routing": {}, "identity": {}}
@@ -277,14 +280,15 @@ def main():
     for n, rows in data.items():
         if rows:
             S["routing"][n] = routing(rows)
-            if n.startswith(("test", "ztest")):
+            if n[len(prefix):].startswith(("test", "ztest")):
                 S["identity"][n] = identity(n, rows, base)
-    for n in ("test_face_chip", "test_full_image"):
+    tfc, tfi, zfc, zfi = (prefix + n for n in ("test_face_chip", "test_full_image", "ztest_face_chip", "ztest_full_image"))
+    for n in (tfc, tfi):
         if data.get(n):
             S[f"matched_{n}"] = matched(n, data[n], base)
-    if data.get("test_face_chip") and data.get("test_full_image"):
-        a = {r["input_id"]: r for r in data["test_face_chip"]}
-        b = {r["input_id"]: r for r in data["test_full_image"]}
+    if data.get(tfc) and data.get(tfi):
+        a = {r["input_id"]: r for r in data[tfc]}
+        b = {r["input_id"]: r for r in data[tfi]}
         both = sorted(set(a) & set(b))
         S["mode_transition"] = {"n": len(both),
                                 "face_chip_reason_to_full_image_reason_for_fc_eligible": dict(Counter(
@@ -296,16 +300,16 @@ def main():
                                                         for i in both),
                                 "eligible_fi_only": sum(a[i]["nafnet_eligible"] != "True" and b[i]["nafnet_eligible"] == "True"
                                                         for i in both)}
-        p = repo_path(f"{OUT}/test_full_image_identity.csv.gz")
+        p = repo_path(f"{OUT}/{tfi}_identity.csv.gz")
         if p.exists():
             pads = [int(r["chip_pad_px"]) for r in read_csv_gz(p) if r.get("chip_pad_px", "") != ""]
             S["mode_transition"]["full_image_enhanced_chip_pad_px"] = {"n": len(pads), "zero": sum(x == 0 for x in pads),
                                                                        "median": med([float(x) for x in pads])}
-    for n in ("ztest_face_chip", "ztest_full_image"):
+    for n in (zfc, zfi):
         if data.get(n):
             S[f"verification_{n}"] = ztest_verification(data[n], n)
             S[f"n1_artefacts_{n}"] = n1_artefacts_vs_service(data[n], "ztest")
-    for n in ("test_face_chip", "test_full_image"):
+    for n in (tfc, tfi):
         if data.get(n):
             S[f"n1_artefacts_{n}"] = n1_artefacts_vs_service(data[n], "test")
     for n in RUNS:
@@ -313,10 +317,12 @@ def main():
         if p.exists():
             g = read_csv_gz(p)
             S[f"guardcheck_{n}"] = {"n": len(g), "reproduced": sum(r["reproduced"] == "True" for r in g)}
-    write_json(repo_path(f"{OUT}/summary.json"), run_info({"summary": S}))
-    repo_path(f"{OUT}/tables.md").write_text(md_table(S), encoding="utf-8")
+    tag = f"_{prefix.rstrip('_')}" if prefix else ""
+    write_json(repo_path(f"{OUT}/summary{tag}.json"), run_info({"summary": S}))
+    repo_path(f"{OUT}/tables{tag}.md").write_text(md_table(S), encoding="utf-8")
     print(json.dumps(S, indent=1, default=str)[:12000])
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    main(sys.argv[1] if len(sys.argv) > 1 else "")

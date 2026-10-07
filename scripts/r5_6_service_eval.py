@@ -302,13 +302,25 @@ def guardcheck(name: str) -> None:
     res = []
     for r in rows:
         img = cv2.imread(paths[r["input_id"]], cv2.IMREAD_COLOR)
+        mask = None
         if r["req_input_mode"] == "full_image":
             fr = P.preprocess(img, det, P.PreprocessConfig(out_size=112), input_mode="face_crop")[0]
-            chip, _ = face_chip(img, np.asarray(fr.detection.landmarks, np.float64))
+            lm = np.asarray(fr.detection.landmarks, np.float64)
+            chip, _ = face_chip(img, lm)
+            try:                                       # R5-7 service path: reflect-filled chip for NAFNet, re-blacked
+                from fes_service.pipeline import face_chip_filled
+                filled, mask = face_chip_filled(img, lm)
+                mask = mask if mask.any() else None
+            except ImportError:                        # R5-6 build
+                mask = None
         else:
             chip = img
-        out, _ = fn_naf(chip, {})
-        g = NR.artifact_guard(chip, out, cfg, lambda x: len(det.detect(x)) > 0, RW.is_gray(chip))
+        out, _ = fn_naf(filled if mask is not None else chip, {})
+        if mask is not None:
+            out = out.copy()
+            out[mask] = 0
+        g = NR.artifact_guard(chip, out, cfg, lambda x: len(det.detect(x)) > 0,
+                              RW.is_gray(filled if mask is not None else chip))
         fn = r["input_id"].replace("/", "__")
         cv2.imwrite(str(out_dir / f"{fn}.png"), np.hstack([chip, out]))
         res.append({"input_id": r["input_id"], "service_reasons": r.get("artifact_reasons"),

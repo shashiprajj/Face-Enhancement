@@ -1,0 +1,474 @@
+diff --git a/configs/phase5/r5_nafnet_route.json b/configs/phase5/r5_nafnet_route.json
+index c60e991..f03ab2b 100644
+--- a/configs/phase5/r5_nafnet_route.json
++++ b/configs/phase5/r5_nafnet_route.json
+@@ -21,11 +21,30 @@
+   "feature_version": "p5-nafnet-feat-1.0.0",
+   "guard": {
+     "channel_mean_shift_max": 25.0,
+-    "chroma_p99_max": 10.0,
++    "chroma_p999_max": 36.4,
++    "chroma_p99_max": 20.4,
+     "gray_chroma_max": 6.0,
+     "hf_color_growth_max": 3.0,
+     "hf_color_ratio_max": 0.270875
+   },
++  "guard_calibration_r5_7": {
++    "data": "DEV only: archive val split (19,290; face_chip path) + visual labels of every eligible output with chroma p99 > 20 or no output face; 10-20 band inspected (30 GT-flagged + 12 random: no artefact)",
++    "destructive_p999_min": 40.494,
++    "destructive_p99_min": 22.672,
++    "legit_p999_max": 32.302,
++    "n_destructive_visual": 15,
++    "n_eligible": 8065,
++    "pre_registered_label_note": "the GT chroma-excess > 10 label (R5-ARCHIVE) flagged clean restorations in the 10-20 band; visual DEV labels were used instead",
++    "previous": {
++      "chroma_p99_max": 10.0,
++      "route_version": "p5-nafnet-route-1.0.0",
++      "sha256": "eb6fe101836aaa66da4edcfafadcf5463ccb6314e781bec29a9265230ceac8b9"
++    },
++    "rules": {
++      "chroma_p999_max": "midpoint(legit p99.9 max, destructive p99.9 min)",
++      "chroma_p99_max": "0.9 x destructive p99 min (backstop)"
++    }
++  },
+   "model": "NAFNET_GOPRO",
+   "model_asset": {
+     "asset_id": "A06",
+@@ -35,10 +54,10 @@
+     "weights": "models/M28_nafnet/NAFNet-GoPro-width64.pth"
+   },
+   "name": "r5_nafnet_route",
+-  "route_version": "p5-nafnet-route-1.0.0",
++  "route_version": "p5-nafnet-route-1.1.0",
+   "rw_feature_version": "p5-rwfeat-1.0.0",
+   "rwgate_seal": "78837a8d2355c5ae46df24afe47fcaf5db6a0acce466ec40720c35397ac96514",
+-  "sha256": "eb6fe101836aaa66da4edcfafadcf5463ccb6314e781bec29a9265230ceac8b9",
++  "sha256": "8fb7bc39d0fb708b8ec2aea4bbc1d1b8fd72152e21f9e1ea773def6530b01dea",
+   "thresholds": {
+     "blockiness_hi": 1.523105,
+     "blur_max": 0.002617,
+diff --git a/scripts/r5_nafnet_calibrate.py b/scripts/r5_nafnet_calibrate.py
+index 3e38040..505dd09 100644
+--- a/scripts/r5_nafnet_calibrate.py
++++ b/scripts/r5_nafnet_calibrate.py
+@@ -26,6 +26,8 @@ Threshold rules
+ --probe-nafnet runs the real NAFNet-GoPro on the DEV strong-blur inputs and on DEV grainy blur, reporting guard metrics
+ (diagnostic only: it does not change any threshold).
+ Writes the sealed config + data/manifests/phase5_rapid/nafnet_route/calibration.json.
++SUPERSEDED for the guard by R5-7 (scripts/r5_7_guard_calibrate.py, route 1.1.0): re-running this script would drop the
++R5-7 guard values; run r5_7_guard_calibrate.py after it.
+ """
+ from __future__ import annotations
+ 
+diff --git a/src/fes_service/models.py b/src/fes_service/models.py
+index 86e724e..d09edea 100644
+--- a/src/fes_service/models.py
++++ b/src/fes_service/models.py
+@@ -58,6 +58,16 @@ def _checked_load(AD, key):
+     return net, rep
+ 
+ 
++def reflect_pad16(img: np.ndarray) -> tuple[np.ndarray, int, int]:
++    """Reflect-pad H and W (bottom/right) up to the next multiple of 16 → (padded, h, w)."""
++    import cv2
++    h, w = img.shape[:2]
++    ph, pw = (-h) % 16, (-w) % 16
++    if not (ph or pw):
++        return img, h, w
++    return cv2.copyMakeBorder(img, 0, ph, 0, pw, cv2.BORDER_REFLECT_101), h, w
++
++
+ def nafnet_factory():
+     os.environ["CUDA_VISIBLE_DEVICES"] = ""
+     import torch
+@@ -66,8 +76,13 @@ def nafnet_factory():
+     net, rep = load_nafnet()
+ 
+     def enhance(img, ctx):
++        # R5-7: NAFNet zero-pads its input to a multiple of 16 (NAFNet_arch.check_image_size); on the service's
++        # re-framed chips (side ≈ 2.75 × IOD, rarely a multiple of 16) that black border measurably degraded the
++        # output (DEV: ΔSFace +0.053 → +0.104). Reflect-pad first, crop back after; /16 inputs are unchanged.
++        x, h, w = reflect_pad16(img)
+         with torch.inference_mode():
+-            return rgb_t_to_bgr_u8(net(bgr_u8_to_rgb_t(img)).clamp(0, 1)), {"model": "NAFNET_GOPRO"}
++            out = rgb_t_to_bgr_u8(net(bgr_u8_to_rgb_t(x)).clamp(0, 1))
++        return np.ascontiguousarray(out[:h, :w]), {"model": "NAFNET_GOPRO", "pad16": [x.shape[0] - h, x.shape[1] - w]}
+     info = {"model": "NAFNET_GOPRO", "label": "NAFNet-GoPro width-64 (deblur)", "asset_id": rep["asset_id"],
+             "weights": rep["weights"], "weights_sha256": rep["sha256"], "strict": rep["strict"],
+             "n_params": rep["n_model_params"], "load_s": round(time.perf_counter() - t0, 2), "device": "cpu",
+diff --git a/src/fes_service/nafnet_route.py b/src/fes_service/nafnet_route.py
+index ca1d6a4..ab98e45 100644
+--- a/src/fes_service/nafnet_route.py
++++ b/src/fes_service/nafnet_route.py
+@@ -23,6 +23,9 @@ Decision order (first match wins; every outcome except ELIGIBLE returns the ORIG
+   9 NAFNET_REJECT_MILD_BLUR             blur_max < lapd1_c < clean_lapd1_lo
+  10 NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR   lapd1_c ≤ blur_max
+ Thresholds: configs/phase5/r5_nafnet_route.json (SHA-256 sealed; scripts/r5_nafnet_calibrate.py, DEV data only).
++1.1.0 (R5-7): artifact guard recalibrated on the archive `val` split + visual DEV labels
++(scripts/r5_7_guard_calibrate.py): chroma p99 limit 10 → 20.4 and a new chroma p99.9 limit (36.4) for localised
++rainbow blocks. The input gate is unchanged.
+ """
+ from __future__ import annotations
+ 
+@@ -36,7 +39,7 @@ import numpy as np
+ from fes_bench import gate as GT
+ from fes_data.common import repo_path
+ 
+-ROUTE_VERSION = "p5-nafnet-route-1.0.0"
++ROUTE_VERSION = "p5-nafnet-route-1.1.0"
+ FEAT_VERSION = "p5-nafnet-feat-1.0.0"
+ CONFIG = "configs/phase5/r5_nafnet_route.json"
+ MODEL = "NAFNET_GOPRO"
+@@ -51,6 +54,7 @@ R_MISSING = "NAFNET_REJECT_MISSING_FEATURE"
+ 
+ A_NUMERIC, A_FACE = "ARTIFACT_NUMERIC_INVALID", "ARTIFACT_FACE_INVALID"
+ A_CHROMA, A_HF, A_GRAY = "ARTIFACT_CHROMA_P99", "ARTIFACT_HIGH_FREQ_COLOR", "ARTIFACT_GRAYSCALE_VIOLATION"
++A_CHROMA_TAIL = "ARTIFACT_CHROMA_P999"
+ 
+ 
+ # ------------------------------------------------------------------ texture features (p5-nafnet-feat-1.0.0)
+@@ -181,10 +185,14 @@ def _lab(img: np.ndarray) -> np.ndarray:
+     return cv2.cvtColor(img, cv2.COLOR_BGR2LAB).astype(np.float64)
+ 
+ 
++def chroma_dist(out: np.ndarray, ref: np.ndarray) -> np.ndarray:
++    a, b = _lab(out), _lab(ref)
++    return np.hypot(a[..., 1] - b[..., 1], a[..., 2] - b[..., 2])
++
++
+ def chroma_p99(out: np.ndarray, ref: np.ndarray) -> float:
+     """99th percentile of the per-pixel Lab chroma distance (a, b) between output and its input (R5-ARCHIVE metric)."""
+-    a, b = _lab(out), _lab(ref)
+-    return float(np.percentile(np.hypot(a[..., 1] - b[..., 1], a[..., 2] - b[..., 2]), 99))
++    return float(np.percentile(chroma_dist(out, ref), 99))
+ 
+ 
+ def hf_color_ratio(img: np.ndarray) -> float:
+@@ -239,11 +247,15 @@ def artifact_guard(inp: np.ndarray, out, cfg: dict, face_check, input_is_gray: b
+     m["face_found"] = face_ok
+     if not face_ok:
+         res.reasons.append(A_FACE)
+-    # 3 Lab chroma change (p99) vs the input chip
+-    cp = chroma_p99(out, inp)
+-    m["chroma_p99"] = round(cp, 3)
++    # 3 Lab chroma change vs the input chip: p99 (broad colour change) and p99.9 (small, intense rainbow blocks —
++    #   R5-7 DEV: every destroyed output ≥ 40.5, every legitimate deblur ≤ 32.3)
++    cd = chroma_dist(out, inp)
++    cp, ct = float(np.percentile(cd, 99)), float(np.percentile(cd, 99.9))
++    m["chroma_p99"], m["chroma_p999"] = round(cp, 3), round(ct, 3)
+     if cp > g["chroma_p99_max"]:
+         res.reasons.append(A_CHROMA)
++    if ct > g["chroma_p999_max"]:
++        res.reasons.append(A_CHROMA_TAIL)
+     # 4 high-frequency colour energy: absolute level AND growth over the input
+     hf_o, hf_i = hf_color_ratio(out), hf_color_ratio(inp)
+     m["hf_color_ratio"], m["hf_color_ratio_in"] = round(hf_o, 4), round(hf_i, 4)
+diff --git a/src/fes_service/pipeline.py b/src/fes_service/pipeline.py
+index b6a48db..5790f63 100644
+--- a/src/fes_service/pipeline.py
++++ b/src/fes_service/pipeline.py
+@@ -140,7 +140,7 @@ class Busy(Exception):
+     pass
+ 
+ 
+-def face_chip(img: np.ndarray, landmarks: np.ndarray) -> tuple[np.ndarray, int]:
++def face_chip(img: np.ndarray, landmarks: np.ndarray, border: int = cv2.BORDER_CONSTANT) -> tuple[np.ndarray, int]:
+     """Square FairFace/dlib-framed chip cut at INTEGER pixel positions (no resampling at native scale).
+ 
+     Framing: the similarity fit of the 5 landmarks to DLIB_CHIP_TEMPLATE gives the chip centre and side in source
+@@ -155,13 +155,25 @@ def face_chip(img: np.ndarray, landmarks: np.ndarray) -> tuple[np.ndarray, int]:
+     x0, y0 = int(round(cx - side / 2.0)), int(round(cy - side / 2.0))
+     h, w = img.shape[:2]
+     pad = max(0, -x0, -y0, x0 + side - w, y0 + side - h)
+-    src = cv2.copyMakeBorder(img, pad, pad, pad, pad, cv2.BORDER_CONSTANT, value=(0, 0, 0)) if pad else img
++    src = cv2.copyMakeBorder(img, pad, pad, pad, pad, border, value=(0, 0, 0)) if pad else img
+     chip = src[y0 + pad:y0 + pad + side, x0 + pad:x0 + pad + side]
+     if side > CHIP_MAX:
+         chip = cv2.resize(chip, (CHIP_MAX, CHIP_MAX), interpolation=cv2.INTER_AREA)
+     return np.ascontiguousarray(chip), side
+ 
+ 
++def face_chip_filled(img: np.ndarray, landmarks: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
++    """R5-7, NAFNet route only: the SAME chip as face_chip (same framing, same pixels where the image exists) but its
++    out-of-image area is filled by reflecting the image instead of black, plus that area's mask (chip coordinates).
++
++    Why (R5-7 DEV, archive val): 40 % of NAFNet-eligible faces get a partly out-of-image chip in full_image mode; the
++    black fill multiplies lapd1 (×3-4) and blockiness, so 95 % of them were wrongly gated NOT_BLUR / MILD_BLUR /
++    COMPRESSION, and NAFNet sees a black frame. The A4 route and the returned chip keep the black-filled face_chip."""
++    filled, _ = face_chip(img, landmarks, cv2.BORDER_REFLECT_101)
++    mask = face_chip(np.full(img.shape[:2] + (3,), 255, np.uint8), landmarks)[0][..., 0] < 128
++    return filled, mask
++
++
+ class EnhancementPipeline:
+     """Thread-safe; one request is processed at a time (YuNet and the router are stateful), at most `max_inflight`
+     requests may wait — beyond that `Busy` is raised (HTTP 503) instead of queueing without bound."""
+@@ -289,6 +301,7 @@ class EnhancementPipeline:
+             res.timings_ms["total"] = ms()
+             return res
+ 
++        fill = None                                       # (reflect-filled chip, out-of-image mask) — NAFNet route only
+         if input_mode not in ("full_image", "face_chip"):
+             res.error = f"unknown input_mode {input_mode!r}"
+             return res
+@@ -323,12 +336,16 @@ class EnhancementPipeline:
+             if not fr.aligned or not P.landmarks_plausible(lm):
+                 return original(decision=GT.UNSAFE, reason="alignment_unreliable:landmarks", escalate=True)
+             chip, _ = face_chip(img, lm)
++            if route_mode != "a4" and not force_a4:
++                filled, oob = face_chip_filled(img, lm)
++                if oob.any():
++                    fill = (filled, oob)
+         res.chip_px = int(chip.shape[0])
+         ok, chip_png = cv2.imencode(".png", chip)
+         res.chip = chip_png.tobytes() if ok else None
+         if route_mode == "a4" or force_a4:
+             return self._a4_path(res, chip, force_a4, original, ms)
+-        return self._nafnet_path(res, chip, route_mode, original, ms)
++        return self._nafnet_path(res, chip, route_mode, original, ms, fill)
+ 
+     def _a4_path(self, res: Result, chip: np.ndarray, force_a4: bool, original, ms) -> Result:
+         """The R5-1/R5-3 behaviour, unchanged: frozen T6 → T7 (or rwgate) → ORIGINAL | A4, with the router's
+@@ -358,22 +375,28 @@ class EnhancementPipeline:
+         res.timings_ms["total"] = ms()
+         return res
+ 
+-    def _nafnet_path(self, res: Result, chip: np.ndarray, route_mode: str, original, ms) -> Result:
+-        """R5-5 guarded NAFNet route: input gate → NAFNet (isolated worker) → artifact guard; ORIGINAL otherwise."""
++    def _nafnet_path(self, res: Result, chip: np.ndarray, route_mode: str, original, ms, fill=None) -> Result:
++        """R5-5 guarded NAFNet route: input gate → NAFNet (isolated worker) → artifact guard; ORIGINAL otherwise.
++        fill (R5-7): (reflect-filled chip, out-of-image mask) when the full_image chip extends past the image — the gate
++        and NAFNet see the filled chip; the output's out-of-image area is set back to black (as in `chip`)."""
+         from fes_service import rwgate as RW
++        work = fill[0] if fill is not None else chip
+         try:
+-            f = self._features(chip)                              # rw features (p5-rwfeat-1.0.0)
+-            f.update(NR.texture_features(chip))                   # p5-nafnet-feat-1.0.0
++            f = self._features(work)                              # rw features (p5-rwfeat-1.0.0)
++            f.update(NR.texture_features(work))                   # p5-nafnet-feat-1.0.0
+         except Exception as e:  # noqa: BLE001 — feature extraction failed: never enhance
+             return original(decision=GT.UNSAFE, reason="quality_analysis_failed", escalate=True,
+                             error=f"{type(e).__name__}: {e}"[:200])
+         res.quality = {k: _json_num(f.get(k)) for k in QUALITY_KEYS + NAFNET_QUALITY_KEYS}
+         nd = NR.decide(f, self.nafnet_cfg)
+-        res.nafnet = {**nd.as_dict(), "route_version": NR.ROUTE_VERSION, "infer_s": None, "artifact": None}
++        res.nafnet = {**nd.as_dict(), "route_version": NR.ROUTE_VERSION, "infer_s": None, "artifact": None,
++                      "oob_fill_frac": round(float(fill[1].mean()), 4) if fill is not None else 0.0}
+         res.timings_ms["gate"] = ms()
+         if not nd.eligible:
+             if route_mode == "auto":
+-                _, why, _, route = RW.decide(f, self.rw_cfg)
++                # the retained A4 route decides on the unchanged (black-filled) chip, exactly as before R5-7
++                fa = f if fill is None else self._features(chip)
++                _, why, _, route = RW.decide(fa, self.rw_cfg)
+                 if route == "A4" and why == "strong_noise":       # the retained, evidence-backed A4 route
+                     return self._a4_path(res, chip, False, original, ms)
+             res.gate_route = RT.ORIGINAL
+@@ -382,8 +405,11 @@ class EnhancementPipeline:
+         res.decision, res.reason, res.bucket = nd.decision, nd.reason, nd.route
+         res.route = res.gate_route = res.model = NR.MODEL
+         try:
+-            out, meta = self.nafnet(chip, {"s": chip.shape[0]})
++            out, meta = self.nafnet(work, {"s": work.shape[0]})
+             res.nafnet["infer_s"] = (meta or {}).get("infer_s")
++            if fill is not None and isinstance(out, np.ndarray) and out.shape[:2] == fill[1].shape:
++                out = out.copy()
++                out[fill[1]] = 0                                  # out-of-image area back to black: geometry unchanged
+         except Exception as e:  # noqa: BLE001 — timeout / OOM / crash / load failure: always the original
+             fb = ("TIMEOUT" if isinstance(e, TimeoutError) else
+                   "RESOURCE_FAILURE" if RT._is_oom(e) else "MODEL_FAILURE")
+diff --git a/tests/test_r5_nafnet.py b/tests/test_r5_nafnet.py
+index 35cd6b4..82adec0 100644
+--- a/tests/test_r5_nafnet.py
++++ b/tests/test_r5_nafnet.py
+@@ -220,6 +220,35 @@ def test_high_frequency_colour_alone_fails(dev, cfg, det):
+     assert NR.A_HF in g.reasons and NR.A_CHROMA not in g.reasons and not g.passed
+ 
+ 
++def lab_shift(img, da=0.0, mask=None):
++    lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB).astype(np.float64)
++    if mask is None:
++        lab[..., 1] += da
++    else:
++        lab[..., 1][mask] += da
++    return cv2.cvtColor(np.clip(lab, 0, 255).astype(np.uint8), cv2.COLOR_LAB2BGR)
++
++
++def test_moderate_broad_colour_change_passes_r5_7(dev, cfg, det):
++    """R5-7: a broad chroma change of ~12-15 Lab units (normal deblur sharpening range on DEV) is no longer blocked."""
++    out = lab_shift(dev["blur"], 14.0)
++    g = guard(dev["blur"], out, cfg, det)
++    assert 10 < g.metrics["chroma_p99"] <= cfg["guard"]["chroma_p99_max"] and g.passed, g
++
++
++def test_small_intense_colour_block_fails_on_p999(dev, cfg, det):
++    """R5-7: a small rainbow block (≈ 0.5 % of the chip, below the p99 reach) is caught by the p99.9 rule."""
++    h, w = dev["blur"].shape[:2]
++    mask = np.zeros((h, w), bool)
++    mask[100:116, 100:116] = True                      # 256 px of 50 176 = 0.51 %
++    patch = MD.rainbow(dev["blur"], amp=90.0, period=2.0)
++    out = dev["blur"].copy()
++    out[mask] = patch[mask]
++    g = guard(dev["blur"], out, cfg, det)
++    assert g.metrics["chroma_p99"] <= cfg["guard"]["chroma_p99_max"]
++    assert NR.A_CHROMA_TAIL in g.reasons and not g.passed
++
++
+ @pytest.mark.parametrize("make,why", [
+     (lambda x: x.astype(np.float32) / 255.0, "dtype"),
+     (lambda x: np.full(x.shape, np.nan, np.float32), "NaN"),
+@@ -507,3 +536,81 @@ def test_real_nafnet_through_pipeline_is_deterministic_and_timed(dev):
+     infer = [r.nafnet["infer_s"] for r in runs]
+     print(f"\nNAFNet-GoPro 224px chip: load {load_s:.1f}s, infer {infer} s, pid {pid}, restarts {m.restarts}")
+     assert m.restarts == 0 and max(infer) < 30
++
++
++# ================================================================== R5-7 NAFNet input padding
++
++def test_reflect_pad16_shapes_and_noop():
++    img = np.random.default_rng(5).integers(0, 255, (99, 107, 3), np.uint8)
++    x, h, w = MD.reflect_pad16(img)
++    assert x.shape == (112, 112, 3) and (h, w) == (99, 107)
++    assert np.array_equal(x[:99, :107], img)
++    assert np.array_equal(x[99, :107], img[97, :107])               # reflect-101, not zeros
++    same = np.zeros((128, 224, 3), np.uint8)
++    assert MD.reflect_pad16(same)[0] is same                         # multiples of 16: untouched
++
++
++@REAL
++def test_real_nafnet_keeps_size_and_is_unchanged_on_multiples_of_16(dev):
++    import torch
++    from fes_bench.adapters import bgr_u8_to_rgb_t, rgb_t_to_bgr_u8
++    fn, _ = MD.nafnet_factory()
++    net, _ = MD.load_nafnet()
++    chip = cv2.resize(dev["blur"], (99, 99), interpolation=cv2.INTER_AREA)
++    out, meta = fn(chip, {})
++    assert out.shape == chip.shape and meta["pad16"] == [13, 13]
++    c128 = cv2.resize(dev["blur"], (128, 128), interpolation=cv2.INTER_AREA)
++    with torch.inference_mode():
++        raw = rgb_t_to_bgr_u8(net(bgr_u8_to_rgb_t(c128)).clamp(0, 1))
++    assert np.array_equal(fn(c128, {})[0], raw)                      # R5-6 behaviour preserved at /16 sizes
++
++
++# ================================================================== R5-7 out-of-image fill (NAFNet route only)
++
++def edge_canvas(dev):
++    """The DEV blur face cut so that its FairFace chip extends ~30 px past the top-left image corner."""
++    canvas = np.full((300, 300, 3), 127, np.uint8)
++    canvas[:194, :194] = dev["blur"][30:, 30:]
++    return canvas
++
++
++class RecSpy(Spy):
++    def __call__(self, img, ctx):
++        self.seen = img.copy()
++        return super().__call__(img, ctx)
++
++
++def test_nafnet_route_sees_reflect_filled_chip_and_returns_black_border(dev):
++    nf = RecSpy(lambda x: x.copy())
++    pipe, a4, _ = make("nafnet", nafnet=nf)
++    r = pipe.process(png(edge_canvas(dev)), "full_image")
++    assert r.nafnet["oob_fill_frac"] > 0
++    chip = cv2.imdecode(np.frombuffer(r.chip, np.uint8), cv2.IMREAD_COLOR)          # the returned chip: unchanged
++    oob = chip.max(axis=2) == 0
++    assert oob.any()
++    if nf.calls:                                                                    # eligible: NAFNet got no black
++        assert nf.seen.shape == chip.shape and nf.seen[oob].max() > 0
++        assert np.array_equal(nf.seen[~oob], chip[~oob])
++        if r.status == SP.ENHANCED:
++            out = cv2.imdecode(np.frombuffer(r.image, np.uint8), cv2.IMREAD_COLOR)
++            assert out.shape == chip.shape and out[oob].max() == 0                  # geometry unchanged
++    assert a4.calls == 0
++
++
++def test_a4_route_keeps_black_filled_chip(dev):
++    pipe, a4, nf = make("auto")
++    a4 = RecSpy()
++    pipe.a4 = a4
++    pipe.router.adapters["A4"] = a4
++    r = pipe.process(png(edge_canvas(dev)), "full_image", route_mode="a4")
++    chip = cv2.imdecode(np.frombuffer(r.chip, np.uint8), cv2.IMREAD_COLOR)
++    assert r.nafnet is None and nf.calls == 0
++    if a4.calls:
++        assert np.array_equal(a4.seen, chip)                                        # A4 input exactly as before
++
++
++def test_face_chip_default_border_is_unchanged(dev):
++    lm = np.array([[60, 70], [140, 70], [100, 110], [70, 150], [130, 150]], float) - 40
++    a, _ = SP.face_chip(dev["blur"], lm)
++    b, mask = SP.face_chip_filled(dev["blur"], lm)
++    assert mask.any() and a[mask].max() == 0 and np.array_equal(a[~mask], b[~mask])
+diff --git a/scripts/r5_7_guard_calibrate.py b/scripts/r5_7_guard_calibrate.py
+new file mode 100644
+index 0000000..b7cdd73
+--- /dev/null
++++ b/scripts/r5_7_guard_calibrate.py
+@@ -0,0 +1,67 @@
++"""R5-7 — recalibrate the NAFNet artifact guard from DEV evidence and re-seal the route config (1.0.0 → 1.1.0).
++
++    PYTHONPATH=src .venv/Scripts/python.exe scripts/r5_7_guard_calibrate.py
++
++Evidence (DEV only): data/manifests/phase5_rapid/r5_7/val_guard.csv.gz — the archive `val` split through the service's
++face_chip path with the sealed 1.0.0 gate/guard (scripts/r5_7_dev_collect.py) — and the visual labels in
++data/manifests/phase5_rapid/r5_7/visual_labels_high.json (every eligible output with chroma p99 > 20 or no face on the
++output, inspected; 15 destroyed by rainbow-block artefacts). The 10–20 band was inspected separately (all 30
++GT-chroma-flagged + 12 random outputs: no artefact) and is labelled legitimate. Not used: archive test, ztest, the
++200 real photos, any R5-6 result.
++
++Rules (fixed before the thresholds were computed):
++  chroma_p999_max = midpoint between the largest p99.9 of a legitimate output and the smallest p99.9 of a destroyed one
++  chroma_p99_max  = 0.9 × the smallest p99 of a destroyed output (backstop: alone it still blocks every DEV destruction)
++Everything else in the config (input gate, other guard rules, model asset) is copied unchanged.
++"""
++from __future__ import annotations
++
++import json
++
++from fes_bench import gate as GT
++from fes_data.common import read_csv_gz, repo_path, run_info, write_json
++from fes_service import nafnet_route as NR
++
++OUT = "data/manifests/phase5_rapid/r5_7"
++
++
++def main() -> None:
++    rows = [r for r in read_csv_gz(repo_path(f"{OUT}/val_guard.csv.gz")) if r["fc_eligible"] == "True"]
++    lab = json.loads(repo_path(f"{OUT}/visual_labels_high.json").read_text(encoding="utf-8"))
++    dest = [r for r in rows if lab.get(r["name"]) == "destructive"]
++    legit = [r for r in rows if lab.get(r["name"]) != "destructive"]
++    c99, c999 = (lambda r: float(r["fc_g_chroma_p99"])), (lambda r: float(r["fc_x_chroma_p999"]))
++    t999 = round((max(map(c999, legit)) + min(map(c999, dest))) / 2, 2)
++    t99 = round(0.9 * min(map(c99, dest)), 2)
++    old = json.loads(repo_path(NR.CONFIG).read_text(encoding="utf-8"))
++    write_json(repo_path("configs/phase5/r5_nafnet_route_v1.0.0.json"), old)          # the R5-5/R5-6 control config
++    cfg = {k: v for k, v in old.items() if k != "sha256"}
++    cfg["route_version"] = NR.ROUTE_VERSION
++    cfg["guard"] = {**old["guard"], "chroma_p99_max": t99, "chroma_p999_max": t999}
++    cfg["guard_calibration_r5_7"] = {
++        "data": "DEV only: archive val split (19,290; face_chip path) + visual labels of every eligible output with "
++                "chroma p99 > 20 or no output face; 10-20 band inspected (30 GT-flagged + 12 random: no artefact)",
++        "n_eligible": len(rows), "n_destructive_visual": len(dest),
++        "legit_p999_max": max(map(c999, legit)), "destructive_p999_min": min(map(c999, dest)),
++        "destructive_p99_min": min(map(c99, dest)),
++        "rules": {"chroma_p999_max": "midpoint(legit p99.9 max, destructive p99.9 min)",
++                  "chroma_p99_max": "0.9 x destructive p99 min (backstop)"},
++        "previous": {"route_version": old["route_version"], "sha256": old["sha256"],
++                     "chroma_p99_max": old["guard"]["chroma_p99_max"]},
++        "pre_registered_label_note": "the GT chroma-excess > 10 label (R5-ARCHIVE) flagged clean restorations in the "
++                                     "10-20 band; visual DEV labels were used instead"}
++    cfg["sha256"] = GT.gate_hash(cfg)
++    write_json(repo_path(NR.CONFIG), cfg)
++    blocked = lambda r: c99(r) > t99 or c999(r) > t999 or any(  # noqa: E731
++        x in r["fc_guard_reasons"] for x in ("FACE_INVALID", "HIGH_FREQ", "NUMERIC", "GRAY"))
++    summ = {"t99": t99, "t999": t999, "seal": cfg["sha256"],
++            "dev_blocked_old": sum(r["fc_guard_pass"] != "True" for r in rows), "dev_blocked_new": sum(map(blocked, rows)),
++            "dev_destructive_blocked_new": sum(map(blocked, dest)), "dev_destructive": len(dest),
++            "dev_destructive_caught_by_p99_alone": sum(c99(r) > t99 for r in dest),
++            "dev_destructive_caught_by_p999_alone": sum(c999(r) > t999 for r in dest)}
++    write_json(repo_path(f"{OUT}/guard_calibration.json"), run_info(summ))
++    print(json.dumps(summ, indent=1))
++
++
++if __name__ == "__main__":
++    main()

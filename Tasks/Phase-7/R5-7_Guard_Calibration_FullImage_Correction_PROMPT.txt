@@ -1,0 +1,305 @@
+R5-7 — GUARDED NAFNET CALIBRATION + FULL-IMAGE FRAMING CORRECTION
+
+PROJECT: Face Enhancement Service (FES)
+BASELINE: R5-6 YELLOW
+BASELINE COMMIT: 9b9f5e3
+R5-5 IMPLEMENTATION BASELINE: 9f55f33
+
+MISSION
+Improve the delivered benefit of the existing NAFNet pipeline without weakening safety.
+
+R5-6 established:
+- Service stable: 39,080 requests, 0 failures, 0 restarts, 0 timeouts, 0 OOMs.
+- NAFNet is the strongest model found for blur.
+- Face-chip service path reproduced offline NAFNet benefit: matched ΔSFace +0.162; enhanced-subset ΔSFace +0.149.
+- ztest NAFNet attempts = 0 and known destructive cases were contained.
+- Two material issues remain: over-strict artifact guard and full_image coverage/benefit loss.
+
+R5-7 must address ONLY those two issues.
+
+HARD SCOPE
+Do NOT:
+- add another enhancement model
+- train/fine-tune NAFNet
+- add GFPGAN/CodeFormer
+- implement or modify Feature-Match
+- add large datasets
+- redesign service/UI/API
+- tune against TEST, ztest, or the 200 real photos
+- create arbitrary thresholds to improve metrics
+- turn A4 into a new workstream
+
+BASELINE FREEZE
+Start from commit 9b9f5e3. Confirm branch, HEAD, working tree, R5-6 report, and evaluation artifacts. Preserve R5-6 as the control experiment.
+
+R5-6 baseline:
+Archive TEST face_chip: N=19,290; eligible=8,147; output=7,393; guard block=754; ΔSFace +0.149; whole-policy +0.057; harmed 0.1%; artifacts returned 0.
+Archive TEST full_image: N=19,290; eligible=5,769; output=5,654; guard block=115; ΔSFace +0.053; whole-policy +0.016; harmed 0.5%; artifacts returned 0.
+ztest: N=100; NAFNet attempts=0; 0 flips; 0 new false accepts.
+Real 200: NAFNet=4; A4=2; ORIGINAL=194; artifact failures=0; failed requests=0.
+96.6% of full_image enhanced chips had zero padding; therefore do not assume black padding is the main cause.
+
+OBJECTIVE 1 — ARTIFACT GUARD CALIBRATION
+
+Problem:
+8,147 face-chip inputs were eligible; 754 were guard-blocked (9.3%). 751 were CHROMA_P99-only; 3 were multi-reason destructive outputs. R5-6 indicates roughly 650–700 may be legitimate deblurs. Destructive outputs were around chroma ≈120.
+
+CALIBRATION DATA
+Use ONLY:
+1. untouched archive validation split
+2. existing R5-5 DEV probe
+
+Do NOT use archive TEST, ztest, 200 real photos, R5-6 test results, Feature-Match data, or future real-user data.
+
+STEP 1 — REPRODUCE CURRENT GUARD ON DEV
+Collect, where available:
+- input/degradation identity
+- input quality features
+- output validity and face validity
+- output chroma p99
+- input chroma p99
+- absolute/relative chroma change
+- high-frequency chroma/luma signals
+- grayscale status
+- current guard reason
+- DEV artifact label
+- pass/fail
+
+STEP 2 — FIND THE SAFETY SEPARATION
+Test whether DEV supports a defensible distinction between normal deblur sharpening (roughly 10–16 chroma p99) and destructive artifacts (roughly 60–120+). Treat these as hypotheses, not assumptions.
+
+Investigate:
+- absolute chroma
+- chroma increase
+- relative increase
+- high-frequency chroma
+- high-frequency chroma relative to input
+- high-frequency luma
+- combined signals
+- face validity
+- grayscale preservation
+
+Prefer a multi-signal guard over simply raising CHROMA_P99 10→20 if DEV evidence supports it.
+
+STEP 3 — CHANGE ONLY IF DEV JUSTIFIES IT
+If DEV shows a clear safety margin:
+- make the smallest guard change that recovers legitimate deblurs
+- preserve destructive-artifact protection
+- version/seal the new configuration
+- document evidence and exact change
+
+If DEV does not support a defensible change:
+- keep the guard unchanged
+- document why
+- continue with Objective 2
+
+Never tune the guard using TEST/ztest/real-photo outcomes.
+
+OBJECTIVE 2 — FULL-IMAGE FRAMING INVESTIGATION
+
+R5-6 found that among the 8,147 face-chip-eligible inputs, full_image changed outcomes to:
+NOT_BLUR 1,366
+MILD_BLUR 1,185
+LOW_FACE_SIZE 789
+COMPRESSION 470
+LOW_DETECTION 156
+UNSAFE_ALIGNMENT 154
+PHOTOMETRIC 66
+HALFTONE 9
+NO_FACE 9
+
+The suspected main cause is FairFace/service re-framing of the 128px archive image, changing face scale, IOD, blur/noise/blockiness measurements, and NAFNet input scale.
+
+STEP 4 — INSTRUMENT MATCHED PATHS
+Compare:
+A) archive face_chip → quality features → NAFNet
+B) archive full_image → YuNet → service re-frame → quality features → NAFNet
+
+For matched images record:
+- original dimensions
+- face bounding box
+- landmarks
+- original IOD
+- re-framed dimensions/IOD
+- padding percentage
+- lapd1_c
+- noise estimate
+- compression/blockiness
+- alignment/photometric features
+- face-size decision
+- blur decision
+- NAFNet input dimensions/scale
+- gate decision/reason
+
+STEP 5 — QUANTIFY THE CAUSE
+Determine:
+1. which feature changes most
+2. which feature changes the gate decision
+3. contribution of face scale
+4. contribution of re-framing
+5. contribution of padding
+6. whether NAFNet input differs materially
+7. whether the crop loses useful facial information
+
+Do not immediately modify crop logic.
+
+STEP 6 — SMALLEST JUSTIFIED CORRECTION
+Only after the cause is established may code change.
+
+Possible outcomes:
+- measurement problem → correct measurement path
+- face-scale problem → correct enhancement crop/scale
+- crop geometry problem → smallest crop adjustment
+- unsafe to correct → leave unchanged and document limitation
+
+Do NOT redesign the cropping system.
+Do NOT broaden eligibility merely to increase NAFNet routing.
+
+SAFETY REQUIREMENTS
+Preserve:
+- T6 safety gate
+- R5-5/R5-6 routing safety
+- NAFNet artifact guard
+- ORIGINAL fallback
+- model/timeout/resource/invalid-output fallbacks
+- grayscale preservation
+- face validity
+
+Every failure must safely return ORIGINAL.
+
+A4
+R5-6 showed 0 archive A4 invocations and 2/200 real-photo A4 invocations, both strong-noise printed photos and neither destructive. Do not make A4 a major R5-7 workstream. Only preserve compatibility.
+
+REGRESSION
+Run relevant existing FES/R5-5 tests plus:
+- /health
+- /ready
+- /v1/enhance
+- guard tests
+- NAFNet tests
+- API tests
+
+Confirm A4 compatibility, ORIGINAL byte identity, fallback behavior, model loading, artifact guard, and route metadata. Do not modify tests just to pass.
+
+MANDATORY R5-6 RE-RUN
+After R5-7 changes, run the existing R5-6 harness unchanged:
+scripts/r5_6_service_eval.py
+
+Run:
+1. Archive TEST: face_chip + full_image
+2. ztest: face_chip + full_image
+3. 200 real photos: full_image + auto
+
+Use the same datasets and methodology as R5-6. Do not create a new evaluation methodology.
+
+BEFORE/AFTER ANALYSIS
+Compare R5-6 vs R5-7:
+- guard block rate
+- NAFNet eligibility/output
+- archive face_chip ΔSFace/dlib
+- archive full_image ΔSFace/dlib
+- whole-policy ΔSFace
+- clearly improved/harmed
+- ztest NAFNet attempts
+- ztest flips/false accepts
+- artifacts returned
+- real-photo NAFNet/A4/ORIGINAL
+- runtime/memory
+- failures/timeouts/OOM/restarts
+
+SUCCESS CRITERIA
+Safety is non-negotiable.
+
+GREEN requires:
+1. no destructive output returned
+2. ztest safely contained
+3. known destructive NAFNet cases still blocked
+4. real-photo safety does not regress
+5. service stable
+6. regression passes
+7. any guard change supported by DEV evidence
+8. any framing change supported by measured cause
+9. R5-6 rerun reproducible
+
+Benefit must show material evidence that at least one known issue improved, preferably both:
+- fewer legitimate guard blocks
+- higher full_image eligibility
+- higher full_image NAFNet benefit
+- higher whole-policy benefit
+
+Do not define an arbitrary SFace target before seeing evidence.
+
+VERDICT
+GREEN: safety preserved, guard materially improved or shown not safely improvable, full_image issue materially improved or shown unsafe to change, rerun reproducible, no blocker.
+YELLOW: safety strong, one issue improves but another remains and is understood/non-blocking.
+RED: destructive output gets through, ztest containment breaks, real-photo safety regresses, service instability appears, or another blocking safety defect appears.
+
+STOP CONDITION
+R5-7 ends after:
+1. guard calibration
+2. full-image cause analysis
+3. smallest justified correction if safe
+4. regression
+5. unchanged R5-6 rerun
+6. complete report
+
+Do NOT start Feature-Match validation in R5-7.
+Do NOT begin another model search.
+
+DELIVERABLE
+Create:
+Planning/WelOrbit_R5-7_Guard_Calibration_FullImage_Correction_REPORT.md
+
+Include:
+1. Executive summary
+2. R5-6 frozen baseline
+3. DEV calibration methodology
+4. Current guard analysis
+5. Guard calibration decision
+6. Full-image framing investigation
+7. Quantified cause analysis
+8. Framing correction
+9. Regression results
+10. R5-6 rerun results
+11. Before/after comparison
+12. Safety analysis
+13. Runtime/resources
+14. Limitations
+15. Final verdict
+16. Recommendation for next task
+
+Prefer manifests/CSV/JSON metrics over committing large generated image collections. Keep inspection outputs git-ignored where appropriate.
+
+GIT
+Commit only after the complete R5-7 work is finished.
+Suggested message:
+R5-7 guard calibration and full-image correction
+Do not push remote.
+If no implementation change is justified, say so explicitly.
+
+FINAL RESPONSE
+Return:
+R5-7 VERDICT: GREEN / YELLOW / RED
+Commit: <hash or no code change>
+Report: Planning/WelOrbit_R5-7_Guard_Calibration_FullImage_Correction_REPORT.md
+
+Then provide:
+Metric | R5-6 | R5-7 | Change
+
+Include guard block rate, NAFNet eligibility, archive face-chip ΔSFace, archive full-image ΔSFace, whole-policy ΔSFace, ztest NAFNet attempts, artifacts returned, real-photo NAFNet count, real-photo A4 count, service failures.
+
+Then answer:
+1. Did the guard improve?
+2. Did full-image routing improve?
+3. Did identity benefit improve?
+4. Did safety remain intact?
+5. What limitation remains?
+6. Are we ready to stop enhancement experimentation?
+7. Is the next task actual Feature-Match validation?
+
+Do not claim Feature-Match benefit.
+Do not claim production approval.
+Do not claim commercial licensing approval.
+Licensing remains REVIEW_REQUIRED.
+
+END OF R5-7
