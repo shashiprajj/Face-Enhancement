@@ -15,8 +15,16 @@ Research option (R5-UI)
              The gate still runs and its decision/reason are reported unchanged; `forced` marks the override and
              `gate_route` keeps the gate's own route. Detection failures still return ORIGINAL (no chip to enhance);
              the router's timeout/failure fallbacks and output guard still apply. Default off = the frozen behaviour.
+Route modes (R5-5; `route_mode`, per pipeline and per request)
+  a4         the R5-1/R5-3 behaviour, unchanged: gate (t6 | rw) → A4 SwinIR-L or ORIGINAL. Legacy / comparison route.
+  nafnet     the guarded NAFNet-GoPro route only (fes_service.nafnet_route): dedicated input gate → NAFNet (isolated
+             worker) → artifact guard → NAFNet output; ORIGINAL on any rejection / failure / guard failure.
+  auto       NAFNet route first; if NAFNet is ineligible, the one evidence-backed A4 route of p5-rwgate is retained
+             (strong_noise → A4, synthetic Phase 4 evidence); everything else → ORIGINAL. The rwgate strong_blur → A4
+             route is NOT used in auto: R5-ARCHIVE measured no blur benefit for A4. Never calls both models.
+  force_a4 (research) always takes the a4 path.
 Outputs
-  ENHANCED   the A4 face chip, 224×224 (E-frame), PNG
+  ENHANCED   A4: the A4 face chip, 224×224 (E-frame), PNG · NAFNet: the deblurred face chip at its native size, PNG
   ORIGINAL   the input bytes exactly as received (never re-encoded) — for every non-A4 outcome
   REJECTED   undecodable / out-of-limit input: nothing to return
 Validity: the gate/router thresholds are SYNTHETIC-calibrated (Phase 4). This pipeline is a research candidate,
@@ -42,13 +50,18 @@ from fes_bench import routing as RT
 from fes_bench.evaluators import DLIB_CHIP_TEMPLATE_150
 from fes_data import preprocess as P
 from fes_data.common import repo_path
+from fes_service import nafnet_route as NR
 
-SERVICE_VERSION = "fes-service-r5-0.1.0"
+SERVICE_VERSION = "fes-service-r5-0.2.0"
 YUNET = "models/D01_yunet/face_detection_yunet_2026may.onnx"
 CHIP_MAX = G.E_SIZE                                   # 224: the largest input size the gate was calibrated on
 TEMPLATE_IOD_150 = float(np.linalg.norm(DLIB_CHIP_TEMPLATE_150[1] - DLIB_CHIP_TEMPLATE_150[0]))
 QUALITY_KEYS = ("noise_sigma", "lap_norm_c", "lapd1_c", "blockiness", "luma_mean", "rms_contrast", "iod_px", "det_score",
                 "is_gray")
+NAFNET_QUALITY_KEYS = ("pixelation", "hf_peak_frac", "hf_energy")
+ROUTE_MODES = ("a4", "nafnet", "auto")
+A4_MODEL = "A4_SWINIR_L"
+ARTIFACT_GUARD = "ARTIFACT_GUARD"                 # fallback code: the NAFNet output failed the artifact guard
 
 ENHANCED, ORIGINAL_S, REJECTED = "ENHANCED", "ORIGINAL", "REJECTED"
 
@@ -84,18 +97,38 @@ class Result:
     forced: bool = False                         # force_a4 overrode the gate's route
     gate_route: str = ""                         # the route the gate chose (before any force_a4 override)
     chip: bytes | None = None                    # PNG of the face chip the gate analysed / A4 received
+    route_mode: str = "a4"                       # a4 | nafnet | auto (R5-5)
+    model: str | None = None                     # model actually INVOKED: A4_SWINIR_L | NAFNET_GOPRO | None
+    artifact_check: str = "NOT_RUN"              # NAFNet artifact guard: PASS | FAIL | NOT_RUN
+    nafnet: dict | None = None                   # NAFNet route record (eligibility, reason, guard result)
 
     def metadata(self) -> dict:
         """Structured, non-sensitive metadata: no landmarks, boxes, embeddings or pixels."""
         return {"service_version": SERVICE_VERSION, "request_id": self.request_id, "status": self.status,
                 "input_mode": self.input_mode, "enhanced": self.status == ENHANCED,
-                "output": "a4_face_chip_224" if self.status == ENHANCED else
-                          ("original_input" if self.status == ORIGINAL_S else "none"),
+                "output": ("nafnet_face_chip_native" if self.used == NR.MODEL else "a4_face_chip_224")
+                          if self.status == ENHANCED else ("original_input" if self.status == ORIGINAL_S else "none"),
                 "decision": self.decision, "reason": self.reason, "bucket": self.bucket, "route": self.route,
                 "used": self.used, "fallback": self.fallback, "escalate": self.escalate, "error": self.error,
                 "warnings": self.warnings, "n_faces": self.n_faces, "chip_px": self.chip_px,
                 "quality": self.quality, "timings_ms": self.timings_ms, "forced": self.forced,
-                "gate_route": self.gate_route}
+                "gate_route": self.gate_route, "route_mode": self.route_mode, "model": self.model,
+                "artifact_check": self.artifact_check, "nafnet": self.nafnet}
+
+    def validation_record(self, input_id: str) -> dict:
+        """Flat per-input row for service-level validation (R5-6): no pixels, no landmarks."""
+        nf = self.nafnet or {}
+        art = nf.get("artifact") or {}
+        return {"input_id": input_id, "service_version": SERVICE_VERSION, "route_mode": self.route_mode,
+                "status": self.status, "decision": self.decision, "reason": self.reason, "route": self.route,
+                "used": self.used, "model": self.model or "", "fallback": self.fallback, "error": self.error,
+                "nafnet_eligible": nf.get("eligible"), "nafnet_reason": nf.get("reason", ""),
+                "nafnet_infer_s": nf.get("infer_s"), "artifact_check": self.artifact_check,
+                "artifact_reasons": "+".join(art.get("reasons", [])),
+                **{f"artifact_{k}": v for k, v in (art.get("metrics") or {}).items()},
+                "output_valid": self.status == ENHANCED or (self.status == ORIGINAL_S and self.image is not None),
+                "n_faces": self.n_faces, "chip_px": self.chip_px, "escalate": self.escalate,
+                **{f"q_{k}": v for k, v in self.quality.items()}, "total_ms": self.timings_ms.get("total")}
 
 
 def _json_num(v):
@@ -134,11 +167,16 @@ class EnhancementPipeline:
     requests may wait — beyond that `Busy` is raised (HTTP 503) instead of queueing without bound."""
 
     def __init__(self, a4, timeout_s: float = 120.0, limits: Limits = Limits(), max_inflight: int = 4,
-                 gate: str = "t6"):
+                 gate: str = "t6", nafnet=None, route_mode: str = "a4"):
         """gate="t6": the frozen Phase 4 T6/T7 policy, exactly (synthetic-calibrated).
-        gate="rw": the R5-3 real-world gate (fes_service.rwgate, configs/phase5/r5_rwgate.json)."""
+        gate="rw": the R5-3 real-world gate (fes_service.rwgate, configs/phase5/r5_rwgate.json).
+        nafnet: callable(chip, ctx) -> (same-size chip, meta), normally an IsolatedModel(nafnet_factory). Route modes
+        nafnet / auto need it and gate="rw" (they use the rw features and, in auto, its noise route)."""
         assert gate in ("t6", "rw"), gate
-        self.gate = gate
+        assert route_mode in ROUTE_MODES, route_mode
+        if route_mode != "a4":
+            assert gate == "rw" and nafnet is not None, f"route_mode={route_mode} needs gate='rw' and a NAFNet model"
+        self.gate, self.route_mode, self.nafnet = gate, route_mode, nafnet
         g6 = json.loads(repo_path("configs/phase4/t6_gate.json").read_text(encoding="utf-8"))
         r7 = json.loads(repo_path("configs/phase4/t7_routing.json").read_text(encoding="utf-8"))
         self.rules = GT.load_rules(g6)                          # verifies the T6 seal
@@ -149,6 +187,8 @@ class EnhancementPipeline:
             from fes_service import rwgate as RW
             self.rw_cfg = RW.load_config()
             self.seals["rw_gate"] = self.rw_cfg["sha256"]
+            self.nafnet_cfg = NR.load_config()                  # verifies the NAFNet route seal
+            self.seals["nafnet_route"] = self.nafnet_cfg["sha256"]
         self.det = P.YuNetDetector(repo_path(YUNET), 0.7, 0.3, max_side=640)
         self.det_cfg = P.PreprocessConfig(out_size=112)
         self.a4 = a4
@@ -156,6 +196,7 @@ class EnhancementPipeline:
         self._feat = {}
         # the router's own thread timeout is a backstop; the isolated worker enforces (and kills at) timeout_s
         face_check = lambda out: len(self.det.detect(out)) > 0  # noqa: E731
+        self._face_check = face_check
         if gate == "rw":
             self.router = RW.RWRouter(self.rw_cfg, {"A4": a4}, features_fn=self._features, face_check=face_check,
                                       timeout_s=timeout_s + 30.0)
@@ -208,12 +249,14 @@ class EnhancementPipeline:
         return img, ""
 
     # ---------------------------------------------------------------- main entry
-    def process(self, data: bytes, input_mode: str = "full_image", force_a4: bool = False) -> Result:
+    def process(self, data: bytes, input_mode: str = "full_image", force_a4: bool = False,
+                route_mode: str | None = None) -> Result:
+        """route_mode None = the pipeline's configured mode."""
         if not self._slots.acquire(blocking=False):
             raise Busy("too many requests in flight")
         try:
             with self._lock:
-                return self._process(data, input_mode, force_a4)
+                return self._process(data, input_mode, force_a4, route_mode or self.route_mode)
         finally:
             self._slots.release()
 
@@ -234,10 +277,10 @@ class EnhancementPipeline:
         finally:
             del self.router.plan                                     # back to the class method
 
-    def _process(self, data: bytes, input_mode: str, force_a4: bool = False) -> Result:
+    def _process(self, data: bytes, input_mode: str, force_a4: bool = False, route_mode: str = "a4") -> Result:
         t0 = time.perf_counter()
         ms = lambda: round((time.perf_counter() - t0) * 1000, 1)  # noqa: E731
-        res = Result(status=REJECTED, request_id=uuid.uuid4().hex, input_mode=input_mode)
+        res = Result(status=REJECTED, request_id=uuid.uuid4().hex, input_mode=input_mode, route_mode=route_mode)
 
         def original(**kw) -> Result:
             res.status, res.image, res.image_format = ORIGINAL_S, data, "as_received"
@@ -248,6 +291,12 @@ class EnhancementPipeline:
 
         if input_mode not in ("full_image", "face_chip"):
             res.error = f"unknown input_mode {input_mode!r}"
+            return res
+        if route_mode not in ROUTE_MODES:
+            res.error = f"unknown route_mode {route_mode!r}"
+            return res
+        if route_mode != "a4" and not force_a4 and (self.gate != "rw" or self.nafnet is None):
+            res.error = f"route_mode {route_mode!r} is not configured on this service (needs gate 'rw' + NAFNet)"
             return res
         img, err = self._decode(data)
         res.timings_ms["decode"] = ms()
@@ -277,8 +326,13 @@ class EnhancementPipeline:
         res.chip_px = int(chip.shape[0])
         ok, chip_png = cv2.imencode(".png", chip)
         res.chip = chip_png.tobytes() if ok else None
+        if route_mode == "a4" or force_a4:
+            return self._a4_path(res, chip, force_a4, original, ms)
+        return self._nafnet_path(res, chip, route_mode, original, ms)
 
-        # ---- frozen T6 → T7 → ORIGINAL | A4 (with the router's fallbacks and output guard)
+    def _a4_path(self, res: Result, chip: np.ndarray, force_a4: bool, original, ms) -> Result:
+        """The R5-1/R5-3 behaviour, unchanged: frozen T6 → T7 (or rwgate) → ORIGINAL | A4, with the router's
+        fallbacks and output guard."""
         try:
             out, rec = self._route(chip, force_a4)
         except Exception as e:  # noqa: BLE001 — feature extraction itself failed: never enhance
@@ -290,6 +344,7 @@ class EnhancementPipeline:
         res.fallback, res.escalate, res.error, res.used = rec.fallback, rec.escalate, rec.error, rec.used
         res.gate_route = rec.extra.get("gate_route", rec.route)
         res.forced = force_a4 and res.gate_route != "A4"
+        res.model = A4_MODEL if rec.route == "A4" else None
         if rec.used == RT.ORIGINAL:
             return original()
         if self.gate == "rw" and self._feat.get("is_gray"):
@@ -299,6 +354,59 @@ class EnhancementPipeline:
         ok, png = cv2.imencode(".png", out)
         if not ok:
             return original(used=RT.ORIGINAL, fallback="INVALID_OUTPUT", error="png encode failed")
+        res.status, res.image, res.image_format = ENHANCED, png.tobytes(), "png"
+        res.timings_ms["total"] = ms()
+        return res
+
+    def _nafnet_path(self, res: Result, chip: np.ndarray, route_mode: str, original, ms) -> Result:
+        """R5-5 guarded NAFNet route: input gate → NAFNet (isolated worker) → artifact guard; ORIGINAL otherwise."""
+        from fes_service import rwgate as RW
+        try:
+            f = self._features(chip)                              # rw features (p5-rwfeat-1.0.0)
+            f.update(NR.texture_features(chip))                   # p5-nafnet-feat-1.0.0
+        except Exception as e:  # noqa: BLE001 — feature extraction failed: never enhance
+            return original(decision=GT.UNSAFE, reason="quality_analysis_failed", escalate=True,
+                            error=f"{type(e).__name__}: {e}"[:200])
+        res.quality = {k: _json_num(f.get(k)) for k in QUALITY_KEYS + NAFNET_QUALITY_KEYS}
+        nd = NR.decide(f, self.nafnet_cfg)
+        res.nafnet = {**nd.as_dict(), "route_version": NR.ROUTE_VERSION, "infer_s": None, "artifact": None}
+        res.timings_ms["gate"] = ms()
+        if not nd.eligible:
+            if route_mode == "auto":
+                _, why, _, route = RW.decide(f, self.rw_cfg)
+                if route == "A4" and why == "strong_noise":       # the retained, evidence-backed A4 route
+                    return self._a4_path(res, chip, False, original, ms)
+            res.gate_route = RT.ORIGINAL
+            return original(decision=nd.decision, reason=nd.reason, bucket=nd.route, route=RT.ORIGINAL,
+                            escalate=nd.decision == GT.UNSAFE)
+        res.decision, res.reason, res.bucket = nd.decision, nd.reason, nd.route
+        res.route = res.gate_route = res.model = NR.MODEL
+        try:
+            out, meta = self.nafnet(chip, {"s": chip.shape[0]})
+            res.nafnet["infer_s"] = (meta or {}).get("infer_s")
+        except Exception as e:  # noqa: BLE001 — timeout / OOM / crash / load failure: always the original
+            fb = ("TIMEOUT" if isinstance(e, TimeoutError) else
+                  "RESOURCE_FAILURE" if RT._is_oom(e) else "MODEL_FAILURE")
+            res.timings_ms["nafnet"] = ms()
+            return original(used=RT.ORIGINAL, fallback=fb, error=f"{type(e).__name__}: {e}"[:300])
+        res.timings_ms["nafnet"] = ms()
+        try:
+            g = NR.artifact_guard(chip, out, self.nafnet_cfg, self._face_check, bool(f.get("is_gray")))
+        except Exception as e:  # noqa: BLE001 — an uncertain safety result counts as a failed one
+            g = NR.ArtifactGuardResult(False, [NR.A_NUMERIC], {"guard_error": f"{type(e).__name__}: {e}"[:200]})
+        res.timings_ms["guard"] = ms()
+        res.nafnet["artifact"] = g.as_dict()
+        res.artifact_check = "PASS" if g.passed else "FAIL"
+        if not g.passed:
+            return original(used=RT.ORIGINAL, fallback=ARTIFACT_GUARD, error="+".join(g.reasons))
+        if f.get("is_gray"):
+            # greyscale in → greyscale out (the guard has already rejected any STRONG invented colour)
+            out = cv2.cvtColor(cv2.cvtColor(out, cv2.COLOR_BGR2GRAY), cv2.COLOR_GRAY2BGR)
+            res.warnings.append("grayscale_preserved")
+        ok, png = cv2.imencode(".png", out)
+        if not ok:
+            return original(used=RT.ORIGINAL, fallback="INVALID_OUTPUT", error="png encode failed")
+        res.used = NR.MODEL
         res.status, res.image, res.image_format = ENHANCED, png.tobytes(), "png"
         res.timings_ms["total"] = ms()
         return res

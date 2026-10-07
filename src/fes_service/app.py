@@ -10,7 +10,8 @@ Endpoints
   GET  /ui/           R5-UI local demo page (static HTML/CSS/JS, same origin; it only calls /ready and /v1/enhance)
   POST /v1/enhance    multipart `image` (file), optional form `input_mode` = full_image | face_chip,
                       `return_image` = true | false, `force_a4` = false (default) | true (research: run A4 even
-                      when the gate does not route it; the gate's decision is still reported, `forced` = true).
+                      when the gate does not route it; the gate's decision is still reported, `forced` = true),
+                      `route_mode` = "" (service default) | a4 | nafnet | auto (R5-5, see fes_service.pipeline).
                       200 ENHANCED / ORIGINAL (JSON metadata + base64 image), 422 REJECTED, 503 busy / not ready
 Environment
   FES_A4_FACTORY   model factory (default fes_service.models:a4_factory)
@@ -19,6 +20,13 @@ Environment
   FES_MAX_INFLIGHT requests allowed to wait (default 4)
   FES_WARMUP       1 = run one tiny A4 inference before reporting ready (default 1)
   FES_GATE         rw = R5-3 real-world gate (default) · t6 = frozen Phase 4 T6/T7 policy (synthetic-calibrated)
+  FES_ROUTE_MODE   auto (default, R5-5: guarded NAFNet blur route, A4 kept only for strong noise) · nafnet · a4 (the
+                   R5-1…R5-UI behaviour). nafnet/auto need FES_GATE=rw.
+  FES_NAFNET_FACTORY    NAFNet model factory (default fes_service.models:nafnet_factory)
+  FES_NAFNET_TIMEOUT_S  hard per-inference timeout, worker killed beyond it (default 60)
+  FES_NAFNET_THREADS    torch threads in the NAFNet worker (default 4)
+Models are loaded once per worker process at startup (the ones the default route mode can use; the other one lazily
+on its first request). A model that fails to load or crashes never takes the API down: that request returns ORIGINAL.
 No request image is stored or logged.
 """
 
@@ -50,18 +58,31 @@ def build_pipeline() -> EnhancementPipeline:
     timeout = float(os.environ.get("FES_A4_TIMEOUT_S", "120"))
     model = IsolatedModel(os.environ.get("FES_A4_FACTORY", "fes_service.models:a4_factory"), timeout_s=timeout,
                           threads=int(os.environ.get("FES_A4_THREADS", "2")))
+    gate = os.environ.get("FES_GATE", "rw")
+    nafnet = None
+    if gate == "rw":
+        nafnet = IsolatedModel(os.environ.get("FES_NAFNET_FACTORY", "fes_service.models:nafnet_factory"),
+                               timeout_s=float(os.environ.get("FES_NAFNET_TIMEOUT_S", "60")),
+                               threads=int(os.environ.get("FES_NAFNET_THREADS", "4")))
     return EnhancementPipeline(model, timeout_s=timeout, max_inflight=int(os.environ.get("FES_MAX_INFLIGHT", "4")),
-                               gate=os.environ.get("FES_GATE", "rw"))
+                               gate=gate, nafnet=nafnet,
+                               route_mode=os.environ.get("FES_ROUTE_MODE", "auto" if gate == "rw" else "a4"))
 
 
 def startup() -> None:
-    STATE.update(ready=False, error="", model_info={})
+    STATE.update(ready=False, error="", model_info={}, nafnet_info={})
     try:
         pipe = build_pipeline()
         STATE["pipeline"] = pipe
-        STATE["model_info"] = pipe.a4.start()
-        if os.environ.get("FES_WARMUP", "1") == "1":
-            pipe.a4(np.full((16, 16, 3), 128, np.uint8), {"s": 16})
+        warm = os.environ.get("FES_WARMUP", "1") == "1"
+        if pipe.route_mode in ("a4", "auto"):               # auto keeps A4 for strong noise
+            STATE["model_info"] = pipe.a4.start()
+            if warm:
+                pipe.a4(np.full((16, 16, 3), 128, np.uint8), {"s": 16})
+        if pipe.route_mode in ("nafnet", "auto"):
+            STATE["nafnet_info"] = pipe.nafnet.start()
+            if warm:
+                pipe.nafnet(np.full((32, 32, 3), 128, np.uint8), {"s": 32})
         STATE["ready"] = True
     except Exception as e:  # noqa: BLE001 — stay alive, report not-ready
         STATE["ready"], STATE["error"] = False, f"{type(e).__name__}: {e}"[:300]
@@ -74,6 +95,8 @@ async def lifespan(_app):
     pipe = STATE.get("pipeline")
     if pipe is not None:
         pipe.a4.close()
+        if pipe.nafnet is not None:
+            pipe.nafnet.close()
 
 
 app = FastAPI(title="Face Enhancement Service (research)", version=SERVICE_VERSION, lifespan=lifespan)
@@ -89,9 +112,12 @@ def ready():
     pipe = STATE.get("pipeline")
     body = {"ready": STATE["ready"], "service_version": SERVICE_VERSION, "error": STATE["error"],
             "seals": pipe.seals if pipe else {}, "routing_table": pipe.table if pipe else {},
-            "gate": pipe.gate if pipe else "",
+            "gate": pipe.gate if pipe else "", "route_mode": pipe.route_mode if pipe else "",
             "model": STATE.get("model_info", {}),
             "worker_alive": bool(pipe and pipe.a4.alive()), "worker_restarts": pipe.a4.restarts if pipe else 0,
+            "nafnet_model": STATE.get("nafnet_info", {}),
+            "nafnet_worker_alive": bool(pipe and pipe.nafnet is not None and pipe.nafnet.alive()),
+            "nafnet_worker_restarts": pipe.nafnet.restarts if (pipe and pipe.nafnet is not None) else 0,
             "limits": dataclasses.asdict(pipe.limits if pipe else Limits()),
             "validity": "SYNTHETIC-calibrated gate/router; research candidate, not production-approved"}
     return JSONResponse(body, status_code=200 if STATE["ready"] else 503)
@@ -99,13 +125,13 @@ def ready():
 
 @app.post("/v1/enhance")
 async def enhance(image: UploadFile = File(...), input_mode: str = Form("full_image"),
-                  return_image: bool = Form(True), force_a4: bool = Form(False)):
+                  return_image: bool = Form(True), force_a4: bool = Form(False), route_mode: str = Form("")):
     if not STATE["ready"]:
         return JSONResponse({"status": "NOT_READY", "error": STATE["error"]}, status_code=503)
     pipe: EnhancementPipeline = STATE["pipeline"]
     data = await image.read(pipe.limits.max_bytes + 1)
     try:
-        res = await run_in_threadpool(pipe.process, data, input_mode, force_a4)
+        res = await run_in_threadpool(pipe.process, data, input_mode, force_a4, route_mode or None)
     except Busy:
         return JSONResponse({"status": "BUSY", "error": "too many requests in flight"}, status_code=503,
                             headers={"Retry-After": "30"})

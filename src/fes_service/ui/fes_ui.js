@@ -92,12 +92,28 @@ const REASONS = [
   [/^degraded_below_a4_size/, "Degraded, but the face is too small for the enhancement model."],
   [/^degraded_no_a4_evidence/, "Mildly degraded, outside the range where the model was shown to help."],
   [/^acceptable$/, "Quality already looks acceptable — no enhancement needed."],
+  // R5-5 guarded NAFNet route
+  [/^NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR$/, "Strong, low-noise blur — the guarded NAFNet deblurring route applies."],
+  [/^NAFNET_REJECT_HIGH_NOISE$/, "Blurred but grainy/noisy: NAFNet is not safe on noise, so the original is kept."],
+  [/^NAFNET_REJECT_PIXELATION$/, "Pixelated / block-structured image: NAFNet is not safe on it."],
+  [/^NAFNET_REJECT_HALFTONE$/, "Printed / halftone pattern detected: NAFNet is not safe on it."],
+  [/^NAFNET_REJECT_LOW_FACE_SIZE$/, "The face is too small for the NAFNet route."],
+  [/^NAFNET_REJECT_UNSAFE_ALIGNMENT$/, "The face pose or landmarks were too uncertain to process safely."],
+  [/^NAFNET_REJECT_LOW_DETECTION$/, "The face detector was not confident enough to process safely."],
+  [/^NAFNET_REJECT_NO_FACE$/, "No usable face was found."],
+  [/^NAFNET_REJECT_NOT_BLUR$/, "Not blurred (sharp, or a different kind of degradation) — nothing for the deblurring route to do."],
+  [/^NAFNET_REJECT_MILD_BLUR$/, "Only mildly blurred — outside the strong-blur range the NAFNet route covers."],
+  [/^NAFNET_REJECT_PHOTOMETRIC$/, "Lighting/contrast problem: NAFNet does not address it."],
+  [/^NAFNET_REJECT_COMPRESSION$/, "Compression artefacts: NAFNet is not safe on them."],
+  [/^NAFNET_REJECT_MISSING_FEATURE/, "A quality measurement could not be computed, so the image was not enhanced."],
 ];
+export const NAFNET = "NAFNET_GOPRO";
 const FALLBACKS = {
   TIMEOUT: "The enhancement model ran out of time; the original was returned.",
   MODEL_FAILURE: "The enhancement model failed; the original was returned.",
   RESOURCE_FAILURE: "The enhancement worker ran out of resources; the original was returned.",
   INVALID_OUTPUT: "The model output failed the safety check (no face found in it); the original was returned.",
+  ARTIFACT_GUARD: "NAFNet ran, but its output failed the artifact check; the original was returned.",
 };
 
 export function explainReason(reason) {
@@ -133,17 +149,26 @@ export function interpretResponse(httpStatus, body) {
   const reason = body.reason || "";
   const fallback = body.fallback || "";
   const forced = body.forced === true;
+  const nafnet = body.nafnet && typeof body.nafnet === "object" ? body.nafnet : null;
+  const art = nafnet && nafnet.artifact && typeof nafnet.artifact === "object" ? nafnet.artifact : null;
+  const byNafnet = s === "ENHANCED" && body.used === NAFNET;
   let title, message;
-  if (s === "ENHANCED" && forced) {
+  if (byNafnet) {
+    title = "Enhanced — NAFNet-GoPro (deblur)";
+    message = "The face was deblurred by NAFNet-GoPro on the guarded strong-blur route; its output passed the artifact check.";
+  } else if (s === "ENHANCED" && forced) {
     title = "A4 (forced) — quality gate bypassed";
     message = `The gate decided ${decision || "not to enhance"}; A4 was run anyway because Force A4 was requested. `
       + "This is a research view: the gate found no evidence that A4 helps this image.";
   } else if (s === "ENHANCED") {
-    title = "Enhanced";
+    title = "Enhanced (A4)";
     message = "The face was enhanced by the A4 model.";
   } else if (fallback) {
     title = "Original returned";
     message = FALLBACKS[fallback] || `Enhancement was attempted but fell back to the original (${fallback}).`;
+    if (fallback === "ARTIFACT_GUARD" && art && Array.isArray(art.reasons) && art.reasons.length) {
+      message += ` Failed checks: ${art.reasons.join(", ")}.`;
+    }
   } else if (decision === "UNSAFE_OR_UNCERTAIN") {
     title = "Not processed (unsafe / uncertain)";
     message = "The service did not enhance this image because it could not do so safely. The original is returned.";
@@ -159,7 +184,15 @@ export function interpretResponse(httpStatus, body) {
     ["Decision", decision],
     ["Reason", reason],
     ["Category", body.bucket],
+    ["Route mode", body.route_mode],
+    ["Model invoked", typeof body.model === "string" ? body.model : body.route_mode ? "none" : ""],
     ["Route / used", body.route || body.used ? `${body.route || "—"} / ${body.used || "—"}` : ""],
+    ["NAFNet route", nafnet ? `${nafnet.eligible ? "eligible" : "ineligible"} (${nafnet.reason || "—"})` : ""],
+    ["Artifact check", body.artifact_check && body.artifact_check !== "NOT_RUN" ? body.artifact_check : ""],
+    ["Artifact reasons", art && Array.isArray(art.reasons) ? art.reasons.join(", ") : ""],
+    ["Chroma change p99", art && art.metrics ? num(art.metrics.chroma_p99, 2) : null],
+    ["HF colour ratio", art && art.metrics ? num(art.metrics.hf_color_ratio, 3) : null],
+    ["NAFNet time", nafnet && Number.isFinite(nafnet.infer_s) ? formatMs(nafnet.infer_s * 1000) : ""],
     ["Gate route", forced ? body.gate_route : ""],
     ["Forced A4", forced ? "yes (gate bypassed)" : ""],
     ["Fallback", fallback],
@@ -184,10 +217,13 @@ export function interpretResponse(httpStatus, body) {
     // enhanced: compare like for like (the face crop the service cut → the A4 output), as in the R5 side-by-side sheets
     leftSrc: enhanced && chipSrc ? chipSrc : "",
     leftLabel: enhanced && chipSrc ? `ORIGINAL (face crop, ${body.chip_px || "?"} px)` : "ORIGINAL",
-    rightLabel: enhanced ? (forced ? "A4 (forced)" : "A4 (gate-approved)") : "PROCESSED (returned unchanged)",
+    rightLabel: byNafnet ? "NAFNet-GoPro (guarded blur route)"
+      : enhanced ? (forced ? "A4 (forced)" : "A4 (gate-approved)") : "PROCESSED (returned unchanged)",
     // a face was cut out but the gate kept the original: offer the research override
     canForce: !enhanced && !!chipSrc && !fallback,
-    outputNote: enhanced
+    outputNote: byNafnet
+      ? `Right = the deblurred face crop at its native size (${body.chip_px || "?"} px) returned by the service. Left = the face crop the service cut from your photo (same framing).`
+      : enhanced
       ? "Right = the enhanced 224×224 face crop returned by the service. Left = the face crop the service cut from your photo (same framing)."
       : "Processed = the original image bytes returned unchanged by the service.",
     details, warnings: Array.isArray(body.warnings) ? body.warnings : [],

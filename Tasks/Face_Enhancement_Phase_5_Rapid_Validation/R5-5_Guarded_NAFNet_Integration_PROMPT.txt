@@ -1,0 +1,397 @@
+R5-5 — GUARDED NAFNET-GOPRO INTEGRATION
+Claude Code Implementation Prompt
+Date: 2026-10-07
+
+MISSION
+Implement the next controlled step in the Face Enhancement Service:
+add NAFNet-GoPro width-64 as a NEW, guarded deblurring route for strong, low-noise blur.
+
+DO NOT blindly replace SwinIR-L.
+DO NOT remove A4/SwinIR-L.
+DO NOT redesign the UI.
+DO NOT fine-tune any model.
+DO NOT change unrelated parts of the project.
+
+The goal is to make NAFNet available through the REAL FastAPI service path, safely and reversibly, while preserving the current SwinIR-L implementation as the existing baseline/comparison route.
+
+AUTHORITATIVE FINDINGS
+The latest R5-ARCHIVE evaluation establishes:
+- A4/SwinIR-L is the wrong model for blur: SFace Δ -0.014, dlib Δ -0.002, ~30.7 s/face.
+- NAFNet-GoPro width-64 is the strongest deblurring candidate found so far: SFace Δ +0.162, dlib Δ +0.021, 44.3% clearly improved, 0% clearly harmed on the clean synthetic test sample, ~0.9 s/face CPU.
+- NAFNet is NOT safe unconditionally: 14% artifacts on grainy ztest and 11/168 (6.5%) destroyed faces on the 200 real-photo check, especially pixelated/halftone/printed images.
+- Therefore the required architecture is: dedicated strong-low-noise-blur input gate -> NAFNet -> output artifact guard -> ORIGINAL fallback.
+- The archive Stage-1 "service path" recorded gate decisions but A4 invocation was a stub. This task must perform REAL NAFNet inference through the actual service.
+
+CURRENT BASELINE
+Inspect the repository first. Expected components include:
+src/fes_service/pipeline.py
+src/fes_service/worker.py
+src/fes_service/models.py
+src/fes_service/app.py
+src/fes_service/rwgate.py
+configs/phase5/r5_rwgate.json
+Do not assume exact filenames; adapt to the actual repository.
+
+CURRENT UI already runs against /v1/enhance. Preserve its existing flow.
+
+PRIMARY ARCHITECTURE
+
+INPUT
+ -> validation
+ -> detection/alignment/quality analysis
+ -> dedicated NAFNet eligibility gate
+ -> if ineligible: ORIGINAL
+ -> NAFNet-GoPro
+ -> output artifact/safety guard
+ -> if guard fails: ORIGINAL
+ -> otherwise NAFNet output
+
+A4/SwinIR-L MUST remain available as a separately selectable/legacy comparison route.
+
+IMPORTANT: Do not globally weaken the existing A4 gate. Create a separate NAFNet route policy. The archive report says the NAFNet route should consider strong/extreme blur that the old A4-specific policy rejected, but this does NOT mean removing safety limits.
+
+NAFNET INPUT GATE
+Target only:
+- strong genuine blur
+- low noise
+- valid face detection
+- reliable alignment
+- sufficient face size
+- acceptable photometric condition
+- no obvious pixelation/halftone/printed/engraved risk
+
+Reject:
+- clean or mild inputs
+- high-noise/grainy blur
+- pixelated/halftone/printed imagery
+- unsafe compression
+- low face size
+- unreliable detection/alignment
+- photometric/safety failures
+- no-face inputs
+- non-blur degradation
+
+Do NOT use blur score alone. Strong blur + high noise must be ORIGINAL.
+
+Inspect and reuse existing p5-rwgate-1.0.0 quality signals where sound. Any new thresholds must:
+- be versioned/configurable;
+- have documented rationale;
+- not be tuned on the held-out evaluation outputs.
+
+Use machine-readable reasons, following project naming conventions, e.g.:
+NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR
+NAFNET_REJECT_HIGH_NOISE
+NAFNET_REJECT_PIXELATION
+NAFNET_REJECT_HALFTONE
+NAFNET_REJECT_LOW_FACE_SIZE
+NAFNET_REJECT_UNSAFE_ALIGNMENT
+NAFNET_REJECT_LOW_DETECTION
+NAFNET_REJECT_NOT_BLUR
+
+MODEL
+Use the existing local official NAFNet-GoPro width-64 checkpoint if present.
+Before coding:
+- locate checkpoint;
+- verify architecture/checkpoint compatibility;
+- record exact path and hash if available;
+- verify provenance/license metadata;
+- do not download an arbitrary checkpoint;
+- do not substitute another NAFNet variant.
+
+If the required checkpoint is absent, stop at the model-loading boundary and report the exact missing artifact.
+
+FAIL-SAFE INFERENCE
+Follow the existing A4 process-isolation/worker pattern where appropriate:
+- load once per worker;
+- CPU support;
+- explicit timeout;
+- safe memory behavior;
+- worker recovery after failed inference where supported.
+
+Any NAFNet timeout, exception, OOM, invalid output, worker failure, or uncertain safety result MUST return ORIGINAL.
+
+Never let NAFNet failure break the FastAPI service.
+
+ARTIFACT GUARD
+Implement a dedicated structured artifact guard.
+
+At minimum:
+1. Output face validity check.
+2. Lab chroma-change check. The archive evaluation used 99th-percentile Lab chroma distance and >10 as an evaluation artifact signal; make the threshold configurable rather than treating it as unquestionable production truth.
+3. High-frequency color-energy check to catch rainbow/metallic streaks.
+4. Numerical/output validity:
+   - finite values
+   - valid dimensions
+   - valid dtype/range
+   - no NaN/Inf
+   - no channel corruption
+5. Grayscale preservation:
+   if input is grayscale/near-grayscale, do not allow strong invented color; otherwise fallback ORIGINAL.
+
+Return a structured result, e.g.:
+ArtifactGuardResult(
+  passed=True/False,
+  reasons=[...],
+  metrics={...}
+)
+
+Possible reasons:
+ARTIFACT_CHROMA_P99
+ARTIFACT_HIGH_FREQ_COLOR
+ARTIFACT_FACE_INVALID
+ARTIFACT_NUMERIC_INVALID
+ARTIFACT_GRAYSCALE_VIOLATION
+
+A4 / SWINIR-L
+DO NOT DELETE A4.
+Keep its existing model code, checkpoint handling, route and behavior unless a change is strictly required for integration.
+
+Prefer an explicit model/route configuration if the project already supports one:
+- A4: existing A4 behavior for comparison
+- NAFNET: guarded NAFNet route
+- AUTO: NAFNet blur route first; otherwise ORIGINAL unless an existing evidence-backed A4 route is deliberately retained
+
+Do not invent a new configuration framework if one already exists.
+Do not make AUTO call both models on every request.
+
+API / METADATA
+Expose the real backend decision using the existing response contract, preserving backward compatibility.
+
+Conceptual examples:
+
+{
+  "decision": "ENHANCED",
+  "model": "NAFNET_GOPRO",
+  "route": "STRONG_LOW_NOISE_BLUR",
+  "artifact_check": "PASS"
+}
+
+or:
+
+{
+  "decision": "ORIGINAL",
+  "model": null,
+  "route": "NAFNET_INELIGIBLE",
+  "reason": "HIGH_NOISE"
+}
+
+or:
+
+{
+  "decision": "ORIGINAL",
+  "model": "NAFNET_GOPRO",
+  "route": "STRONG_LOW_NOISE_BLUR",
+  "artifact_check": "FAIL",
+  "fallback": true
+}
+
+Use the actual project's schema/naming.
+
+UI
+Do not redesign the UI.
+Make only minimal changes needed to display actual backend metadata.
+
+It must distinguish:
+- ORIGINAL
+- NAFNet enhanced
+- A4 enhanced
+
+For NAFNet show actual:
+- model
+- route/reason
+- artifact-check status where available
+
+For fallback show the real reason.
+Never fake model/status values.
+
+TESTS
+Add focused unit/integration tests for:
+
+1. Model loading
+- correct checkpoint loads
+- missing/wrong checkpoint fails clearly
+- no network dependency
+
+2. Input gate
+- strong low-noise blur => eligible
+- high-noise blur => rejected
+- clean => rejected
+- mild => rejected
+- pixelated/halftone => rejected where detectable
+- low face size => rejected
+- bad detection/alignment => rejected
+
+3. Artifact guard
+- normal output => pass
+- rainbow/chroma artifact => fail
+- excessive high-frequency color => fail
+- invalid output => fail
+- grayscale color invention => fail/fallback
+
+4. Pipeline routing
+- eligible => NAFNet invoked
+- ineligible => NAFNet NOT invoked
+- NAFNet failure => ORIGINAL
+- artifact failure => ORIGINAL
+- A4 remains independently callable
+
+5. Regression
+- existing FES/R5 tests pass
+- existing A4 tests pass
+- existing API/UI contract tests pass
+
+6. Determinism
+- identical input gives stable route
+- repeated inference is deterministic within project tolerance
+
+7. Performance
+- measure NAFNet CPU inference time
+- confirm model is not reloaded per request
+
+Do not run the entire WelOrbit suite if it risks exhausting the VM. Use focused FES tests first and report broader-test limitations honestly.
+
+VALIDATION PREPARATION
+Do not perform final model selection in R5-5.
+Prepare structured metrics for R5-6:
+- input id
+- route
+- decision
+- reason
+- model
+- quality metrics
+- NAFNet eligibility
+- inference time
+- artifact result
+- artifact metrics
+- fallback
+- output validity
+
+The next task will run the archive test/ztest and 200 real photos through the ACTUAL service.
+
+LICENSING / DATA
+The report identifies official NAFNet-GoPro weights as MIT, but verify the exact local checkpoint/release metadata.
+Do not claim production approval.
+The archive dataset provenance/license is unresolved.
+DO NOT train or fine-tune on it in this task.
+
+NO FEATURE-MATCH WORK
+Do not implement or modify Feature-Match.
+That remains the subsequent 20+ real-person validation task.
+
+DELIVERABLES
+Implement code, tests, configuration, and minimal UI/API metadata changes.
+
+Create:
+Planning/WelOrbit_R5-5_Guarded_NAFNet_Integration_REPORT.md
+
+Report must include:
+1. Executive summary
+2. Baseline commit
+3. Final commit
+4. Exact NAFNet checkpoint/path
+5. Hash if available
+6. License/provenance evidence
+7. Files changed
+8. Architecture/route flow
+9. Input-gate rules
+10. Artifact-guard rules
+11. A4 compatibility strategy
+12. API changes
+13. UI changes
+14. Tests and results
+15. Runtime/memory
+16. Known limitations
+17. Deliberately unchanged areas
+18. R5-6 readiness
+19. Final verdict
+
+VERDICT:
+GREEN = implementation complete, tests pass, fail-safe behavior verified, ready for service-level validation.
+YELLOW = implementation complete but material validation/blocker remains.
+RED = cannot safely proceed.
+
+GIT DISCIPLINE
+Before changing anything:
+- inspect git status
+- identify HEAD/current R5 baseline
+- preserve unrelated user changes
+- use repository branch convention if established
+- commit only R5-5 work
+- do not push unless explicitly instructed
+
+Suggested commit:
+feat(fes): add guarded NAFNet GoPro blur route
+
+ACCEPTANCE CRITERIA
+[ ] NAFNet-GoPro width-64 integrated into the existing service
+[ ] Exact checkpoint/provenance documented
+[ ] NAFNet is not always-on
+[ ] Dedicated guarded blur route exists
+[ ] High-noise/grainy blur rejected
+[ ] Pixelated/halftone/printed risk rejected where detectable
+[ ] Artifact guard implemented and tested
+[ ] Chroma artifact detection exists
+[ ] High-frequency color artifact detection exists
+[ ] Output validity checks exist
+[ ] Grayscale safety covered
+[ ] NAFNet failures fall back to ORIGINAL
+[ ] Artifact failures fall back to ORIGINAL
+[ ] Existing A4/SwinIR-L remains available
+[ ] A4 remains independently testable
+[ ] Existing API behavior remains compatible
+[ ] UI continues to work
+[ ] UI reports actual backend decision/model
+[ ] Focused tests pass
+[ ] No Feature-Match changes
+[ ] No GFPGAN/CodeFormer changes
+[ ] No training/fine-tuning
+[ ] No archive training
+[ ] No unrelated WelOrbit changes
+[ ] Report written
+[ ] Changes committed
+[ ] R5-6 explicitly identified as next step
+
+FINAL CLAUDE RESPONSE
+Return:
+
+R5-5 VERDICT: GREEN / YELLOW / RED
+Commit: <hash>
+
+Implemented:
+- ...
+
+NAFNet checkpoint:
+- ...
+
+Route behavior:
+- ...
+
+A4 behavior:
+- ...
+
+Artifact guard:
+- ...
+
+Tests:
+- X passed / Y skipped / Z failed
+
+Runtime:
+- ...
+
+Known limitations:
+- ...
+
+R5-6 readiness:
+- READY / BLOCKED
+
+If YELLOW/RED, state the exact blocker.
+
+SCOPE BOUNDARY
+This task is ONLY guarded NAFNet-GoPro integration.
+Do not jump ahead into:
+- service-level archive validation,
+- 200-photo validation,
+- A4 final removal,
+- Feature-Match validation,
+- production approval,
+- model training/fine-tuning.

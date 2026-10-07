@@ -26,6 +26,7 @@ def client(monkeypatch):
     from fastapi.testclient import TestClient
     from fes_service import app as A
     monkeypatch.setenv("FES_A4_FACTORY", "fes_service.models:fake_ok_factory")
+    monkeypatch.setenv("FES_NAFNET_FACTORY", "fes_service.models:fake_nafnet_ok_factory")
     monkeypatch.setenv("FES_WARMUP", "0")
     monkeypatch.setitem(A.STATE, "ready", False)
     with TestClient(A.app) as c:

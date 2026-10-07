@@ -272,6 +272,7 @@ def client(monkeypatch):
     from fastapi.testclient import TestClient
     from fes_service import app as A
     monkeypatch.setenv("FES_A4_FACTORY", "fes_service.models:fake_ok_factory")
+    monkeypatch.setenv("FES_NAFNET_FACTORY", "fes_service.models:fake_nafnet_ok_factory")
     monkeypatch.setitem(A.STATE, "ready", False)
     with TestClient(A.app) as c:
         yield c
@@ -307,6 +308,7 @@ def test_api_not_ready_when_model_cannot_load(monkeypatch):
     from fastapi.testclient import TestClient
     from fes_service import app as A
     monkeypatch.setenv("FES_A4_FACTORY", "fes_service.models:fake_load_fail_factory")
+    monkeypatch.setenv("FES_NAFNET_FACTORY", "fes_service.models:fake_nafnet_ok_factory")
     monkeypatch.setitem(A.STATE, "ready", False)
     with TestClient(A.app) as c:
         assert c.get("/ready").status_code == 503 and "load" in c.get("/ready").json()["error"]

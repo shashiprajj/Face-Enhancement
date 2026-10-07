@@ -141,6 +141,70 @@ test("A4 fallback (timeout / failure) is reported, not hidden", () => {
   assert.equal(Object.fromEntries(v.details).Fallback, "TIMEOUT");
 });
 
+// ------------------------------------------------------------------ R5-5 guarded NAFNet route
+const nafRec = (over = {}) => ({ eligible: true, reason: "NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR",
+  decision: "ENHANCE_CANDIDATE", route: "STRONG_LOW_NOISE_BLUR", route_version: "p5-nafnet-route-1.0.0",
+  infer_s: 2.4, artifact: { passed: true, reasons: [], metrics: { chroma_p99: 3.61, hf_color_ratio: 0.091 } }, ...over });
+
+test("NAFNet-enhanced result names the real model, route and artifact check", () => {
+  const v = interpretResponse(200, { ...base, status: "ENHANCED", enhanced: true, decision: "ENHANCE_CANDIDATE",
+    reason: "NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR", bucket: "STRONG_LOW_NOISE_BLUR", route: "NAFNET_GOPRO",
+    used: "NAFNET_GOPRO", model: "NAFNET_GOPRO", route_mode: "auto", artifact_check: "PASS", nafnet: nafRec(),
+    fallback: "", image_format: "png", image_b64: PNG_B64, chip_b64: PNG_B64 });
+  assert.match(v.title, /NAFNet-GoPro/);
+  assert.equal(v.rightLabel, "NAFNet-GoPro (guarded blur route)");
+  assert.match(v.reasonText, /low-noise blur/);
+  assert.match(v.outputNote, /native size \(180 px\)/);
+  const d = Object.fromEntries(v.details);
+  assert.equal(d["Model invoked"], "NAFNET_GOPRO");
+  assert.equal(d["Route mode"], "auto");
+  assert.equal(d["Artifact check"], "PASS");
+  assert.equal(d["NAFNet route"], "eligible (NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR)");
+  assert.equal(d["Chroma change p99"], "3.61");
+  assert.equal(d["NAFNet time"], "2.4 s");
+});
+
+test("A4-enhanced result stays distinguishable from NAFNet", () => {
+  const v = interpretResponse(200, { ...base, status: "ENHANCED", decision: "ENHANCE_CANDIDATE", reason: "strong_noise",
+    route: "A4", used: "A4", model: "A4_SWINIR_L", route_mode: "auto", artifact_check: "NOT_RUN",
+    nafnet: nafRec({ eligible: false, reason: "NAFNET_REJECT_HIGH_NOISE", artifact: null }),
+    image_format: "png", image_b64: PNG_B64, chip_b64: PNG_B64 });
+  assert.equal(v.title, "Enhanced (A4)");
+  assert.equal(v.rightLabel, "A4 (gate-approved)");
+  const d = Object.fromEntries(v.details);
+  assert.equal(d["Model invoked"], "A4_SWINIR_L");
+  assert.equal(d["NAFNet route"], "ineligible (NAFNET_REJECT_HIGH_NOISE)");
+  assert.equal(d["Artifact check"], undefined);                       // NOT_RUN is not shown as a result
+});
+
+test("NAFNet artifact-guard fallback shows the real failed checks", () => {
+  const v = interpretResponse(200, { ...base, status: "ORIGINAL", decision: "ENHANCE_CANDIDATE",
+    reason: "NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR", route: "NAFNET_GOPRO", used: "B0", model: "NAFNET_GOPRO",
+    route_mode: "nafnet", artifact_check: "FAIL", fallback: "ARTIFACT_GUARD",
+    error: "ARTIFACT_CHROMA_P99+ARTIFACT_HIGH_FREQ_COLOR",
+    nafnet: nafRec({ artifact: { passed: false, reasons: ["ARTIFACT_CHROMA_P99", "ARTIFACT_HIGH_FREQ_COLOR"],
+      metrics: { chroma_p99: 61.5 } } }), image_format: "as_received", image_b64: PNG_B64 });
+  assert.equal(v.kind, "ORIGINAL");
+  assert.match(v.message, /artifact check.*ARTIFACT_CHROMA_P99, ARTIFACT_HIGH_FREQ_COLOR/);
+  const d = Object.fromEntries(v.details);
+  assert.equal(d["Artifact check"], "FAIL");
+  assert.equal(d.Fallback, "ARTIFACT_GUARD");
+  assert.equal(d["Model invoked"], "NAFNET_GOPRO");
+  assert.equal(v.rightLabel, "PROCESSED (returned unchanged)");
+});
+
+test("NAFNet-ineligible original shows the real rejection reason and no model", () => {
+  const v = interpretResponse(200, { ...base, status: "ORIGINAL", decision: "DO_NOT_ENHANCE",
+    reason: "NAFNET_REJECT_HIGH_NOISE", bucket: "NAFNET_INELIGIBLE", route: "B0", used: "B0", model: null,
+    route_mode: "nafnet", artifact_check: "NOT_RUN", fallback: "",
+    nafnet: nafRec({ eligible: false, reason: "NAFNET_REJECT_HIGH_NOISE", artifact: null }),
+    image_format: "as_received", image_b64: PNG_B64 });
+  assert.match(v.title, /not enhanced/);
+  assert.match(v.reasonText, /grainy/);
+  assert.equal(Object.fromEntries(v.details)["Model invoked"], "none");
+  assert.equal(explainReason("NAFNET_REJECT_PIXELATION"), "Pixelated / block-structured image: NAFNet is not safe on it.");
+});
+
 test("REJECTED, BUSY, NOT_READY and malformed responses become friendly errors", () => {
   const rej = interpretResponse(422, { status: "REJECTED", error: "not a decodable image", image_b64: null });
   assert.equal(rej.kind, "REJECTED");
