@@ -1,0 +1,1962 @@
+{
+ "clean:fc:image_65422.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_68100.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_68536.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_68638.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_68989.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_70296.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_71107.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_71895.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_71953.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_72412.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_73057.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_7374.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_73755.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_74122.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_74640.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_7487.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_75513.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_75559.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_7612.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_76651.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_76678.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_76923.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_77029.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_77232.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_78017.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_79575.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_80116.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_80481.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_8093.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "clean:fc:image_81971.jpg": {
+  "label": "GOOD",
+  "sheet": "cln_index",
+  "note": "NAFNet on a sharp GT face: mild sharpening, no visible artifact"
+ },
+ "dev_mod:fc:image_65680.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_66.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_66486.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_66963.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_67311.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_67522.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_67980.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_6840.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_68433.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_68621.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_69276.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_70012.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_70575.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_71364.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_71467.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_71503.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_71968.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_72208.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_72988.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_73120.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_73127.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_74436.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_74697.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_74778.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_75403.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_75825.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_76311.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_77201.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_77397.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_78051.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_79109.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_79277.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_80142.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_80201.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_80412.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_81536.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_81707.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_81921.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_81977.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fc:image_82303.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_65896.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_65939.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_66311.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_66395.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_66944.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_67040.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_67274.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_67334.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_67834.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_68085.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_6810.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_68537.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_68645.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_68791.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_70128.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_70432.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_70572.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_70657.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_70834.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_70991.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_7114.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_71389.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_71783.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_72980.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_72984.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_74207.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_75522.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_75795.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_7610.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_7670.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_76701.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_77769.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_78049.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_78972.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_7906.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_79313.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_8003.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_81147.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_81953.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "dev_mod:fi:image_8212.jpg": {
+  "label": "GOOD",
+  "sheet": "dmod_index",
+  "note": "moderate-blur archive val (R5-10 zone); legit deblur, no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-10219.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-10219.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-10219.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-10464.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-10464.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-10464.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-10464.ref-v1.motionblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-13457.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-13457.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-13457.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-13457.ref-v1.gaussblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-13457.ref-v1.gaussblur-severe@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-13457.ref-v1.gaussblur-severe@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-13457.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-13457.ref-v1.motionblur-moderate": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-13457.ref-v1.motionblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-22205.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-22205.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-22205.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-22205.ref-v1.motionblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-27622.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-27622.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-28962.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-28962.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-28962.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-28962.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-30710.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-30710.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-30710.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-30710.ref-v1.gaussblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-30710.ref-v1.gaussblur-severe@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-30710.ref-v1.gaussblur-severe@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-30710.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-34390.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-34390.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-34390.ref-v1.gaussblur-extreme@168": {
+  "label": "BAD_CLEAR",
+  "sheet": "p4_index",
+  "note": "magenta dotted patch on left cheek; medluma keeps a fainter dotted residue"
+ },
+ "p4:fc:ff-train-35374.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-35374.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-35374.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-39781.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-39781.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-39781.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-40842.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-40842.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-40842.ref-v1.motionblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-4485.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-4485.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-4485.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-4485.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-50664.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-50664.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-50664.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-5767.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-5767.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-5767.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-5767.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-5767.ref-v1.motionblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.gaussblur-mild": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.gaussblur-moderate": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.gaussblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.gaussblur-severe@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.jpeg-mild": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.lowcontrast-mild": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.lowcontrast-moderate": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.motionblur-mild": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.motionblur-moderate": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.motionblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.underexposure-mild": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-59417.ref-v1.underexposure-moderate": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-6151.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-6151.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-6151.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-6151.ref-v1.motionblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-62944.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-62944.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-62944.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-62944.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-67194.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-67194.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-67194.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-67194.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-67194.ref-v1.motionblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-69910.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-69910.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-69910.ref-v1.gaussblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-69910.ref-v1.gaussblur-severe@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-69910.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-69910.ref-v1.motionblur-moderate": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-69910.ref-v1.motionblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-71424.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-71424.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-71424.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-81064.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-81064.ref-v1.motionblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-81170.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-81170.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-81170.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-81383.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-81383.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-81383.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-82760.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-82760.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-82760.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-82760.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-84405.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-84405.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-84405.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-85768.ref-v1.gaussblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-85768.ref-v1.gaussblur-extreme@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-85768.ref-v1.gaussblur-extreme@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-85768.ref-v1.gaussblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-85768.ref-v1.gaussblur-severe@112": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-85768.ref-v1.gaussblur-severe@168": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-85768.ref-v1.motionblur-extreme": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-85768.ref-v1.motionblur-moderate": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "p4:fc:ff-train-85768.ref-v1.motionblur-severe": {
+  "label": "GOOD",
+  "sheet": "p4_index",
+  "note": "p4/r5gap synthetic family output; no visible artifact at 2x"
+ },
+ "real_r510:fi:img118.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "real_index",
+  "note": "img118 colour mottling on a sepia print (R5-10 returned)"
+ },
+ "real_r510:fi:img123.jpg": {
+  "label": "GOOD",
+  "sheet": "real_index",
+  "note": "mild legit deblur; grayscale prints stay grey"
+ },
+ "real_r510:fi:img147.jpg": {
+  "label": "GOOD",
+  "sheet": "real_index",
+  "note": "mild legit deblur; grayscale prints stay grey"
+ },
+ "real_r510:fi:img148.jpg": {
+  "label": "GOOD",
+  "sheet": "real_index",
+  "note": "mild legit deblur; grayscale prints stay grey"
+ },
+ "real_r510:fi:img153.jpg": {
+  "label": "GOOD",
+  "sheet": "real_index",
+  "note": "mild legit deblur; grayscale prints stay grey"
+ },
+ "real_r510:fi:img154.jpg": {
+  "label": "GOOD",
+  "sheet": "real_index",
+  "note": "mild legit deblur; grayscale prints stay grey"
+ },
+ "real_r510:fi:img165.jpg": {
+  "label": "BAD_DESTRUCTIVE",
+  "sheet": "real_index",
+  "note": "STRESS ONLY: halftone print the service routes to A4 (never to NAFNet); NAFNet forced here destroys the image"
+ },
+ "real_r510:fi:img72.jpg": {
+  "label": "BAD_DESTRUCTIVE",
+  "sheet": "real_index",
+  "note": "STRESS ONLY: halftone print the service routes to A4 (never to NAFNet); NAFNet forced here destroys the image"
+ },
+ "real_r56:fi:img147.jpg": {
+  "label": "GOOD",
+  "sheet": "real_index",
+  "note": "mild legit deblur; grayscale prints stay grey"
+ },
+ "real_r56:fi:img148.jpg": {
+  "label": "GOOD",
+  "sheet": "real_index",
+  "note": "mild legit deblur; grayscale prints stay grey"
+ },
+ "real_r56:fi:img153.jpg": {
+  "label": "GOOD",
+  "sheet": "real_index",
+  "note": "mild legit deblur; grayscale prints stay grey"
+ },
+ "real_r56:fi:img154.jpg": {
+  "label": "GOOD",
+  "sheet": "real_index",
+  "note": "mild legit deblur; grayscale prints stay grey"
+ },
+ "real_r56:fi:img165.jpg": {
+  "label": "BAD_DESTRUCTIVE",
+  "sheet": "real_index",
+  "note": "STRESS ONLY: halftone print the service routes to A4 (never to NAFNet); NAFNet forced here destroys the image"
+ },
+ "real_r56:fi:img72.jpg": {
+  "label": "BAD_DESTRUCTIVE",
+  "sheet": "real_index",
+  "note": "STRESS ONLY: halftone print the service routes to A4 (never to NAFNet); NAFNet forced here destroys the image"
+ },
+ "test_r56:fc:image_82904.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_83394.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_83780.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_84007.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_84443.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_84526.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_84565.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_85360.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_85382.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_85519.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_86638.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_869.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_87508.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_87681.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_87706.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_88099.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_88531.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_88677.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_88812.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_89077.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_89442.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fc:image_89531.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_89596.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_90081.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_9048.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_90799.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_91054.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_91216.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_91802.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_91868.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_91875.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_92041.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_92402.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_92536.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_92746.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_92980.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_93312.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_93395.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_93536.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_93962.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_93965.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fc:image_94329.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_94506.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_94653.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_94918.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fc:image_95050.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_95919.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_96321.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_96751.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_97261.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_97294.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_97796.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_98083.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_98174.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_98255.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_98634.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_98715.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fc:image_9896.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_99058.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_9930.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_99782.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_99801.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_99928.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fc:image_99993.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_8267.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_83106.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_83447.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_8355.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_84131.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_84286.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_84289.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_84547.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_84550.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_84809.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_84841.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_84848.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_84898.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_8530.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_85324.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_85757.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_8591.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_85973.jpg": {
+  "label": "BAD_FAINT",
+  "sheet": "r56flag_index",
+  "note": "faint edge streak / specks, visible at zoom"
+ },
+ "test_r56:fi:image_86239.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_86403.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_8650.jpg": {
+  "label": "BAD_FAINT",
+  "sheet": "r56flag_index",
+  "note": "faint edge streak / specks, visible at zoom"
+ },
+ "test_r56:fi:image_8726.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_87341.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_87403.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_87443.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_87782.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_88245.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_88319.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_88442.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_88566.jpg": {
+  "label": "BAD_DESTRUCTIVE",
+  "sheet": "r56flag_index",
+  "note": "whole-face grid texture"
+ },
+ "test_r56:fi:image_88572.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_88669.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_88763.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_88813.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_89035.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_8916.jpg": {
+  "label": "BAD_FAINT",
+  "sheet": "r56flag_index",
+  "note": "faint edge streak / specks, visible at zoom"
+ },
+ "test_r56:fi:image_89225.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_89949.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_90004.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_90029.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_90293.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_90670.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_90737.jpg": {
+  "label": "BAD_FAINT",
+  "sheet": "r56flag_index",
+  "note": "faint edge streak / specks, visible at zoom"
+ },
+ "test_r56:fi:image_90748.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_90814.jpg": {
+  "label": "BAD_FAINT",
+  "sheet": "r56flag_index",
+  "note": "faint edge streak / specks, visible at zoom"
+ },
+ "test_r56:fi:image_90877.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_91039.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_91049.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_91662.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_92362.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_92732.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_93232.jpg": {
+  "label": "BAD_FAINT",
+  "sheet": "r56flag_index",
+  "note": "faint edge streak / specks, visible at zoom"
+ },
+ "test_r56:fi:image_93881.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_93954.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_947.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_94749.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_95026.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_9516.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_95481.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_95532.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_95967.jpg": {
+  "label": "BAD_FAINT",
+  "sheet": "r56flag_index",
+  "note": "faint edge streak / specks, visible at zoom"
+ },
+ "test_r56:fi:image_96320.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_96329.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_964.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_96500.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_96504.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_9658.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_96954.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_9718.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_97456.jpg": {
+  "label": "BAD_FAINT",
+  "sheet": "r56flag_index",
+  "note": "faint edge streak / specks, visible at zoom"
+ },
+ "test_r56:fi:image_97488.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_97702.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_97880.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_98021.jpg": {
+  "label": "BAD_FAINT",
+  "sheet": "r56flag_index",
+  "note": "faint edge streak / specks, visible at zoom"
+ },
+ "test_r56:fi:image_98080.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_98094.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_98399.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_98424.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_98887.jpg": {
+  "label": "BAD_FAINT",
+  "sheet": "r56flag_index",
+  "note": "faint edge streak / specks, visible at zoom"
+ },
+ "test_r56:fi:image_9902.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_99160.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_99442.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_99633.jpg": {
+  "label": "BAD_CLEAR",
+  "sheet": "r56flag_index",
+  "note": "dotted/grid patch or edge streak (R5-6 zero-pad build)"
+ },
+ "test_r56:fi:image_99710.jpg": {
+  "label": "GOOD",
+  "sheet": "t56r_index",
+  "note": "no visible artifact at 2x zoom (faint ones not excluded)"
+ },
+ "test_r56:fi:image_99736.jpg": {
+  "label": "BAD_FAINT",
+  "sheet": "r56flag_index",
+  "note": "faint edge streak / specks, visible at zoom"
+ }
+}

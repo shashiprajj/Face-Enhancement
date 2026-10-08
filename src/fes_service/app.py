@@ -14,7 +14,7 @@ Endpoints
                       when the gate does not route it; the gate's decision is still reported, `forced` = true),
                       `route_mode` = "" (service default) | a4 | nafnet | auto (R5-5, see fes_service.pipeline),
                       `profile` = "" (service default, unchanged) | original (input returned unchanged, no model) |
-                      r5_6 | r5_8 | r5_10 (R5-9/R5-10 comparison; r5_8 / r5_10 only when listed in
+                      r5_6 | r5_8 | r5_10 | r6 (R5-9/R5-10/R6 comparison; r5_8 / r5_10 / r6 only when listed in
                       FES_EXPERIMENTAL_PROFILES, otherwise 422).
                       200 ENHANCED / ORIGINAL (JSON metadata + base64 image), 422 REJECTED, 503 busy / not ready
 Environment
@@ -29,11 +29,15 @@ Environment
   FES_NAFNET_PROFILE    r5_6 (default: the validated live NAFNet route) · r5_8 (R5-8 research candidate: candidate
                         route config + local-patch guard + out-of-image reflect fill + reflect-pad16 NAFNet factory)
                         · r5_10 (R5-10 research candidate: r5_8 with the DEV-recalibrated blur boundary)
+                        · r6 (R6 research candidate: r5_8 route + NAFNet on the chip and its 3 mirrors, ORIGINAL when
+                        any run is unstable, else the median of the 4 runs with the input's colour; nafnet_factory_r6)
   FES_NAFNET_FACTORY    NAFNet model factory (default fes_service.models:nafnet_factory; r5_8/r5_10: nafnet_factory_pad16)
   FES_EXPERIMENTAL_PROFILES  "" (default: off) · comma list of r5_8, r5_10 = also load those candidates so a request
                         may ask for profile=r5_8 / r5_10. They share ONE extra NAFNet worker (FES_NAFNET_R5_8_FACTORY,
                         default models:nafnet_factory_pad16: both use the same model + padding; only the route config
-                        differs). Never changes requests without `profile`; neither is production-approved.
+                        differs). r6 = its own worker (FES_NAFNET_R6_FACTORY, default models:nafnet_factory_r6,
+                        timeout FES_NAFNET_R6_TIMEOUT_S, default 120: 4 NAFNet runs per request). Never changes
+                        requests without `profile`; none of them is production-approved.
   FES_NAFNET_TIMEOUT_S  hard per-inference timeout, worker killed beyond it (default 60)
   FES_NAFNET_THREADS    torch threads in the NAFNet worker (default 4)
 Models are loaded once per worker process at startup (the ones the default route mode can use; the other one lazily
@@ -76,6 +80,12 @@ def build_pipeline() -> EnhancementPipeline:
     for name in filter(None, (x.strip() for x in os.environ.get("FES_EXPERIMENTAL_PROFILES", "").split(","))):
         if name not in EXPERIMENTAL_PROFILES:
             raise ValueError(f"FES_EXPERIMENTAL_PROFILES: unknown profile {name!r} (only {', '.join(EXPERIMENTAL_PROFILES)})")
+        if name == "r6":                            # R6: its own worker (4-run consensus factory)
+            experimental[name] = IsolatedModel(
+                os.environ.get("FES_NAFNET_R6_FACTORY", "fes_service.models:nafnet_factory_r6"),
+                timeout_s=float(os.environ.get("FES_NAFNET_R6_TIMEOUT_S", "120")),
+                threads=int(os.environ.get("FES_NAFNET_THREADS", "4")))
+            continue
         if shared is None:
             shared = IsolatedModel(
                 os.environ.get("FES_NAFNET_R5_8_FACTORY", "fes_service.models:nafnet_factory_pad16"),
@@ -83,7 +93,8 @@ def build_pipeline() -> EnhancementPipeline:
                 threads=int(os.environ.get("FES_NAFNET_THREADS", "4")))
         experimental[name] = shared
     if gate == "rw":
-        default_factory = ("fes_service.models:nafnet_factory_pad16"
+        default_factory = ("fes_service.models:nafnet_factory_r6" if os.environ.get("FES_NAFNET_PROFILE") == "r6"
+                           else "fes_service.models:nafnet_factory_pad16"
                            if os.environ.get("FES_NAFNET_PROFILE") in EXPERIMENTAL_PROFILES
                            else "fes_service.models:nafnet_factory")
         nafnet = IsolatedModel(os.environ.get("FES_NAFNET_FACTORY", default_factory),

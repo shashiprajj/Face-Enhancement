@@ -46,7 +46,8 @@ async function checkHealth() {
     const off = EXPERIMENTAL_IDS.filter((id) => !state.available.includes(id));
     for (const id of EXPERIMENTAL_IDS) $(`mode-${id}`).classList.toggle("unavailable", off.includes(id));
     $("mode-r5_10").hidden = off.includes("r5_10");                  // R5-10 is listed only when enabled
-    const offShown = off.filter((id) => id === "r5_8");             // a disabled R5-10 is simply not listed
+    $("mode-r6").hidden = off.includes("r6");                        // R6 is listed only when enabled
+    const offShown = off.filter((id) => id === "r5_8");             // a disabled R5-10 / R6 is simply not listed
     el.profilesNote.hidden = !offShown.length;
     el.profilesNote.textContent = !offShown.length ? "" : `${offShown.map((id) => profileById(id).title).join(" and ")} `
       + `${offShown.length > 1 ? "are" : "is"} not enabled on this service (off by default). Start the service with `

@@ -173,10 +173,11 @@ def face_chip_filled(img: np.ndarray, landmarks: np.ndarray) -> tuple[np.ndarray
     return filled, mask
 
 
-NAFNET_PROFILES = ("r5_6", "r5_8", "r5_10")      # r5_6 = live/default; r5_8 / r5_10 = research candidates (opt-in)
+NAFNET_PROFILES = ("r5_6", "r5_8", "r5_10", "r6")  # r5_6 = live/default; r5_8 / r5_10 / r6 = research candidates (opt-in)
 # route config per NAFNet profile (each file is SHA-256 sealed; load_config verifies it)
-PROFILE_CONFIG = {"r5_6": NR.CONFIG, "r5_8": NR.CANDIDATE_CONFIG, "r5_10": NR.R5_10_CONFIG}
-EXPERIMENTAL_PROFILES = ("r5_8", "r5_10")
+PROFILE_CONFIG = {"r5_6": NR.CONFIG, "r5_8": NR.CANDIDATE_CONFIG, "r5_10": NR.R5_10_CONFIG, "r6": NR.R6_CONFIG}
+EXPERIMENTAL_PROFILES = ("r5_8", "r5_10", "r6")
+STABILITY_GUARD = "STABILITY_GUARD"                # fallback code: R6 — a mirror run of NAFNet was unstable
 LOCAL_ARTIFACT_GUARD = "LOCAL_ARTIFACT_GUARD"     # fallback code: the candidate's local-patch guard rejected the output
 # R5-9 per-request profiles: "original" = input returned unchanged, no model invoked (comparison baseline);
 # r5_6 / r5_8 / r5_10 = the NAFNet profiles above. r5_8 / r5_10 are servable per request ONLY when the pipeline was
@@ -207,7 +208,9 @@ class EnhancementPipeline:
         nafnet / auto need it and gate="rw" (they use the rw features and, in auto, its noise route).
         nafnet_profile: "r5_6" (default, the validated live route) | "r5_8" (R5-8 research candidate: candidate route
         config with the local-patch guard, out-of-image reflect fill; pair it with models:nafnet_factory_pad16) |
-        "r5_10" (R5-10 research candidate: r5_8 with the DEV-recalibrated blur boundary; same model factory).
+        "r5_10" (R5-10 research candidate: r5_8 with the DEV-recalibrated blur boundary; same model factory) |
+        "r6" (R6 research candidate: the r5_8 route + 4-run stability check + median/luma-only consensus output;
+        pair it with models:nafnet_factory_r6).
         experimental_nafnet: R5-9 — {"r5_8": model, "r5_10": model} makes those candidates selectable PER REQUEST
         (profile="r5_8" / "r5_10") next to the default profile r5_6; it never changes what a request without
         `profile` does."""
@@ -238,7 +241,7 @@ class EnhancementPipeline:
             self.profiles[nafnet_profile] = _NafnetProfile(nafnet_profile, self.nafnet_cfg, nafnet, self.oob_fill)
         for name, model in (experimental_nafnet or {}).items():
             assert name in EXPERIMENTAL_PROFILES and nafnet_profile == "r5_6", \
-                "only r5_8 / r5_10 can be added next to the default r5_6"
+                "only r5_8 / r5_10 / r6 can be added next to the default r5_6"
             assert gate == "rw" and nafnet is not None and model is not None, f"experimental {name} needs gate 'rw'"
             cfg = NR.load_config(PROFILE_CONFIG[name])                  # verifies the candidate seal
             self.profiles[name] = _NafnetProfile(name, cfg, model,
@@ -470,7 +473,10 @@ class EnhancementPipeline:
         res.decision, res.reason, res.bucket = nd.decision, nd.reason, nd.route
         res.route = res.gate_route = res.model = NR.MODEL
         try:
-            out, meta = prof.model(work, {"s": work.shape[0]})
+            ctx = {"s": work.shape[0]}
+            if "stability" in cfg and fill is not None:          # r6: out-of-image area excluded from the tracer
+                ctx["oob_mask"] = fill[1]
+            out, meta = prof.model(work, ctx)
             res.nafnet["infer_s"] = (meta or {}).get("infer_s")
             if fill is not None and isinstance(out, np.ndarray) and out.shape[:2] == fill[1].shape:
                 out = out.copy()
@@ -481,6 +487,15 @@ class EnhancementPipeline:
             res.timings_ms["nafnet"] = ms()
             return original(used=RT.ORIGINAL, fallback=fb, error=f"{type(e).__name__}: {e}"[:300])
         res.timings_ms["nafnet"] = ms()
+        if "stability" in cfg:                            # r6 candidate: 4-run stability check before any other guard
+            try:
+                sg = NR.stability_check((meta or {}).get("runs_dot_c"), cfg)
+            except Exception as e:  # noqa: BLE001 — an uncertain stability result counts as a failed one
+                sg = NR.ArtifactGuardResult(False, [NR.A_UNSTABLE_ERROR], {"error": f"{type(e).__name__}: {e}"[:200]})
+            res.nafnet["stability"] = sg.as_dict()
+            if not sg.passed:
+                res.artifact_check = "FAIL"
+                return original(used=RT.ORIGINAL, fallback=STABILITY_GUARD, error="+".join(sg.reasons))
         try:
             g = NR.artifact_guard(chip, out, cfg, self._face_check, bool(f.get("is_gray")))
         except Exception as e:  # noqa: BLE001 — an uncertain safety result counts as a failed one

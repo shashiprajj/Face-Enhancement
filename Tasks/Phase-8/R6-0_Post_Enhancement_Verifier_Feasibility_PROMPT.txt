@@ -1,0 +1,413 @@
+R6-0 — POST-ENHANCEMENT SAFETY VERIFIER FEASIBILITY STUDY
+
+OBJECTIVE
+Determine whether a post-enhancement verifier can reliably decide whether a NAFNet-generated enhancement candidate is safe to return, or whether the candidate should be discarded and the untouched original returned.
+
+TARGET ARCHITECTURE
+
+INPUT
+  -> basic technical checks
+  -> NAFNet enhancement candidate
+  -> POST-ENHANCEMENT SAFETY VERIFIER
+       PASS -> enhanced candidate
+       FAIL -> original
+
+The original image must always remain available as the safe fallback.
+
+THIS IS A FEASIBILITY STUDY ONLY.
+
+DO NOT:
+- modify production behavior
+- tune blur thresholds
+- modify R5-6, R5-8, or R5-10 behavior
+- change the NAFNet model
+- introduce another enhancement model
+- modify API/UI behavior
+- integrate Feature-Match
+- search for new datasets/models
+- turn this into another threshold-tuning exercise
+
+The only question is:
+Can we reliably detect unsafe/bad NAFNet outputs AFTER enhancement?
+
+If the answer is no, stop. Do not manufacture a verifier just to obtain GREEN.
+
+============================================================
+1. EXISTING BASE
+============================================================
+
+Reuse the existing FES infrastructure:
+
+- standalone FastAPI service
+- face detection/alignment
+- NAFNet-GoPro integration
+- isolated enhancement worker
+- timeout/resource failure fallback
+- original-image fallback
+- existing quality/texture measurements
+- existing artifact guards
+- SFace and dlib identity evaluation
+- R5-6 baseline
+- R5-8 experimental profile
+- R5-10 research profile
+- archive/synthetic/real validation infrastructure
+- known-good and known-bad NAFNet outputs
+
+Do not rebuild existing functionality.
+
+============================================================
+2. R6-0 SCOPE
+============================================================
+
+Evaluate a post-enhancement verifier containing these signal families:
+
+1. Geometry / face integrity
+2. Photometric / colour integrity
+3. Texture / frequency integrity
+4. Localized difference analysis
+5. Identity consistency
+
+Do not implement the final production TRY -> VERIFY -> COMMIT pipeline in this task.
+
+============================================================
+3. EVALUATION CORPUS
+============================================================
+
+Use EXISTING R5 evidence. Do not create a new synthetic benchmark from scratch.
+
+Create an explicit corpus with:
+
+A. GOOD
+Known acceptable NAFNet outputs from R5 evaluations, including representative:
+- strong blur
+- moderate blur
+- noise
+- grayscale
+- low contrast
+- different face sizes
+- archive data
+- real images where available
+
+B. BAD / KNOWN FAILURE
+Include all recoverable known failures, including:
+- R5-7 rainbow/dotted outputs
+- R5-8 known artifact cases
+- R5-10 image_84257
+- R5-10 real img118
+- previously identified destructive NAFNet outputs
+- other explicitly labelled failures in R5 reports
+
+C. BORDERLINE / AMBIGUOUS
+Include examples such as:
+- moderate blur
+- strong blur
+- motion blur
+- noisy faces
+- grayscale
+- low contrast
+- JPEG degradation
+- small faces
+- printed/halftone images
+- suspicious but non-destructive changes
+
+Report exact counts for all three categories.
+Do not silently classify uncertain examples.
+
+============================================================
+4. SIGNALS TO EVALUATE
+============================================================
+
+4.1 GEOMETRIC INTEGRITY
+
+Measure where possible:
+- face bounding-box change
+- landmark displacement
+- face proportions
+- landmark validity
+- face detector confidence before/after
+- obvious geometric deformation
+
+Goal: detect face warping or structural damage.
+
+4.2 PHOTOMETRIC / COLOUR INTEGRITY
+
+Measure:
+- RGB/channel deltas
+- luminance delta
+- global chroma delta
+- local chroma delta
+- grayscale preservation
+- extreme pixel/channel changes
+- localized colour changes
+
+Goal: detect failures such as the img118 colour-mottling case.
+
+4.3 TEXTURE / FREQUENCY INTEGRITY
+
+Measure relevant signals for:
+- high-frequency energy
+- high-frequency chroma energy
+- edge-energy change
+- ringing/halos
+- periodic texture
+- grid/dot patterns
+- localized frequency spikes
+- unnatural texture creation
+
+Goal: detect rainbow artifacts, dots, grids, ringing, artificial texture, and high-frequency explosions.
+
+4.4 LOCALIZED DIFFERENCE ANALYSIS
+
+REQUIRED.
+
+For every candidate analyze:
+    abs(enhanced - original)
+
+Do not rely only on one global difference score.
+
+Measure appropriate signals such as:
+- changed-pixel percentage
+- largest connected changed region
+- concentration of changes
+- local chroma concentration
+- local high-frequency concentration
+- spatial distribution of changes
+
+Goal:
+distinguish distributed/natural deblurring from small localized artificial patches.
+
+4.5 IDENTITY CONSISTENCY
+
+Calculate where available:
+- SFace similarity: original -> enhanced
+- dlib similarity: original -> enhanced
+- embedding movement/delta
+
+IMPORTANT:
+Identity similarity is a SAFETY signal, not proof that enhancement is good.
+
+Do not claim:
+"SFace passed, therefore the enhancement is safe."
+
+Use identity movement as a conservative reject signal for substantial identity drift.
+
+============================================================
+5. INDIVIDUAL SIGNAL ANALYSIS
+============================================================
+
+For each signal:
+1. Calculate its distribution on GOOD examples.
+2. Calculate its distribution on BAD examples.
+3. Calculate its distribution on BORDERLINE examples.
+4. Determine whether it provides meaningful separation.
+5. Identify known failure cases it misses.
+6. Identify GOOD cases it would incorrectly reject.
+
+Produce a table similar to:
+
+Signal | GOOD | BAD | BORDERLINE | Separation | Known misses
+
+Do not hide overlapping distributions.
+
+============================================================
+6. COMBINATION ANALYSIS
+============================================================
+
+Evaluate whether combinations provide better separation.
+
+Potential families:
+- photometric + local artifact
+- texture + local artifact
+- geometry + identity
+- photometric + texture + local artifact
+- all safety families
+
+Do not blindly invent arbitrary thresholds.
+
+If thresholds are required for research:
+- derive them only from the documented corpus
+- document selection method
+- keep them research-only
+- do not modify production configuration
+
+============================================================
+7. FALSE ACCEPT / FALSE REJECT
+============================================================
+
+Measure:
+
+FALSE ACCEPT:
+BAD candidate -> verifier PASS
+
+This is the dangerous failure.
+
+FALSE REJECT:
+GOOD candidate -> verifier FAIL
+
+This sacrifices enhancement benefit but is safer.
+
+The verifier should be conservative.
+
+Report:
+- false-accept count/rate
+- false-reject count/rate
+- exact examples involved
+- why the verifier failed
+
+============================================================
+8. KNOWN FAILURE CHALLENGE SET
+============================================================
+
+Explicitly test, where available:
+1. R5-7 rainbow/dotted artifacts
+2. R5-8 known artifact cases
+3. R5-10 image_84257
+4. R5-10 real img118
+5. motion-blur examples
+6. moderate-blur examples
+7. grayscale examples
+8. printed/halftone examples
+9. small-face examples
+
+For every known BAD case:
+DETECTED or MISSED?
+
+If MISSED, explain why.
+
+A verifier that misses a known destructive case must not be called production-safe.
+
+============================================================
+9. RESEARCH IMPLEMENTATION RULES
+============================================================
+
+Research-only code may be placed under:
+    scripts/r6_0/
+
+or another clearly isolated R6-0 research location.
+
+Do not modify:
+- live service decision logic
+- default environment variables
+- production routes
+- R5 profiles
+- API contracts
+- UI behavior
+- model files
+
+Reuse existing helpers where practical.
+Keep the experiment deterministic and reproducible.
+
+============================================================
+10. REQUIRED REPORT
+============================================================
+
+Create:
+    Planning/WelOrbit_R6-0_Post_Enhancement_Verifier_REPORT.md
+
+The report must contain:
+1. Executive summary
+2. Current architecture context
+3. R6-0 scope and non-goals
+4. Evaluation corpus
+5. GOOD/BAD/BORDERLINE definitions
+6. Exact dataset counts
+7. Signal definitions
+8. Individual signal results
+9. Combination results
+10. False-accept analysis
+11. False-reject analysis
+12. Known failure challenge results
+13. Missed failure analysis
+14. Recommended verifier architecture
+15. Limitations
+16. Final GREEN/YELLOW/RED verdict
+17. Exact next step based on verdict
+
+============================================================
+11. FINAL VERDICT
+============================================================
+
+GREEN — VERIFIER FEASIBLE
+Use only if evidence shows the verifier can meaningfully detect known unsafe/bad outputs while retaining a useful amount of good enhancement.
+Then recommend R6-1:
+    TRY -> VERIFY -> COMMIT
+
+YELLOW — PROMISING BUT INSUFFICIENT
+Some signals work, but separation is not reliable enough for safe implementation.
+Do NOT implement production routing.
+Document exactly what evidence is missing.
+
+RED — NOT FEASIBLE WITH CURRENT EVIDENCE
+Available signals cannot reliably distinguish safe from unsafe outputs.
+Do NOT manufacture a safety verifier.
+Recommend stopping and reassessing architecture/data.
+
+============================================================
+12. ACCEPTANCE CRITERIA
+============================================================
+
+[ ] Existing R5 evidence reused
+[ ] GOOD/BAD/BORDERLINE corpus explicitly documented
+[ ] Exact corpus counts reported
+[ ] Geometry evaluated
+[ ] Photometric/colour integrity evaluated
+[ ] Texture/frequency integrity evaluated
+[ ] Localized difference analysis evaluated
+[ ] SFace/dlib identity movement evaluated
+[ ] Known R5 artifact cases explicitly tested
+[ ] img118 explicitly tested
+[ ] False accepts reported
+[ ] False rejects reported
+[ ] Missed known failures reported
+[ ] No production behavior changed
+[ ] No blur threshold changed
+[ ] No model changed
+[ ] No new enhancement model introduced
+[ ] No API/UI behavior changed
+[ ] No Feature-Match integration performed
+[ ] Research code isolated
+[ ] Reproducible commands documented
+[ ] Final GREEN/YELLOW/RED verdict evidence-based
+[ ] Recommended next action explicit
+
+============================================================
+13. GIT DISCIPLINE
+============================================================
+
+Before work:
+- record current git HEAD
+- record git status
+- record active R5 configuration
+
+During work:
+- do not modify production behavior
+
+At completion:
+- commit ONLY R6-0 research/report/test artifacts
+- do not commit R5 production changes
+- report commit hash
+- report whether working tree is clean
+
+If unrelated working-tree changes already exist, do not overwrite or revert them.
+
+============================================================
+14. FINAL RESPONSE
+============================================================
+
+Report concisely:
+1. What was analyzed
+2. Corpus counts
+3. Best verifier signals
+4. Known failures detected
+5. Known failures missed
+6. False-accept rate
+7. False-reject rate
+8. Whether production code changed
+9. Files created
+10. Commit hash
+11. GREEN/YELLOW/RED verdict
+12. Exact recommendation for R6-1 or STOP
+
+Do not claim production safety from R6-0.
+
+Do not implement R6-1 unless explicitly instructed after review of the R6-0 result.

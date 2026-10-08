@@ -81,6 +81,43 @@ def nafnet_factory_pad16():
     return enhance, {**info, "variant": "reflect_pad16"}
 
 
+def r6_consensus(enhance1):
+    """R6 research candidate core: wrap a single-run enhance(img, ctx) into the 4-run consensus enhance. Runs `enhance1`
+    on the chip and its h / v / hv mirrors (each mirrored back), computes each run's colour-dottedness tracer vs the
+    input, returns (median of the runs with the input's chrominance, {"runs_dot_c": [...]}) via
+    nafnet_route.consensus_luma. The accept / reject decision is NOT taken here: the pipeline applies
+    nafnet_route.stability_check to meta["runs_dot_c"]. ctx["oob_mask"] (full_image chips that extend past the image) =
+    out-of-image pixels, set to 0 in every run and excluded from the tracer, exactly as in the R6-0 study."""
+    import cv2
+
+    from fes_service import nafnet_route as NR
+
+    def enhance(img, ctx):
+        mask = (ctx or {}).get("oob_mask")
+        ref, valid = img, None
+        if mask is not None:
+            ref, valid = img.copy(), ~mask
+            ref[mask] = 0
+        runs, dots = [], []
+        for fl in NR.FLIPS:
+            x = img if fl is None else np.ascontiguousarray(cv2.flip(img, fl))
+            y = enhance1(x, ctx)[0]
+            y = y if fl is None else cv2.flip(y, fl)
+            if mask is not None:
+                y = y.copy()
+                y[mask] = 0
+            runs.append(y)
+            dots.append(round(NR.dot_c_max(ref, y, valid), 4))
+        return NR.consensus_luma(img, runs), {"model": NR.MODEL, "runs_dot_c": dots, "variant": "r6_consensus4"}
+    return enhance
+
+
+def nafnet_factory_r6():
+    """R6 research candidate (profile r6 only): r6_consensus around the reflect-pad16 NAFNet (4 runs per request)."""
+    enhance1, info = nafnet_factory_pad16()
+    return r6_consensus(enhance1), {**info, "variant": "r6_consensus4"}
+
+
 def nafnet_factory():
     os.environ["CUDA_VISIBLE_DEVICES"] = ""
     import torch
@@ -164,3 +201,33 @@ def fake_nafnet_rainbow_factory():
 
 def fake_nafnet_bad_shape_factory():
     return (lambda img, ctx: (np.zeros((224, 224, 3), np.uint8), {})), {"model": "FAKE_NAFNET_BAD_SHAPE"}
+
+
+def _fake_unstable_core(img, ctx):
+    """Deterministic test double for R6: a mild unsharp mask, plus a saturated dotted colour patch whenever the image's
+    top-left pixel is darker than its bottom-right one — so it depends on orientation and appears in SOME mirror runs
+    only (the NAFNet instability pattern)."""
+    import cv2
+    b = cv2.GaussianBlur(img, (0, 0), 1.0)
+    out = cv2.addWeighted(img, 1.5, b, -0.5, 0)
+    if int(img[0, 0].sum()) < int(img[-1, -1].sum()):
+        out = out.copy()
+        h, w = out.shape[:2]
+        patch = out[h // 4:h // 4 + 16, w // 4:w // 4 + 16]
+        patch[::2, ::2] = (255, 0, 255)
+        patch[1::2, 1::2] = (0, 255, 0)
+    return out, {}
+
+
+def fake_nafnet_r6_stable_factory():
+    """R6 consensus around the mild unsharp mask (every run stable)."""
+    def core(img, ctx):
+        import cv2
+        b = cv2.GaussianBlur(img, (0, 0), 1.0)
+        return cv2.addWeighted(img, 1.5, b, -0.5, 0), {}
+    return r6_consensus(core), {"model": "FAKE_NAFNET_R6_STABLE", "pid": os.getpid()}
+
+
+def fake_nafnet_r6_unstable_factory():
+    """R6 consensus around _fake_unstable_core (some runs explode, depending on the image orientation)."""
+    return r6_consensus(_fake_unstable_core), {"model": "FAKE_NAFNET_R6_UNSTABLE", "pid": os.getpid()}

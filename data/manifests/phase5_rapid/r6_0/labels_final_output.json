@@ -1,0 +1,358 @@
+{
+ "clean:fc:image_68536.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "clean:fc:image_70296.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "clean:fc:image_72412.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "clean:fc:image_7487.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "clean:fc:image_75513.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "clean:fc:image_76923.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "clean:fc:image_79575.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "clean:fc:image_81971.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fc:image_6668.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_66882.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fc:image_67333.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fc:image_67784.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_67904.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fc:image_68191.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_69562.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_7040.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_70768.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_70817.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_70889.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fc:image_71761.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_71890.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_73774.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fc:image_74175.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_75168.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fc:image_75238.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fc:image_75394.jpg": {
+  "medluma": "FAINT_RESIDUE",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_75601.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fc:image_76247.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_76320.jpg": {
+  "medluma": "FAINT_RESIDUE",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_76901.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_7761.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_77722.jpg": {
+  "medluma": "CLEAN",
+  "review": "BAD v0 accepted by any-run tracer (all 4 runs stable)"
+ },
+ "dev:fc:image_78145.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fc:image_78604.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_80526.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_81554.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fc:image_81812.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fi:image_65296.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fi:image_66299.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fi:image_66979.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fi:image_67741.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fi:image_68245.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fi:image_68258.jpg": {
+  "medluma": "CLEAN",
+  "review": "BAD v0 accepted by any-run tracer (all 4 runs stable)"
+ },
+ "dev:fi:image_69240.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fi:image_72248.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fi:image_73094.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fi:image_77054.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fi:image_77276.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fi:image_77368.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev:fi:image_79120.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fi:image_79154.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fi:image_80294.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev:fi:image_80537.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "dev_mod:fc:image_71467.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev_mod:fc:image_74778.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev_mod:fi:image_67040.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev_mod:fi:image_67274.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "dev_mod:fi:image_72980.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "real_r510:fi:img118.jpg": {
+  "medluma": "CLEAN",
+  "review": "BAD v0 accepted by any-run tracer (all 4 runs stable)"
+ },
+ "test_r510:fc:image_84257.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fc:image_88677.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "test_r56:fc:image_89442.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fc:image_93965.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fc:image_94918.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_83106.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_83447.jpg": {
+  "medluma": "CLEAN",
+  "review": "GOOD tail: highest medluma luma-dottedness / flip disagreement"
+ },
+ "test_r56:fi:image_84289.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_85324.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_85973.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_88442.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_88566.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_89035.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_90737.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_93232.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_95481.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_95967.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_97456.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_98021.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_9902.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_99633.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r56:fi:image_99736.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r57:fc:image_88924.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r57:fi:image_85126.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r57:fi:image_90856.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r57:fi:image_96161.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r57:fi:image_96475.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r57:fi:image_97266.jpg": {
+  "medluma": "CLEAN",
+  "review": "k1 sheet: BAD v0 with exactly 1 unstable run"
+ },
+ "test_r58:fi:image_89280.jpg": {
+  "medluma": "CLEAN",
+  "review": "BAD v0 accepted by any-run tracer (all 4 runs stable)"
+ },
+ "test_r58:fi:image_91965.jpg": {
+  "medluma": "CLEAN",
+  "review": "BAD v0 accepted by any-run tracer (all 4 runs stable)"
+ }
+}

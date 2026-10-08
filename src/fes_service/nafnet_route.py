@@ -119,7 +119,8 @@ def texture_features(img: np.ndarray) -> dict:
 def load_config(path: str = CONFIG) -> dict:
     cfg = json.loads(repo_path(path).read_text(encoding="utf-8"))
     assert cfg["sha256"] == GT.gate_hash(cfg), "r5_nafnet_route.json modified after freeze"
-    assert cfg["route_version"] in (ROUTE_VERSION, CANDIDATE_ROUTE_VERSION, R5_10_ROUTE_VERSION), cfg["route_version"]
+    assert cfg["route_version"] in (ROUTE_VERSION, CANDIDATE_ROUTE_VERSION, R5_10_ROUTE_VERSION, R6_ROUTE_VERSION), \
+        cfg["route_version"]
     assert cfg["feature_version"] == FEAT_VERSION and cfg["model"] == MODEL
     return cfg
 
@@ -361,5 +362,69 @@ def local_artifact_guard(inp: np.ndarray, out, cfg: dict, input_is_gray: bool) -
     for k, limit in lc["limits"].items():
         if f[k] > limit:
             res.reasons.append(f"{A_LOCAL}:{k}")
+    res.passed = not res.reasons
+    return res
+
+
+# ------------------------------------------------------------------ R6 stability-verified consensus (candidate only)
+# p6-nafnet-stability-1.0.0 (R6-0: Planning/WelOrbit_R6-0_Post_Enhancement_Verifier_REPORT.md). NAFNet-GoPro is
+# numerically unstable on some inputs: mirroring the input (which must not change a deblur) then makes one or more runs
+# explode into a dotted / grid / noise patch, and the localized artifacts R5-6..R5-10 returned are the same failure.
+# The candidate runs NAFNet on the chip and on its h / v / hv mirrors (each mirrored back), REJECTS the request
+# (ORIGINAL) when any run carries the explosion tracer — colour dottedness vs the input above the DEV limit — and
+# otherwise returns the per-pixel MEDIAN of the four runs with the INPUT's chrominance (luma-only enhancement: the
+# output cannot change colour at all). Used only when the route config has a "stability" section (profile r6).
+
+R6_CONFIG = "configs/phase5/r6_nafnet_candidate.json"
+R6_ROUTE_VERSION = "p6-nafnet-route-1.0.0"
+STABILITY_VERSION = "p6-nafnet-stability-1.0.0"
+A_UNSTABLE, A_UNSTABLE_ERROR = "ARTIFACT_UNSTABLE_RUN", "ARTIFACT_STABILITY_CHECK_ERROR"
+FLIPS = (None, 1, 0, -1)                               # identity, horizontal, vertical, both (cv2.flip codes)
+
+
+def dot_c_max(inp: np.ndarray, out: np.ndarray, valid: np.ndarray | None = None, win: int = LOCAL_WIN) -> float:
+    """Colour dottedness of `out` over `inp` (the R5-8 l_dot_c_max formula), restricted to `valid` pixels (the
+    out-of-image chip area is excluded when a mask is given). Unmasked, it equals local_features()['l_dot_c_max']."""
+    A, B = _lab(out).astype(np.float32), _lab(inp).astype(np.float32)
+    k = np.array([[1.0, -2.0, 1.0]], np.float32)
+
+    def iso(x):
+        return np.minimum(cv2.filter2D(x, -1, k, borderType=cv2.BORDER_REFLECT_101) ** 2,
+                          cv2.filter2D(x, -1, k.T, borderType=cv2.BORDER_REFLECT_101) ** 2)
+    d = np.maximum(iso(A[..., 1]) + iso(A[..., 2]) - iso(B[..., 1]) - iso(B[..., 2]), 0)
+    if valid is not None:
+        d = d * valid
+    return float(cv2.blur(d.astype(np.float32), (win, win), borderType=cv2.BORDER_REFLECT_101).max())
+
+
+def consensus_luma(inp: np.ndarray, runs: list) -> np.ndarray:
+    """Per-pixel median of the runs (uint8 BGR, same size as inp), then the median's luminance (Y) with the input's
+    chrominance (Cr, Cb). With >= 3 artifact-free runs every output pixel lies inside their range."""
+    med = np.median(np.stack(runs).astype(np.float32), 0).round().clip(0, 255).astype(np.uint8)
+    a, b = cv2.cvtColor(med, cv2.COLOR_BGR2YCrCb), cv2.cvtColor(inp, cv2.COLOR_BGR2YCrCb)
+    a[..., 1:] = b[..., 1:]
+    return cv2.cvtColor(a, cv2.COLOR_YCrCb2BGR)
+
+
+def stability_check(runs_dot_c, cfg: dict) -> ArtifactGuardResult:
+    """R6 stability rule: every run's colour-dottedness tracer must be <= the DEV limit (rule "any": a single unstable
+    run rejects the request). Missing / malformed tracer values reject."""
+    sc = cfg["stability"]
+    assert sc["version"] == STABILITY_VERSION, sc["version"]
+    res = ArtifactGuardResult(passed=False)
+    try:
+        vals = [float(v) for v in runs_dot_c]
+    except (TypeError, ValueError):
+        vals = []
+    if len(vals) != len(FLIPS) or not all(np.isfinite(vals)):
+        res.reasons.append(A_UNSTABLE_ERROR)
+        res.metrics["runs_dot_c"] = runs_dot_c
+        return res
+    limit = float(sc["run_dot_c_max"])
+    n_bad = sum(v > limit for v in vals)
+    res.metrics.update(runs_dot_c=[round(v, 4) for v in vals], run_dot_c_max=round(max(vals), 4),
+                       n_unstable=n_bad, limit=limit, rule=sc["rule"])
+    if n_bad >= int(sc["max_unstable_runs"]) + 1:
+        res.reasons.append(f"{A_UNSTABLE}:{n_bad}/{len(vals)}")
     res.passed = not res.reasons
     return res

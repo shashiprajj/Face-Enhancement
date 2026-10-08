@@ -11,10 +11,13 @@ export const PROFILES = [
     note: "The saved R5-8 research candidate (rejected as RED): reflect framing + local-patch artifact detector." },
   { id: "r5_10", title: "NAFNet R5-10 — Recalibrated Blur Experimental", warning: "EXPERIMENTAL — NOT PRODUCTION-APPROVED",
     note: "R5-8 with ONE change: the blur-eligibility boundary recalibrated on DEV data, so moderate blur is attempted." },
+  { id: "r6", title: "NAFNet R6 — Stability-Verified Experimental", warning: "EXPERIMENTAL — NOT PRODUCTION-APPROVED",
+    note: "R5-8 route; NAFNet runs on the face and its 3 mirror images. Any unstable run → ORIGINAL; otherwise the "
+      + "median of the 4 runs, with the original's colours (brightness detail only)." },
 ];
 export const PROFILE_IDS = PROFILES.map((p) => p.id);
-export const NAFNET_IDS = ["r5_6", "r5_8", "r5_10"];          // the profiles that can run NAFNet (rated by the owner)
-export const EXPERIMENTAL_IDS = ["r5_8", "r5_10"];             // off unless listed in FES_EXPERIMENTAL_PROFILES
+export const NAFNET_IDS = ["r5_6", "r5_8", "r5_10", "r6"];          // the profiles that can run NAFNet (rated by the owner)
+export const EXPERIMENTAL_IDS = ["r5_8", "r5_10", "r6"];             // off unless listed in FES_EXPERIMENTAL_PROFILES
 export const profileById = (id) => PROFILES.find((p) => p.id === id) || null;
 
 export const RATINGS = ["Better", "Same", "Worse", "Unsafe / Artifact"];
@@ -30,6 +33,7 @@ const FALLBACK_TEXT = {
   INVALID_OUTPUT: "the output failed the output check",
   ARTIFACT_GUARD: "NAFNet ran, but its output failed the artifact guard",
   LOCAL_ARTIFACT_GUARD: "NAFNet ran, but the local-patch artifact detector rejected its output",
+  STABILITY_GUARD: "NAFNet was unstable on this face (a mirror-image run produced an artifact), so the original is kept",
 };
 
 /** /ready body → which profiles this service can serve right now (original is always local to the service). */
@@ -90,6 +94,7 @@ export function interpretProfileResult(profile, httpStatus, body, rttMs, { timed
   const nf = body.nafnet && typeof body.nafnet === "object" ? body.nafnet : null;
   const art = nf && nf.artifact && typeof nf.artifact === "object" ? nf.artifact : null;
   const loc = nf && nf.local_artifact && typeof nf.local_artifact === "object" ? nf.local_artifact : null;
+  const stab = nf && nf.stability && typeof nf.stability === "object" ? nf.stability : null;
   const applied = s === "ENHANCED";
   const model = typeof body.model === "string" && body.model ? body.model : "";
   const finalOutput = !applied ? "ORIGINAL" : body.used === "NAFNET_GOPRO" ? "NAFNet" : body.used === "A4" ? "A4" : str(body.used);
@@ -126,6 +131,13 @@ export function interpretProfileResult(profile, httpStatus, body, rttMs, { timed
     local = `${loc.passed ? "PASS" : "FAIL"}${Array.isArray(loc.reasons) && loc.reasons.length ? ` (${loc.reasons.join(", ")})` : ""}`;
     if (loc.metrics && Number.isFinite(loc.metrics.l_dot_c_max)) local += ` · l_dot_c_max ${num(loc.metrics.l_dot_c_max)}`;
   } else local = "not run (no NAFNet output reached it)";
+  let stability = "";
+  if (profile === "r6") {
+    const m = stab && stab.metrics && typeof stab.metrics === "object" ? stab.metrics : {};
+    stability = !stab ? "not run (NAFNet was not attempted)"
+      : `${stab.passed ? "PASS" : "FAIL"} · unstable runs ${Number.isFinite(m.n_unstable) ? m.n_unstable : "?"}/4`
+        + (Number.isFinite(m.run_dot_c_max) ? ` · max tracer ${num(m.run_dot_c_max)} (limit ${num(m.limit)})` : "");
+  }
   const fbText = fallback
     ? `${fallback} — ${FALLBACK_TEXT[fallback] || "enhancement fell back to the original"}${body.error ? ` [${str(body.error).slice(0, 160)}]` : ""}`
     : !applied && profile !== "original" ? `none — not eligible${gateText ? `: ${gateText}` : ""}` : "";
@@ -143,6 +155,7 @@ export function interpretProfileResult(profile, httpStatus, body, rttMs, { timed
       ? num(body.quality.lapd1_c, 6) : ""],
     ["Artifact guard", profile === "original" ? "" : guard],
     ["Local artifact detector", local],
+    ["Stability check (4 runs)", stability],
     ["Fallback / reason", profile === "original" ? "" : fbText],
     ["Route version", nf ? str(nf.route_version) : ""],
     ["NAFNet inference", nf && Number.isFinite(nf.infer_s) ? formatMs(nf.infer_s * 1000) : ""],
@@ -162,7 +175,7 @@ export function interpretProfileResult(profile, httpStatus, body, rttMs, { timed
       status: s, http_status: httpStatus, applied, final_output: finalOutput, model: model || "none",
       gate: gate, reason, fallback,
       lapd1_c: body.quality && Number.isFinite(body.quality.lapd1_c) ? body.quality.lapd1_c : null, artifact_guard: profile === "original" ? "" : guard,
-      local_detector: local, server_ms: Number.isFinite(t.total) ? t.total : null,
+      local_detector: local, stability, server_ms: Number.isFinite(t.total) ? t.total : null,
       rtt_ms: Number.isFinite(rttMs) ? Math.round(rttMs) : null, request_id: str(body.request_id),
     },
   };
@@ -193,7 +206,7 @@ export function recordsToJSON(records) {
 }
 
 const CSV_PROFILE_FIELDS = ["rating", "tags", "notes", "applied", "final_output", "model", "gate", "lapd1_c", "fallback",
-  "artifact_guard", "local_detector", "server_ms", "http_status"];
+  "artifact_guard", "local_detector", "stability", "server_ms", "http_status"];
 const csvCell = (v) => {
   const s = Array.isArray(v) ? v.join("; ") : v === null || v === undefined ? "" : String(v);
   // quote everything; neutralise spreadsheet formula injection from free-text notes
