@@ -1,4 +1,11 @@
 {
+  "blur_range": {
+    "evidence": "DEV: archive val dSFace by lapd1 band (R5-10 outputs); sharp GT lapd1 percentiles (800 val GT): p5 0.0073 -> 97.5 % blurred / 6.5 % sharp admitted",
+    "mild_blur_band": "removed (blur_max == clean_lapd1_lo)",
+    "new_blur_max": 0.008,
+    "old_blur_max": 0.002617,
+    "old_clean_lapd1_lo": 0.005579
+  },
   "decision_order": [
     "safety (T6, unchanged)",
     "missing_feature",
@@ -55,7 +62,7 @@
   "route_version": "p6-nafnet-route-1.0.0",
   "rw_feature_version": "p5-rwfeat-1.0.0",
   "rwgate_seal": "78837a8d2355c5ae46df24afe47fcaf5db6a0acce466ec40720c35397ac96514",
-  "sha256": "9d73d36c1ae7a0927283b620869bb36ab04b53fc915f17e714068fe40ba990fe",
+  "sha256": "32e47852730d74d5ad9708ac6c85a058e58b150f2015414ae18f98cbfdda3ea6",
   "stability": {
     "analysis_sha256": "06b28d5e1c6d9f05cf04476a9429afda95a58865e723985965948895a419b609",
     "calibration": "DEV only: 99th percentile of max-over-runs tracer on the 458 R5-8 DEV LEGITIMATE outputs (archive val); fixed before any TEST population result was read",
@@ -76,8 +83,8 @@
   "status": "RESEARCH CANDIDATE (R6) \u2014 not the live/default route",
   "thresholds": {
     "blockiness_hi": 1.523105,
-    "blur_max": 0.002617,
-    "clean_lapd1_lo": 0.005579,
+    "blur_max": 0.008,
+    "clean_lapd1_lo": 0.008,
     "halftone_energy_max": 0.09985,
     "halftone_peak_max": 0.27363,
     "iod_min": 35.347,

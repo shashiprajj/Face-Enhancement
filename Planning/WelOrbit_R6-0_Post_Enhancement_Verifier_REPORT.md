@@ -405,3 +405,33 @@ node --test tests/ui/fes_compare.test.mjs tests/ui/fes_ui.test.mjs
 - `src/fes_service/{nafnet_route,models,pipeline,app}.py` and `ui/{fes_compare.js,compare.js,compare.html}` (additive, r6 only)
 - `tests/test_r6_candidate.py`, `tests/ui/fes_compare.test.mjs`
 - this report
+
+## 19. Addendum (2026-10-09): blur range widened, second pass tested, fine-tuning cost measured
+
+**Owner feedback:** the gate only attempted heavy blur, where little can be recovered, and rejected less-blurred faces that are easier to improve.
+
+**1. The R6 blur range is widened** (config re-sealed `32e47852…`; R5-6 / R5-8 / R5-10 are unchanged). `blur_max = clean_lapd1_lo = 0.008`, so the mild-blur band is gone.
+
+DEV evidence (archive val, R5-10 outputs, ΔSFace vs GT):
+
+| Blur score (lapd1) | ΔSFace | Harmed |
+|---|---|---|
+| < 0.003 | +0.155 | 1.1 % |
+| 0.003–0.005 | +0.141 to +0.153 | 0.3–0.6 % |
+| 0.005–0.012 | +0.126 to +0.150 | ≤ 0.4 % |
+| sharp GT faces | −0.02 | — |
+
+Mild blur gains as much as strong blur. On 800 val faces, sharp GT faces have lapd1 p5 = 0.0073. The 0.008 limit admits 97.5 % of blurred faces and 6.5 % of sharp ones.
+
+Live check (HTTP, fes-ui): 6/6 DEV faces with lapd1 0.0041–0.0078, all rejected by R5-6 as MILD_BLUR / NOT_BLUR, are enhanced by R6 with 0/4 unstable runs. The faces still rejected fail other gates: photometric (too dark / low contrast) or face size.
+
+**2. Second / third NAFNet pass** (`scripts/r6_0/multipass.py`, 480 val faces, `multipass_val.json`):
+- Visually sharper, but **no identity gain**: heavy +0.160 → +0.159 → +0.154; strong +0.173 → +0.171 → +0.167; moderate +0.146 → +0.144 → +0.138.
+- Harm rises with each pass: moderate 0 % → 1.2 % → 4.4 %.
+- **Not adopted.**
+
+**3. Why outputs on soft blur change little.** NAFNet-GoPro was trained only on camera-shake video blur (GoPro dataset). Defocus / Gaussian face blur is outside its training. No threshold changes this; fine-tuning on face blur does.
+
+**Fine-tuning measured on this laptop** (Docker, 8 threads, 128-px crops): **≈ 95–110 s per training step at batch 4**. 2,000 steps ≈ 2.5 days. Not practical on this CPU.
+
+**Licensed data is available:** FairFace (DS01, CC BY 4.0, ELIGIBLE, ≈ 97k faces) with self-generated blur. NAFNet weights are MIT.

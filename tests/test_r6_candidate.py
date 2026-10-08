@@ -136,9 +136,24 @@ def test_stability_rule(vals, ok):
 def test_r6_config_is_r5_8_plus_stability_only():
     r6, r8 = NR.load_config(NR.R6_CONFIG), NR.load_config(NR.CANDIDATE_CONFIG)
     assert r6["route_version"] == NR.R6_ROUTE_VERSION and r6["stability"]["version"] == NR.STABILITY_VERSION
-    same = set(r8) - {"sha256", "name", "route_version", "derived_from", "status", "stage"}
+    same = set(r8) - {"sha256", "name", "route_version", "derived_from", "status", "stage", "thresholds"}
     assert {k: r6[k] for k in same} == {k: r8[k] for k in same}
-    assert set(r6) - set(r8) == {"stability"}
+    assert set(r6) - set(r8) == {"stability", "blur_range"}
+    t6, t8 = r6["thresholds"], r8["thresholds"]
+    assert t6["blur_max"] == t6["clean_lapd1_lo"] == 0.008                     # every blurred face, no mild band
+    assert {k: v for k, v in t6.items() if k not in ("blur_max", "clean_lapd1_lo")} ==         {k: v for k, v in t8.items() if k not in ("blur_max", "clean_lapd1_lo")}
+
+
+def test_r6_admits_mild_blur_that_r5_rejected():
+    r6, r6_6 = NR.load_config(NR.R6_CONFIG), NR.load_config()
+    f = {"det_status": "OK", "det_score": 0.95, "yaw_proxy": 0.0, "iod_px": 50.0, "luma_mean": 120.0, "rms_contrast": 50.0,
+         "blockiness": 1.0, "pixelation": 0.1, "hf_peak_frac": 0.05, "hf_energy": 0.05, "noise_sigma": 0.5,
+         "lapd1_c": 0.00433}                                                   # the owner's "less blurred" photo
+    live = NR.decide(f, r6_6)
+    if live.reason not in (NR.R_MILD, NR.ELIGIBLE):
+        pytest.skip(f"feature set incomplete for decide(): {live.reason}")
+    assert live.reason == NR.R_MILD and NR.decide(f, r6).eligible
+    assert NR.decide({**f, "lapd1_c": 0.0125}, r6).reason == NR.R_NOT_BLUR      # sharp faces still left alone
 
 
 def test_consensus_wrapper_flags_orientation_dependent_explosion(dev):
