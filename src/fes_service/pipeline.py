@@ -173,11 +173,15 @@ def face_chip_filled(img: np.ndarray, landmarks: np.ndarray) -> tuple[np.ndarray
     return filled, mask
 
 
-NAFNET_PROFILES = ("r5_6", "r5_8")                # r5_6 = live/default; r5_8 = research candidate (opt-in)
+NAFNET_PROFILES = ("r5_6", "r5_8", "r5_10")      # r5_6 = live/default; r5_8 / r5_10 = research candidates (opt-in)
+# route config per NAFNet profile (each file is SHA-256 sealed; load_config verifies it)
+PROFILE_CONFIG = {"r5_6": NR.CONFIG, "r5_8": NR.CANDIDATE_CONFIG, "r5_10": NR.R5_10_CONFIG}
+EXPERIMENTAL_PROFILES = ("r5_8", "r5_10")
 LOCAL_ARTIFACT_GUARD = "LOCAL_ARTIFACT_GUARD"     # fallback code: the candidate's local-patch guard rejected the output
 # R5-9 per-request profiles: "original" = input returned unchanged, no model invoked (comparison baseline);
-# r5_6 / r5_8 = the NAFNet profiles above. r5_8 is servable per request ONLY when the pipeline was built with an
-# experimental r5_8 model (app: FES_EXPERIMENTAL_PROFILES=r5_8); a request without `profile` = the service default.
+# r5_6 / r5_8 / r5_10 = the NAFNet profiles above. r5_8 / r5_10 are servable per request ONLY when the pipeline was
+# built with that experimental model (app: FES_EXPERIMENTAL_PROFILES=r5_8,r5_10); a request without `profile` = the
+# service default.
 PROFILE_ORIGINAL = "original"
 REQUEST_PROFILES = (PROFILE_ORIGINAL,) + NAFNET_PROFILES
 
@@ -202,9 +206,11 @@ class EnhancementPipeline:
         nafnet: callable(chip, ctx) -> (same-size chip, meta), normally an IsolatedModel(nafnet_factory). Route modes
         nafnet / auto need it and gate="rw" (they use the rw features and, in auto, its noise route).
         nafnet_profile: "r5_6" (default, the validated live route) | "r5_8" (R5-8 research candidate: candidate route
-        config with the local-patch guard, out-of-image reflect fill; pair it with models:nafnet_factory_pad16).
-        experimental_nafnet: R5-9 — {"r5_8": model} makes the r5_8 candidate selectable PER REQUEST (profile="r5_8")
-        next to the default profile r5_6; it never changes what a request without `profile` does."""
+        config with the local-patch guard, out-of-image reflect fill; pair it with models:nafnet_factory_pad16) |
+        "r5_10" (R5-10 research candidate: r5_8 with the DEV-recalibrated blur boundary; same model factory).
+        experimental_nafnet: R5-9 — {"r5_8": model, "r5_10": model} makes those candidates selectable PER REQUEST
+        (profile="r5_8" / "r5_10") next to the default profile r5_6; it never changes what a request without
+        `profile` does."""
         assert gate in ("t6", "rw"), gate
         assert nafnet_profile in NAFNET_PROFILES, nafnet_profile
         self.nafnet_profile = nafnet_profile
@@ -222,7 +228,7 @@ class EnhancementPipeline:
             from fes_service import rwgate as RW
             self.rw_cfg = RW.load_config()
             self.seals["rw_gate"] = self.rw_cfg["sha256"]
-            self.nafnet_cfg = NR.load_config(NR.CANDIDATE_CONFIG if nafnet_profile == "r5_8" else NR.CONFIG)
+            self.nafnet_cfg = NR.load_config(PROFILE_CONFIG[nafnet_profile])
             self.seals["nafnet_route"] = self.nafnet_cfg["sha256"]
             self.oob_fill = bool(self.nafnet_cfg.get("framing", {}).get("oob_reflect_fill", False))
         else:
@@ -231,12 +237,13 @@ class EnhancementPipeline:
         if gate == "rw" and nafnet is not None:
             self.profiles[nafnet_profile] = _NafnetProfile(nafnet_profile, self.nafnet_cfg, nafnet, self.oob_fill)
         for name, model in (experimental_nafnet or {}).items():
-            assert name == "r5_8" and nafnet_profile == "r5_6", "only r5_8 can be added next to the default r5_6"
-            assert gate == "rw" and nafnet is not None and model is not None, "experimental r5_8 needs gate 'rw'"
-            cfg = NR.load_config(NR.CANDIDATE_CONFIG)                   # verifies the candidate seal
+            assert name in EXPERIMENTAL_PROFILES and nafnet_profile == "r5_6", \
+                "only r5_8 / r5_10 can be added next to the default r5_6"
+            assert gate == "rw" and nafnet is not None and model is not None, f"experimental {name} needs gate 'rw'"
+            cfg = NR.load_config(PROFILE_CONFIG[name])                  # verifies the candidate seal
             self.profiles[name] = _NafnetProfile(name, cfg, model,
                                                  bool(cfg.get("framing", {}).get("oob_reflect_fill", False)))
-            self.seals["nafnet_route_r5_8"] = cfg["sha256"]
+            self.seals[f"nafnet_route_{name}"] = cfg["sha256"]
         self.det = P.YuNetDetector(repo_path(YUNET), 0.7, 0.3, max_side=640)
         self.det_cfg = P.PreprocessConfig(out_size=112)
         self.a4 = a4
@@ -300,7 +307,7 @@ class EnhancementPipeline:
     def process(self, data: bytes, input_mode: str = "full_image", force_a4: bool = False,
                 route_mode: str | None = None, profile: str | None = None) -> Result:
         """route_mode None = the pipeline's configured mode. profile None/"" = the service default (R5-9: "original" |
-        "r5_6" | "r5_8"; an unknown or not-enabled profile is REJECTED, never silently replaced)."""
+        "r5_6" | "r5_8" | "r5_10"; an unknown or not-enabled profile is REJECTED, never silently replaced)."""
         if not self._slots.acquire(blocking=False):
             raise Busy("too many requests in flight")
         try:
@@ -340,7 +347,7 @@ class EnhancementPipeline:
             res.timings_ms["total"] = ms()
             return res
 
-        fill = None                                       # (reflect-filled chip, out-of-image mask): r5_8 profile only
+        fill = None                         # (reflect-filled chip, out-of-image mask): r5_8 / r5_10 profiles only
         if input_mode not in ("full_image", "face_chip"):
             res.error = f"unknown input_mode {input_mode!r}"
             return res
@@ -355,7 +362,8 @@ class EnhancementPipeline:
             return res
         if profile in NAFNET_PROFILES and profile not in self.profiles:
             res.error = (f"profile {profile!r} is not enabled on this service"
-                         + (" (start it with FES_EXPERIMENTAL_PROFILES=r5_8)" if profile == "r5_8" else ""))
+                         + (f" (start it with FES_EXPERIMENTAL_PROFILES={profile})"
+                            if profile in EXPERIMENTAL_PROFILES else ""))
             return res
         if profile and force_a4:
             res.error = "force_a4 cannot be combined with an explicit profile"
@@ -430,7 +438,7 @@ class EnhancementPipeline:
     def _nafnet_path(self, res: Result, chip: np.ndarray, route_mode: str, original, ms, fill=None,
                      prof: _NafnetProfile | None = None) -> Result:
         """R5-5 guarded NAFNet route: input gate → NAFNet (isolated worker) → artifact guard; ORIGINAL otherwise.
-        r5_8 candidate profile: `fill` = (reflect-filled chip, out-of-image mask) when the full_image chip extends past
+        r5_8 / r5_10 candidate profiles: `fill` = (reflect-filled chip, out-of-image mask) when the full_image chip extends past
         the image (gate + NAFNet see the filled chip, the output's out-of-image area is set back to black), and the
         local-patch guard runs after the artifact guard."""
         from fes_service import rwgate as RW
@@ -482,7 +490,7 @@ class EnhancementPipeline:
         res.artifact_check = "PASS" if g.passed else "FAIL"
         if not g.passed:
             return original(used=RT.ORIGINAL, fallback=ARTIFACT_GUARD, error="+".join(g.reasons))
-        if "local_artifact" in cfg:                               # r5_8 candidate: local-patch guard
+        if "local_artifact" in cfg:                       # r5_8 / r5_10 candidates: local-patch guard
             try:
                 lg = NR.local_artifact_guard(chip, out, cfg, bool(f.get("is_gray")))
             except Exception as e:  # noqa: BLE001 — detector failure counts as a rejection

@@ -1,4 +1,4 @@
-// R5-9 — pure logic of the research comparison page (no DOM): profiles, requests, per-profile result views,
+// R5-9 / R5-10 — pure logic of the research comparison page (no DOM): profiles, requests, per-profile result views,
 // manual-evaluation records and their local export. Every status, decision and reason shown comes from the backend
 // (/ready, /v1/enhance); this file only labels it. Nothing here is a measurement of identity or matching quality.
 import { explainReason, formatMs, sniffMime } from "./fes_ui.js";
@@ -9,8 +9,12 @@ export const PROFILES = [
     note: "The historical R5-6 route exactly as validated (NAFNet-GoPro, input gate, artifact guard)." },
   { id: "r5_8", title: "NAFNet R5-8 Experimental", warning: "EXPERIMENTAL — NOT PRODUCTION-APPROVED",
     note: "The saved R5-8 research candidate (rejected as RED): reflect framing + local-patch artifact detector." },
+  { id: "r5_10", title: "NAFNet R5-10 — Recalibrated Blur Experimental", warning: "EXPERIMENTAL — NOT PRODUCTION-APPROVED",
+    note: "R5-8 with ONE change: the blur-eligibility boundary recalibrated on DEV data, so moderate blur is attempted." },
 ];
 export const PROFILE_IDS = PROFILES.map((p) => p.id);
+export const NAFNET_IDS = ["r5_6", "r5_8", "r5_10"];          // the profiles that can run NAFNet (rated by the owner)
+export const EXPERIMENTAL_IDS = ["r5_8", "r5_10"];             // off unless listed in FES_EXPERIMENTAL_PROFILES
 export const profileById = (id) => PROFILES.find((p) => p.id === id) || null;
 
 export const RATINGS = ["Better", "Same", "Worse", "Unsafe / Artifact"];
@@ -25,7 +29,7 @@ const FALLBACK_TEXT = {
   RESOURCE_FAILURE: "the model worker ran out of resources",
   INVALID_OUTPUT: "the output failed the output check",
   ARTIFACT_GUARD: "NAFNet ran, but its output failed the artifact guard",
-  LOCAL_ARTIFACT_GUARD: "NAFNet ran, but the R5-8 local-patch artifact detector rejected its output",
+  LOCAL_ARTIFACT_GUARD: "NAFNet ran, but the local-patch artifact detector rejected its output",
 };
 
 /** /ready body → which profiles this service can serve right now (original is always local to the service). */
@@ -74,8 +78,9 @@ export function interpretProfileResult(profile, httpStatus, body, rttMs, { timed
   if (s === "REJECTED") {
     const notEnabled = /not enabled/.test(str(body.error));
     return fail("REJECTED", notEnabled ? "Profile not enabled on this service" : "Request rejected",
-      notEnabled && profile === "r5_8"
-        ? "R5-8 is off by default. Restart the service with FES_EXPERIMENTAL_PROFILES=r5_8 to compare it."
+      notEnabled && EXPERIMENTAL_IDS.includes(profile)
+        ? `${profileById(profile).title} is off by default. Restart the service with `
+          + `FES_EXPERIMENTAL_PROFILES=${EXPERIMENTAL_IDS.join(",")} (or =${profile}) to compare it.`
         : str(body.error) || "The service could not accept this image.");
   }
   if ((s !== "ENHANCED" && s !== "ORIGINAL") || !body.image_b64) {
@@ -116,7 +121,7 @@ export function interpretProfileResult(profile, httpStatus, body, rttMs, { timed
     ? `${art.passed ? "PASS" : "FAIL"}${Array.isArray(art.reasons) && art.reasons.length ? ` (${art.reasons.join(", ")})` : ""}`
     : "not run";
   let local;
-  if (profile !== "r5_8") local = profile === "original" ? "" : "not part of this profile";
+  if (!EXPERIMENTAL_IDS.includes(profile)) local = profile === "original" ? "" : "not part of this profile";
   else if (loc) {
     local = `${loc.passed ? "PASS" : "FAIL"}${Array.isArray(loc.reasons) && loc.reasons.length ? ` (${loc.reasons.join(", ")})` : ""}`;
     if (loc.metrics && Number.isFinite(loc.metrics.l_dot_c_max)) local += ` · l_dot_c_max ${num(loc.metrics.l_dot_c_max)}`;
@@ -133,6 +138,9 @@ export function interpretProfileResult(profile, httpStatus, body, rttMs, { timed
     ["Enhancement applied", applied ? "YES" : "NO"],
     ["Final output", finalOutput],
     ["Gate decision", gate],
+    // the blur score the eligibility boundary is applied to (shown so moderate-blur attempts can be checked by eye)
+    ["Blur score (lapd1_c)", profile !== "original" && body.quality && Number.isFinite(body.quality.lapd1_c)
+      ? num(body.quality.lapd1_c, 6) : ""],
     ["Artifact guard", profile === "original" ? "" : guard],
     ["Local artifact detector", local],
     ["Fallback / reason", profile === "original" ? "" : fbText],
@@ -152,14 +160,15 @@ export function interpretProfileResult(profile, httpStatus, body, rttMs, { timed
     chipSrc: body.chip_b64 ? `data:image/png;base64,${body.chip_b64}` : "",
     record: {
       status: s, http_status: httpStatus, applied, final_output: finalOutput, model: model || "none",
-      gate: gate, reason, fallback, artifact_guard: profile === "original" ? "" : guard,
+      gate: gate, reason, fallback,
+      lapd1_c: body.quality && Number.isFinite(body.quality.lapd1_c) ? body.quality.lapd1_c : null, artifact_guard: profile === "original" ? "" : guard,
       local_detector: local, server_ms: Number.isFinite(t.total) ? t.total : null,
       rtt_ms: Number.isFinite(rttMs) ? Math.round(rttMs) : null, request_id: str(body.request_id),
     },
   };
 }
 
-/** One manual-evaluation record (no pixels). `ratings[profile] = {rating, tags[], notes}` for r5_6 / r5_8. */
+/** One manual-evaluation record (no pixels). `ratings[profile] = {rating, tags[], notes}` per NAFNet profile. */
 export function makeRecord({ fileName, fileSize, dims, category, overallNote, results, ratings }, now = new Date()) {
   const rec = { recorded_at: now.toISOString(), file_name: str(fileName), file_size: fileSize ?? null,
     dims: str(dims), category: str(category), overall_note: str(overallNote), profiles: {} };
@@ -175,15 +184,15 @@ export function makeRecord({ fileName, fileSize, dims, category, overallNote, re
 
 /** A record can be saved once at least one NAFNet profile has a result AND a rating. */
 export function canSave(results, ratings) {
-  return ["r5_6", "r5_8"].some((id) => results && results[id] && ratings && ratings[id] && RATINGS.includes(ratings[id].rating));
+  return NAFNET_IDS.some((id) => results && results[id] && ratings && ratings[id] && RATINGS.includes(ratings[id].rating));
 }
 
 export function recordsToJSON(records) {
-  return JSON.stringify({ kind: "fes-r5-9-manual-evaluation", version: 1,
+  return JSON.stringify({ kind: "fes-r5-9-manual-evaluation", version: 2,
     note: "Owner's visual judgement only. Not an identity or matching measurement.", records }, null, 2);
 }
 
-const CSV_PROFILE_FIELDS = ["rating", "tags", "notes", "applied", "final_output", "model", "gate", "fallback",
+const CSV_PROFILE_FIELDS = ["rating", "tags", "notes", "applied", "final_output", "model", "gate", "lapd1_c", "fallback",
   "artifact_guard", "local_detector", "server_ms", "http_status"];
 const csvCell = (v) => {
   const s = Array.isArray(v) ? v.join("; ") : v === null || v === undefined ? "" : String(v);
@@ -194,11 +203,11 @@ const csvCell = (v) => {
 export function recordsToCSV(records) {
   const head = ["recorded_at", "file_name", "dims", "category", "overall_note"];
   const cols = [...head];
-  for (const id of ["r5_6", "r5_8"]) for (const f of CSV_PROFILE_FIELDS) cols.push(`${id}_${f}`);
+  for (const id of NAFNET_IDS) for (const f of CSV_PROFILE_FIELDS) cols.push(`${id}_${f}`);
   const lines = [cols.map(csvCell).join(",")];
   for (const r of records) {
     const row = head.map((k) => r[k]);
-    for (const id of ["r5_6", "r5_8"]) for (const f of CSV_PROFILE_FIELDS) row.push((r.profiles[id] || {})[f]);
+    for (const id of NAFNET_IDS) for (const f of CSV_PROFILE_FIELDS) row.push((r.profiles[id] || {})[f]);
     lines.push(row.map(csvCell).join(","));
   }
   return lines.join("\r\n") + "\r\n";

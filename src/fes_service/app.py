@@ -8,13 +8,14 @@ Endpoints
   GET  /ready         readiness: frozen seals verified, detector loaded, A4 worker loaded and warmed up
                       (+ `limits`: the input limits /v1/enhance enforces, for clients such as the demo UI)
   GET  /ui/           R5-UI local demo page (static HTML/CSS/JS, same origin; it only calls /ready and /v1/enhance)
-  GET  /ui/compare.html  R5-9 research comparison page: ORIGINAL vs NAFNet R5-6 vs NAFNet R5-8 (experimental)
+  GET  /ui/compare.html  R5-9 research comparison page: ORIGINAL vs NAFNet R5-6 vs NAFNet R5-8 / R5-10 (experimental)
   POST /v1/enhance    multipart `image` (file), optional form `input_mode` = full_image | face_chip,
                       `return_image` = true | false, `force_a4` = false (default) | true (research: run A4 even
                       when the gate does not route it; the gate's decision is still reported, `forced` = true),
                       `route_mode` = "" (service default) | a4 | nafnet | auto (R5-5, see fes_service.pipeline),
                       `profile` = "" (service default, unchanged) | original (input returned unchanged, no model) |
-                      r5_6 | r5_8 (R5-9 comparison; r5_8 only when FES_EXPERIMENTAL_PROFILES=r5_8, otherwise 422).
+                      r5_6 | r5_8 | r5_10 (R5-9/R5-10 comparison; r5_8 / r5_10 only when listed in
+                      FES_EXPERIMENTAL_PROFILES, otherwise 422).
                       200 ENHANCED / ORIGINAL (JSON metadata + base64 image), 422 REJECTED, 503 busy / not ready
 Environment
   FES_A4_FACTORY   model factory (default fes_service.models:a4_factory)
@@ -27,10 +28,12 @@ Environment
                    R5-1…R5-UI behaviour). nafnet/auto need FES_GATE=rw.
   FES_NAFNET_PROFILE    r5_6 (default: the validated live NAFNet route) · r5_8 (R5-8 research candidate: candidate
                         route config + local-patch guard + out-of-image reflect fill + reflect-pad16 NAFNet factory)
-  FES_NAFNET_FACTORY    NAFNet model factory (default fes_service.models:nafnet_factory; r5_8: nafnet_factory_pad16)
-  FES_EXPERIMENTAL_PROFILES  "" (default: off) · r5_8 = also load the R5-8 candidate (a second NAFNet worker,
-                        FES_NAFNET_R5_8_FACTORY, default models:nafnet_factory_pad16) so a request may ask for
-                        profile=r5_8. Never changes requests without `profile`; R5-8 is NOT production-approved.
+                        · r5_10 (R5-10 research candidate: r5_8 with the DEV-recalibrated blur boundary)
+  FES_NAFNET_FACTORY    NAFNet model factory (default fes_service.models:nafnet_factory; r5_8/r5_10: nafnet_factory_pad16)
+  FES_EXPERIMENTAL_PROFILES  "" (default: off) · comma list of r5_8, r5_10 = also load those candidates so a request
+                        may ask for profile=r5_8 / r5_10. They share ONE extra NAFNet worker (FES_NAFNET_R5_8_FACTORY,
+                        default models:nafnet_factory_pad16: both use the same model + padding; only the route config
+                        differs). Never changes requests without `profile`; neither is production-approved.
   FES_NAFNET_TIMEOUT_S  hard per-inference timeout, worker killed beyond it (default 60)
   FES_NAFNET_THREADS    torch threads in the NAFNet worker (default 4)
 Models are loaded once per worker process at startup (the ones the default route mode can use; the other one lazily
@@ -52,7 +55,8 @@ from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
-from fes_service.pipeline import PROFILE_ORIGINAL, REJECTED, SERVICE_VERSION, Busy, EnhancementPipeline, Limits
+from fes_service.pipeline import (EXPERIMENTAL_PROFILES, PROFILE_ORIGINAL, REJECTED, SERVICE_VERSION, Busy,
+                                  EnhancementPipeline, Limits)
 from fes_service.worker import IsolatedModel
 
 STATE: dict = {"ready": False, "error": ""}
@@ -68,15 +72,19 @@ def build_pipeline() -> EnhancementPipeline:
                           threads=int(os.environ.get("FES_A4_THREADS", "2")))
     gate = os.environ.get("FES_GATE", "rw")
     nafnet, experimental = None, {}
+    shared = None                                   # r5_8 and r5_10 run the same pad16 NAFNet: one worker for both
     for name in filter(None, (x.strip() for x in os.environ.get("FES_EXPERIMENTAL_PROFILES", "").split(","))):
-        if name != "r5_8":
-            raise ValueError(f"FES_EXPERIMENTAL_PROFILES: unknown profile {name!r} (only r5_8)")
-        experimental[name] = IsolatedModel(
-            os.environ.get("FES_NAFNET_R5_8_FACTORY", "fes_service.models:nafnet_factory_pad16"),
-            timeout_s=float(os.environ.get("FES_NAFNET_TIMEOUT_S", "60")),
-            threads=int(os.environ.get("FES_NAFNET_THREADS", "4")))
+        if name not in EXPERIMENTAL_PROFILES:
+            raise ValueError(f"FES_EXPERIMENTAL_PROFILES: unknown profile {name!r} (only {', '.join(EXPERIMENTAL_PROFILES)})")
+        if shared is None:
+            shared = IsolatedModel(
+                os.environ.get("FES_NAFNET_R5_8_FACTORY", "fes_service.models:nafnet_factory_pad16"),
+                timeout_s=float(os.environ.get("FES_NAFNET_TIMEOUT_S", "60")),
+                threads=int(os.environ.get("FES_NAFNET_THREADS", "4")))
+        experimental[name] = shared
     if gate == "rw":
-        default_factory = ("fes_service.models:nafnet_factory_pad16" if os.environ.get("FES_NAFNET_PROFILE") == "r5_8"
+        default_factory = ("fes_service.models:nafnet_factory_pad16"
+                           if os.environ.get("FES_NAFNET_PROFILE") in EXPERIMENTAL_PROFILES
                            else "fes_service.models:nafnet_factory")
         nafnet = IsolatedModel(os.environ.get("FES_NAFNET_FACTORY", default_factory),
                                timeout_s=float(os.environ.get("FES_NAFNET_TIMEOUT_S", "60")),
@@ -102,11 +110,14 @@ def startup() -> None:
             STATE["nafnet_info"] = pipe.nafnet.start()
             if warm:
                 pipe.nafnet(np.full((32, 32, 3), 128, np.uint8), {"s": 32})
-            for name, prof in pipe.profiles.items():          # R5-9 experimental profiles (opt-in only)
+            started = {}                                       # model id → info (r5_8 / r5_10 share one worker)
+            for name, prof in pipe.profiles.items():          # R5-9 / R5-10 experimental profiles (opt-in only)
                 if prof.model is not pipe.nafnet:
-                    STATE["experimental_info"][name] = prof.model.start()
-                    if warm:
-                        prof.model(np.full((32, 32, 3), 128, np.uint8), {"s": 32})
+                    if id(prof.model) not in started:
+                        started[id(prof.model)] = prof.model.start()
+                        if warm:
+                            prof.model(np.full((32, 32, 3), 128, np.uint8), {"s": 32})
+                    STATE["experimental_info"][name] = started[id(prof.model)]
         STATE["ready"] = True
     except Exception as e:  # noqa: BLE001 — stay alive, report not-ready
         STATE["ready"], STATE["error"] = False, f"{type(e).__name__}: {e}"[:300]
@@ -121,9 +132,8 @@ async def lifespan(_app):
         pipe.a4.close()
         if pipe.nafnet is not None:
             pipe.nafnet.close()
-        for prof in pipe.profiles.values():
-            if prof.model is not pipe.nafnet:
-                prof.model.close()
+        for m in {id(p.model): p.model for p in pipe.profiles.values() if p.model is not pipe.nafnet}.values():
+            m.close()
 
 
 app = FastAPI(title="Face Enhancement Service (research)", version=SERVICE_VERSION, lifespan=lifespan)

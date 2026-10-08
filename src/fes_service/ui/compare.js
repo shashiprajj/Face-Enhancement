@@ -1,8 +1,8 @@
-// R5-9 — DOM wiring of the comparison page. The service makes every decision; see fes_compare.js for the logic.
+// R5-9 / R5-10 — DOM wiring of the comparison page. The service makes every decision; see fes_compare.js for the logic.
 import { ACCEPTED_TYPES, DEFAULT_LIMITS, REQUEST_TIMEOUT_MS, formatBytes, interpretReady, validateDimensions,
   validateFile } from "./fes_ui.js";
-import { CATEGORIES, PROFILES, PROFILE_IDS, RATINGS, TAGS, availableProfiles, buildProfileForm, canSave,
-  interpretProfileResult, makeRecord, profileById, recordsToCSV, recordsToJSON } from "./fes_compare.js";
+import { CATEGORIES, EXPERIMENTAL_IDS, NAFNET_IDS, PROFILES, PROFILE_IDS, RATINGS, TAGS, availableProfiles,
+  buildProfileForm, canSave, interpretProfileResult, makeRecord, profileById, recordsToCSV, recordsToJSON } from "./fes_compare.js";
 
 const $ = (id) => document.getElementById(id);
 const el = {
@@ -10,7 +10,7 @@ const el = {
   dropEmpty: $("drop-empty"), preview: $("preview"), fileRow: $("file-row"), fileName: $("file-name"),
   replace: $("replace-btn"), runOne: $("run-one-btn"), runAll: $("run-all-btn"), reset: $("reset-btn"),
   loading: $("loading"), loadingText: $("loading-text"), elapsed: $("elapsed"), error: $("error"),
-  formatHint: $("format-hint"), panels: $("panels"), profilesNote: $("profiles-note"), modeR58: $("mode-r5_8"),
+  formatHint: $("format-hint"), panels: $("panels"), profilesNote: $("profiles-note"),
   eval: $("eval"), category: $("category"), overall: $("overall-note"), evalGrid: $("eval-grid"), save: $("save-btn"),
   saveHint: $("save-hint"), recCount: $("rec-count"), exportJson: $("export-json"), exportCsv: $("export-csv"),
   clearLog: $("clear-log"), logBody: document.querySelector("#log tbody"),
@@ -43,11 +43,14 @@ async function checkHealth() {
   }
   if (body && Array.isArray(body.profiles)) {
     state.available = availableProfiles(body);
-    const r58 = state.available.includes("r5_8");
-    el.modeR58.classList.toggle("unavailable", !r58);
-    el.profilesNote.hidden = r58;
-    el.profilesNote.textContent = r58 ? "" : "R5-8 Experimental is not enabled on this service (off by default). "
-      + "Start the service with FES_EXPERIMENTAL_PROFILES=r5_8 to compare it; requests for it are refused until then.";
+    const off = EXPERIMENTAL_IDS.filter((id) => !state.available.includes(id));
+    for (const id of EXPERIMENTAL_IDS) $(`mode-${id}`).classList.toggle("unavailable", off.includes(id));
+    $("mode-r5_10").hidden = off.includes("r5_10");                  // R5-10 is listed only when enabled
+    const offShown = off.filter((id) => id === "r5_8");             // a disabled R5-10 is simply not listed
+    el.profilesNote.hidden = !offShown.length;
+    el.profilesNote.textContent = !offShown.length ? "" : `${offShown.map((id) => profileById(id).title).join(" and ")} `
+      + `${offShown.length > 1 ? "are" : "is"} not enabled on this service (off by default). Start the service with `
+      + `FES_EXPERIMENTAL_PROFILES=${EXPERIMENTAL_IDS.join(",")} to compare; requests for it are refused until then.`;
   }
 }
 
@@ -159,7 +162,10 @@ async function run(profiles) {
 }
 const selectedMode = () => (document.querySelector('input[name="mode"]:checked') || {}).value || "original";
 el.runOne.addEventListener("click", () => run([selectedMode()]));
-el.runAll.addEventListener("click", () => run([...PROFILE_IDS]));
+// R5-10: an experimental profile the service has not enabled is neither run nor shown (R5-9 behaviour when it is off)
+const shownIds = () => PROFILE_IDS.filter((id) => !EXPERIMENTAL_IDS.includes(id) || id === "r5_8"
+  || (state.available || []).includes(id));
+el.runAll.addEventListener("click", () => run(shownIds()));
 
 // ------------------------------------------------------------------ panels
 function dl(rows) {
@@ -172,10 +178,10 @@ function renderPanels() {
   el.panels.replaceChildren();
   if (!state.file) return;
   const chip = PROFILE_IDS.map((p) => state.results[p]?.chipSrc).find(Boolean);
-  for (const prof of PROFILES) {
+  for (const prof of PROFILES.filter((p) => shownIds().includes(p.id))) {
     const v = state.results[prof.id];
     const head = [make("h3", { textContent: prof.title }),
-      prof.warning ? make("p", { class: `pwarn${prof.id === "r5_8" ? " exp" : ""}`, textContent: prof.warning }) : null];
+      prof.warning ? make("p", { class: `pwarn${EXPERIMENTAL_IDS.includes(prof.id) ? " exp" : ""}`, textContent: prof.warning }) : null];
     const panel = make("article", { class: "panel", dataset: { tone: v ? v.tone : "neutral", profile: prof.id } }, ...head);
     if (prof.id === "original") {
       // the original is ALWAYS visible, whether or not its request has run
@@ -206,13 +212,13 @@ function renderPanels() {
 
 // ------------------------------------------------------------------ manual evaluation
 function renderEvalForm() {
-  const have = ["r5_6", "r5_8"].filter((p) => state.results[p]?.ok);
+  const have = NAFNET_IDS.filter((p) => state.results[p]?.ok);
   el.eval.hidden = !have.length;
   if (el.evalGrid.childElementCount) {                                 // keep what the owner already entered
     for (const col of el.evalGrid.children) col.classList.toggle("disabled", !have.includes(col.dataset.profile));
     return;
   }
-  for (const id of ["r5_6", "r5_8"]) {
+  for (const id of NAFNET_IDS) {
     const col = make("div", { class: "eval-col", dataset: { profile: id } }, make("h3", { textContent: profileById(id).title }));
     const ratings = make("div", { class: "ratings", role: "radiogroup", ariaLabel: `${id} rating` });
     for (const r of RATINGS) ratings.append(make("label", {}, make("input", { type: "radio", name: `rate-${id}`, value: r }), ` ${r}`));
@@ -226,7 +232,7 @@ function renderEvalForm() {
 
 function readRatings() {
   const out = {};
-  for (const id of ["r5_6", "r5_8"]) {
+  for (const id of NAFNET_IDS) {
     out[id] = {
       rating: (document.querySelector(`input[name="rate-${id}"]:checked`) || {}).value || "",
       tags: [...document.querySelectorAll(`input[name="tag-${id}"]:checked`)].map((x) => x.value),
@@ -257,9 +263,9 @@ el.save.addEventListener("click", () => {
 function renderLog() {
   el.logBody.replaceChildren();
   state.records.forEach((r, i) => {
-    const p6 = r.profiles.r5_6 || {}, p8 = r.profiles.r5_8 || {};
-    el.logBody.append(make("tr", {}, ...[i + 1, r.file_name, r.category, p6.rating, p8.rating, p6.final_output,
-      p8.final_output].map((x) => make("td", { textContent: x ?? "" }))));
+    const p = NAFNET_IDS.map((id) => r.profiles[id] || {});
+    el.logBody.append(make("tr", {}, ...[i + 1, r.file_name, r.category, ...p.map((x) => x.rating),
+      ...p.map((x) => x.final_output)].map((x) => make("td", { textContent: x ?? "" }))));
   });
 }
 

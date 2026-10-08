@@ -1,10 +1,10 @@
-// R5-9 comparison-page logic tests (Node ≥ 18, no dependencies):  node --test tests/ui/fes_compare.test.mjs
+// R5-9 / R5-10 comparison-page logic tests (Node ≥ 18, no dependencies):  node --test tests/ui/fes_compare.test.mjs
 // Also run from pytest by tests/test_r5_ui.py when `node` is on PATH.
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
 import {
-  PROFILES, PROFILE_IDS, RATINGS, TAGS, availableProfiles, buildProfileForm, canSave, interpretProfileResult,
+  EXPERIMENTAL_IDS, NAFNET_IDS, PROFILES, PROFILE_IDS, RATINGS, TAGS, availableProfiles, buildProfileForm, canSave, interpretProfileResult,
   makeRecord, recordsToCSV, recordsToJSON,
 } from "../../src/fes_service/ui/fes_compare.js";
 
@@ -19,9 +19,12 @@ const row = (v, k) => (v.rows.find(([key]) => key === k) || [])[1];
 class FakeFD { constructor() { this.e = []; } append(k, v) { this.e.push([k, v]); } }
 
 test("profiles, labels and warning text", () => {
-  assert.deepEqual(PROFILE_IDS, ["original", "r5_6", "r5_8"]);
+  assert.deepEqual(PROFILE_IDS, ["original", "r5_6", "r5_8", "r5_10"]);
+  assert.deepEqual(NAFNET_IDS, ["r5_6", "r5_8", "r5_10"]); assert.deepEqual(EXPERIMENTAL_IDS, ["r5_8", "r5_10"]);
   assert.equal(PROFILES[1].warning, "REFERENCE — NOT PRODUCTION-APPROVED");
   assert.equal(PROFILES[2].warning, "EXPERIMENTAL — NOT PRODUCTION-APPROVED");
+  assert.equal(PROFILES[3].title, "NAFNet R5-10 — Recalibrated Blur Experimental");
+  assert.equal(PROFILES[3].warning, "EXPERIMENTAL — NOT PRODUCTION-APPROVED");
   assert.deepEqual(RATINGS, ["Better", "Same", "Worse", "Unsafe / Artifact"]);
 });
 
@@ -33,7 +36,9 @@ test("request always names an explicit profile; unknown profiles are refused cli
 
 test("available profiles come from /ready", () => {
   assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6"] }), ["original", "r5_6"]);
-  assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6", "r5_8"] }), PROFILE_IDS);
+  assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6", "r5_8"] }), ["original", "r5_6", "r5_8"]);
+  assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6", "r5_10"] }), ["original", "r5_6", "r5_10"]);
+  assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6", "r5_8", "r5_10"] }), PROFILE_IDS);
   assert.deepEqual(availableProfiles(null), []);
 });
 
@@ -87,6 +92,8 @@ test("errors are clean: not enabled, rejected, busy, network, timeout", () => {
   const ne = interpretProfileResult("r5_8", 422, { status: "REJECTED", error: "profile 'r5_8' is not enabled on this service" }, 5);
   assert.equal(ne.ok, false); assert.match(ne.message, /FES_EXPERIMENTAL_PROFILES=r5_8/);
   assert.equal(row(ne, "HTTP / API status"), "422 REJECTED");
+  const ne10 = interpretProfileResult("r5_10", 422, { status: "REJECTED", error: "profile 'r5_10' is not enabled on this service" }, 5);
+  assert.equal(ne10.ok, false); assert.match(ne10.message, /R5-10/); assert.match(ne10.message, /FES_EXPERIMENTAL_PROFILES=.*r5_10/);
   assert.equal(interpretProfileResult("r5_6", 503, { status: "BUSY" }, 1).kind, "BUSY");
   assert.match(interpretProfileResult("r5_6", 0, null, 1).headline, /unavailable/);
   assert.match(interpretProfileResult("r5_6", 0, null, 1, { timedOut: true }).headline, /timed out/);
@@ -108,8 +115,23 @@ test("evaluation records: save rule, content, JSON and CSV export", () => {
   assert.equal(JSON.parse(recordsToJSON([rec])).records.length, 1);
   const csv = recordsToCSV([rec]);
   const [head, line] = csv.trim().split("\r\n");
-  assert.match(head, /"r5_6_rating"/); assert.match(head, /"r5_8_local_detector"/);
+  assert.match(head, /"r5_6_rating"/); assert.match(head, /"r5_8_local_detector"/); assert.match(head, /"r5_10_lapd1_c"/);
   assert.match(line, /"'=1\+1"/);                                       // formula injection neutralised
   assert.match(line, /"say ""hi"""/);
   assert.doesNotMatch(csv + recordsToJSON([rec]), /base64|data:image/);  // no pixels in exports
+});
+
+test("R5-10: moderate-blur attempt shows the blur score and the local detector; r5_10 rating can be saved", () => {
+  const v = interpretProfileResult("r5_10", 200, { ...base, status: "ENHANCED", image_format: "png", model: "NAFNET_GOPRO",
+    used: "NAFNET_GOPRO", quality: { lapd1_c: 0.0041234 },
+    nafnet: nafnet({ profile: "r5_10", route_version: "p5-nafnet-route-1.2.0",
+      local_artifact: { passed: true, reasons: [], metrics: { l_dot_c_max: 3.2 } } }) }, 900);
+  assert.equal(v.applied, true); assert.equal(v.finalOutput, "NAFNet");
+  assert.equal(row(v, "Blur score (lapd1_c)"), "0.004123");
+  assert.match(row(v, "Local artifact detector"), /^PASS/); assert.equal(row(v, "Route version"), "p5-nafnet-route-1.2.0");
+  assert.equal(canSave({ r5_10: v }, { r5_10: { rating: "Better" } }), true);
+  const rec = makeRecord({ fileName: "m.jpg", results: { r5_10: v }, ratings: { r5_10: { rating: "Better" } } });
+  assert.equal(rec.profiles.r5_10.lapd1_c, 0.0041234); assert.equal(rec.profiles.r5_10.rating, "Better");
+  const orig = interpretProfileResult("original", 200, { ...base, status: "ORIGINAL", quality: { lapd1_c: 0.004 } }, 1);
+  assert.equal(row(orig, "Blur score (lapd1_c)"), undefined);              // original never shows gate data
 });

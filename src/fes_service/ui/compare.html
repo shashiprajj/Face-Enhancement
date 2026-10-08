@@ -12,7 +12,7 @@
   <header class="top">
     <div>
       <h1>NAFNet Profile Comparison <span class="tag-exp">RESEARCH</span></h1>
-      <p class="sub">R5-9 · ORIGINAL vs NAFNet R5-6 Reference vs NAFNet R5-8 Experimental ·
+      <p class="sub">R5-9 / R5-10 · ORIGINAL vs NAFNet R5-6 Reference vs NAFNet R5-8 / R5-10 Experimental ·
         <a href="./">← back to the A4 / default demo</a></p>
     </div>
     <div id="health" class="health" data-state="unknown" role="status" aria-live="polite">
@@ -22,8 +22,8 @@
 
   <main>
     <div class="banner" role="note">
-      Neither NAFNet profile is production-approved. R5-8 is a rejected research candidate (RED), shown only for
-      comparison. This page records your visual judgement only — it does not measure identity or matching.
+      The NAFNet profiles are not production-approved. R5-8 is a rejected research candidate (RED); R5-10 is R5-8 with a
+      recalibrated blur boundary (research candidate). Both are shown only for comparison. This page records your visual judgement only — it does not measure identity or matching.
     </div>
 
     <!-- 1. upload + mode -->
@@ -52,12 +52,14 @@
           <span><strong>NAFNet R5-6 Reference</strong><small class="warnlbl">REFERENCE — NOT PRODUCTION-APPROVED</small></span></label>
         <label class="mode" id="mode-r5_8"><input type="radio" name="mode" value="r5_8">
           <span><strong>NAFNet R5-8 Experimental</strong><small class="warnlbl exp">EXPERIMENTAL — NOT PRODUCTION-APPROVED</small></span></label>
+        <label class="mode" id="mode-r5_10" hidden><input type="radio" name="mode" value="r5_10">
+          <span><strong>NAFNet R5-10 — Recalibrated Blur Experimental</strong><small class="warnlbl exp">EXPERIMENTAL — NOT PRODUCTION-APPROVED</small></span></label>
       </fieldset>
       <p id="profiles-note" class="note" hidden></p>
 
       <div class="actions">
         <button id="run-one-btn" class="btn ghost" type="button" disabled>Run selected mode</button>
-        <button id="run-all-btn" class="btn primary" type="button" disabled>Compare all three</button>
+        <button id="run-all-btn" class="btn primary" type="button" disabled>Compare all</button>
         <button id="reset-btn" class="btn ghost" type="button">Reset</button>
       </div>
       <div id="loading" class="loading" hidden role="status" aria-live="polite">
@@ -98,7 +100,7 @@
         </div>
       </div>
       <div class="table-wrap"><table id="log"><thead><tr>
-        <th>#</th><th>File</th><th>Category</th><th>R5-6</th><th>R5-8</th><th>R5-6 output</th><th>R5-8 output</th>
+        <th>#</th><th>File</th><th>Category</th><th>R5-6</th><th>R5-8</th><th>R5-10</th><th>R5-6 output</th><th>R5-8 output</th><th>R5-10 output</th>
       </tr></thead><tbody></tbody></table></div>
     </section>
   </main>

@@ -40,6 +40,10 @@ ROUTE_VERSION = "p5-nafnet-route-1.0.0"              # the live/default (R5-6) r
 # R5-8 research candidate (opt-in profile "r5_8"; never the default): R5-7 guard values + framing fixes + local guard
 CANDIDATE_CONFIG = "configs/phase5/r5_8_nafnet_candidate.json"
 CANDIDATE_ROUTE_VERSION = "p5-nafnet-route-1.1.0"
+# R5-10 research candidate (opt-in profile "r5_10"; never the default): the R5-8 candidate with ONE change — the input
+# blur-eligibility boundary blur_max, recalibrated on DEV (scripts/r5_10_dev_analyze.py, pre-registered protocol)
+R5_10_CONFIG = "configs/phase5/r5_10_nafnet_candidate.json"
+R5_10_ROUTE_VERSION = "p5-nafnet-route-1.2.0"
 FEAT_VERSION = "p5-nafnet-feat-1.0.0"
 CONFIG = "configs/phase5/r5_nafnet_route.json"
 MODEL = "NAFNET_GOPRO"
@@ -115,7 +119,7 @@ def texture_features(img: np.ndarray) -> dict:
 def load_config(path: str = CONFIG) -> dict:
     cfg = json.loads(repo_path(path).read_text(encoding="utf-8"))
     assert cfg["sha256"] == GT.gate_hash(cfg), "r5_nafnet_route.json modified after freeze"
-    assert cfg["route_version"] in (ROUTE_VERSION, CANDIDATE_ROUTE_VERSION), cfg["route_version"]
+    assert cfg["route_version"] in (ROUTE_VERSION, CANDIDATE_ROUTE_VERSION, R5_10_ROUTE_VERSION), cfg["route_version"]
     assert cfg["feature_version"] == FEAT_VERSION and cfg["model"] == MODEL
     return cfg
 

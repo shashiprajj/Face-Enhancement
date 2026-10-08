@@ -1,0 +1,42 @@
+{
+  "name": "R5-10 NAFNet blur-eligibility recalibration — pre-registered DEV selection protocol",
+  "written": "2026-10-08, before any R5-10 DEV result was inspected (DEV collection running)",
+  "baseline": {
+    "git_head": "e636c58c46c8ff271e9e5b8883e3838bb6d84ef4",
+    "r5_6_route_seal": "eb6fe101836aaa66da4edcfafadcf5463ccb6314e781bec29a9265230ceac8b9",
+    "r5_8_candidate_seal": "631acd73ce084f2d48fbcd569a28658fc0261395dfa3ebc5b4bb01036817641f",
+    "nafnet_sha256": "329d3ab4077b8d6b7ff61de376e483714667960bf85be027bf4335cda701196f",
+    "blur_max": 0.002617,
+    "clean_lapd1_lo": 0.005579,
+    "note": "blur_max was inherited from the A4 rwgate (p5-rwgate-1.0.0 blur_scan_best, A4 benefit on p4dev+r5gap); it was never calibrated for NAFNet."
+  },
+  "dev_data": [
+    "archive val split (19,290 pairs), face_chip + full_image, R5-8 path; R5-8-eligible outcomes from r5_8/corpus + local_features",
+    "archive val sharp GT images as inputs (clean protection)",
+    "p4dev 896 + r5gap 224 synthetic DEV pairs (other degradation families, larger/smaller faces)"
+  ],
+  "not_used": ["archive test", "ztest", "200 real photos", "owner's real images", "R5-9 manual UI observations"],
+  "outcome_definition": "after BOTH output guards: a blocked output returns ORIGINAL (Δ = 0); 'clearly improved' / 'clearly harmed' = SFace AND dlib Δ > +0.02 / < −0.02 (R5-6 definition); rates over NAFnet attempts",
+  "grid": [0.002617, 0.0030, 0.0035, 0.0040, 0.0045, 0.0050, 0.005579],
+  "named_bands": {
+    "A_VERY_STRONG_BLUR": "lapd1_c <= 0.0015",
+    "B_STRONG_BLUR": "0.0015 < lapd1_c <= 0.002617 (current eligible zone)",
+    "C_MODERATE_BLUR": "0.002617 < lapd1_c <= 0.0040",
+    "D_MILD_BLUR": "0.0040 < lapd1_c < 0.005579",
+    "E_CLEAN_NOT_BLUR": "lapd1_c >= 0.005579 (never admissible in R5-10: clean_lapd1_lo is unchanged)"
+  },
+  "per_subband_rules (each grid step, archive val, face_chip AND full_image separately)": {
+    "R1_evidence": "NAFNet attempts >= 100",
+    "R2_benefit": "mean ΔSFace bootstrap 95% lower bound > 0 AND mean Δdlib > 0",
+    "R3_harm": "clearly-harmed rate <= reference rate of the current eligible zone (same mode) + 1.0 pp",
+    "R4_balance": "clearly improved >= 3 x clearly harmed",
+    "R5_artifacts": "global+local guard block rate <= reference block rate (same mode) + 2.0 pp"
+  },
+  "cumulative_rules (at the candidate boundary t)": {
+    "R6_clean": "share of sharp archive GT faces that pass every other gate and have lapd1_c <= t must be <= 2.0 % (same 2 % convention as clean_lapd1_lo)",
+    "R7_other_degradations": "p4dev/r5gap non-blur families newly admitted at t: mean ΔSFace >= 0 and clearly harmed <= clearly improved (descriptive if n < 10)"
+  },
+  "selection": "t* = the largest grid point such that every sub-band from 0.002617 up to t* passes R1-R5 in both modes and R6/R7 hold at t*. Stop at the first failing sub-band (no skipping). If the first sub-band fails: NO CHANGE.",
+  "face_size": "Report every newly admitted zone by face IOD bucket [35.3,40) [40,45) [45,71.4) [71.4,inf) (35.3 = iod_min, 71.4 = rwgate clean_iod_lo; 40/45 are descriptive splits of the archive range). A size condition is added ONLY if a bucket with >= 100 newly admitted attempts fails R2 or R3; then the newly admitted zone requires IOD >= that bucket's upper edge.",
+  "freeze": "After DEV selection + regression the config is sealed; TEST / ztest / real-photo / UI results are evaluation only and cannot change it."
+}
