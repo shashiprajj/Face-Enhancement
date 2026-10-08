@@ -1,0 +1,273 @@
+R5-8 — LOCAL-PATCH ARTIFACT DETECTOR
+FINAL ENHANCEMENT SAFETY TASK
+
+Repository: WelOrbit Face Enhancement Service (FES)
+Current safe baseline: R5-6
+R5-7 result: RED
+R5-7 commit: 33922fe
+
+OBJECTIVE
+Determine whether the R5-7 NAFNet benefit/coverage improvements can be recovered safely by adding a deterministic local/spatial artifact detector.
+
+R5-6 is the SAFE baseline and MUST remain the live/default state.
+Do not promote R5-7.
+
+WHY THIS TASK EXISTS
+R5-7 materially improved NAFNet coverage and identity benefit, especially for full_image inputs, but the candidate returned at least 8 archive TEST faces with small rainbow/dotted patches. The existing global chroma guard could not reliably detect these localized artifacts.
+
+The NAFNet model is NOT being replaced. This task is only about detecting the localized artifact failure mode.
+
+HARD SCOPE
+IN SCOPE:
+- DEV-only artifact analysis
+- deterministic local/spatial artifact features
+- DEV labeling/inspection
+- small local artifact detector
+- isolated R5-7 research candidate
+- regression tests
+- one final service-level validation
+- final report and commit
+
+OUT OF SCOPE:
+- new enhancement models
+- GFPGAN/CodeFormer/SwinIR experiments
+- NAFNet weight changes or retraining
+- T6/RW gate redesign
+- Feature-Match validation
+- production deployment
+- TEST/ztest/real-photo-driven threshold tuning
+- endless follow-up tuning tasks
+
+STEP 0 — FREEZE R5-6
+1. Verify current repository state.
+2. Confirm src/, configs/, and tests/ are the R5-6 safe implementation.
+3. Record commit, route/gate versions, NAFNet checkpoint SHA, service image and relevant config.
+4. Run a baseline smoke/regression check.
+5. Preserve a clean R5-6 reference.
+
+STEP 1 — RECOVER R5-7 AS RESEARCH ONLY
+Recover the saved R5-7 candidate changes:
+- relaxed artifact guard
+- full-image framing correction
+- reflect-padding correction, where applicable
+
+Keep these isolated from the default/live service.
+First reproduce the previously observed R5-7 benefit before adding the detector.
+
+STEP 2 — DEV ARTIFACT CORPUS
+Use DEV data ONLY for detector development.
+
+Use the archive validation/DEV split and existing R5-5 DEV material.
+Do not use archive TEST, ztest, or the 200 real photos to select thresholds.
+
+Inspect broadly:
+- legitimate NAFNet restorations
+- high-chroma but legitimate restorations
+- destructive outputs
+- localized rainbow/dotted artifacts
+- grayscale cases
+- different blur strengths
+- relevant face sizes
+
+If DEV does not contain enough examples of localized artifacts to justify a detector, say so rather than inventing labels.
+
+Labels:
+- LEGITIMATE
+- DESTRUCTIVE
+- LOCALIZED_ARTIFACT
+- UNCERTAIN
+
+Do not silently classify uncertain samples as clean.
+
+STEP 3 — INVESTIGATE SMALL DETERMINISTIC LOCAL FEATURES
+Prefer simple interpretable spatial signals.
+
+Evaluate a limited set such as:
+- local chroma p99/p99.9
+- local maximum vs global chroma distribution
+- local-vs-global chroma excess
+- high-frequency chroma concentration
+- connected abnormal-region size/concentration
+- spatial concentration ratio
+- local chroma-to-luma ratios
+
+Do not build an ML classifier unless deterministic signals clearly cannot solve the problem.
+
+The goal is the SMALLEST defensible detector.
+
+STEP 4 — DESIGN LOCAL GUARD
+Desired flow:
+
+input
+ -> existing validation/detection/alignment
+ -> existing NAFNet eligibility gate
+ -> NAFNet
+ -> existing artifact guard
+ -> LOCAL PATCH ARTIFACT GUARD
+ -> NAFNet output
+
+If either guard or detector rejects/fails:
+ -> ORIGINAL
+
+Detector requirements:
+- deterministic
+- bounded runtime
+- offline/no network
+- no extra model
+- grayscale-safe
+- auditable reason/code
+- detector exception => ORIGINAL
+- no modification of accepted NAFNet pixels
+
+Give it an explicit version identifier such as p5-nafnet-local-artifact-1.0.0.
+Do not silently mutate the R5-6 guard version.
+
+STEP 5 — DEV CALIBRATION
+Report:
+- total DEV samples
+- legitimate/destructive/localized/uncertain counts
+- artifact detection recall
+- legitimate-output block rate
+- retained NAFNet benefit
+- fallback rate
+- runtime overhead
+
+Safety takes priority over coverage.
+
+STEP 6 — TESTS BEFORE FINAL VALIDATION
+Add unit tests for:
+- legitimate output accepted
+- known localized artifact blocked
+- destructive output blocked
+- grayscale accepted when valid
+- detector exception => ORIGINAL
+- invalid numeric values => ORIGINAL
+- deterministic repeated execution
+
+Run existing R5-6/FES regression, API and relevant UI tests.
+
+Do not proceed to TEST until DEV calibration and tests are frozen.
+
+STEP 7 — FREEZE
+After DEV calibration:
+- freeze code
+- freeze thresholds
+- freeze feature version
+- freeze candidate configuration
+- record hashes
+
+NO changes based on TEST observations.
+
+STEP 8 — ONE FINAL SERVICE VALIDATION
+Run the existing service-level harness once on the frozen candidate:
+
+A. Archive TEST — face_chip
+B. Archive TEST — full_image
+C. ztest — face_chip
+D. ztest — full_image
+E. 200 real photos — full_image, auto
+
+Compare R5-6 SAFE BASELINE vs R5-8 CANDIDATE.
+
+Measure:
+- NAFNet attempts/returns
+- ORIGINAL/fallback
+- global guard blocks
+- local guard blocks
+- SFace/dlib Δ
+- improved/harmed counts
+- artifact findings
+- ztest containment
+- real-photo safety
+- failures/timeouts/OOM/restarts
+- latency/memory
+
+Inspect every artifact-like output found by automated scans.
+
+STEP 9 — VERDICT
+
+GREEN:
+- no known material artifact escapes
+- no destructive/localized artifact returned
+- ztest remains contained
+- real-photo safety intact
+- service stable
+- regression passes
+- meaningful R5-7 benefit retained
+- detector is explainable and DEV-supported
+
+YELLOW:
+- safe, but benefit/coverage improvement is modest or evidence is insufficient for production confidence
+
+RED:
+- any known material localized artifact escapes
+- destructive output returned
+- ztest containment regresses
+- real-photo safety regresses materially
+- detector unstable/non-deterministic
+- service stability regresses
+
+If RED:
+- restore/retain R5-6 as live/default
+- preserve R5-8 evidence
+- do NOT start another artifact-detector/model-search task
+- proceed to Feature-Match using R5-6 if access/data are available
+
+IMPORTANT STOP CONDITION
+R5-8 is the FINAL enhancement-safety experiment.
+Do not create R5-8A/R5-8B/R5-8C just to continue optimization.
+
+If the local detector cannot safely recover the R5-7 benefit, accept R5-6 as the final safe enhancement pipeline and move to Feature-Match.
+
+REQUIRED REPORT
+Create:
+Planning/WelOrbit_R5-8_Local_Patch_Artifact_Detector_REPORT.md
+
+Include:
+1. Executive summary
+2. R5-6 baseline
+3. R5-7 candidate reconstruction
+4. DEV dataset/labels
+5. local features investigated
+6. final detector
+7. DEV calibration
+8. tests
+9. frozen configuration/hashes
+10. archive TEST results
+11. ztest results
+12. 200-real-photo results
+13. artifact inspection
+14. R5-6 vs R5-8 table
+15. safety analysis
+16. identity-benefit analysis
+17. runtime/service stability
+18. licensing status
+19. GREEN/YELLOW/RED verdict
+20. explicit adopt vs retain-R5-6 recommendation
+
+FINAL GIT STATE
+If GREEN: commit the validated detector/candidate cleanly while preserving the R5-6 reference.
+If YELLOW: commit only if safe/useful, clearly marking production status.
+If RED: ensure src/, configs/, and tests/ return to R5-6 safe state; commit evidence/report and rejected candidate separately.
+
+DO NOT:
+- tune on TEST
+- tune on ztest
+- tune on 200 real photos
+- weaken safety merely for coverage
+- add another restoration model
+- change NAFNet weights
+- modify Feature-Match
+- redesign UI
+- redesign T6/RW routing
+- silently leave R5-7 candidate behavior active
+- claim production approval from synthetic evidence alone
+
+FINAL QUESTION
+Answer only this:
+“Can a small deterministic local-patch artifact detector make the R5-7 NAFNet candidate safe enough to retain its materially better full-image benefit?”
+
+YES -> validate and preserve it.
+NO -> retain R5-6, stop enhancement experimentation, and move to Feature-Match.
+
+Do not extend the enhancement workstream beyond this decision without explicit owner approval.

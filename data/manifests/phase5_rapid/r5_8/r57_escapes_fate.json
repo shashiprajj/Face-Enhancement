@@ -1,0 +1,54 @@
+{
+ "face_chip": {
+  "95636": {
+   "status": "ORIGINAL",
+   "fallback": "LOCAL_ARTIFACT_GUARD",
+   "error": "ARTIFACT_LOCAL_PATCH:l_dot_c_max",
+   "reason": "NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR"
+  },
+  "88924": {
+   "status": "ORIGINAL",
+   "fallback": "LOCAL_ARTIFACT_GUARD",
+   "error": "ARTIFACT_LOCAL_PATCH:l_dot_c_max",
+   "reason": "NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR"
+  }
+ },
+ "full_image": {
+  "8964": {
+   "status": "ORIGINAL",
+   "fallback": "LOCAL_ARTIFACT_GUARD",
+   "error": "ARTIFACT_LOCAL_PATCH:l_dot_c_max",
+   "reason": "NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR"
+  },
+  "96161": {
+   "status": "ORIGINAL",
+   "fallback": "LOCAL_ARTIFACT_GUARD",
+   "error": "ARTIFACT_LOCAL_PATCH:l_dot_c_max",
+   "reason": "NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR"
+  },
+  "97266": {
+   "status": "ORIGINAL",
+   "fallback": "LOCAL_ARTIFACT_GUARD",
+   "error": "ARTIFACT_LOCAL_PATCH:l_dot_c_max",
+   "reason": "NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR"
+  },
+  "90856": {
+   "status": "ORIGINAL",
+   "fallback": "LOCAL_ARTIFACT_GUARD",
+   "error": "ARTIFACT_LOCAL_PATCH:l_dot_c_max",
+   "reason": "NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR"
+  },
+  "85126": {
+   "status": "ORIGINAL",
+   "fallback": "LOCAL_ARTIFACT_GUARD",
+   "error": "ARTIFACT_LOCAL_PATCH:l_dot_c_max",
+   "reason": "NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR"
+  },
+  "96475": {
+   "status": "ORIGINAL",
+   "fallback": "LOCAL_ARTIFACT_GUARD",
+   "error": "ARTIFACT_LOCAL_PATCH:l_dot_c_max",
+   "reason": "NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR"
+  }
+ }
+}

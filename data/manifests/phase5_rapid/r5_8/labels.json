@@ -1,0 +1,1970 @@
+{
+"fc/image_65276.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65279.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65281.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65282.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65283.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65289.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65290.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65291.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65294.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65296.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65297.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65298.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_6530.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65309.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_6531.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65316.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65319.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fc/image_65476.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess"
+},
+"fc/image_65636.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_65699.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_65744.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_65748.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_65796.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_66061.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_66075.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_6608.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_66126.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_66147.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_6626.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_6640.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_66678.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fc/image_6668.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "small sheet / zoom"
+},
+"fc/image_66681.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_66697.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_66830.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_66869.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max"
+},
+"fc/image_66882.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_67026.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_67051.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_67052.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_67054.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fc/image_67095.jpg": {
+"label": "DESTRUCTIVE",
+"source": "small sheet; global-guard blocked"
+},
+"fc/image_67140.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_67175.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_67333.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_67450.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc30_max+dmean_excess+dmean_max"
+},
+"fc/image_67546.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_67784.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_67898.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_67904.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_67918.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_67990.jpg": {
+"label": "UNCERTAIN",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_6804.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_68046.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_68080.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fc/image_68171.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_68191.jpg": {
+"label": "DESTRUCTIVE",
+"source": "small sheet; global-guard blocked"
+},
+"fc/image_68457.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_68462.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+dmean_excess+dmean_max"
+},
+"fc/image_68479.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_68511.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_6857.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_68784.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+dmean_excess+dmean_max"
+},
+"fc/image_68820.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_68878.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_69133.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_6926.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_69390.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_69401.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+dmean_excess+dmean_max"
+},
+"fc/image_69499.jpg": {
+"label": "UNCERTAIN",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_69562.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_69596.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_69932.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_70098.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_70373.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_7040.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_70497.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_70564.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_growth_p999"
+},
+"fc/image_70600.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_70648.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fc/image_70768.jpg": {
+"label": "DESTRUCTIVE",
+"source": "small sheet; global-guard blocked"
+},
+"fc/image_70817.jpg": {
+"label": "DESTRUCTIVE",
+"source": "small sheet; global-guard blocked"
+},
+"fc/image_70889.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_70986.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_71021.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fc/image_71055.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fc/image_71085.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_71121.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc30_max+dmean_excess+dmean_max"
+},
+"fc/image_71156.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_71244.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_71329.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_71341.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_71596.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_max"
+},
+"fc/image_71638.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_71658.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+dmean_excess+dmean_max"
+},
+"fc/image_71733.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_71746.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_71761.jpg": {
+"label": "DESTRUCTIVE",
+"source": "small sheet; global-guard blocked"
+},
+"fc/image_71821.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_71825.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fc/image_71890.jpg": {
+"label": "DESTRUCTIVE",
+"source": "small sheet; global-guard blocked"
+},
+"fc/image_71914.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+cc30_max+dmean_excess+dmean_max"
+},
+"fc/image_71961.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+dmean_excess+dmean_max"
+},
+"fc/image_72077.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_72185.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_72210.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_72309.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_72330.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_72513.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_72583.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_72631.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_72650.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_72791.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_72835.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_72851.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_72930.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_73026.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_73167.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max"
+},
+"fc/image_73183.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_73337.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_7337.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fc/image_73403.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_73499.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_73537.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_73627.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_73679.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_7376.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_73774.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_73843.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_73921.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_growth_max+hfc_growth_p999"
+},
+"fc/image_73940.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_73944.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_73997.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_74120.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_74175.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "small sheet / zoom"
+},
+"fc/image_74456.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_74568.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_74767.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_74780.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_74978.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_74988.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_75168.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max+hfc_growth_p999"
+},
+"fc/image_75188.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+hfc_growth_max+hfc_growth_p999"
+},
+"fc/image_75232.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_growth_max+hfc_growth_p999"
+},
+"fc/image_75238.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_75283.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_75354.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_75394.jpg": {
+"label": "DESTRUCTIVE",
+"source": "small sheet; global-guard blocked"
+},
+"fc/image_75487.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_7554.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_growth_max"
+},
+"fc/image_75601.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_growth_max+hfc_growth_p999"
+},
+"fc/image_75901.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_75972.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_76093.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_76095.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_76133.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_76191.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_76247.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "small sheet / zoom"
+},
+"fc/image_76261.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_76320.jpg": {
+"label": "DESTRUCTIVE",
+"source": "small sheet; global-guard blocked"
+},
+"fc/image_7644.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_7656.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_76564.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_76595.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_76676.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_76696.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_76901.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_76931.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_7695.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_77165.jpg": {
+"label": "DESTRUCTIVE",
+"source": "small sheet; global-guard blocked"
+},
+"fc/image_77369.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+dmean_excess"
+},
+"fc/image_7761.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_77701.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_77722.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_77742.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_77751.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_77867.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_77965.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_7800.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+hfc_ratio_max"
+},
+"fc/image_7804.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max"
+},
+"fc/image_78099.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_78145.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_78149.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max"
+},
+"fc/image_78240.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_78382.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_78489.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_78518.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_78578.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_max"
+},
+"fc/image_78604.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_78656.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_78927.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+dmean_excess+dmean_max"
+},
+"fc/image_78930.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_78942.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_78944.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_78970.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_78985.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_79270.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_79281.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_79300.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_79396.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_79404.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_79537.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_79644.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_79683.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_79739.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_79742.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+hfc_ratio_max"
+},
+"fc/image_79886.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_80010.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_growth_max"
+},
+"fc/image_80185.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_80250.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_80301.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_80305.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "small sheet / zoom"
+},
+"fc/image_80497.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_80526.jpg": {
+"label": "DESTRUCTIVE",
+"source": "small sheet; global-guard blocked"
+},
+"fc/image_80591.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fc/image_80596.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_80713.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_80734.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fc/image_80833.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_80862.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [4,8)"
+},
+"fc/image_8102.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max"
+},
+"fc/image_81276.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_813.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_81372.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_81439.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+cc30_max+dmean_excess+dmean_max"
+},
+"fc/image_81456.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_81470.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fc/image_81512.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_81554.jpg": {
+"label": "DESTRUCTIVE",
+"source": "small sheet; global-guard blocked"
+},
+"fc/image_81612.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_81660.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_81720.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_81812.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fc/image_81889.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+hfc_ratio_max"
+},
+"fc/image_82039.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_82336.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_82361.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,2)"
+},
+"fc/image_82373.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_82463.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [8,1000000000.0)"
+},
+"fc/image_82621.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [2,4)"
+},
+"fc/image_82628.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_65276.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65279.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65280.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65281.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65282.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65287.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65289.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_6529.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65290.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65291.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65294.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65296.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_65297.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65298.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_6530.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra cc30_max"
+},
+"fi/image_65343.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_65669.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_65724.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_65744.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_6575.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_65775.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_658.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_65806.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_65903.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_65944.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_66004.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_66219.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_66232.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_66299.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_66345.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_66429.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_66451.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_66576.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_66678.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_66697.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+dmean_max"
+},
+"fi/image_66869.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fi/image_66979.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_67021.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_67044.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_67187.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_67452.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_67456.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_67481.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_675.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_67566.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_67579.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_67688.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_67736.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_67741.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_67880.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_67959.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_6799.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+dmean_excess+dmean_max"
+},
+"fi/image_680.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_6804.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_68111.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_68138.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_68164.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_68230.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_68245.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_68258.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_68259.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_68365.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_68482.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_68488.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_6851.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_68539.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_68565.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_68616.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_68624.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_6878.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_68800.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_6884.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_68990.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_69113.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_69240.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_69352.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_69401.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_69542.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_69686.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_69740.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_69747.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_69858.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_69881.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_69915.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_69965.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_69986.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_70003.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fi/image_70035.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_70096.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_70100.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_70147.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_70183.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_70188.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_70198.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_70205.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_70293.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_70447.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_70717.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_70805.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fi/image_71055.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max"
+},
+"fi/image_71194.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_71197.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_71405.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_71672.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_71738.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_71765.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_71872.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_71914.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_71935.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra dmean_excess"
+},
+"fi/image_72248.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_72277.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_72283.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_72308.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_7238.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_72568.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_72681.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_72795.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_72902.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_72950.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max"
+},
+"fi/image_73043.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_73067.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_73094.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_73135.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_73163.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_73167.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fi/image_73230.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_7337.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_73407.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_73463.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_73521.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_73592.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_73630.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_73679.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_73867.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_74149.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_74184.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_74257.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_74338.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_74459.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_74500.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max"
+},
+"fi/image_74550.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_74552.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_74615.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_74752.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_7491.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_74980.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_74984.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_75188.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_75214.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_75232.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_75318.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_75678.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_75682.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_75750.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_75788.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max"
+},
+"fi/image_75860.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_76002.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_76133.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_76204.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_76326.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_76505.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_76516.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_76682.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_76690.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_76762.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_76763.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_76777.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_76846.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_7686.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_7695.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_76958.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_76986.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_77054.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_77085.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_77202.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_77276.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_7730.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_77307.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_77368.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_77472.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_77555.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_77574.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+dmean_excess+dmean_max"
+},
+"fi/image_77591.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_77614.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_77671.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_77848.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_77930.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_77975.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_78338.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_78427.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_7850.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_78508.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_78518.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_78574.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fi/image_78594.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_78688.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_78820.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_78847.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_78963.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_78979.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_791.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_79120.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_79154.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_79158.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_79396.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_79556.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_79670.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_79674.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_79760.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [0,3)"
+},
+"fi/image_79814.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_79818.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_79855.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra dmean_excess+dmean_max"
+},
+"fi/image_79924.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_80129.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_80171.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_80225.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_80294.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_80301.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_80397.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+cc20_max+cc30_max+dmean_excess+dmean_max"
+},
+"fi/image_80416.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_80420.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_80481.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_80537.jpg": {
+"label": "LOCALIZED_ARTIFACT",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_80564.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_80620.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [15,30)"
+},
+"fi/image_80670.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_80708.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_80738.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [3,6)"
+},
+"fi/image_80845.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_80871.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fi/image_80873.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_81178.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_81219.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_8132.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra hfc_ratio_max"
+},
+"fi/image_81347.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_81439.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20+dmean_excess+dmean_max"
+},
+"fi/image_81519.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_81528.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_81649.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [10,15)"
+},
+"fi/image_81820.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_81880.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_81889.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra p999>20"
+},
+"fi/image_81894.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_81903.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [6,10)"
+},
+"fi/image_81928.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_82059.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_82264.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra dmean_excess+dmean_max"
+},
+"fi/image_82456.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_82527.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+},
+"fi/image_82558.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom extra random"
+},
+"fi/image_82591.jpg": {
+"label": "LEGITIMATE",
+"source": "zoom stratified [30,1000000000.0)"
+}
+}
