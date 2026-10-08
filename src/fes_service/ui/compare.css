@@ -1,0 +1,58 @@
+/* R5-9 comparison page — extends style.css (same tokens, light + dark) */
+.tag-exp { font-size: 11px; vertical-align: middle; letter-spacing: .08em; padding: 2px 8px; border-radius: 999px;
+  background: var(--warn-soft); color: var(--warn); }
+.sub a { color: var(--accent); }
+.banner { background: var(--warn-soft); color: var(--warn); border-radius: var(--radius); padding: 10px 14px; font-size: 14px; }
+.dropzone { min-height: 140px; }
+.preview.small { max-height: 200px; }
+
+.modes { border: 1px solid var(--line); border-radius: 8px; margin: 16px 0 0; padding: 8px 12px 12px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
+.modes legend { font-weight: 600; padding: 0 4px; }
+.mode { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; padding: 6px; border-radius: 6px; }
+.mode:has(input:checked) { background: var(--accent-soft); }
+.mode.unavailable { opacity: .5; }
+.mode span { display: grid; }
+.mode small { font-size: 11px; color: var(--muted); }
+.warnlbl { font-weight: 700; letter-spacing: .03em; color: var(--warn) !important; }
+.warnlbl.exp { color: var(--bad) !important; }
+
+.panels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 900px) { .panels { grid-template-columns: 1fr; } }
+.panel { background: var(--card); border: 2px solid var(--line); border-radius: var(--radius); padding: 12px; min-width: 0; }
+.panel[data-tone="ok"] { border-color: var(--ok); }
+.panel[data-tone="bad"] { border-color: var(--bad); }
+.panel[data-tone="warn"] { border-color: var(--warn); }
+.panel h3 { margin: 0; font-size: 15px; }
+.panel .pwarn { font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--warn); margin: 2px 0 0; }
+.panel .pwarn.exp { color: var(--bad); }
+.panel .headline { margin: 8px 0 4px; font-weight: 600; font-size: 14px; }
+.panel .frame { height: 280px; position: relative; }
+.panel .frame.unchanged { outline: 3px dashed var(--muted); outline-offset: -3px; }
+.panel .stamp { position: absolute; left: 8px; top: 8px; right: 8px; text-align: center; font-size: 12px; font-weight: 800;
+  letter-spacing: .04em; padding: 4px 6px; border-radius: 6px; background: var(--neutral); color: var(--card); }
+.panel .stamp.bad { background: var(--bad); }
+.panel .sub-frame { display: flex; gap: 8px; align-items: center; margin-top: 8px; font-size: 12px; color: var(--muted); }
+.panel .sub-frame img { width: 72px; height: 72px; object-fit: contain; background: var(--neutral-soft); border-radius: 6px; }
+.panel .placeholder { height: 280px; display: grid; place-items: center; color: var(--muted); text-align: center;
+  background: var(--neutral-soft); border-radius: 8px; padding: 12px; font-size: 14px; }
+.panel dl { display: grid; grid-template-columns: max-content 1fr; gap: 2px 10px; margin: 10px 0 0; font-size: 12.5px; }
+.panel dt { color: var(--muted); }
+.panel dd { margin: 0; font-family: ui-monospace, Consolas, monospace; overflow-wrap: anywhere; }
+
+.eval-top { display: flex; gap: 16px; flex-wrap: wrap; margin: 8px 0; }
+.eval-top label { display: grid; gap: 4px; font-size: 14px; }
+.eval-top .grow { flex: 1; min-width: 220px; }
+select, input[type="text"], textarea { font: inherit; color: var(--text); background: var(--card);
+  border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+.eval-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.eval-col { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.eval-col h3 { margin: 0 0 6px; font-size: 14px; }
+.eval-col .ratings, .eval-col .tags { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 14px; margin-bottom: 8px; }
+.eval-col textarea { width: 100%; min-height: 54px; }
+.eval-col.disabled { opacity: .5; }
+
+.table-wrap { overflow-x: auto; margin-top: 8px; }
+#log { width: 100%; border-collapse: collapse; font-size: 13px; }
+#log th, #log td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+#log th { color: var(--muted); font-weight: 600; }

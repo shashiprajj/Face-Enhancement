@@ -58,6 +58,29 @@ def _checked_load(AD, key):
     return net, rep
 
 
+def reflect_pad16(img: np.ndarray) -> tuple[np.ndarray, int, int]:
+    """Reflect-pad H and W (bottom/right) up to the next multiple of 16 → (padded, h, w)."""
+    import cv2
+    h, w = img.shape[:2]
+    ph, pw = (-h) % 16, (-w) % 16
+    if not (ph or pw):
+        return img, h, w
+    return cv2.copyMakeBorder(img, 0, ph, 0, pw, cv2.BORDER_REFLECT_101), h, w
+
+
+def nafnet_factory_pad16():
+    """R5-8 research candidate (profile r5_8 only): NAFNet zero-pads its input to a multiple of 16
+    (NAFNet_arch.check_image_size); on the service's re-framed chips that black border halved the gain (R5-7 DEV:
+    ΔSFace +0.056 → +0.113). Reflect-pad first, crop back after; inputs already /16 give bit-identical outputs."""
+    enhance0, info = nafnet_factory()
+
+    def enhance(img, ctx):
+        x, h, w = reflect_pad16(img)
+        out, meta = enhance0(x, ctx)
+        return np.ascontiguousarray(out[:h, :w]), {**meta, "pad16": [x.shape[0] - h, x.shape[1] - w]}
+    return enhance, {**info, "variant": "reflect_pad16"}
+
+
 def nafnet_factory():
     os.environ["CUDA_VISIBLE_DEVICES"] = ""
     import torch

@@ -36,7 +36,10 @@ import numpy as np
 from fes_bench import gate as GT
 from fes_data.common import repo_path
 
-ROUTE_VERSION = "p5-nafnet-route-1.0.0"
+ROUTE_VERSION = "p5-nafnet-route-1.0.0"              # the live/default (R5-6) route
+# R5-8 research candidate (opt-in profile "r5_8"; never the default): R5-7 guard values + framing fixes + local guard
+CANDIDATE_CONFIG = "configs/phase5/r5_8_nafnet_candidate.json"
+CANDIDATE_ROUTE_VERSION = "p5-nafnet-route-1.1.0"
 FEAT_VERSION = "p5-nafnet-feat-1.0.0"
 CONFIG = "configs/phase5/r5_nafnet_route.json"
 MODEL = "NAFNET_GOPRO"
@@ -51,6 +54,7 @@ R_MISSING = "NAFNET_REJECT_MISSING_FEATURE"
 
 A_NUMERIC, A_FACE = "ARTIFACT_NUMERIC_INVALID", "ARTIFACT_FACE_INVALID"
 A_CHROMA, A_HF, A_GRAY = "ARTIFACT_CHROMA_P99", "ARTIFACT_HIGH_FREQ_COLOR", "ARTIFACT_GRAYSCALE_VIOLATION"
+A_CHROMA_TAIL = "ARTIFACT_CHROMA_P999"                 # candidate config only (guard key chroma_p999_max)
 
 
 # ------------------------------------------------------------------ texture features (p5-nafnet-feat-1.0.0)
@@ -111,7 +115,8 @@ def texture_features(img: np.ndarray) -> dict:
 def load_config(path: str = CONFIG) -> dict:
     cfg = json.loads(repo_path(path).read_text(encoding="utf-8"))
     assert cfg["sha256"] == GT.gate_hash(cfg), "r5_nafnet_route.json modified after freeze"
-    assert cfg["route_version"] == ROUTE_VERSION and cfg["feature_version"] == FEAT_VERSION and cfg["model"] == MODEL
+    assert cfg["route_version"] in (ROUTE_VERSION, CANDIDATE_ROUTE_VERSION), cfg["route_version"]
+    assert cfg["feature_version"] == FEAT_VERSION and cfg["model"] == MODEL
     return cfg
 
 
@@ -181,10 +186,14 @@ def _lab(img: np.ndarray) -> np.ndarray:
     return cv2.cvtColor(img, cv2.COLOR_BGR2LAB).astype(np.float64)
 
 
+def chroma_dist(out: np.ndarray, ref: np.ndarray) -> np.ndarray:
+    a, b = _lab(out), _lab(ref)
+    return np.hypot(a[..., 1] - b[..., 1], a[..., 2] - b[..., 2])
+
+
 def chroma_p99(out: np.ndarray, ref: np.ndarray) -> float:
     """99th percentile of the per-pixel Lab chroma distance (a, b) between output and its input (R5-ARCHIVE metric)."""
-    a, b = _lab(out), _lab(ref)
-    return float(np.percentile(np.hypot(a[..., 1] - b[..., 1], a[..., 2] - b[..., 2]), 99))
+    return float(np.percentile(chroma_dist(out, ref), 99))
 
 
 def hf_color_ratio(img: np.ndarray) -> float:
@@ -240,10 +249,16 @@ def artifact_guard(inp: np.ndarray, out, cfg: dict, face_check, input_is_gray: b
     if not face_ok:
         res.reasons.append(A_FACE)
     # 3 Lab chroma change (p99) vs the input chip
-    cp = chroma_p99(out, inp)
+    cd = chroma_dist(out, inp)
+    cp = float(np.percentile(cd, 99))
     m["chroma_p99"] = round(cp, 3)
     if cp > g["chroma_p99_max"]:
         res.reasons.append(A_CHROMA)
+    if "chroma_p999_max" in g:                            # candidate config only; absent in the live 1.0.0 config
+        ct = float(np.percentile(cd, 99.9))
+        m["chroma_p999"] = round(ct, 3)
+        if ct > g["chroma_p999_max"]:
+            res.reasons.append(A_CHROMA_TAIL)
     # 4 high-frequency colour energy: absolute level AND growth over the input
     hf_o, hf_i = hf_color_ratio(out), hf_color_ratio(inp)
     m["hf_color_ratio"], m["hf_color_ratio_in"] = round(hf_o, 4), round(hf_i, 4)
@@ -276,3 +291,71 @@ def synth_halftone(img: np.ndarray, period: float) -> np.ndarray:
     u, v = (xx * c + yy * s) / period, (-xx * s + yy * c) / period
     d = np.hypot(u - np.round(u), v - np.round(v)) / 0.7071
     return cv2.cvtColor(((d > np.sqrt(1 - y)) * 255).astype(np.uint8), cv2.COLOR_GRAY2BGR)
+
+
+# ------------------------------------------------------------------ R5-8 local-patch artifact guard (candidate only)
+# p5-nafnet-local-artifact-1.0.0 — deterministic spatial statistics of the output-vs-input chroma change and of the
+# high-frequency colour energy NAFNet adds; computed on the chip (≤ 224 px) with box filters + one connected-component
+# pass: bounded runtime, no model, no network. Used only when the route config has a "local_artifact" section.
+
+LOCAL_VERSION = "p5-nafnet-local-artifact-1.0.0"
+A_LOCAL, A_LOCAL_ERROR = "ARTIFACT_LOCAL_PATCH", "ARTIFACT_LOCAL_GUARD_ERROR"
+LOCAL_WIN = 8
+
+
+def local_features(inp: np.ndarray, out: np.ndarray, win: int = LOCAL_WIN) -> dict:
+    """All candidate local signals (R5-8 DEV study). inp/out: same-size uint8 BGR chips."""
+    A, B = _lab(out), _lab(inp)
+    d = np.hypot(A[..., 1] - B[..., 1], A[..., 2] - B[..., 2]).astype(np.float32)
+    box = lambda x: cv2.blur(x, (win, win), borderType=cv2.BORDER_REFLECT_101)  # noqa: E731
+    hp = lambda x: x - cv2.GaussianBlur(x, (0, 0), 1.0)  # noqa: E731
+    ha, hb = hp(A), hp(B)
+    ec_out = (ha[..., 1] ** 2 + ha[..., 2] ** 2).astype(np.float32)
+    ec_in = (hb[..., 1] ** 2 + hb[..., 2] ** 2).astype(np.float32)
+    el_out = (ha[..., 0] ** 2).astype(np.float32)
+    dm = box(d)
+    growth = box(np.maximum(ec_out - ec_in, 0))
+    ratio = box(ec_out) / (box(el_out) + 4.0)
+    f = {"l_dmean_max": float(dm.max()), "l_dmean_excess": float(dm.max() - np.median(d)),
+         "l_hfc_growth_max": float(growth.max()), "l_hfc_ratio_max": float(ratio.max()),
+         "l_hfc_growth_p999": float(np.percentile(growth, 99.9))}
+    # "dottedness": second-difference energy present in BOTH x and y (min of the two) — a dot / grid oscillates in both
+    # directions, a sharpened edge only across the edge. Output's increase over the input, 8×8 window maximum.
+    k = np.array([[1.0, -2.0, 1.0]], np.float32)
+
+    def iso(x):
+        x = x.astype(np.float32)
+        return np.minimum(cv2.filter2D(x, -1, k, borderType=cv2.BORDER_REFLECT_101) ** 2,
+                          cv2.filter2D(x, -1, k.T, borderType=cv2.BORDER_REFLECT_101) ** 2)
+    dot_c = np.maximum(iso(A[..., 1]) + iso(A[..., 2]) - iso(B[..., 1]) - iso(B[..., 2]), 0)
+    dot_l = np.maximum(iso(A[..., 0]) - iso(B[..., 0]), 0)
+    f["l_dot_c_max"] = float(box(dot_c).max())
+    f["l_dot_l_max"] = float(box(dot_l).max())
+    for t in (20, 30):
+        n, lab_, stats, _ = cv2.connectedComponentsWithStats((d > t).astype(np.uint8), connectivity=8)
+        f[f"l_cc{t}_max"] = int(stats[1:, cv2.CC_STAT_AREA].max()) if n > 1 else 0
+        f[f"l_cc{t}_frac"] = round(f[f"l_cc{t}_max"] / float(d.size), 6)
+    return {k: (round(v, 4) if isinstance(v, float) else v) for k, v in f.items()}
+
+
+def local_artifact_guard(inp: np.ndarray, out, cfg: dict, input_is_gray: bool) -> ArtifactGuardResult:
+    """Candidate local-patch guard: any configured local signal above its DEV-calibrated limit → reject (ORIGINAL).
+    Never modifies `out`. Invalid input → reject."""
+    lc = cfg["local_artifact"]
+    assert lc["version"] == LOCAL_VERSION, lc["version"]
+    res = ArtifactGuardResult(passed=False)
+    if not (isinstance(out, np.ndarray) and isinstance(inp, np.ndarray) and out.dtype == np.uint8
+            and out.shape == inp.shape and out.ndim == 3):
+        res.reasons.append(A_LOCAL_ERROR)
+        res.metrics["error"] = "invalid image for the local guard"
+        return res
+    f = local_features(inp, out, lc.get("win", LOCAL_WIN))
+    res.metrics.update(f)
+    if not all(np.isfinite(v) for v in f.values()):
+        res.reasons.append(A_LOCAL_ERROR)
+        return res
+    for k, limit in lc["limits"].items():
+        if f[k] > limit:
+            res.reasons.append(f"{A_LOCAL}:{k}")
+    res.passed = not res.reasons
+    return res
