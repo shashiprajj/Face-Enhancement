@@ -4,9 +4,8 @@
 *.gz binary
 *.png binary
 *.jpg binary
-*.onnx binary
+*.onnx filter=lfs diff=lfs merge=lfs -text
 *.pth binary
-
 # vendored upstream files are SHA-256-pinned byte-for-byte (archs.VENDORED_SHA256); some upstreams use CRLF
 third_party/gfpgan/** -text
 third_party/codeformer/** -text

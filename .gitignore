@@ -8,8 +8,6 @@ venv/
 .ipynb_checkpoints/
 
 # Large assets — never commit (tracked via manifests + checksums instead)
-models/*
-!models/README.md
 datasets/*
 !datasets/README.md
 experiments/**/outputs/
@@ -24,6 +22,8 @@ logs/*
 *.zip
 *.tar
 *.tar.gz
+# shipped model weights (stored via Git LFS, see .gitattributes)
+!models/**
 
 # Secrets
 .env
