@@ -1,9 +1,0 @@
-{
-  "date": "2026-10-03",
-  "e07_rescore_main_A4": {"first": "6a71727060f4fc781345d32a26aab5a279de1916c64e40c02908feba90c1c991",
-                           "rerun": "6a71727060f4fc781345d32a26aab5a279de1916c64e40c02908feba90c1c991", "identical": true},
-  "analysis_rerun_main_verdicts": {"first": "946a724434fdfb5ebf8c2ff1e32b389f229a557c4d0aeae407f38dc1b360efca",
-                                   "rerun": "946a724434fdfb5ebf8c2ff1e32b389f229a557c4d0aeae407f38dc1b360efca", "identical": true},
-  "e07_validation_determinism": "bit-identical descriptors on repeat (evaluator_E07_validation.json V3)",
-  "inputs_reused_unchanged": "Phase 3 main outputs; every output re-verified against its run-manifest SHA-256 at scoring"
-}

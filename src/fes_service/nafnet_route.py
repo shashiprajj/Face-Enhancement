@@ -1,15 +1,16 @@
-"""R5-5 — guarded NAFNet-GoPro route: dedicated input gate + output artifact guard (p5-nafnet-route).
+"""Guarded NAFNet route: dedicated input gate + stability check + output artifact guards (p6-nafnet-route).
 
     face chip → rw features (p5-rwfeat-1.0.0) + texture features (p5-nafnet-feat-1.0.0)
               → decide() ─ ineligible ──────────────────────────────→ ORIGINAL (reason NAFNET_REJECT_*)
-                         └ NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR → NAFNet-GoPro (isolated worker)
-                                → artifact_guard() ─ fail → ORIGINAL (reasons ARTIFACT_*)
-                                                   └ pass → NAFNet output (native-size face chip)
+                         └ NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR → NAFNet, 4 mirror runs (isolated worker)
+                                → stability_check() ─ any unstable run → ORIGINAL (STABILITY_GUARD)
+                                → artifact_guard() + local_artifact_guard() ─ fail → ORIGINAL (reasons ARTIFACT_*)
+                                  └ pass → median of the runs with the input's colour (native-size face chip)
 
 Why a separate policy (R5-ARCHIVE, docs/phase_5_rapid/R5_Archive_Deblur_Dataset_REPORT.md): NAFNet-GoPro is the only
 identity-positive deblurring model found (SFace Δ +0.16 on noise-free synthetic blur) but it is brittle — colour streaks
 on 14 % of grainy blur and 6.5 % destroyed real printed / pixelated / halftone photos. So: blur only, low noise only,
-and every output is checked before it is returned. The A4 policy (fes_service.rwgate) is NOT modified.
+and every output is checked before it is returned.
 
 Decision order (first match wins; every outcome except ELIGIBLE returns the ORIGINAL; a missing feature never enhances):
   1 NAFNET_REJECT_NO_FACE / _LOW_DETECTION / _UNSAFE_ALIGNMENT   T6 safety rules, unchanged
@@ -24,7 +25,7 @@ Decision order (first match wins; every outcome except ELIGIBLE returns the ORIG
     (admin blur range, fes_service.blur_scale; only when set: below enhance_from_pct → 9 MILD_BLUR,
      above give_up_above_pct → NAFNET_REJECT_TOO_BLURRED)
  10 NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR   lapd1_c ≤ blur_max
-Thresholds: configs/phase5/r5_nafnet_route.json (SHA-256 sealed; scripts/r5_nafnet_calibrate.py, DEV data only).
+Thresholds: configs/phase5/r6_nafnet_candidate.json (SHA-256 sealed, DEV data only).
 """
 from __future__ import annotations
 
@@ -35,19 +36,10 @@ from dataclasses import asdict, dataclass, field
 import cv2
 import numpy as np
 
-from fes_bench import gate as GT
-from fes_data.common import repo_path
+from fes_service import gate as GT
+from fes_service import repo_path
 
-ROUTE_VERSION = "p5-nafnet-route-1.0.0"              # the live/default (R5-6) route
-# R5-8 research candidate (opt-in profile "r5_8"; never the default): R5-7 guard values + framing fixes + local guard
-CANDIDATE_CONFIG = "configs/phase5/r5_8_nafnet_candidate.json"
-CANDIDATE_ROUTE_VERSION = "p5-nafnet-route-1.1.0"
-# R5-10 research candidate (opt-in profile "r5_10"; never the default): the R5-8 candidate with ONE change — the input
-# blur-eligibility boundary blur_max, recalibrated on DEV (scripts/r5_10_dev_analyze.py, pre-registered protocol)
-R5_10_CONFIG = "configs/phase5/r5_10_nafnet_candidate.json"
-R5_10_ROUTE_VERSION = "p5-nafnet-route-1.2.0"
 FEAT_VERSION = "p5-nafnet-feat-1.0.0"
-CONFIG = "configs/phase5/r5_nafnet_route.json"
 MODEL = "NAFNET_GOPRO"
 ROUTE_ELIGIBLE, ROUTE_INELIGIBLE = "STRONG_LOW_NOISE_BLUR", "NAFNET_INELIGIBLE"
 
@@ -61,7 +53,7 @@ R_MISSING = "NAFNET_REJECT_MISSING_FEATURE"
 
 A_NUMERIC, A_FACE = "ARTIFACT_NUMERIC_INVALID", "ARTIFACT_FACE_INVALID"
 A_CHROMA, A_HF, A_GRAY = "ARTIFACT_CHROMA_P99", "ARTIFACT_HIGH_FREQ_COLOR", "ARTIFACT_GRAYSCALE_VIOLATION"
-A_CHROMA_TAIL = "ARTIFACT_CHROMA_P999"                 # candidate config only (guard key chroma_p999_max)
+A_CHROMA_TAIL = "ARTIFACT_CHROMA_P999"                 # guard key chroma_p999_max
 
 
 # ------------------------------------------------------------------ texture features (p5-nafnet-feat-1.0.0)
@@ -119,12 +111,14 @@ def texture_features(img: np.ndarray) -> dict:
 
 # ------------------------------------------------------------------ config + input gate
 
-def load_config(path: str = CONFIG) -> dict:
+def load_config(path: str | None = None) -> dict:
+    """The sealed route config (default R6_CONFIG): input gate thresholds, guards and the stability rule."""
+    path = path or R6_CONFIG
     cfg = json.loads(repo_path(path).read_text(encoding="utf-8"))
-    assert cfg["sha256"] == GT.gate_hash(cfg), "r5_nafnet_route.json modified after freeze"
-    assert cfg["route_version"] in (ROUTE_VERSION, CANDIDATE_ROUTE_VERSION, R5_10_ROUTE_VERSION, R6_ROUTE_VERSION), \
-        cfg["route_version"]
+    assert cfg["sha256"] == GT.gate_hash(cfg), f"{path} modified after freeze"
+    assert cfg["route_version"] == R6_ROUTE_VERSION, cfg["route_version"]
     assert cfg["feature_version"] == FEAT_VERSION and cfg["model"] == MODEL
+    assert {"stability", "local_artifact"} <= set(cfg), "the route needs its stability check and local guard"
     return cfg
 
 
@@ -302,7 +296,7 @@ def artifact_guard(inp: np.ndarray, out, cfg: dict, face_check, input_is_gray: b
     m["chroma_p99"] = round(cp, 3)
     if cp > g["chroma_p99_max"]:
         res.reasons.append(A_CHROMA)
-    if "chroma_p999_max" in g:                            # candidate config only; absent in the live 1.0.0 config
+    if "chroma_p999_max" in g:
         ct = float(np.percentile(cd, 99.9))
         m["chroma_p999"] = round(ct, 3)
         if ct > g["chroma_p999_max"]:
@@ -322,29 +316,10 @@ def artifact_guard(inp: np.ndarray, out, cfg: dict, face_check, input_is_gray: b
     return res
 
 
-# ------------------------------------------------------------------ synthetic printed-image risks (calibration/tests only)
-
-def synth_pixelate(img: np.ndarray, k: int) -> np.ndarray:
-    h, w = img.shape[:2]
-    s = cv2.resize(img, (max(1, w // k), max(1, h // k)), interpolation=cv2.INTER_AREA)
-    return cv2.resize(s, (w, h), interpolation=cv2.INTER_NEAREST)
-
-
-def synth_halftone(img: np.ndarray, period: float) -> np.ndarray:
-    """Clustered-dot screen at 45° (newspaper / magazine print), black dots on white."""
-    y = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY).astype(np.float64) / 255.0
-    h, w = y.shape
-    yy, xx = np.mgrid[0:h, 0:w]
-    c, s = np.cos(np.pi / 4), np.sin(np.pi / 4)
-    u, v = (xx * c + yy * s) / period, (-xx * s + yy * c) / period
-    d = np.hypot(u - np.round(u), v - np.round(v)) / 0.7071
-    return cv2.cvtColor(((d > np.sqrt(1 - y)) * 255).astype(np.uint8), cv2.COLOR_GRAY2BGR)
-
-
-# ------------------------------------------------------------------ R5-8 local-patch artifact guard (candidate only)
+# ------------------------------------------------------------------ local-patch artifact guard (R5-8)
 # p5-nafnet-local-artifact-1.0.0 — deterministic spatial statistics of the output-vs-input chroma change and of the
 # high-frequency colour energy NAFNet adds; computed on the chip (≤ 224 px) with box filters + one connected-component
-# pass: bounded runtime, no model, no network. Used only when the route config has a "local_artifact" section.
+# pass: bounded runtime, no model, no network. Limits: the route config's "local_artifact" section.
 
 LOCAL_VERSION = "p5-nafnet-local-artifact-1.0.0"
 A_LOCAL, A_LOCAL_ERROR = "ARTIFACT_LOCAL_PATCH", "ARTIFACT_LOCAL_GUARD_ERROR"
@@ -387,7 +362,7 @@ def local_features(inp: np.ndarray, out: np.ndarray, win: int = LOCAL_WIN) -> di
 
 
 def local_artifact_guard(inp: np.ndarray, out, cfg: dict, input_is_gray: bool) -> ArtifactGuardResult:
-    """Candidate local-patch guard: any configured local signal above its DEV-calibrated limit → reject (ORIGINAL).
+    """Local-patch guard: any configured local signal above its DEV-calibrated limit → reject (ORIGINAL).
     Never modifies `out`. Invalid input → reject."""
     lc = cfg["local_artifact"]
     assert lc["version"] == LOCAL_VERSION, lc["version"]
@@ -409,14 +384,14 @@ def local_artifact_guard(inp: np.ndarray, out, cfg: dict, input_is_gray: bool) -
     return res
 
 
-# ------------------------------------------------------------------ R6 stability-verified consensus (candidate only)
+# ------------------------------------------------------------------ R6 stability-verified consensus
 # p6-nafnet-stability-1.0.0 (R6-0: Planning/WelOrbit_R6-0_Post_Enhancement_Verifier_REPORT.md). NAFNet-GoPro is
 # numerically unstable on some inputs: mirroring the input (which must not change a deblur) then makes one or more runs
 # explode into a dotted / grid / noise patch, and the localized artifacts R5-6..R5-10 returned are the same failure.
-# The candidate runs NAFNet on the chip and on its h / v / hv mirrors (each mirrored back), REJECTS the request
+# The route runs NAFNet on the chip and on its h / v / hv mirrors (each mirrored back), REJECTS the request
 # (ORIGINAL) when any run carries the explosion tracer — colour dottedness vs the input above the DEV limit — and
 # otherwise returns the per-pixel MEDIAN of the four runs with the INPUT's chrominance (luma-only enhancement: the
-# output cannot change colour at all). Used only when the route config has a "stability" section (profile r6).
+# output cannot change colour at all).
 
 R6_CONFIG = "configs/phase5/r6_nafnet_candidate.json"
 R6_ROUTE_VERSION = "p6-nafnet-route-1.0.0"
@@ -485,7 +460,7 @@ SELECT_RULE = "sharper_lapd1_c"
 def select_best(chip: np.ndarray, outs: dict) -> tuple[str, dict]:
     """outs: {profile: accepted output chip}, in candidate order → (chosen profile, {profile: lapd1_c}). The highest
     score wins; a tie or an unusable score keeps the earlier candidate. `chip` (the input) is not part of the rule."""
-    from fes_service.rwgate import lapd1
+    from fes_service.quality import lapd1
     scores = {}
     for n, o in outs.items():
         v = lapd1(o)

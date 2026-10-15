@@ -1,4 +1,9 @@
 # models/ (git-ignored contents)
-Downloaded model weights live here, one folder per manifest id (e.g. `M03_restoreformerpp/`).
-Never commit weights. Provenance, license, revision and SHA-256 for every file are recorded in
-`docs/phase_1/model_acquisition_manifest.csv`. Only assets marked ELIGIBLE in P1-T3 may be placed here.
+Model files used by the service. Never commit weights; SHA-256 values are pinned in `src/fes_service/models.py`
+(NAFNet ONNX exports, also checked against the source weights recorded in their metadata).
+
+- `D01_yunet/face_detection_yunet_2026may.onnx` — YuNet face detector (OpenCV Zoo; licence REVIEW_REQUIRED)
+- `M28_nafnet/onnx/nafnet_gopro.onnx` — NAFNet-GoPro width-64 (megvii-research/NAFNet, MIT), profile r6
+- `M28_nafnet/onnx/nafnet_face_ft.onnx` — its face-blur fine-tune (FairFace CC BY 4.0), profile r6_ft
+
+The source PyTorch weights (.pth) and every other model were moved to `D:/ReBIT/FES-archive/models/`.

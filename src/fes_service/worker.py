@@ -1,8 +1,8 @@
-"""Process-isolated model execution (R5-1; Phase 4 T7 §1.3: a thread timeout cannot kill a hung model).
+"""Process-isolated model execution (a thread timeout cannot kill a hung model).
 
 The model lives in ONE child process (multiprocessing 'spawn'). The parent sends an image, waits at most `timeout_s`
 for the answer, and on timeout KILLS the child (it is restarted lazily on the next call). Failures surface as
-exceptions that the frozen router (fes_bench.routing.Router) already maps to its fallbacks:
+exceptions that the pipeline maps to its fallbacks (fes_service.pipeline.fallback_code):
   TimeoutError                         → TIMEOUT          (concurrent.futures.TimeoutError is TimeoutError, py ≥ 3.11)
   MemoryError / child killed by signal → RESOURCE_FAILURE (e.g. kernel OOM kill)
   RuntimeError (model exception)       → MODEL_FAILURE
@@ -23,14 +23,7 @@ def _resolve(spec: str):
     return getattr(importlib.import_module(mod), fn)
 
 
-def _serve(conn, factory: str, threads: int) -> None:
-    os.environ.setdefault("CUDA_VISIBLE_DEVICES", "")
-    try:
-        import torch
-        torch.set_num_threads(threads)
-        torch.manual_seed(0)
-    except ImportError:
-        pass
+def _serve(conn, factory: str) -> None:
     try:
         import cv2
         cv2.setNumThreads(1)
@@ -67,8 +60,8 @@ class WorkerDied(RuntimeError):
 class IsolatedModel:
     """Callable(img, ctx) -> (out, meta) backed by one killable child process. Calls are serialised."""
 
-    def __init__(self, factory: str, timeout_s: float = 120.0, load_timeout_s: float = 600.0, threads: int = 2):
-        self.factory, self.timeout_s, self.load_timeout_s, self.threads = factory, timeout_s, load_timeout_s, threads
+    def __init__(self, factory: str, timeout_s: float = 120.0, load_timeout_s: float = 600.0):
+        self.factory, self.timeout_s, self.load_timeout_s = factory, timeout_s, load_timeout_s
         self._ctx = mp.get_context("spawn")
         self._proc = None
         self._conn = None
@@ -84,7 +77,7 @@ class IsolatedModel:
     def start(self) -> dict:
         self._kill()
         parent, child = self._ctx.Pipe()
-        self._proc = self._ctx.Process(target=_serve, args=(child, self.factory, self.threads), daemon=True)
+        self._proc = self._ctx.Process(target=_serve, args=(child, self.factory), daemon=True)
         self._proc.start()
         child.close()
         self._conn = parent

@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 import pytest
 
-from fes_data import preprocess as P
+from fes_service import preprocess as P
 
 
 def _canvas(h: int, w: int, value: int = 128) -> np.ndarray:

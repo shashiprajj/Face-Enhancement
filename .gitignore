@@ -40,3 +40,6 @@ Thumbs.db
 
 # user-supplied real photos and their enhanced outputs (personal data) — never commit
 Dataset-and-code/
+
+# test face images (FairFace / Indian-expression benchmark) — local only, tests skip without them
+tests/fixtures/

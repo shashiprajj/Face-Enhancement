@@ -1,26 +1,17 @@
-"""Admin blur range (fes_service.blur_scale): the 0-100 % blur scale, enhance_from_pct and give_up_above_pct.
-
-Invariants: the scale is sealed, monotone and anchored to the validated blur limits; with both settings off the gate
-decides exactly as before (same outputs); the settings can only make the gate STRICTER — enhance_from_pct below the
-validated minimum, a give_up_above_pct not above enhance_from_pct, or a request that widens the deployment's range is
-refused; a face outside the range is returned unchanged without running a model; every NAFNet answer reports the
-face's blur percent and the range applied. Images: the Indian-expression benchmark (skipped when absent).
-"""
+"""Admin blur range: the sealed 0-100 % blur scale, settings validation (stricter only), the gate rule, and the
+service (settings file, per-request form fields, /ready). Images: benchmark fixtures (local only; skipped if absent)."""
 
 from __future__ import annotations
 
 import json
 import math
 
-import cv2
 import pytest
 
 from fes_service import blur_scale as BS
 from fes_service import nafnet_route as NR
 from fes_service import pipeline as SP
-from test_r6_best import strong
-from test_r6_candidate import Model, Spy, sharpen
-from test_side_face import FRONT, SIDE, load
+from helpers import FRONT, SIDE, build, fixture_bytes
 
 
 @pytest.fixture(scope="module")
@@ -28,12 +19,8 @@ def scale():
     return BS.load_scale()
 
 
-def build(settings=None):
-    m6, ft = Model(sharpen), Model(strong)
-    pipe = SP.EnhancementPipeline(Spy(lambda x: (cv2.resize(x, (224, 224)), {})), timeout_s=10, gate="rw",
-                                  nafnet=Spy(sharpen), route_mode="auto", experimental_nafnet={"r6": m6, "r6_ft": ft},
-                                  blur_settings=settings)
-    return pipe, m6, ft
+def load(name):
+    return fixture_bytes(name)
 
 
 # ------------------------------------------------------------------ the scale
@@ -51,7 +38,7 @@ def test_scale_is_sealed_monotone_and_anchored(scale):
         assert all(a >= b for a, b in zip(ys, ys[1:]))                                  # sharper → lower percent
     assert math.isnan(scale.percent("front", float("nan")))
     floor = scale.floor()
-    sealed = {"front": NR.load_config(NR.R6_CONFIG)["thresholds"]["blur_max"],
+    sealed = {"front": NR.load_config()["thresholds"]["blur_max"],
               "side": NR.load_side_config()["thresholds"]["blur_max"]}
     for framing, v in sealed.items():                                   # the floor is stored to 3 decimals
         assert floor[framing] == pytest.approx(scale.percent(framing, v), abs=1e-3)
@@ -93,7 +80,8 @@ def test_parse_refuses_non_percentages(v):
 
 def test_settings_file(tmp_path, monkeypatch):
     monkeypatch.delenv("FES_SETTINGS", raising=False)
-    assert BS.load_settings()[0] == BS.BlurSettings()                 # the shipped file: both null
+    shipped = json.loads((BS.repo_path(BS.SETTINGS_FILE)).read_text(encoding="utf-8"))["blur"]
+    assert BS.load_settings() == (BS.parse(shipped["enhance_from_pct"], shipped["give_up_above_pct"]), BS.SETTINGS_FILE)
     p = tmp_path / "s.json"
     p.write_text(json.dumps({"blur": {"enhance_from_pct": 45, "give_up_above_pct": 85}}), encoding="utf-8")
     monkeypatch.setenv("FES_SETTINGS", str(p))
@@ -108,15 +96,13 @@ def test_settings_file(tmp_path, monkeypatch):
 
 def test_pipeline_refuses_invalid_deployment_settings():
     with pytest.raises(ValueError, match="validated minimum"):
-        build(BS.BlurSettings(10, None))
-    with pytest.raises(ValueError, match="need gate 'rw'"):
-        SP.EnhancementPipeline(Spy(lambda x: (x, {})), timeout_s=10, gate="t6", blur_settings=BS.BlurSettings(40, None))
+        build(settings=BS.BlurSettings(10, None))
 
 
 # ------------------------------------------------------------------ the gate rule
 
 def test_decide_rule_is_stricter_only():
-    cfg = NR.load_config(NR.R6_CONFIG)
+    cfg = NR.load_config()
     t = cfg["thresholds"]
     f = {"det_status": "FACE_TOO_SMALL", "det_score": 0.95, "iod_px": 80.0, "lapd1_c": t["blur_max"] / 2,
          "noise_sigma": 0.0, "luma_mean": 120.0, "rms_contrast": 40.0, "blockiness": 1.0, "pixelation": 0.1,
@@ -142,7 +128,7 @@ def test_default_is_unchanged_and_reports_the_blur(scale):
     assert b["enhance_from_pct"] == round(scale.floor()["front"], 1)
     assert b["source"] == {"enhance_from": "validated_limit", "give_up_above": "off"}
     assert b["blur_pct"] == round(scale.percent("front", r.quality["lapd1_c"]), 1)
-    wide = build(BS.BlurSettings(36, 99))[0].process(data, "full_image", profile="best")    # range that still admits it
+    wide = build(settings=BS.BlurSettings(36, 99))[0].process(data, "full_image", profile="best")    # range that still admits it
     assert wide.status == SP.ENHANCED and wide.image == r.image
     assert wide.nafnet["blur_range"]["source"] == {"enhance_from": "deployment", "give_up_above": "deployment"}
 
@@ -164,7 +150,7 @@ def test_outside_the_range_returns_the_original_without_a_model():
 
 def test_request_may_only_narrow_the_deployment_range():
     data = load(FRONT)
-    pipe, m6, _ = build(BS.BlurSettings(40, 80))
+    pipe, m6, _ = build(settings=BS.BlurSettings(40, 80))
     r = pipe.process(data, "full_image", profile="best", blur=BS.BlurSettings(None, 90))
     assert r.status == SP.REJECTED and "only narrow" in r.error and r.image is None and not m6.ctx
     r = pipe.process(data, "full_image", profile="best", blur=BS.BlurSettings(20, None))
@@ -183,24 +169,12 @@ def test_side_face_uses_the_side_scale(scale):
     assert t.status == SP.ORIGINAL_S and t.reason == NR.R_TOO_BLURRED
 
 
-def test_other_profiles_are_unchanged():
-    data = load(FRONT)
-    pipe, *_ = build(BS.BlurSettings(40, 80))
-    r = pipe.process(data, "full_image")                                # the default r5_6 route: no blur range
-    assert r.status != SP.REJECTED and "blur_range" not in (r.nafnet or {})
-    r = pipe.process(data, "full_image", blur=BS.BlurSettings(50, None))
-    assert r.status == SP.REJECTED and "apply to profiles" in r.error
-    assert pipe.process(data, "full_image", profile="original", blur=BS.BlurSettings(50, None)).status == SP.ORIGINAL_S
-
-
 def test_api_settings_file_form_fields_and_ready(tmp_path, monkeypatch):
     pytest.importorskip("fastapi")
     from fastapi.testclient import TestClient
     from fes_service import app as A
     data = load(FRONT)
-    for k, v in {"FES_EXPERIMENTAL_PROFILES": "r6,r6_ft", "FES_A4_FACTORY": "fes_service.models:fake_ok_factory",
-                 "FES_NAFNET_FACTORY": "fes_service.models:fake_nafnet_ok_factory",
-                 "FES_NAFNET_R6_FACTORY": "fes_service.models:fake_nafnet_r6_stable_factory",
+    for k, v in {"FES_NAFNET_R6_FACTORY": "fes_service.models:fake_nafnet_r6_stable_factory",
                  "FES_NAFNET_R6_FT_FACTORY": "fes_service.models:fake_nafnet_r6_stable_factory", "FES_WARMUP": "0"}.items():
         monkeypatch.setenv(k, v)
     p = tmp_path / "settings.json"

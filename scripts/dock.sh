@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Run a command inside the pinned CPU dev image with the repo mounted at /workspace.
-# Usage: scripts/dock.sh python scripts/p2_fairface_verify.py ...
+# Usage: scripts/dock.sh sh -c 'PYTHONPATH=src python -m pytest -q tests'
 # (Required on this host: Windows Smart App Control blocks PyTorch DLLs outside the container.)
 set -euo pipefail
-IMAGE="${FES_IMAGE:-fes-dev:cpu-p2}"
+IMAGE="${FES_IMAGE:-fes-dev:cpu-p5-onnx}"
 ROOT="$(cd "$(dirname "$0")/.." && pwd -W 2>/dev/null || pwd)"
 HEAD_SHA="$(git -C "$(dirname "$0")/.." rev-parse HEAD 2>/dev/null || echo unknown)"
 DIRTY="$(git -C "$(dirname "$0")/.." status --porcelain 2>/dev/null | grep -qv '^??' && echo -dirty || true)"

@@ -25,7 +25,7 @@ import math
 import os
 from dataclasses import dataclass
 
-from fes_data.common import repo_path
+from fes_service import repo_path
 
 SCALE_VERSION = "p8-blur-scale-1.0.0"
 SCALE_CONFIG = "configs/phase5/blur_scale.json"
@@ -69,7 +69,7 @@ class BlurScale:
 
 
 def load_scale(path: str = SCALE_CONFIG) -> BlurScale:
-    from fes_bench import gate as GT
+    from fes_service import gate as GT
     from fes_service import nafnet_route as NR
     cfg = json.loads(repo_path(path).read_text(encoding="utf-8"))
     assert cfg["sha256"] == GT.gate_hash(cfg), "blur_scale.json modified after freeze"

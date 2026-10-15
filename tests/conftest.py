@@ -1,17 +1,16 @@
-"""Shared fixtures. Face images come from the (git-ignored) P2-T3 references; tests needing them are skipped
-when the dataset has not been prepared. No face images are committed to the repository."""
+"""Shared fixtures. Face images come from tests/fixtures/ (git-ignored: FairFace and Indian-expression benchmark
+images); tests needing them are skipped when they are absent. No face images are committed to the repository."""
 
 from __future__ import annotations
 
-import cv2
 import numpy as np
 import pytest
 
-from fes_data import common as C
-from fes_data import preprocess as P
+from fes_service import preprocess as P
+from fes_service import repo_path
+from helpers import fixture_img
 
-YUNET = C.repo_path("models/D01_yunet/face_detection_yunet_2026may.onnx")
-REF_MANIFEST = C.repo_path("data/manifests/references_v1.csv.gz")
+YUNET = repo_path("models/D01_yunet/face_detection_yunet_2026may.onnx")
 
 
 @pytest.fixture(scope="session")
@@ -23,18 +22,17 @@ def detector() -> P.YuNetDetector:
 
 @pytest.fixture(scope="session")
 def ref_faces() -> list[np.ndarray]:
-    """Three accepted clean references (deterministic choice: first three test-pool ref_ids)."""
-    if not REF_MANIFEST.exists():
-        pytest.skip("references not built")
-    rows = sorted((r for r in C.read_csv_gz(REF_MANIFEST) if r["accepted"] == "True" and r["pool"] == "test_pool"),
-                  key=lambda r: r["ref_id"])[:3]
-    imgs = []
-    for r in rows:
-        p = C.repo_path(r["ref_path"])
-        if not p.exists():
-            pytest.skip("reference files missing")
-        imgs.append(cv2.imread(str(p), cv2.IMREAD_COLOR))
-    return imgs
+    """Three accepted clean FairFace references (val pool)."""
+    return [fixture_img(f"ref_{i}.png") for i in range(3)]
+
+
+@pytest.fixture(scope="session")
+def dev() -> dict:
+    """A strongly blurred DEV face chip (gaussblur-extreme) and a full image whose face chip extends past a corner."""
+    blur = fixture_img("blur_extreme.png")
+    canvas = np.full((300, 300, 3), 127, np.uint8)
+    canvas[:194, :194] = blur[30:, 30:]
+    return {"blur": blur, "edge": canvas}
 
 
 @pytest.fixture
