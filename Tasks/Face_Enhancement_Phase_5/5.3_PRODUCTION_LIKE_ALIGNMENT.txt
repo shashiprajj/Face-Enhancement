@@ -1,0 +1,18 @@
+TASK 5.3 — PRODUCTION-LIKE FACE DETECTION AND ALIGNMENT
+
+Objective: remove oracle-alignment assumptions and use the same detection/alignment contract intended for the service.
+
+Do:
+1. Identify all oracle transforms in current benchmark code.
+2. Implement/finalize production-like face detection.
+3. Record detector/model versions.
+4. Implement deterministic crop/alignment.
+5. Define safe behavior for no face, multiple faces, tiny faces, partial faces, extreme pose and detector uncertainty.
+6. Preserve original on unsafe detection.
+7. Add alignment diagnostics and sample outputs.
+8. Quantify oracle-vs-production alignment differences on a controlled sample.
+9. Switch real-world harnesses to production-like alignment.
+10. Add tests and report.
+
+Do not manually correct transforms, use oracle transforms in final real-world evaluation, or change A4.
+Acceptance: raw input can reach a deterministic face crop/alignment without oracle information.

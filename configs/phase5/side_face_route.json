@@ -1,0 +1,548 @@
+{
+  "applies_to": "pipeline profile best_side, detection-box framing only",
+  "calibration": {
+    "bins": [
+      {
+        "better_share": 0.802,
+        "lapd1_from": 0.0,
+        "lapd1_to": 0.0005,
+        "mean_delta_psnr": 0.749,
+        "n": 86
+      },
+      {
+        "better_share": 0.77,
+        "lapd1_from": 0.0005,
+        "lapd1_to": 0.001,
+        "mean_delta_psnr": 0.775,
+        "n": 330
+      },
+      {
+        "better_share": 0.804,
+        "lapd1_from": 0.001,
+        "lapd1_to": 0.0015,
+        "mean_delta_psnr": 1.203,
+        "n": 316
+      },
+      {
+        "better_share": 0.748,
+        "lapd1_from": 0.0015,
+        "lapd1_to": 0.002,
+        "mean_delta_psnr": 0.996,
+        "n": 314
+      },
+      {
+        "better_share": 0.71,
+        "lapd1_from": 0.002,
+        "lapd1_to": 0.0025,
+        "mean_delta_psnr": 0.859,
+        "n": 307
+      },
+      {
+        "better_share": 0.631,
+        "lapd1_from": 0.0025,
+        "lapd1_to": 0.003,
+        "mean_delta_psnr": 0.29,
+        "n": 255
+      },
+      {
+        "better_share": 0.565,
+        "lapd1_from": 0.003,
+        "lapd1_to": 0.0035,
+        "mean_delta_psnr": -0.268,
+        "n": 246
+      },
+      {
+        "better_share": 0.489,
+        "lapd1_from": 0.0035,
+        "lapd1_to": 0.004,
+        "mean_delta_psnr": -0.739,
+        "n": 274
+      },
+      {
+        "better_share": 0.477,
+        "lapd1_from": 0.004,
+        "lapd1_to": 0.0045,
+        "mean_delta_psnr": -0.72,
+        "n": 235
+      },
+      {
+        "better_share": 0.438,
+        "lapd1_from": 0.0045,
+        "lapd1_to": 0.005,
+        "mean_delta_psnr": -0.981,
+        "n": 192
+      },
+      {
+        "better_share": 0.454,
+        "lapd1_from": 0.005,
+        "lapd1_to": 0.0055,
+        "mean_delta_psnr": -0.997,
+        "n": 141
+      },
+      {
+        "better_share": 0.411,
+        "lapd1_from": 0.0055,
+        "lapd1_to": 0.006,
+        "mean_delta_psnr": -1.127,
+        "n": 73
+      },
+      {
+        "better_share": 0.474,
+        "lapd1_from": 0.006,
+        "lapd1_to": 0.0065,
+        "mean_delta_psnr": -0.583,
+        "n": 57
+      },
+      {
+        "better_share": 0.361,
+        "lapd1_from": 0.0065,
+        "lapd1_to": 0.007,
+        "mean_delta_psnr": -1.082,
+        "n": 36
+      },
+      {
+        "better_share": 0.577,
+        "lapd1_from": 0.007,
+        "lapd1_to": 0.0075,
+        "mean_delta_psnr": -0.22,
+        "n": 26
+      },
+      {
+        "better_share": 0.56,
+        "lapd1_from": 0.0075,
+        "lapd1_to": 0.008,
+        "mean_delta_psnr": 0.126,
+        "n": 25
+      }
+    ],
+    "data": "DEV only: Indian-expression benchmark, turned faces of Anger, Confused, Excited, Fear; synthetic blur, levels 1-4; types camera_shake, defocus_blur, down_up, gaussian_blur, motion_blur_000, motion_blur_090",
+    "date": "2026-10-13",
+    "enhanced": 2913,
+    "limits": "synthetic blur on 800 px references of one dataset; persons may repeat between DEV and TEST folders; PSNR is not an identity measure",
+    "originals": 138,
+    "requests": 3106,
+    "rule": "largest T on a 0.00025 grid such that every 0.0005-wide lapd1_c bin below T has a positive mean delta PSNR (output vs degraded, against the clean reference)"
+  },
+  "compression_noise": {
+    "data": "DEV only (2802 enhanced turned-face requests of Anger, Confused, Excited, Fear; all degradation types)",
+    "date": "2026-10-14",
+    "rule": "pixelation_max = the DEV value that maximises the summed delta PSNR of the DEV enhancements kept (pixelation <= T); never looser than the frontal route (attempt 2; attempt 1 on noise_sigma / blockiness was RED on TEST)",
+    "steps": {
+      "pixelation_max": {
+        "bins": [
+          {
+            "better_share": 0.84,
+            "from": 0.039187,
+            "mean_delta_psnr": 1.477,
+            "n": 50,
+            "to": 0.100211
+          },
+          {
+            "better_share": 0.82,
+            "from": 0.101679,
+            "mean_delta_psnr": 0.999,
+            "n": 50,
+            "to": 0.113043
+          },
+          {
+            "better_share": 0.74,
+            "from": 0.11342,
+            "mean_delta_psnr": 0.664,
+            "n": 50,
+            "to": 0.122042
+          },
+          {
+            "better_share": 0.72,
+            "from": 0.122114,
+            "mean_delta_psnr": 0.638,
+            "n": 50,
+            "to": 0.126901
+          },
+          {
+            "better_share": 0.72,
+            "from": 0.126952,
+            "mean_delta_psnr": 0.893,
+            "n": 50,
+            "to": 0.132183
+          },
+          {
+            "better_share": 0.84,
+            "from": 0.132302,
+            "mean_delta_psnr": 1.162,
+            "n": 50,
+            "to": 0.138809
+          },
+          {
+            "better_share": 0.84,
+            "from": 0.138816,
+            "mean_delta_psnr": 1.52,
+            "n": 50,
+            "to": 0.14323
+          },
+          {
+            "better_share": 0.78,
+            "from": 0.143365,
+            "mean_delta_psnr": 1.08,
+            "n": 50,
+            "to": 0.146065
+          },
+          {
+            "better_share": 0.68,
+            "from": 0.146164,
+            "mean_delta_psnr": 0.692,
+            "n": 50,
+            "to": 0.149915
+          },
+          {
+            "better_share": 0.72,
+            "from": 0.150003,
+            "mean_delta_psnr": 0.612,
+            "n": 50,
+            "to": 0.153312
+          },
+          {
+            "better_share": 0.66,
+            "from": 0.15335,
+            "mean_delta_psnr": 0.946,
+            "n": 50,
+            "to": 0.157308
+          },
+          {
+            "better_share": 0.84,
+            "from": 0.157465,
+            "mean_delta_psnr": 1.014,
+            "n": 50,
+            "to": 0.161325
+          },
+          {
+            "better_share": 0.74,
+            "from": 0.161373,
+            "mean_delta_psnr": 1.103,
+            "n": 50,
+            "to": 0.164999
+          },
+          {
+            "better_share": 0.82,
+            "from": 0.165036,
+            "mean_delta_psnr": 1.001,
+            "n": 50,
+            "to": 0.168313
+          },
+          {
+            "better_share": 0.64,
+            "from": 0.168352,
+            "mean_delta_psnr": 0.376,
+            "n": 50,
+            "to": 0.172717
+          },
+          {
+            "better_share": 0.7,
+            "from": 0.172765,
+            "mean_delta_psnr": 0.598,
+            "n": 50,
+            "to": 0.175869
+          },
+          {
+            "better_share": 0.66,
+            "from": 0.175884,
+            "mean_delta_psnr": 0.556,
+            "n": 50,
+            "to": 0.179154
+          },
+          {
+            "better_share": 0.7,
+            "from": 0.179179,
+            "mean_delta_psnr": 0.97,
+            "n": 50,
+            "to": 0.182471
+          },
+          {
+            "better_share": 0.82,
+            "from": 0.182479,
+            "mean_delta_psnr": 1.173,
+            "n": 50,
+            "to": 0.186375
+          },
+          {
+            "better_share": 0.74,
+            "from": 0.18642,
+            "mean_delta_psnr": 0.891,
+            "n": 50,
+            "to": 0.191754
+          },
+          {
+            "better_share": 0.74,
+            "from": 0.191848,
+            "mean_delta_psnr": 1.263,
+            "n": 50,
+            "to": 0.195309
+          },
+          {
+            "better_share": 0.72,
+            "from": 0.195397,
+            "mean_delta_psnr": 0.719,
+            "n": 50,
+            "to": 0.199233
+          },
+          {
+            "better_share": 0.66,
+            "from": 0.199482,
+            "mean_delta_psnr": 0.47,
+            "n": 50,
+            "to": 0.202646
+          },
+          {
+            "better_share": 0.78,
+            "from": 0.202737,
+            "mean_delta_psnr": 0.982,
+            "n": 50,
+            "to": 0.206235
+          },
+          {
+            "better_share": 0.8,
+            "from": 0.206302,
+            "mean_delta_psnr": 0.748,
+            "n": 50,
+            "to": 0.210369
+          },
+          {
+            "better_share": 0.78,
+            "from": 0.210383,
+            "mean_delta_psnr": 0.76,
+            "n": 50,
+            "to": 0.214275
+          },
+          {
+            "better_share": 0.68,
+            "from": 0.214302,
+            "mean_delta_psnr": 0.794,
+            "n": 50,
+            "to": 0.217997
+          },
+          {
+            "better_share": 0.74,
+            "from": 0.218023,
+            "mean_delta_psnr": 0.868,
+            "n": 50,
+            "to": 0.222482
+          },
+          {
+            "better_share": 0.82,
+            "from": 0.222639,
+            "mean_delta_psnr": 1.184,
+            "n": 50,
+            "to": 0.226383
+          },
+          {
+            "better_share": 0.76,
+            "from": 0.226533,
+            "mean_delta_psnr": 0.668,
+            "n": 50,
+            "to": 0.231376
+          },
+          {
+            "better_share": 0.76,
+            "from": 0.23148,
+            "mean_delta_psnr": 0.913,
+            "n": 50,
+            "to": 0.234537
+          },
+          {
+            "better_share": 0.74,
+            "from": 0.234571,
+            "mean_delta_psnr": 0.86,
+            "n": 50,
+            "to": 0.238679
+          },
+          {
+            "better_share": 0.82,
+            "from": 0.238685,
+            "mean_delta_psnr": 1.156,
+            "n": 50,
+            "to": 0.243428
+          },
+          {
+            "better_share": 0.7,
+            "from": 0.243604,
+            "mean_delta_psnr": 0.746,
+            "n": 50,
+            "to": 0.248499
+          },
+          {
+            "better_share": 0.76,
+            "from": 0.248781,
+            "mean_delta_psnr": 0.812,
+            "n": 50,
+            "to": 0.253198
+          },
+          {
+            "better_share": 0.82,
+            "from": 0.253352,
+            "mean_delta_psnr": 1.034,
+            "n": 50,
+            "to": 0.258538
+          },
+          {
+            "better_share": 0.7,
+            "from": 0.258829,
+            "mean_delta_psnr": 0.623,
+            "n": 50,
+            "to": 0.264928
+          },
+          {
+            "better_share": 0.76,
+            "from": 0.265066,
+            "mean_delta_psnr": 0.716,
+            "n": 50,
+            "to": 0.270912
+          },
+          {
+            "better_share": 0.74,
+            "from": 0.27104,
+            "mean_delta_psnr": 0.517,
+            "n": 50,
+            "to": 0.276194
+          },
+          {
+            "better_share": 0.74,
+            "from": 0.276203,
+            "mean_delta_psnr": 0.707,
+            "n": 50,
+            "to": 0.282717
+          },
+          {
+            "better_share": 0.8,
+            "from": 0.283004,
+            "mean_delta_psnr": 0.851,
+            "n": 50,
+            "to": 0.29059
+          },
+          {
+            "better_share": 0.82,
+            "from": 0.290685,
+            "mean_delta_psnr": 0.824,
+            "n": 50,
+            "to": 0.298732
+          },
+          {
+            "better_share": 0.88,
+            "from": 0.298949,
+            "mean_delta_psnr": 0.991,
+            "n": 50,
+            "to": 0.306894
+          },
+          {
+            "better_share": 0.8,
+            "from": 0.307048,
+            "mean_delta_psnr": 0.546,
+            "n": 50,
+            "to": 0.31599
+          },
+          {
+            "better_share": 0.78,
+            "from": 0.316064,
+            "mean_delta_psnr": 0.885,
+            "n": 50,
+            "to": 0.324126
+          },
+          {
+            "better_share": 0.82,
+            "from": 0.324146,
+            "mean_delta_psnr": 0.831,
+            "n": 50,
+            "to": 0.332677
+          },
+          {
+            "better_share": 0.84,
+            "from": 0.332733,
+            "mean_delta_psnr": 0.922,
+            "n": 50,
+            "to": 0.346559
+          },
+          {
+            "better_share": 0.8,
+            "from": 0.346702,
+            "mean_delta_psnr": 0.524,
+            "n": 50,
+            "to": 0.358466
+          },
+          {
+            "better_share": 0.86,
+            "from": 0.359272,
+            "mean_delta_psnr": 0.703,
+            "n": 50,
+            "to": 0.378816
+          },
+          {
+            "better_share": 0.78,
+            "from": 0.379578,
+            "mean_delta_psnr": 0.1,
+            "n": 50,
+            "to": 0.400583
+          },
+          {
+            "better_share": 0.7,
+            "from": 0.400648,
+            "mean_delta_psnr": -0.215,
+            "n": 50,
+            "to": 0.421026
+          },
+          {
+            "better_share": 0.7,
+            "from": 0.421357,
+            "mean_delta_psnr": 0.106,
+            "n": 50,
+            "to": 0.439572
+          },
+          {
+            "better_share": 0.66,
+            "from": 0.440259,
+            "mean_delta_psnr": -0.401,
+            "n": 50,
+            "to": 0.463526
+          },
+          {
+            "better_share": 0.52,
+            "from": 0.463761,
+            "mean_delta_psnr": -0.971,
+            "n": 50,
+            "to": 0.500803
+          },
+          {
+            "better_share": 0.34,
+            "from": 0.502254,
+            "mean_delta_psnr": -2.009,
+            "n": 50,
+            "to": 0.565904
+          },
+          {
+            "better_share": 0.404,
+            "from": 0.566033,
+            "mean_delta_psnr": -0.972,
+            "n": 52,
+            "to": 0.624373
+          }
+        ],
+        "feature": "pixelation",
+        "frontal": 0.625481,
+        "value": 0.393664
+      }
+    },
+    "test_replay": {
+      "enhanced_after": 2501,
+      "enhanced_before": 2762,
+      "verdict": "YELLOW"
+    }
+  },
+  "frontal_route": {
+    "blur_max": 0.008,
+    "config": "configs/phase5/r6_nafnet_candidate.json"
+  },
+  "route_version": "p7-side-face-route-1.1.0",
+  "sha256": "8f2509349e7aac5d05703ad2945b5b251bbf991faaea8e6c48190b973f52fc33",
+  "thresholds": {
+    "blur_max": 0.003,
+    "clean_lapd1_lo": 0.003,
+    "pixelation_max": 0.393664
+  }
+}

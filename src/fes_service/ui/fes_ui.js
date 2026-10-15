@@ -103,6 +103,7 @@ const REASONS = [
   [/^NAFNET_REJECT_NO_FACE$/, "No usable face was found."],
   [/^NAFNET_REJECT_NOT_BLUR$/, "Not blurred (sharp, or a different kind of degradation) — nothing for the deblurring route to do."],
   [/^NAFNET_REJECT_MILD_BLUR$/, "Only mildly blurred — outside the strong-blur range the NAFNet route covers."],
+  [/^NAFNET_REJECT_TOO_BLURRED$/, "Too blurred to fix — blurrier than the \"give up above\" setting, so it is returned unchanged."],
   [/^NAFNET_REJECT_PHOTOMETRIC$/, "Lighting/contrast problem: NAFNet does not address it."],
   [/^NAFNET_REJECT_COMPRESSION$/, "Compression artefacts: NAFNet is not safe on them."],
   [/^NAFNET_REJECT_MISSING_FEATURE/, "A quality measurement could not be computed, so the image was not enhanced."],

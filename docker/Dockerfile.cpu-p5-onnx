@@ -1,0 +1,7 @@
+# R6-ONNX study image = fes-dev:cpu-p5 + hash-pinned ONNX export / ONNX Runtime (CPU) wheels. No weights baked in.
+FROM fes-dev:cpu-p5
+USER root
+COPY requirements-onnx.txt /tmp/
+RUN pip install --require-hashes --only-binary=:all: --no-deps -r /tmp/requirements-onnx.txt \
+ && python -c "import onnx, onnxruntime, onnxscript; print(onnx.__version__, onnxruntime.__version__)"
+USER fes

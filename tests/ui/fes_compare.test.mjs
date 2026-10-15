@@ -19,8 +19,11 @@ const row = (v, k) => (v.rows.find(([key]) => key === k) || [])[1];
 class FakeFD { constructor() { this.e = []; } append(k, v) { this.e.push([k, v]); } }
 
 test("profiles, labels and warning text", () => {
-  assert.deepEqual(PROFILE_IDS, ["original", "r5_6", "r5_8", "r5_10", "r6"]);
-  assert.deepEqual(NAFNET_IDS, ["r5_6", "r5_8", "r5_10", "r6"]); assert.deepEqual(EXPERIMENTAL_IDS, ["r5_8", "r5_10", "r6"]);
+  assert.deepEqual(PROFILE_IDS, ["original", "r5_6", "r5_8", "r5_10", "r6", "r6_ft"]);
+  assert.deepEqual(NAFNET_IDS, ["r5_6", "r5_8", "r5_10", "r6", "r6_ft"]);
+  assert.deepEqual(EXPERIMENTAL_IDS, ["r5_8", "r5_10", "r6", "r6_ft"]);
+  assert.equal(PROFILES[5].title, "NAFNet R6-FT — Face Fine-Tuned Experimental");
+  assert.equal(PROFILES[5].warning, "EXPERIMENTAL — NOT PRODUCTION-APPROVED");
   assert.equal(PROFILES[4].title, "NAFNet R6 — Stability-Verified Experimental");
   assert.equal(PROFILES[4].warning, "EXPERIMENTAL — NOT PRODUCTION-APPROVED");
   assert.equal(PROFILES[1].warning, "REFERENCE — NOT PRODUCTION-APPROVED");
@@ -40,7 +43,8 @@ test("available profiles come from /ready", () => {
   assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6"] }), ["original", "r5_6"]);
   assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6", "r5_8"] }), ["original", "r5_6", "r5_8"]);
   assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6", "r5_10"] }), ["original", "r5_6", "r5_10"]);
-  assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6", "r5_8", "r5_10", "r6"] }), PROFILE_IDS);
+  assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6", "r5_8", "r5_10", "r6", "r6_ft"] }), PROFILE_IDS);
+  assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6", "r6_ft"] }), ["original", "r5_6", "r6_ft"]);
   assert.deepEqual(availableProfiles({ profiles: ["original", "r5_6", "r6"] }), ["original", "r5_6", "r6"]);
   assert.deepEqual(availableProfiles(null), []);
 });
@@ -158,4 +162,16 @@ test("R6: stability check shown; an unstable run is a STABILITY_GUARD fallback t
   assert.match(rec.profiles.r6.stability, /^FAIL/);
   const ne = interpretProfileResult("r6", 422, { status: "REJECTED", error: "profile 'r6' is not enabled on this service" }, 5);
   assert.equal(ne.ok, false); assert.match(ne.message, /FES_EXPERIMENTAL_PROFILES=.*r6/);
+});
+
+test("R6-FT: same panel as R6, the fine-tuned model is named", () => {
+  const stab = { passed: true, reasons: [], metrics: { n_unstable: 0, run_dot_c_max: 5.2, limit: 20.2863, rule: "any" } };
+  const ok = interpretProfileResult("r6_ft", 200, { ...base, status: "ENHANCED", image_format: "png", model: "NAFNET_FACE_FT",
+    used: "NAFNET_GOPRO", nafnet: nafnet({ profile: "r6_ft", route_version: "p6-nafnet-route-1.0.0", stability: stab,
+      local_artifact: { passed: true, reasons: [], metrics: { l_dot_c_max: 0.4 } } }) }, 2500);
+  assert.equal(ok.applied, true); assert.equal(ok.finalOutput, "NAFNet");
+  assert.equal(row(ok, "Model invoked"), "NAFNET_FACE_FT"); assert.match(row(ok, "Profile"), /R6-FT/);
+  assert.match(row(ok, "Stability check (4 runs)"), /^PASS · unstable runs 0\/4/);
+  const ne = interpretProfileResult("r6_ft", 422, { status: "REJECTED", error: "profile 'r6_ft' is not enabled on this service" }, 5);
+  assert.equal(ne.ok, false); assert.match(ne.message, /R6-FT/); assert.match(ne.message, /FES_EXPERIMENTAL_PROFILES=.*r6_ft/);
 });

@@ -1,0 +1,396 @@
+{
+  "a4": {
+    "acquisition_asset_id": "A03",
+    "architecture": {
+      "builder": "fes_bench.archs.build_swinir_realsr_l_x4",
+      "img_size": 64,
+      "upscale": 4,
+      "variant": "SwinIR-L real-SR x4 GAN",
+      "vendored_source": "third_party/swinir/models/network_swinir.py",
+      "vendored_source_sha256": "9e143898679ebeebc5d2fc94ad1b89c38aa4a4d43da4e0fcba0f93e476994913",
+      "window_size": 8
+    },
+    "config_id": "A4",
+    "input_contract": "native degraded face chip (D-frame), BGR uint8 \u2192 RGB [0,1]; uses no alignment transform (ctx['M_e2f'] is ignored by GeneralSR)",
+    "kind": "general_sr",
+    "label": "SwinIR-L real-SR x4 (GAN)",
+    "output_contract": "\u00d74 \u2192 E-frame 224\u00d7224 BGR uint8 (INTER_AREA if 4s>224, INTER_LANCZOS4 if 4s<224)",
+    "runtime": {
+      "device": "cpu",
+      "precision": "fp32",
+      "threads": 2,
+      "timeout_s": 120.0,
+      "torch": "2.14.0+cpu"
+    },
+    "settings": {
+      "input": "D-frame native, RGB [0,1]",
+      "precision": "fp32",
+      "scale": 4,
+      "tile": 0,
+      "to_e": "INTER_AREA if 4s>224, INTER_LANCZOS4 if 4s<224"
+    },
+    "status": "RESEARCH CANDIDATE \u2014 not production-approved; licence REVIEW_REQUIRED (FFHQ/DIV2K-type training data, R4); code Apache-2.0",
+    "upstream": {
+      "checkpoint_key": "params_ema",
+      "commit": "6545850fbf8df298df73d81f3e8cba638787c8bd",
+      "release": "v0.0",
+      "repo": "https://github.com/JingyunLiang/SwinIR",
+      "strict_load": true
+    },
+    "weights": "models/M24_swinir/003_realSR_BSRGAN_DFOWMFC_s64w8_SwinIR-L_x4_GAN.pth",
+    "weights_key": "M24",
+    "weights_sha256": "99adfa91350a84c99e946c1eb3d8fce34bc28f57d807b09dc8fe40a316328c0a",
+    "weights_size_bytes": 142473939
+  },
+  "a4_rerun": {
+    "all_identical": true,
+    "load_report": {
+      "M24": {
+        "load_s": 2.555,
+        "missing_keys": [],
+        "sha256": "99adfa91350a84c99e946c1eb3d8fce34bc28f57d807b09dc8fe40a316328c0a",
+        "strict": true
+      }
+    },
+    "n": 2,
+    "rows": [
+      {
+        "bucket": "BLUR",
+        "identical": true,
+        "infer_s": 79.1,
+        "pair_id": "ff-train-59417.ref-v1.motionblur-severe",
+        "phase4_pixel_sha256": "52be6c886bd6f8f4981ca0844aa12594cc935362365aa13a32b5187300728b11",
+        "pixel_sha256": "52be6c886bd6f8f4981ca0844aa12594cc935362365aa13a32b5187300728b11"
+      },
+      {
+        "bucket": "BLUR",
+        "identical": true,
+        "infer_s": 80.7,
+        "pair_id": "ff-train-10219.ref-v1.gaussblur-extreme",
+        "phase4_pixel_sha256": "9f961b5fe72ca519243cde8a0708205e7c6d7367521e06a192e7d91f1a639734",
+        "pixel_sha256": "9f961b5fe72ca519243cde8a0708205e7c6d7367521e06a192e7d91f1a639734"
+      }
+    ]
+  },
+  "assets": {
+    "A4_weights": {
+      "path": "models/M24_swinir/003_realSR_BSRGAN_DFOWMFC_s64w8_SwinIR-L_x4_GAN.pth",
+      "sha256": "99adfa91350a84c99e946c1eb3d8fce34bc28f57d807b09dc8fe40a316328c0a",
+      "verified": true
+    },
+    "E01_sface": {
+      "path": "models/E01_sface/face_recognition_sface_2021dec.onnx",
+      "sha256": "0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79",
+      "verified": true
+    },
+    "E07_dlib": {
+      "path": "models/E07_dlib_resnet/dlib_face_recognition_resnet_model_v1.dat",
+      "sha256": "55533b28a95800a551ba546ba62fe69625c7e95a7061c338adffead08719da30",
+      "verified": true
+    },
+    "yunet_detector": {
+      "path": "models/D01_yunet/face_detection_yunet_2026may.onnx",
+      "sha256": "ebafce4e3c118d6554634be5c27ab333b4c047a9a8c3faf1d7cf93101c22f0f0",
+      "verified": true
+    }
+  },
+  "code_sha256_text": {
+    "scripts/p4_gate_evaluate.py": "5bc1251f7224e20312817f318d863e9a1b3d173e2aed75b9dfc7b614d04e77e0",
+    "scripts/p4_route_evaluate.py": "f34eda59ddff8ec3b41c0f80ed3e260f63bd41f8ebd72219ce680125e408f8c2",
+    "scripts/p4_router_validate.py": "c3370dd1b23f8ab78c90cb1b402380c5279b2ee55de7106c54caf5411395a7eb",
+    "src/fes_bench/adapters.py": "08b9d74248532295b39725b4124380853668bff66efd131b3b412cf2b87fb8d4",
+    "src/fes_bench/archs.py": "147272b11dea25cf87de2c166c77dc6844a25dce12727bbfac521465cf7d7ad4",
+    "src/fes_bench/evaluators.py": "df5b0bd2168bba533c30189afc5cf28509277cb5a217abfb9f1cd687370b35ab",
+    "src/fes_bench/gate.py": "bec9a6099c947c68157576cff6e17f4c50aa83ee80416f8374309366df11e812",
+    "src/fes_bench/geometry.py": "adbadb86ab5245d713943602c1ad2791438916976f2e595cf4ec1fee4f12dd64",
+    "src/fes_bench/metrics.py": "0851742c46ea7a7c8d449246a22994c15766bba7873ee54b6c9123fccfb9f983",
+    "src/fes_bench/p4eval.py": "0e06b57976eadbb3263ab1f3febc14049a512ce5c55ec2112bb19835f8cf097d",
+    "src/fes_bench/quality.py": "27cc6f80851598c020d852ccb142d37f7a5b5090565310b69f2be97217df75fa",
+    "src/fes_bench/routing.py": "5eda7196802448fdfc79c5d339cdeef3432f5e15302957bd4df5ddc7686072ae",
+    "src/fes_data/common.py": "bffc25407b57cd948a0eb2ce1498a939813cfaf7ad26183803848ee32e81c77d",
+    "src/fes_data/preprocess.py": "1cf2cea2ed8e4d0d591a866f0502e768e9cafbcbaa66e47bd256d8b03baa8fc5"
+  },
+  "data_kind": "SYNTHETIC",
+  "detection_alignment": {
+    "candidate_input": "A4 receives the native degraded chip; no alignment transform is applied to it",
+    "detector": {
+      "licence": "MIT code; weights REVIEW_REQUIRED (WIDER FACE, R4)",
+      "max_side": 640,
+      "model": "models/D01_yunet/face_detection_yunet_2026may.onnx",
+      "nms_threshold": 0.3,
+      "score_threshold": 0.7,
+      "sha256": "ebafce4e3c118d6554634be5c27ab333b4c047a9a8c3faf1d7cf93101c22f0f0",
+      "top_k": 50
+    },
+    "evaluation_frame": "E-frame = FairFace dlib chip (224 px) with the RECORDED per-reference alignment (ffhq512_transform_2x3, P2-T3). This is oracle alignment for evaluation; Phase 5 task 5.3 replaces it for real-world inputs.",
+    "quality_features": {
+      "c_frame": 112,
+      "crop_pad_frac": 0.5,
+      "crop_relaxed_threshold": 0.5,
+      "input_mode": "face_crop",
+      "min_eye_dist_px": 12.0,
+      "out_size": 112
+    },
+    "router_original_rule": "ORIGINAL returned in the E-frame via geometry.upsample_to_e (bicubic if s < 224)"
+  },
+  "evaluators": {
+    "E01": {
+      "id": "SFace (OpenCV Zoo 2021dec)",
+      "model": "models/E01_sface/face_recognition_sface_2021dec.onnx",
+      "role": "TEST-ONLY",
+      "sha256": "0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79",
+      "thr_far_1e-2": {
+        "main": 0.31333,
+        "p4dev": 0.2843
+      }
+    },
+    "E07": {
+      "dlib_version": "20.0.1",
+      "id": "dlib ResNet v1",
+      "image": "fes-dev:cpu-p4",
+      "model": "models/E07_dlib_resnet/dlib_face_recognition_resnet_model_v1.dat",
+      "role": "TEST-ONLY",
+      "sha256": "55533b28a95800a551ba546ba62fe69625c7e95a7061c338adffead08719da30",
+      "thr_far_1e-2": {
+        "main": 0.93363,
+        "p4dev": 0.92975
+      }
+    },
+    "identity_change_delta": {
+      "E01": 0.02154,
+      "E07": 0.00258
+    },
+    "note": "Neither evaluator is the Feature-Match system. Feature-Match is not integrated (Phase 0 boundary).",
+    "verdict_rules": "per evaluator BENEFIT \u0394>\u03b4 / HARM \u0394<\u2212\u03b4; multi: CONFIRMED_* both, PARTIAL_* one, DISAGREE opposite"
+  },
+  "frozen_configs": {
+    "configs/phase3/benchmark_p3.yaml": {
+      "sha256_text": "28f9ab7c08ba3cbee0b943b7c444cfede4e5bafee5e92214c686205a1b413cd0"
+    },
+    "configs/phase4/p4_protocol.yaml": {
+      "sha256_text": "e8c12b450b85d9cbf9d39eeaece89d995d943bb0aaff3b4d8dc8365386e4cdd5"
+    },
+    "configs/phase4/t6_gate.json": {
+      "sha256_text": "e8b8e72e6205eefd964cd1729b087b277f3a968b8f4b8c87b181450d01fc7baa"
+    },
+    "configs/phase4/t7_routing.json": {
+      "sha256_text": "dcfd2bbc2e70ac03675eed00f348e546d2447bd5b557e1fa6eaeaa5c480c9b42"
+    },
+    "configs/phase4/taxonomy_v1.yaml": {
+      "sha256_text": "63b972b0c77bb7525fd06ca89fe719965642845e4c4be4f679f781fb9b6eee27"
+    }
+  },
+  "gate": {
+    "decisions": [
+      "DO_NOT_ENHANCE",
+      "ENHANCE_CANDIDATE",
+      "UNSAFE_OR_UNCERTAIN"
+    ],
+    "default": "DO_NOT_ENHANCE",
+    "file": "configs/phase4/t6_gate.json",
+    "k": 4,
+    "rules": [
+      {
+        "conds": [
+          [
+            "noise_sigma",
+            ">=",
+            9.837129
+          ]
+        ]
+      },
+      {
+        "conds": [
+          [
+            "hf_ratio_c",
+            "<=",
+            0.000167
+          ]
+        ]
+      },
+      {
+        "conds": [
+          [
+            "blockiness",
+            ">=",
+            2.422797
+          ],
+          [
+            "noise_sigma",
+            "<=",
+            0.282681
+          ]
+        ]
+      },
+      {
+        "conds": [
+          [
+            "lap_norm_c",
+            "<=",
+            0.019835
+          ],
+          [
+            "noise_sigma",
+            "<=",
+            0.282681
+          ]
+        ]
+      }
+    ],
+    "safety": {
+      "abs_yaw_proxy_max": 0.25,
+      "det_score_min": 0.85,
+      "det_status": "OK required",
+      "nan_feature_condition": "False (missing evidence never enhances)"
+    },
+    "seal": "b8ee2c4309e5fe9a7ac1b07a6c0c8154f015dd86981fb72b1bf0043ec9fb7d88"
+  },
+  "manifest_version": "p5-baseline-1.0.0",
+  "name": "phase5_baseline",
+  "phase4_commits": {
+    "T6_evaluation": "bc5ef801d861a1c734a6c0eba64e0dcbaab71ea6",
+    "T6_freeze": "e504dfa12700414a4ffcc75bb2cfaa54ed850460",
+    "T7_evaluation": "ad79455f92e27b6bc1741573480b6bbd114396a0",
+    "T7_freeze": "785a4b213020ad75aee94048b415181358dcb724",
+    "phase3_baseline": "fdfce67a0e01f35dcb775d146b0a68938dd345c5",
+    "phase4_final_T8": "7aa8b2905bf347a1a6e5375f976617d5fb11a0fe"
+  },
+  "phase4_gate": "YELLOW",
+  "purpose": "Exact Phase 4 behaviour frozen as the Phase 5 baseline. Phase 5 changes are compared against it; nothing in this file may be edited \u2014 a changed baseline is a new manifest version.",
+  "reproduction": {
+    "T6_main": {
+      "committed_file": "data/manifests/phase4/t6/decisions_main.csv.gz",
+      "committed_sha256": "420e0d0d4723726fb373cff6919ec483d4f40b5cf3d5f578b9fa1238a93b8bee",
+      "identical": true,
+      "n": 896,
+      "replayed_sha256": "420e0d0d4723726fb373cff6919ec483d4f40b5cf3d5f578b9fa1238a93b8bee"
+    },
+    "T6_p4dev": {
+      "committed_file": "data/manifests/phase4/t6/decisions_p4dev.csv.gz",
+      "committed_sha256": "b5ba03293081de3ab947971b098c68b76092090ca30a957a04e9b2eca4f8411a",
+      "identical": true,
+      "n": 896,
+      "replayed_sha256": "b5ba03293081de3ab947971b098c68b76092090ca30a957a04e9b2eca4f8411a"
+    },
+    "T7_main": {
+      "committed_file": "data/manifests/phase4/t7/decision_log_main.csv.gz",
+      "committed_sha256": "79094637e86c3d5d4177533d8e767dbac8f08b7c08c4475b08a079d64a7bc005",
+      "decisions": {
+        "DO_NOT_ENHANCE": 565,
+        "ENHANCE_CANDIDATE": 92,
+        "UNSAFE_OR_UNCERTAIN": 239
+      },
+      "escalated": 239,
+      "fallbacks": {},
+      "identical": true,
+      "mild": {
+        "decisions": {
+          "DO_NOT_ENHANCE": 223,
+          "UNSAFE_OR_UNCERTAIN": 29
+        },
+        "enhanced": 0,
+        "n": 252
+      },
+      "n": 896,
+      "replayed_sha256": "79094637e86c3d5d4177533d8e767dbac8f08b7c08c4475b08a079d64a7bc005",
+      "used": {
+        "A4": 63,
+        "B0": 833
+      }
+    },
+    "T7_p4dev": {
+      "committed_file": "data/manifests/phase4/t7/decision_log_p4dev.csv.gz",
+      "committed_sha256": "349325f06f95ae31a38433eef71bbe5b4a25e85c141c3f8cb9ba3a7f5987022b",
+      "decisions": {
+        "DO_NOT_ENHANCE": 607,
+        "ENHANCE_CANDIDATE": 103,
+        "UNSAFE_OR_UNCERTAIN": 186
+      },
+      "escalated": 186,
+      "fallbacks": {},
+      "identical": true,
+      "mild": {
+        "decisions": {
+          "DO_NOT_ENHANCE": 243,
+          "UNSAFE_OR_UNCERTAIN": 9
+        },
+        "enhanced": 0,
+        "n": 252
+      },
+      "n": 896,
+      "replayed_sha256": "349325f06f95ae31a38433eef71bbe5b4a25e85c141c3f8cb9ba3a7f5987022b",
+      "used": {
+        "A4": 73,
+        "B0": 823
+      }
+    }
+  },
+  "routing": {
+    "bucket_rule": "PHOTOMETRIC > MIXED (\u22652 of LOWRES/NOISE/BLUR/COMPRESS) > LOWRES > NOISE > BLUR > COMPRESS > NONE",
+    "bucket_thresholds": {
+      "blockiness_hi": 1.523105,
+      "iod_px_lo": 71.440432,
+      "lap_norm_c_lo": 0.023057,
+      "luma_mean_lo": 47.13201,
+      "noise_sigma_hi": 1.083544,
+      "rms_contrast_lo": 25.377259
+    },
+    "fallbacks": {
+      "DO_NOT_ENHANCE": "original",
+      "INVALID_OUTPUT": "original (shape/dtype, non-finite, std < 1, no face on output)",
+      "MODEL_FAILURE": "original",
+      "RESOURCE_FAILURE": "original",
+      "TIMEOUT": "original",
+      "UNSAFE_OR_UNCERTAIN": "original + escalate"
+    },
+    "file": "configs/phase4/t7_routing.json",
+    "must_not_route": [
+      "A1",
+      "A2",
+      "A5"
+    ],
+    "original_id": "B0",
+    "output_guard": "INVALID_OUTPUT if shape/dtype \u2260 224\u00d7224\u00d73 uint8, std < 1, or YuNet finds no face on the output (score \u2265 0.7)",
+    "routed_candidates": [
+      "A4"
+    ],
+    "seal": "2f026f22903955cae6fc4379897e3d738b521a9533a136844f48792cc36e8eac",
+    "t6_gate_seal": "b8ee2c4309e5fe9a7ac1b07a6c0c8154f015dd86981fb72b1bf0043ec9fb7d88",
+    "table": {
+      "BLUR": "A4",
+      "COMPRESS": "B0",
+      "LOWRES": "B0",
+      "MIXED": "B0",
+      "NOISE": "A4",
+      "NONE": "B0",
+      "PHOTOMETRIC": "B0"
+    },
+    "timeout_mechanism": "thread future timeout (cannot kill a hung model; process isolation is P5 work)",
+    "timeout_s": 120.0
+  },
+  "run": {
+    "git_head": "7aa8b2905bf347a1a6e5375f976617d5fb11a0fe",
+    "numpy": "2.4.6",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.18.33.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "python": "3.11.16",
+    "utc": "2026-10-04T10:21:49+00:00"
+  },
+  "runtime": {
+    "cv2_threads": 1,
+    "device": "cpu",
+    "image_id": "sha256:cdf1790652e46580ca7bf49ce536b9934b4b8350ba16ea6a13e365374f81a666",
+    "image_tag": "fes-dev:cpu-p4",
+    "torch_threads": 2
+  },
+  "sha256": "9ce89a52e10f4027b2d589a97cd7e188faf484c451efb49290ada9ad4d198842",
+  "validity": "SYNTHETIC dev calibration. NOT valid for real-world inputs until re-calibrated on the rw dev split.",
+  "versions": {
+    "baseline_protocol": "p3-protocol-1.0.1",
+    "gate": "p4-gate-1.1.0",
+    "preprocess": "preproc-1.0.0",
+    "protocol": "p4-protocol-1.0.0",
+    "quality": "p4-quality-1.0.0",
+    "routing": "p4-routing-1.0.0"
+  }
+}

@@ -21,6 +21,8 @@ Decision order (first match wins; every outcome except ELIGIBLE returns the ORIG
   7 NAFNET_REJECT_HIGH_NOISE            noise_sigma > noise_max   (strong blur + grain is ORIGINAL, never NAFNet)
   8 NAFNET_REJECT_NOT_BLUR              lapd1_c ≥ clean_lapd1_lo  (sharp / clean-looking, or a non-blur degradation)
   9 NAFNET_REJECT_MILD_BLUR             blur_max < lapd1_c < clean_lapd1_lo
+    (admin blur range, fes_service.blur_scale; only when set: below enhance_from_pct → 9 MILD_BLUR,
+     above give_up_above_pct → NAFNET_REJECT_TOO_BLURRED)
  10 NAFNET_ELIGIBLE_STRONG_LOW_NOISE_BLUR   lapd1_c ≤ blur_max
 Thresholds: configs/phase5/r5_nafnet_route.json (SHA-256 sealed; scripts/r5_nafnet_calibrate.py, DEV data only).
 """
@@ -54,6 +56,7 @@ R_NO_FACE, R_LOW_DET, R_ALIGN = "NAFNET_REJECT_NO_FACE", "NAFNET_REJECT_LOW_DETE
 R_SIZE, R_PHOTO, R_COMP = "NAFNET_REJECT_LOW_FACE_SIZE", "NAFNET_REJECT_PHOTOMETRIC", "NAFNET_REJECT_COMPRESSION"
 R_PIX, R_HALF, R_NOISE = "NAFNET_REJECT_PIXELATION", "NAFNET_REJECT_HALFTONE", "NAFNET_REJECT_HIGH_NOISE"
 R_NOT_BLUR, R_MILD = "NAFNET_REJECT_NOT_BLUR", "NAFNET_REJECT_MILD_BLUR"
+R_TOO_BLURRED = "NAFNET_REJECT_TOO_BLURRED"            # admin blur range: blurrier than give_up_above_pct
 R_MISSING = "NAFNET_REJECT_MISSING_FEATURE"
 
 A_NUMERIC, A_FACE = "ARTIFACT_NUMERIC_INVALID", "ARTIFACT_FACE_INVALID"
@@ -140,14 +143,50 @@ class NafnetDecision:
         return asdict(self)
 
 
-def decide(f: dict, cfg: dict) -> NafnetDecision:
-    """f = rw features (+ texture_features). Pure function of the features and the sealed thresholds."""
+SIDE_CONFIG = "configs/phase5/side_face_route.json"
+SIDE_ROUTE_VERSION = "p7-side-face-route-1.0.0"
+# 1.1.0: + a compression / noise rule for box framing (scripts/indian_bench/calibrate_side_comp.py, DEV data only)
+SIDE_ROUTE_VERSION_COMP = "p7-side-face-route-1.1.0"
+SIDE_TIGHTER = ("noise_max", "blockiness_hi", "pixelation_max")   # may only be TIGHTER than the frontal route's
+
+
+def load_side_config(path: str = SIDE_CONFIG) -> dict:
+    """The sealed side-face (detection-box framing) calibration: the blur boundary of a box-framed chip, which reads
+    less sharp than a landmark-framed frontal chip of the same photo (more hair / background / smooth skin), and
+    (1.1.0) tighter noise / JPEG-blocking limits, because box-framed side chips with mild blur plus grain or JPEG
+    came out worse than their input."""
+    cfg = json.loads(repo_path(path).read_text(encoding="utf-8"))
+    assert cfg["sha256"] == GT.gate_hash(cfg), "side_face_route.json modified after freeze"
+    assert cfg["route_version"] in (SIDE_ROUTE_VERSION, SIDE_ROUTE_VERSION_COMP), cfg["route_version"]
+    keys = set(cfg["thresholds"])
+    assert {"blur_max", "clean_lapd1_lo"} <= keys <= {"blur_max", "clean_lapd1_lo", *SIDE_TIGHTER}, \
+        "only the blur boundary and the noise / compression limits may differ"
+    front = load_config(R6_CONFIG)["thresholds"]
+    assert all(cfg["thresholds"][k] <= front[k] for k in SIDE_TIGHTER if k in keys), "side limits must be tighter"
+    return cfg
+
+
+def box_safety(f: dict) -> str | None:
+    """SIDE-FACE framing (pipeline profile "best_side") only: the safety rule for a chip framed by the detection box.
+    The T6 pose rules cannot hold on a turned / profile face (two of the five landmarks are guesses), so the face
+    must instead be a confident detection in the full image: the same LOW_CONF score limit T6 uses."""
+    if _nan(f.get("det_score")):
+        return "no_valid_face:NO_BOX_DETECTION"
+    return "low_detection_confidence" if f["det_score"] < GT.LOW_CONF else None
+
+
+def decide(f: dict, cfg: dict, safety=GT.safety, blur_range: dict | None = None) -> NafnetDecision:
+    """f = rw features (+ texture_features). Pure function of the features and the sealed thresholds.
+    `safety`: the T6 safety rules (default, unchanged) | box_safety (side-face framing; every other rule and
+    threshold is the same).
+    `blur_range`: the admin blur range (fes_service.blur_scale.report) — only ever STRICTER than the sealed rules:
+    verdict NOT_BLURRY_ENOUGH → R_MILD, TOO_BLURRED → R_TOO_BLURRED, checked after every sealed rule. None = as before."""
     t = cfg["thresholds"]
 
     def no(reason: str, decision: str = GT.DNE) -> NafnetDecision:
         return NafnetDecision(False, reason, decision, ROUTE_INELIGIBLE)
 
-    why = GT.safety(f)
+    why = safety(f)
     if why:
         r = R_NO_FACE if why.startswith("no_valid_face") else (R_LOW_DET if why == "low_detection_confidence"
                                                                 else R_ALIGN)
@@ -172,6 +211,10 @@ def decide(f: dict, cfg: dict) -> NafnetDecision:
         return no(R_NOT_BLUR)
     if f["lapd1_c"] > t["blur_max"]:
         return no(R_MILD)
+    if blur_range is not None and blur_range["verdict"] == "NOT_BLURRY_ENOUGH":
+        return no(R_MILD)
+    if blur_range is not None and blur_range["verdict"] == "TOO_BLURRED":
+        return no(R_TOO_BLURRED)
     return NafnetDecision(True, ELIGIBLE, GT.ENH, ROUTE_ELIGIBLE)
 
 
@@ -428,3 +471,23 @@ def stability_check(runs_dot_c, cfg: dict) -> ArtifactGuardResult:
         res.reasons.append(f"{A_UNSTABLE}:{n_bad}/{len(vals)}")
     res.passed = not res.reasons
     return res
+
+
+# ------------------------------------------------------------------ R6-BEST: one output out of several candidates
+# Profile "best" (pipeline.BEST_CANDIDATES = r6, r6_ft). Rule from scripts/r6_ft/selector_study.py (316 blurred faces
+# with a sharp original: archive VAL shake blur + FairFace gaussian/defocus/motion; rule fixed on the even half, read
+# on the odd half): the SHARPER accepted output — higher lapd1_c, the gate's own grain-robust blur measure — is the
+# one closer to the sharp original in 51/55 faces where both candidates were accepted (57/63 on the design half);
+# SFace-to-sharp 0.754 vs 0.728 (always r6) / 0.713 (always r6_ft) / 0.757 (oracle). Synthetic blur only.
+SELECT_RULE = "sharper_lapd1_c"
+
+
+def select_best(chip: np.ndarray, outs: dict) -> tuple[str, dict]:
+    """outs: {profile: accepted output chip}, in candidate order → (chosen profile, {profile: lapd1_c}). The highest
+    score wins; a tie or an unusable score keeps the earlier candidate. `chip` (the input) is not part of the rule."""
+    from fes_service.rwgate import lapd1
+    scores = {}
+    for n, o in outs.items():
+        v = lapd1(o)
+        scores[n] = None if _nan(v) else round(v, 6)
+    return max(outs, key=lambda n: -1.0 if scores[n] is None else scores[n]), scores

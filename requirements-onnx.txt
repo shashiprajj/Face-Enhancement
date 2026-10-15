@@ -1,0 +1,10 @@
+# ONNX export + ONNX Runtime CPU inference (R6-ONNX study). Hash-pinned wheels resolved 2026-10-10 on python 3.11 /
+# linux x86_64. Licences: onnx Apache-2.0, onnxruntime MIT, onnxscript MIT, onnx-ir Apache-2.0, protobuf BSD-3,
+# flatbuffers Apache-2.0, ml_dtypes Apache-2.0.
+flatbuffers==25.12.19 --hash=sha256:7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4
+ml_dtypes==0.6.0 --hash=sha256:6c8e39b53e90afda8ce52859c93de4dba3e02b76d85dcf091cc469f9184c6dae
+onnx==1.23.2 --hash=sha256:c03ecf6b835d136108eeaeeafbd0026fc7b3cf98661409fbc6b63d5a29361348
+onnx-ir==1.0.0 --hash=sha256:e578f0d608d3062866b48223616eb2d10a6d6d01f8b8faac596129034f483cc7
+onnxruntime==1.31.0 --hash=sha256:d4092b78fc5bab77ce6522393098cdb2535423045ecdcff15cc0d022162d6b66
+onnxscript==0.7.2 --hash=sha256:d0e7121c6a1eefd608058928e111cbdb76709f70d269ff0d07aee493bd1d13c9
+protobuf==7.36.2 --hash=sha256:89f23aa53c24553a2416fd4fd1ec06f74fa42b14b546d8883128813f775bbfd2

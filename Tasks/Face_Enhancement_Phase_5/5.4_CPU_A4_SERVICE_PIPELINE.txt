@@ -1,0 +1,23 @@
+TASK 5.4 — STANDALONE CPU A4 ENHANCEMENT PIPELINE
+
+Objective: build the actual standalone service around the frozen gate/router and A4, entirely offline on CPU.
+
+Target:
+Input -> validation -> detection/alignment -> quality analysis -> T6 -> T7 -> original OR A4 -> output validation -> response.
+
+Do:
+1. Build clean standalone service boundary.
+2. Load a pinned local A4 artifact.
+3. Ensure inference needs no online API.
+4. Configure/document CPU threads and memory.
+5. Add input limits, timeout/watchdog strategy, memory/error handling, malformed image handling, no-face fallback, multi-face policy, and model-exception fallback.
+6. Keep original as safe fallback.
+7. Return structured route/result metadata without unnecessary sensitive data.
+8. Add health/readiness checks.
+9. Add unit/integration tests.
+10. Measure CPU latency/memory; do not optimize prematurely.
+11. Run representative end-to-end samples and preserve manifests.
+12. Report and commit.
+
+A4 remains a research candidate, not production-approved.
+Acceptance: poor-quality raw image can safely return original or A4 result according to frozen policy.

@@ -1,0 +1,88 @@
+{
+  "curves": {
+    "front": [
+      {
+        "lapd1_c": 0.015829,
+        "n": 135,
+        "percent": 0.0,
+        "sigma": 0.0
+      },
+      {
+        "lapd1_c": 0.012046,
+        "n": 136,
+        "percent": 20.0,
+        "sigma": 0.8
+      },
+      {
+        "lapd1_c": 0.007668,
+        "n": 139,
+        "percent": 37.5,
+        "sigma": 1.5
+      },
+      {
+        "lapd1_c": 0.003643,
+        "n": 145,
+        "percent": 62.5,
+        "sigma": 2.5
+      },
+      {
+        "lapd1_c": 0.001318,
+        "n": 188,
+        "percent": 100.0,
+        "sigma": 4.0
+      }
+    ],
+    "side": [
+      {
+        "lapd1_c": 0.005699,
+        "n": 265,
+        "percent": 0.0,
+        "sigma": 0.0
+      },
+      {
+        "lapd1_c": 0.004371,
+        "n": 264,
+        "percent": 20.0,
+        "sigma": 0.8
+      },
+      {
+        "lapd1_c": 0.002625,
+        "n": 261,
+        "percent": 37.5,
+        "sigma": 1.5
+      },
+      {
+        "lapd1_c": 0.00119,
+        "n": 255,
+        "percent": 62.5,
+        "sigma": 2.5
+      },
+      {
+        "lapd1_c": 0.000464,
+        "n": 212,
+        "percent": 100.0,
+        "sigma": 4.0
+      }
+    ]
+  },
+  "data": {
+    "blur_anchors": "benchmark gaussian_blur levels 1-4 (front: enhancement_results.jsonl, profile best; side: side_profile_run, framing detection_box)",
+    "date": "2026-10-14",
+    "limits": "one dataset, synthetic Gaussian blur; other blur types at the same percentage look different; grain raises lapd1_c (reads as less blurred)",
+    "sharp_anchor": "400 clean references of the Indian-expression benchmark, one request each (profile best_side), blur_scale/clean_anchor.jsonl"
+  },
+  "definition": "blur percent = 25 x Gaussian sigma on the 800-px clean reference (0 % sharp, 100 % = sigma 4.0); per framing, linear in log(lapd1_c) between the median-lapd1_c anchors, clamped to 0-100",
+  "feature": "lapd1_c",
+  "scale_version": "p8-blur-scale-1.0.0",
+  "sha256": "e0395575738d8da5238ac88bd7187c23ade9327c69da83837d18cb4918c96b5f",
+  "validated_floor": {
+    "front": {
+      "blur_max": 0.008,
+      "percent": 35.858
+    },
+    "side": {
+      "blur_max": 0.003,
+      "percent": 32.917
+    }
+  }
+}

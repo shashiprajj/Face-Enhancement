@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>Face Enhancement — Best Result</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="compare.css">
+</head>
+<body>
+  <header class="top">
+    <div>
+      <h1>Face Enhancement <span class="tag-exp">RESEARCH</span></h1>
+      <p class="sub">One image in → one image out ·
+        <a href="compare.html">compare the individual models →</a> · <a href="./">A4 / default demo →</a></p>
+    </div>
+    <div id="health" class="health" data-state="unknown" role="status" aria-live="polite">
+      <span class="dot" aria-hidden="true"></span><span id="health-label">Checking service…</span>
+    </div>
+  </header>
+
+  <main>
+    <div class="banner" role="note">
+      Two deblurring models run on the face. Each output must pass the safety checks; when both do, the sharper one is
+      returned. If neither does, or the face is not blurred, you get the original back unchanged. Not production-approved.
+    </div>
+
+    <section class="card">
+      <div id="dropzone" class="dropzone" tabindex="0" role="button"
+           aria-label="Upload a face image: drop a file here or press Enter to browse">
+        <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp,image/bmp" hidden>
+        <div id="drop-empty" class="drop-empty">
+          <p><strong>Drop a face image here</strong> or <span class="link">browse</span></p>
+          <p class="hint" id="format-hint">JPEG, PNG, WebP or BMP · up to 20 MB</p>
+        </div>
+        <img id="preview" class="preview" alt="Selected image preview" hidden>
+      </div>
+      <div id="file-row" class="file-row" hidden>
+        <span id="file-name" class="file-name"></span>
+        <div class="file-actions">
+          <button id="replace-btn" class="btn ghost" type="button">Replace</button>
+          <button id="remove-btn" class="btn ghost" type="button">Remove</button>
+        </div>
+      </div>
+      <p id="mode-note" class="note" hidden>Single-output mode is not enabled on this service. Start it with
+        FES_EXPERIMENTAL_PROFILES=r6,r6_ft.</p>
+      <details id="blur-panel" class="blur-panel" hidden>
+        <summary>Blur range</summary>
+        <p id="blur-service" class="note"></p>
+        <div class="blur-fields">
+          <label>Enhance from (%)
+            <input id="blur-from" type="number" min="0" max="100" step="1" inputmode="decimal" placeholder="service setting">
+          </label>
+          <label>Give up above (%)
+            <input id="blur-upto" type="number" min="0" max="99" step="1" inputmode="decimal" placeholder="service setting">
+          </label>
+        </div>
+        <p class="note">Optional, for this image only. Leave empty to use the service setting. Values can only narrow the
+          range: faces less blurred than "enhance from" or more blurred than "give up above" are returned unchanged.
+          <span id="blur-min"></span></p>
+      </details>
+      <div class="actions">
+        <button id="enhance-btn" class="btn primary" type="button" disabled>Enhance Image</button>
+      </div>
+      <div id="loading" class="loading" hidden role="status" aria-live="polite">
+        <span class="spinner" aria-hidden="true"></span>
+        <span>Running both models on the face… a few seconds on CPU.</span>
+        <span id="elapsed" class="elapsed"></span>
+      </div>
+      <div id="error" class="alert bad" hidden role="alert"></div>
+    </section>
+
+    <section id="result" class="card" hidden>
+      <div class="result-head best-head">
+        <div>
+          <span id="status-badge" class="badge"></span>
+          <h2 id="result-title"></h2>
+          <p id="result-message" class="msg"></p>
+        </div>
+        <div class="result-actions">
+          <button id="reset-btn" class="btn primary" type="button">Try Another Image</button>
+        </div>
+      </div>
+      <div class="compare">
+        <figure>
+          <figcaption id="left-label">ORIGINAL</figcaption>
+          <div class="frame"><img id="orig-img" alt="Original image"></div>
+        </figure>
+        <figure>
+          <figcaption id="right-label">ENHANCED</figcaption>
+          <div class="frame"><img id="proc-img" alt="Image returned by the service"></div>
+        </figure>
+      </div>
+      <details class="meta">
+        <summary>How this result was chosen</summary>
+        <dl id="details"></dl>
+      </details>
+      <p class="disclaimer">Research demo only. An enhanced image has not been verified for identity matching; do not
+        use it for identification.</p>
+    </section>
+  </main>
+
+  <footer>Images are sent only to this local service and are not stored by it.</footer>
+  <script type="module" src="best.js"></script>
+</body>
+</html>

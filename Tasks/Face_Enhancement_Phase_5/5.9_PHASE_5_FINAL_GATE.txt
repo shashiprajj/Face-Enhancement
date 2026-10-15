@@ -1,0 +1,36 @@
+TASK 5.9 — PHASE 5 FINAL EVIDENCE SYNTHESIS AND DECISION GATE
+
+Objective: decide whether a proper working face-enhancement model/pipeline has been demonstrated.
+
+Synthesize 5.1–5.8, licensing status, CPU performance, and all evidence.
+
+GREEN only if:
+- real-world Feature-Match improvement is demonstrated;
+- false-accept/identity risk is acceptable;
+- gate/router is safe;
+- human review shows no unacceptable identity fabrication;
+- robustness is acceptable;
+- CPU behavior is operationally acceptable;
+- licensing is cleared/approved for intended deployment.
+
+YELLOW if technical benefit exists but evidence/sample size or approval gates remain open.
+
+RED if A4 does not improve actual Feature-Match, identity risk is unacceptable, routing cannot control harm, or robustness is unsafe.
+
+Report:
+1. Executive verdict.
+2. Evidence matrix.
+3. Original vs enhanced Feature-Match results.
+4. Router performance.
+5. Human-review findings.
+6. Robustness.
+7. CPU runtime/memory.
+8. Licensing status/open approvals.
+9. Limitations.
+10. Exact next step if not GREEN.
+11. Reproducibility instructions.
+12. Commit/artifact locations.
+
+Do not declare GREEN from visual quality or embedding similarity alone. If RED, extract real-world failure signatures and define the next model-discovery benchmark instead of random model hunting.
+
+Phase 5 ends at this gate.

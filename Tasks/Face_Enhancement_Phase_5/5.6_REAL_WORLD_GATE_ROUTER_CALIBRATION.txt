@@ -1,0 +1,21 @@
+TASK 5.6 — REAL-WORLD GATE AND ROUTER CALIBRATION
+
+Objective: calibrate T6/T7 using only the real-world DEVELOPMENT split, leaving final test untouched.
+
+Start from NOISE/BLUR -> A4; otherwise original/uncertain.
+
+Do:
+1. Analyze 5.5 benefits/failures on development data.
+2. Identify degradation classes that genuinely improve actual Feature-Match.
+3. Tune quality thresholds only on development data.
+4. Define explicit states: DO_NOT_ENHANCE, ENHANCE_A4, UNSAFE_OR_UNCERTAIN, ORIGINAL_FALLBACK.
+5. Optimize identity safety first.
+6. Require actual matching evidence before admitting a new degradation class.
+7. Keep conservative fallback.
+8. Use cross-validation where feasible.
+9. Freeze router before final test.
+10. Evaluate frozen router on held-out test once as primary evaluation.
+11. Report Phase 4 synthetic policy vs calibrated development policy vs final test.
+
+Do not route A1/A2/A5, add classes for visual quality alone, tune on held-out test, or force coverage.
+Acceptance: frozen real-world router with documented thresholds, evidence and safe fallback.

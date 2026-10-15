@@ -38,7 +38,7 @@ import json
 import threading
 import time
 import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 import cv2
 import numpy as np
@@ -50,6 +50,7 @@ from fes_bench import routing as RT
 from fes_bench.evaluators import DLIB_CHIP_TEMPLATE_150
 from fes_data import preprocess as P
 from fes_data.common import repo_path
+from fes_service import blur_scale as BS
 from fes_service import nafnet_route as NR
 
 SERVICE_VERSION = "fes-service-r5-0.2.0"
@@ -98,14 +99,17 @@ class Result:
     gate_route: str = ""                         # the route the gate chose (before any force_a4 override)
     chip: bytes | None = None                    # PNG of the face chip the gate analysed / A4 received
     route_mode: str = "a4"                       # a4 | nafnet | auto (R5-5)
-    model: str | None = None                     # model actually INVOKED: A4_SWINIR_L | NAFNET_GOPRO | None
+    model: str | None = None                     # model INVOKED: A4_SWINIR_L | NAFNET_GOPRO | NAFNET_FACE_FT | None
     artifact_check: str = "NOT_RUN"              # NAFNet artifact guard: PASS | FAIL | NOT_RUN
     nafnet: dict | None = None                   # NAFNet route record (eligibility, reason, guard result)
     profile: str = ""                            # R5-9: the explicitly requested profile ("" = service default)
+    selection: dict | None = None                # R6-BEST (profile "best"): candidates, scores and the one chosen
 
     def metadata(self) -> dict:
         """Structured, non-sensitive metadata: no landmarks, boxes, embeddings or pixels."""
         extra = {"profile": self.profile} if self.profile else {}     # default requests: metadata exactly as before
+        if self.selection is not None:
+            extra["selection"] = self.selection
         return {**extra, "service_version": SERVICE_VERSION, "request_id": self.request_id, "status": self.status,
                 "input_mode": self.input_mode, "enhanced": self.status == ENHANCED,
                 "output": ("nafnet_face_chip_native" if self.used == NR.MODEL else "a4_face_chip_224")
@@ -173,10 +177,30 @@ def face_chip_filled(img: np.ndarray, landmarks: np.ndarray) -> tuple[np.ndarray
     return filled, mask
 
 
-NAFNET_PROFILES = ("r5_6", "r5_8", "r5_10", "r6")  # r5_6 = live/default; r5_8 / r5_10 / r6 = research candidates (opt-in)
-# route config per NAFNet profile (each file is SHA-256 sealed; load_config verifies it)
-PROFILE_CONFIG = {"r5_6": NR.CONFIG, "r5_8": NR.CANDIDATE_CONFIG, "r5_10": NR.R5_10_CONFIG, "r6": NR.R6_CONFIG}
-EXPERIMENTAL_PROFILES = ("r5_8", "r5_10", "r6")
+def face_chip_box(img: np.ndarray, bbox_xywh, border: int = cv2.BORDER_CONSTANT) -> tuple[np.ndarray, int]:
+    """SIDE-FACE framing (profile "best_side"): square chip centred on the detection box, side = SIDE_BOX_SCALE ×
+    the box's longer side, cut at integer pixel positions and reduced to 224 with INTER_AREA when larger — the
+    face_chip rules, with the box in place of the landmark fit."""
+    x, y, bw, bh = bbox_xywh
+    side = int(max(8, round(SIDE_BOX_SCALE * max(bw, bh))))
+    x0, y0 = int(round(x + bw / 2.0 - side / 2.0)), int(round(y + bh / 2.0 - side / 2.0))
+    h, w = img.shape[:2]
+    pad = max(0, -x0, -y0, x0 + side - w, y0 + side - h)
+    src = cv2.copyMakeBorder(img, pad, pad, pad, pad, border, value=(0, 0, 0)) if pad else img
+    chip = src[y0 + pad:y0 + pad + side, x0 + pad:x0 + pad + side]
+    if side > CHIP_MAX:
+        chip = cv2.resize(chip, (CHIP_MAX, CHIP_MAX), interpolation=cv2.INTER_AREA)
+    return np.ascontiguousarray(chip), side
+
+
+# r5_6 = live/default; r5_8 / r5_10 / r6 / r6_ft = research candidates (opt-in)
+NAFNET_PROFILES = ("r5_6", "r5_8", "r5_10", "r6", "r6_ft")
+# route config per NAFNet profile (each file is SHA-256 sealed; load_config verifies it). r6_ft = the r6 route
+# unchanged (same gate, stability check and guards) with ONE change: the model's weights (models:nafnet_factory_r6_ft)
+PROFILE_CONFIG = {"r5_6": NR.CONFIG, "r5_8": NR.CANDIDATE_CONFIG, "r5_10": NR.R5_10_CONFIG, "r6": NR.R6_CONFIG,
+                  "r6_ft": NR.R6_CONFIG}
+EXPERIMENTAL_PROFILES = ("r5_8", "r5_10", "r6", "r6_ft")
+PROFILE_MODEL = {"r6_ft": "NAFNET_FACE_FT"}        # model INVOKED when it is not NR.MODEL (models.FACE_FT_MODEL)
 STABILITY_GUARD = "STABILITY_GUARD"                # fallback code: R6 — a mirror run of NAFNet was unstable
 LOCAL_ARTIFACT_GUARD = "LOCAL_ARTIFACT_GUARD"     # fallback code: the candidate's local-patch guard rejected the output
 # R5-9 per-request profiles: "original" = input returned unchanged, no model invoked (comparison baseline);
@@ -184,7 +208,28 @@ LOCAL_ARTIFACT_GUARD = "LOCAL_ARTIFACT_GUARD"     # fallback code: the candidate
 # built with that experimental model (app: FES_EXPERIMENTAL_PROFILES=r5_8,r5_10); a request without `profile` = the
 # service default.
 PROFILE_ORIGINAL = "original"
-REQUEST_PROFILES = (PROFILE_ORIGINAL,) + NAFNET_PROFILES
+# R6-BEST per-request profile "best": 1 input → 1 output. Every BEST_CANDIDATES profile runs its full guarded route on
+# the same face; the output chosen by nafnet_route.select_best is returned. Servable only when all of them are enabled.
+PROFILE_BEST = "best"
+BEST_CANDIDATES = ("r6", "r6_ft")
+# SIDE-FACE research profile "best_side" (opt-in per request, full_image only): exactly profile "best" for a face the
+# landmark framing accepts. Only where "best" stops because the face is turned — the detector's landmarks are not
+# usable (FACE_TOO_SMALL / alignment_unreliable) or the gate answers NAFNET_REJECT_UNSAFE_ALIGNMENT — the face is
+# framed by its DETECTION BOX instead (face_chip_box) and the same "best" route runs on that chip: same blur / noise /
+# compression rules and thresholds, same models, stability check, guards and selection. Two things replace what
+# needs two visible eyes: the safety rule (NR.box_safety: confident detection in the full image) and the face-size
+# feature (the chip's template-equivalent eye distance). Evidence: experiments on the Indian-expression benchmark
+# (2026-10-13: 641 blurred side faces, synthetic level-3 blur). Not production-approved; identity on profile faces
+# is not measured (SFace is not reliable there).
+PROFILE_BEST_SIDE = "best_side"
+BEST_PROFILES = (PROFILE_BEST, PROFILE_BEST_SIDE)
+# chip side / max(box width, box height): the median over 80 frontal references of that benchmark, so a box-framed
+# chip shows a face at the scale the models and the gate see in the landmark framing
+SIDE_BOX_SCALE = 0.982
+REQUEST_PROFILES = (PROFILE_ORIGINAL,) + NAFNET_PROFILES + BEST_PROFILES
+# admin blur range (fes_service.blur_scale): the scale is calibrated against the r6 route's blur limits, so it applies
+# to the r6-based profiles only (r6, r6_ft and therefore best / best_side, /v2, /v3); r5_6 / r5_8 / r5_10 are unchanged
+BLUR_RANGE_PROFILES = ("r6", "r6_ft")
 
 
 @dataclass(frozen=True)
@@ -201,7 +246,8 @@ class EnhancementPipeline:
 
     def __init__(self, a4, timeout_s: float = 120.0, limits: Limits = Limits(), max_inflight: int = 4,
                  gate: str = "t6", nafnet=None, route_mode: str = "a4", nafnet_profile: str = "r5_6",
-                 experimental_nafnet: dict | None = None):
+                 experimental_nafnet: dict | None = None, best_parallel: bool = False,
+                 blur_settings: BS.BlurSettings | None = None, blur_settings_source: str = "default"):
         """gate="t6": the frozen Phase 4 T6/T7 policy, exactly (synthetic-calibrated).
         gate="rw": the R5-3 real-world gate (fes_service.rwgate, configs/phase5/r5_rwgate.json).
         nafnet: callable(chip, ctx) -> (same-size chip, meta), normally an IsolatedModel(nafnet_factory). Route modes
@@ -210,11 +256,23 @@ class EnhancementPipeline:
         config with the local-patch guard, out-of-image reflect fill; pair it with models:nafnet_factory_pad16) |
         "r5_10" (R5-10 research candidate: r5_8 with the DEV-recalibrated blur boundary; same model factory) |
         "r6" (R6 research candidate: the r5_8 route + 4-run stability check + median/luma-only consensus output;
-        pair it with models:nafnet_factory_r6).
+        pair it with models:nafnet_factory_r6) | "r6_ft" (R6-FT research candidate: r6 with the face-blur fine-tuned
+        weights; pair it with models:nafnet_factory_r6_ft).
         experimental_nafnet: R5-9 — {"r5_8": model, "r5_10": model} makes those candidates selectable PER REQUEST
         (profile="r5_8" / "r5_10") next to the default profile r5_6; it never changes what a request without
-        `profile` does."""
+        `profile` does.
+        best_parallel: PERF Step 1 (opt-in, default off = the sequential behaviour) — profile "best" starts the model
+        inference of all its candidates at the same moment, each in its own isolated worker, instead of one after
+        the other. Gate, stability check, guards, selection and every fallback are the same code on the same inputs;
+        see _parallel_infer.
+        blur_settings: the deployment's admin blur range (fes_service.blur_scale; None = both off = unchanged
+        behaviour). Validated here: an invalid value raises ValueError (the service does not become ready)."""
         assert gate in ("t6", "rw"), gate
+        self.blur_scale, self.blur_settings = None, BS.BlurSettings()
+        self.blur_settings_source = blur_settings_source
+        self._req_blur: tuple[BS.BlurSettings, dict] | None = None    # the current request's range (under the lock)
+        self.best_parallel = bool(best_parallel)
+        self.side_cfg = None
         assert nafnet_profile in NAFNET_PROFILES, nafnet_profile
         self.nafnet_profile = nafnet_profile
         assert route_mode in ROUTE_MODES, route_mode
@@ -234,14 +292,23 @@ class EnhancementPipeline:
             self.nafnet_cfg = NR.load_config(PROFILE_CONFIG[nafnet_profile])
             self.seals["nafnet_route"] = self.nafnet_cfg["sha256"]
             self.oob_fill = bool(self.nafnet_cfg.get("framing", {}).get("oob_reflect_fill", False))
+            if repo_path(NR.SIDE_CONFIG).exists():              # profile "best_side" is servable only with its seal
+                self.side_cfg = NR.load_side_config()
+                self.seals["side_face_route"] = self.side_cfg["sha256"]
+            if repo_path(BS.SCALE_CONFIG).exists() and self.side_cfg is not None:
+                self.blur_scale = BS.load_scale()
+                self.seals["blur_scale"] = self.blur_scale.cfg["sha256"]
+                self.blur_settings = BS.validate(blur_settings or BS.BlurSettings(), self.blur_scale)
         else:
             self.oob_fill = False
+        if (blur_settings or BS.BlurSettings()).active and self.blur_scale is None:
+            raise ValueError("blur settings need gate 'rw' and the sealed " + BS.SCALE_CONFIG)
         self.profiles: dict[str, _NafnetProfile] = {}
         if gate == "rw" and nafnet is not None:
             self.profiles[nafnet_profile] = _NafnetProfile(nafnet_profile, self.nafnet_cfg, nafnet, self.oob_fill)
         for name, model in (experimental_nafnet or {}).items():
             assert name in EXPERIMENTAL_PROFILES and nafnet_profile == "r5_6", \
-                "only r5_8 / r5_10 / r6 can be added next to the default r5_6"
+                "only r5_8 / r5_10 / r6 / r6_ft can be added next to the default r5_6"
             assert gate == "rw" and nafnet is not None and model is not None, f"experimental {name} needs gate 'rw'"
             cfg = NR.load_config(PROFILE_CONFIG[name])                  # verifies the candidate seal
             self.profiles[name] = _NafnetProfile(name, cfg, model,
@@ -308,16 +375,44 @@ class EnhancementPipeline:
 
     # ---------------------------------------------------------------- main entry
     def process(self, data: bytes, input_mode: str = "full_image", force_a4: bool = False,
-                route_mode: str | None = None, profile: str | None = None) -> Result:
+                route_mode: str | None = None, profile: str | None = None,
+                blur: BS.BlurSettings | None = None) -> Result:
         """route_mode None = the pipeline's configured mode. profile None/"" = the service default (R5-9: "original" |
-        "r5_6" | "r5_8" | "r5_10"; an unknown or not-enabled profile is REJECTED, never silently replaced)."""
+        "r5_6" | "r5_8" | "r5_10"; an unknown or not-enabled profile is REJECTED, never silently replaced).
+        blur: per-request admin blur range; it may only narrow the deployment's (otherwise REJECTED)."""
         if not self._slots.acquire(blocking=False):
             raise Busy("too many requests in flight")
         try:
             with self._lock:
+                self._req_blur = None
+                try:
+                    self._req_blur = self._request_blur(blur)
+                    target = BEST_CANDIDATES[0] if profile in BEST_PROFILES else profile or self.nafnet_profile
+                    if blur is not None and blur.active and target not in BLUR_RANGE_PROFILES + (PROFILE_ORIGINAL,):
+                        raise ValueError("blur settings apply to profiles "
+                                         f"{', '.join(BLUR_RANGE_PROFILES + BEST_PROFILES)} only (this request: "
+                                         f"{target!r})")
+                except ValueError as e:
+                    res = Result(status=REJECTED, request_id=uuid.uuid4().hex, input_mode=input_mode,
+                                 route_mode=route_mode or self.route_mode, profile=profile or "", error=str(e))
+                    return res
                 return self._process(data, input_mode, force_a4, route_mode or self.route_mode, profile or "")
         finally:
             self._slots.release()
+
+    def _request_blur(self, blur: BS.BlurSettings | None) -> tuple[BS.BlurSettings, dict] | None:
+        """→ (effective blur range, where each value came from), or None when no blur scale is loaded."""
+        if self.blur_scale is None:
+            if blur is not None and blur.active:
+                raise ValueError("blur settings are not available on this service (gate 'rw' + "
+                                 f"{BS.SCALE_CONFIG} needed)")
+            return None
+        req = blur or BS.BlurSettings()
+        eff = BS.validate(req, self.blur_scale, base=self.blur_settings)
+        def src(r, d, unset):
+            return "request" if r is not None else "deployment" if d is not None else unset
+        return eff, {"enhance_from": src(req.enhance_from_pct, self.blur_settings.enhance_from_pct, "validated_limit"),
+                     "give_up_above": src(req.give_up_above_pct, self.blur_settings.give_up_above_pct, "off")}
 
     def _route(self, chip: np.ndarray, force_a4: bool):
         """The frozen router; with force_a4 its plan is kept but the route is overridden to A4 (under the lock)."""
@@ -368,10 +463,19 @@ class EnhancementPipeline:
                          + (f" (start it with FES_EXPERIMENTAL_PROFILES={profile})"
                             if profile in EXPERIMENTAL_PROFILES else ""))
             return res
+        if profile in BEST_PROFILES and not all(p in self.profiles for p in BEST_CANDIDATES):
+            res.error = (f"profile {profile!r} is not enabled on this service"
+                         f" (start it with FES_EXPERIMENTAL_PROFILES={','.join(BEST_CANDIDATES)})")
+            return res
+        if profile == PROFILE_BEST_SIDE and self.side_cfg is None:
+            res.error = f"profile {profile!r} is not enabled on this service (no {NR.SIDE_CONFIG})"
+            return res
         if profile and force_a4:
             res.error = "force_a4 cannot be combined with an explicit profile"
             return res
-        prof = self.profiles.get(profile or self.nafnet_profile)
+        prof = self.profiles.get(BEST_CANDIDATES[0] if profile in BEST_PROFILES else profile or self.nafnet_profile)
+        side = profile == PROFILE_BEST_SIDE and route_mode != "a4" and input_mode == "full_image"
+        det = None                          # the full-image detection (profile "best_side": its box frames a side face)
         img, err = self._decode(data)
         res.timings_ms["decode"] = ms()
         if img is None:
@@ -393,10 +497,15 @@ class EnhancementPipeline:
             fr = P.preprocess(img, self.det, self.det_cfg, input_mode="face_crop")[0]
             res.n_faces, res.warnings = fr.n_faces, list(fr.warnings)
             res.timings_ms["detect"] = ms()
+            det = fr.detection
             if fr.status != P.OK or fr.detection is None:
+                if side and det is not None:
+                    return self._side_path(res, data, img, det, route_mode, ms, f"no_valid_face:{fr.status}")
                 return original(decision=GT.UNSAFE, reason=f"no_valid_face:{fr.status}", escalate=True)
             lm = np.asarray(fr.detection.landmarks, np.float64)
             if not fr.aligned or not P.landmarks_plausible(lm):
+                if side:
+                    return self._side_path(res, data, img, det, route_mode, ms, "alignment_unreliable:landmarks")
                 return original(decision=GT.UNSAFE, reason="alignment_unreliable:landmarks", escalate=True)
             chip, _ = face_chip(img, lm)
             if prof is not None and prof.oob_fill and route_mode != "a4" and not force_a4:
@@ -408,7 +517,87 @@ class EnhancementPipeline:
         res.chip = chip_png.tobytes() if ok else None
         if route_mode == "a4" or force_a4:
             return self._a4_path(res, chip, force_a4, original, ms)
+        if profile in BEST_PROFILES:
+            out = self._best_path(res, data, chip, route_mode, ms, fill)
+            if (side and det is not None and out.status == ORIGINAL_S
+                    and (out.nafnet or {}).get("reason") == NR.R_ALIGN):     # turned face: the gate's pose rule said no
+                return self._side_path(res, data, img, det, route_mode, ms, NR.R_ALIGN)
+            return out
         return self._nafnet_path(res, chip, route_mode, original, ms, fill, prof)
+
+    def _side_path(self, res: Result, data: bytes, img: np.ndarray, det, route_mode: str, ms, why: str) -> Result:
+        """Profile "best_side": the landmark framing stopped at `why`; frame the face by its detection box and run
+        the unchanged "best" route on that chip (see PROFILE_BEST_SIDE). Out-of-image area as in the r6 profiles:
+        reflect-filled for the gate and the model, black in the returned chip."""
+        res = replace(res, warnings=[*res.warnings, "side_face_box_framing"], timings_ms=dict(res.timings_ms))
+        chip, _ = face_chip_box(img, det.bbox_xywh)
+        oob = face_chip_box(np.full(img.shape[:2] + (3,), 255, np.uint8), det.bbox_xywh)[0][..., 0] < 128
+        fill = (face_chip_box(img, det.bbox_xywh, cv2.BORDER_REFLECT_101)[0], oob) if oob.any() else None
+        res.chip_px = int(chip.shape[0])
+        ok, chip_png = cv2.imencode(".png", chip)
+        res.chip = chip_png.tobytes() if ok else None
+        box = {"landmark_framing": why, "det_score": float(det.score),
+               "iod_equiv_px": round(chip.shape[0] * TEMPLATE_IOD_150 / 150.0, 3)}
+        return self._best_path(res, data, chip, route_mode, ms, fill, box)
+
+    def _best_path(self, res: Result, data: bytes, chip: np.ndarray, route_mode: str, ms, fill=None,
+                   box: dict | None = None) -> Result:
+        """R6-BEST (profile "best"): run every BEST_CANDIDATES profile's unchanged guarded route on the same chip and
+        return ONE result — the accepted output NR.select_best prefers, or the original when no candidate was accepted.
+        The candidates share one sealed input gate, so a face the first one finds not eligible (ORIGINAL, or the
+        retained A4 strong-noise route in auto mode) is final and the others are not run."""
+        subs: dict[str, Result] = {}
+        infer_for = self._parallel_infer() if self.best_parallel else None
+        for name in BEST_CANDIDATES:
+            sub = replace(res, warnings=list(res.warnings), timings_ms=dict(res.timings_ms))
+
+            def sub_original(_s=sub, **kw) -> Result:
+                _s.status, _s.image, _s.image_format = ORIGINAL_S, data, "as_received"
+                for k, v in kw.items():
+                    setattr(_s, k, v)
+                _s.timings_ms["total"] = ms()
+                return _s
+            self._nafnet_path(sub, chip, route_mode if not subs else "nafnet", sub_original, ms, fill,
+                              self.profiles[name], infer_for(name) if infer_for else None, box)
+            subs[name] = sub
+            if not (sub.nafnet or {}).get("eligible"):
+                break
+        outs = {n: cv2.imdecode(np.frombuffer(s.image, np.uint8), cv2.IMREAD_COLOR)
+                for n, s in subs.items() if s.status == ENHANCED and s.used == NR.MODEL}
+        chosen, scores = NR.select_best(chip, outs) if outs else (None, {})
+        final = subs[chosen] if chosen else subs[BEST_CANDIDATES[0]]
+        final.selection = {"rule": NR.SELECT_RULE, "chosen": chosen,
+                           "candidates": {n: {"status": s.status, "fallback": s.fallback or "", "model": s.model,
+                                              "score": scores.get(n)} for n, s in subs.items()}}
+        final.timings_ms["total"] = ms()
+        return final
+
+    def _parallel_infer(self):
+        """PERF Step 1: → infer_for(name) → infer(work, ctx), a drop-in for `profile.model(work, ctx)` in _nafnet_path.
+        Nothing runs until the FIRST candidate reaches its model call (so a face the gate rejects never starts a
+        model). At that moment the model of EVERY candidate is started on that same input, each in its own
+        IsolatedModel (own process, own lock, own timeout: a hang, crash or error stays with that worker and surfaces
+        as the same exception, to the same candidate, as in the sequential path). Each candidate then collects ITS
+        result. A later candidate whose input is not the very same one is run directly, as before."""
+        from concurrent.futures import ThreadPoolExecutor
+        state: dict = {}
+
+        def infer_for(name):
+            def infer(work, ctx):
+                if not state:
+                    models = {n: self.profiles[n].model for n in BEST_CANDIDATES}
+                    pool = ThreadPoolExecutor(len(models), thread_name_prefix="fes-best")
+                    state.update(work=work, ctx=dict(ctx),
+                                 fut={n: pool.submit(m, work, dict(ctx)) for n, m in models.items()})
+                    pool.shutdown(wait=False)
+                first = state["ctx"]
+                same = work is state["work"] and ctx.keys() == first.keys() and all(
+                    ctx[k] is first[k] or (not isinstance(ctx[k], np.ndarray) and ctx[k] == first[k]) for k in ctx)
+                if not same or name not in state["fut"]:
+                    return self.profiles[name].model(work, ctx)
+                return state["fut"].pop(name).result()
+            return infer
+        return infer_for
 
     def _a4_path(self, res: Result, chip: np.ndarray, force_a4: bool, original, ms) -> Result:
         """The R5-1/R5-3 behaviour, unchanged: frozen T6 → T7 (or rwgate) → ORIGINAL | A4, with the router's
@@ -439,7 +628,7 @@ class EnhancementPipeline:
         return res
 
     def _nafnet_path(self, res: Result, chip: np.ndarray, route_mode: str, original, ms, fill=None,
-                     prof: _NafnetProfile | None = None) -> Result:
+                     prof: _NafnetProfile | None = None, infer=None, box: dict | None = None) -> Result:
         """R5-5 guarded NAFNet route: input gate → NAFNet (isolated worker) → artifact guard; ORIGINAL otherwise.
         r5_8 / r5_10 candidate profiles: `fill` = (reflect-filled chip, out-of-image mask) when the full_image chip extends past
         the image (gate + NAFNet see the filled chip, the output's out-of-image area is set back to black), and the
@@ -454,15 +643,29 @@ class EnhancementPipeline:
         except Exception as e:  # noqa: BLE001 — feature extraction failed: never enhance
             return original(decision=GT.UNSAFE, reason="quality_analysis_failed", escalate=True,
                             error=f"{type(e).__name__}: {e}"[:200])
+        if box is not None:     # side-face framing: the box's detection score and the chip's template-equivalent IOD
+            f = {**f, "det_score": box["det_score"], "iod_px": box["iod_equiv_px"]}
         res.quality = {k: _json_num(f.get(k)) for k in QUALITY_KEYS + NAFNET_QUALITY_KEYS}
-        nd = NR.decide(f, cfg)
+        gate_cfg = cfg if box is None else {         # box framing: its own sealed blur boundary
+            **cfg, "thresholds": {**cfg["thresholds"], **self.side_cfg["thresholds"]}}
+        br = None                                    # admin blur range: the face's blur % and the range applied
+        if self._req_blur is not None and prof.name in BLUR_RANGE_PROFILES and not NR._nan(f.get("lapd1_c")):
+            br = BS.report(self.blur_scale, "front" if box is None else "side", f["lapd1_c"],
+                           gate_cfg["thresholds"]["blur_max"], *self._req_blur)
+        nd = NR.decide(f, gate_cfg, GT.safety if box is None else NR.box_safety,
+                       br if br is not None and self._req_blur[0].active else None)
         res.nafnet = {**nd.as_dict(), "route_version": cfg["route_version"], "infer_s": None, "artifact": None}
+        if br is not None:
+            res.nafnet["blur_range"] = br
+        if box is not None:
+            res.nafnet.update(framing="detection_box", landmark_framing=box["landmark_framing"],
+                              side_route_version=self.side_cfg["route_version"])
         if prof.name != "r5_6":
             res.nafnet.update(profile=prof.name, local_artifact=None,
                               oob_fill_frac=round(float(fill[1].mean()), 4) if fill is not None else 0.0)
         res.timings_ms["gate"] = ms()
         if not nd.eligible:
-            if route_mode == "auto":
+            if route_mode == "auto" and box is None:              # the A4 route keeps its own (landmark) safety rules
                 fa = f if fill is None else self._features(chip)  # the A4 route always decides on the unchanged chip
                 _, why, _, route = RW.decide(fa, self.rw_cfg)
                 if route == "A4" and why == "strong_noise":       # the retained, evidence-backed A4 route
@@ -472,12 +675,15 @@ class EnhancementPipeline:
                             escalate=nd.decision == GT.UNSAFE)
         res.decision, res.reason, res.bucket = nd.decision, nd.reason, nd.route
         res.route = res.gate_route = res.model = NR.MODEL
+        res.model = PROFILE_MODEL.get(prof.name, NR.MODEL)       # r6_ft: same route, fine-tuned weights
         try:
             ctx = {"s": work.shape[0]}
             if "stability" in cfg and fill is not None:          # r6: out-of-image area excluded from the tracer
                 ctx["oob_mask"] = fill[1]
-            out, meta = prof.model(work, ctx)
+            out, meta = (infer or prof.model)(work, ctx)          # infer: PERF Step 1 (profile "best" only)
             res.nafnet["infer_s"] = (meta or {}).get("infer_s")
+            if (meta or {}).get("backend"):                       # R6-ONNX: reported only by a non-default backend
+                res.nafnet["backend"] = meta["backend"]
             if fill is not None and isinstance(out, np.ndarray) and out.shape[:2] == fill[1].shape:
                 out = out.copy()
                 out[fill[1]] = 0                                  # out-of-image area back to black: geometry unchanged

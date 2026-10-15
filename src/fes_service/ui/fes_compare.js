@@ -14,10 +14,14 @@ export const PROFILES = [
   { id: "r6", title: "NAFNet R6 — Stability-Verified Experimental", warning: "EXPERIMENTAL — NOT PRODUCTION-APPROVED",
     note: "R5-8 route; NAFNet runs on the face and its 3 mirror images. Any unstable run → ORIGINAL; otherwise the "
       + "median of the 4 runs, with the original's colours (brightness detail only)." },
+  { id: "r6_ft", title: "NAFNet R6-FT — Face Fine-Tuned Experimental", warning: "EXPERIMENTAL — NOT PRODUCTION-APPROVED",
+    note: "R6 with ONE change: NAFNet weights fine-tuned on face blur (Gaussian, defocus, motion) instead of the "
+      + "GoPro street-video weights. Same gate, stability check and guards." },
 ];
 export const PROFILE_IDS = PROFILES.map((p) => p.id);
-export const NAFNET_IDS = ["r5_6", "r5_8", "r5_10", "r6"];          // the profiles that can run NAFNet (rated by the owner)
-export const EXPERIMENTAL_IDS = ["r5_8", "r5_10", "r6"];             // off unless listed in FES_EXPERIMENTAL_PROFILES
+export const NAFNET_IDS = ["r5_6", "r5_8", "r5_10", "r6", "r6_ft"]; // the profiles that can run NAFNet (rated by the owner)
+export const EXPERIMENTAL_IDS = ["r5_8", "r5_10", "r6", "r6_ft"];    // off unless listed in FES_EXPERIMENTAL_PROFILES
+export const STABILITY_IDS = ["r6", "r6_ft"];                        // profiles with the 4-run stability check
 export const profileById = (id) => PROFILES.find((p) => p.id === id) || null;
 
 export const RATINGS = ["Better", "Same", "Worse", "Unsafe / Artifact"];
@@ -132,7 +136,7 @@ export function interpretProfileResult(profile, httpStatus, body, rttMs, { timed
     if (loc.metrics && Number.isFinite(loc.metrics.l_dot_c_max)) local += ` · l_dot_c_max ${num(loc.metrics.l_dot_c_max)}`;
   } else local = "not run (no NAFNet output reached it)";
   let stability = "";
-  if (profile === "r6") {
+  if (STABILITY_IDS.includes(profile)) {
     const m = stab && stab.metrics && typeof stab.metrics === "object" ? stab.metrics : {};
     stability = !stab ? "not run (NAFNet was not attempted)"
       : `${stab.passed ? "PASS" : "FAIL"} · unstable runs ${Number.isFinite(m.n_unstable) ? m.n_unstable : "?"}/4`

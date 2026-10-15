@@ -1,0 +1,24 @@
+TASK 5.5 — ACTUAL FEATURE-MATCH EVALUATION
+
+Objective: determine whether enhancement improves the actual Feature-Match system.
+
+Compare on the same real-world test samples:
+A) Original -> Feature-Match
+B) Original -> Enhancement Service -> Feature-Match
+
+Do not substitute SFace/dlib-only evaluation.
+
+Do:
+1. Connect to Feature-Match in evaluation-only mode without production changes.
+2. Use identity-disjoint real-world test data.
+3. Evaluate genuine and appropriate impostor pairs.
+4. Keep Feature-Match model/embedding/decision setup fixed before comparison.
+5. Measure genuine similarity, false rejection, false acceptance, TAR at fixed FAR where meaningful, ROC/DET where appropriate, match/no-match changes, identity flips, original-wins vs enhanced-wins, and degradation-specific results.
+6. Report uncertainty/confidence intervals where appropriate.
+7. Separate enhanced, original, unsafe/uncertain, detector-failure and enhancement-failure cases.
+8. Preserve manifests and deterministic rerun capability.
+9. Write detailed report.
+
+Do not retune Feature-Match to favor enhancement, tune on test data, or hide negative cases.
+Acceptance: defensible real-world original-vs-enhanced Feature-Match evidence.
+Stop before changing the router; that belongs to 5.6.

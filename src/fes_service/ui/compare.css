@@ -56,3 +56,11 @@ select, input[type="text"], textarea { font: inherit; color: var(--text); backgr
 #log { width: 100%; border-collapse: collapse; font-size: 13px; }
 #log th, #log td { text-align: left; padding: 4px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
 #log th { color: var(--muted); font-weight: 600; }
+/* single-output page: a long result message wraps inside its column instead of pushing the button to a new row */
+.best-head > div:first-child { flex: 1 1 0; min-width: 240px; }
+.blur-panel { margin-top: 12px; font-size: 14px; }
+.blur-panel summary { cursor: pointer; font-weight: 600; }
+.blur-fields { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.blur-fields label { display: grid; gap: 4px; }
+.blur-fields input { font: inherit; color: var(--text); background: var(--card); border: 1px solid var(--line);
+  border-radius: 6px; padding: 6px 8px; width: 10em; max-width: 100%; }

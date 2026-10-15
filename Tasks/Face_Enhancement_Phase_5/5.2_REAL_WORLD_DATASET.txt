@@ -1,0 +1,18 @@
+TASK 5.2 — BUILD GOVERNED REAL-WORLD DATASET
+
+Objective: create a legally usable real-world development/test population representing the poor-quality images the service must handle.
+
+Do:
+1. Inspect Phase 4 dataset/governance framework.
+2. Define taxonomy: blur/motion blur, low resolution, noise, compression, poor lighting, mixed degradation, document/camera artifacts where permitted, and good controls.
+3. Build identity-disjoint development and test splits.
+4. Prefer identity-linked reference images for genuine matching.
+5. Record provenance, consent/license status, capture conditions, face size and quality metadata.
+6. Use only approved sources; record blockers instead of bypassing them.
+7. Build manifests and validation scripts.
+8. Check identity leakage, duplicates, corrupt files, face presence, metadata completeness, deterministic manifests.
+9. Write a dataset/governance report.
+
+Do not train A4 or tune on the final test split.
+Acceptance: reproducible governed real-world dev/test dataset, or a clearly documented external blocker.
+Stop after governance and manifests are validated.

@@ -1,0 +1,7 @@
+{
+  "_help": "Admin settings, read once at service start. blur: the range of blur the service tries to fix, on a 0-100 % scale (0 = sharp, 100 = very heavy blur). enhance_from_pct: faces less blurred than this are returned unchanged; null = the validated limit (about 36 % front / 33 % side); the lowest allowed value is shown by GET /ready (blur_settings.min_enhance_from_pct). give_up_above_pct: faces more blurred than this are returned unchanged (too blurred to fix); null = off, every heavily blurred face is attempted. Must be above enhance_from_pct and below 100.",
+  "blur": {
+    "enhance_from_pct": 40,
+    "give_up_above_pct": 90
+  }
+}
